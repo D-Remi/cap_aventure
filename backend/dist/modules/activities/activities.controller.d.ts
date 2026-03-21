@@ -1,0 +1,40 @@
+import { ActivitiesService } from './activities.service';
+import { Activity, ActivityType, ScheduleType } from './activity.entity';
+import { CreateActivityDto, UpdateActivityDto } from '../../common/dto';
+export declare class ActivitiesController {
+    private service;
+    constructor(service: ActivitiesService);
+    findAll(all: string): Promise<{
+        places_restantes: number;
+        id: number;
+        titre: string;
+        description: string;
+        type: ActivityType;
+        schedule_type: ScheduleType;
+        date: Date;
+        dates: string[];
+        recurrence_days: import("./activity.entity").RecurrenceDay[];
+        recurrence_time: string;
+        date_debut: string;
+        date_fin: string;
+        periode_label: string;
+        prix: number;
+        prix_seance: number;
+        payment_methods: import("./activity.entity").PaymentMethod[];
+        virement_info: string;
+        cesu_info: string;
+        places_max: number;
+        image_url: string;
+        lieu: string;
+        age_min: number;
+        age_max: number;
+        actif: boolean;
+        registrations: import("../registrations/registration.entity").Registration[];
+        created_at: Date;
+        updated_at: Date;
+    }[]>;
+    findOne(id: string): Promise<Activity>;
+    create(dto: CreateActivityDto): Promise<Activity>;
+    update(id: string, dto: UpdateActivityDto): Promise<Activity>;
+    remove(id: string): Promise<Activity>;
+}

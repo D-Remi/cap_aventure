@@ -1,0 +1,41 @@
+import { Repository } from 'typeorm';
+import { Activity, ActivityType } from './activity.entity';
+import { Registration } from '../registrations/registration.entity';
+export declare class ActivitiesService {
+    private repo;
+    private regRepo;
+    constructor(repo: Repository<Activity>, regRepo: Repository<Registration>);
+    findAll(onlyActif?: boolean): Promise<{
+        places_restantes: number;
+        id: number;
+        titre: string;
+        description: string;
+        type: ActivityType;
+        schedule_type: import("./activity.entity").ScheduleType;
+        date: Date;
+        dates: string[];
+        recurrence_days: import("./activity.entity").RecurrenceDay[];
+        recurrence_time: string;
+        date_debut: string;
+        date_fin: string;
+        periode_label: string;
+        prix: number;
+        prix_seance: number;
+        payment_methods: import("./activity.entity").PaymentMethod[];
+        virement_info: string;
+        cesu_info: string;
+        places_max: number;
+        image_url: string;
+        lieu: string;
+        age_min: number;
+        age_max: number;
+        actif: boolean;
+        registrations: Registration[];
+        created_at: Date;
+        updated_at: Date;
+    }[]>;
+    findOne(id: number): Promise<Activity>;
+    create(dto: Partial<Activity>): Promise<Activity>;
+    update(id: number, dto: Partial<Activity>): Promise<Activity>;
+    remove(id: number): Promise<Activity>;
+}
