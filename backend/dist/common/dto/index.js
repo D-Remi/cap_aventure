@@ -309,6 +309,16 @@ __decorate([
     (0, class_transformer_1.Type)(() => Number),
     __metadata("design:type", Number)
 ], CreateRegistrationDto.prototype, "child_id", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsEnum)(['seance', 'mensuel', 'trimestriel', 'semestriel', 'annuel', 'essai']),
+    __metadata("design:type", String)
+], CreateRegistrationDto.prototype, "subscription_type", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateRegistrationDto.prototype, "notes", void 0);
 class UpdateRegistrationStatusDto {
 }
 exports.UpdateRegistrationStatusDto = UpdateRegistrationStatusDto;

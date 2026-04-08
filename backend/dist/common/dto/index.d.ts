@@ -57,6 +57,8 @@ export declare class CreateChildDto {
 export declare class CreateRegistrationDto {
     activity_id: number;
     child_id: number;
+    subscription_type?: string;
+    notes?: string;
 }
 export declare class UpdateRegistrationStatusDto {
     status: string;

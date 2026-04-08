@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import './Hero.css'
 
@@ -12,7 +11,7 @@ export default function Hero() {
       <div className="hero__overlay" />
 
       <div className="hero__content">
-        <div className="hero__badge">🏔️ Haute-Savoie · 6–14 ans</div>
+        <div className="hero__badge">🏔️ Thonon-les-Bains · 6–14 ans</div>
 
         <h1 className="hero__title">
           Cap<span>Aventure</span>
@@ -24,11 +23,11 @@ export default function Hero() {
         </p>
 
         <div className="hero__cta">
-          <button className="btn-primary" onClick={() => scrollTo('contact')}>
-            Je rejoins la liste
+          <button className="btn-primary" onClick={() => scrollTo('activites')}>
+            Voir les activités
           </button>
-          <button className="btn-ghost" onClick={() => scrollTo('activites')}>
-            Découvrir les activités
+          <button className="btn-ghost" onClick={() => scrollTo('contact')}>
+            Demander les dates
           </button>
         </div>
 
@@ -44,8 +43,8 @@ export default function Hero() {
           </div>
           <div className="hero__stat-sep" />
           <div className="hero__stat">
-            <span className="hero__stat-num">74</span>
-            <span className="hero__stat-label">Haute-Savoie</span>
+            <span className="hero__stat-num">Lac</span>
+            <span className="hero__stat-label">Léman</span>
           </div>
         </div>
       </div>

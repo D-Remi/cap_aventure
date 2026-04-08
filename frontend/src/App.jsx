@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext'
 import { useNotifications } from './hooks/useNotifications'
 import ProtectedRoute from './components/layout/ProtectedRoute'
 import PWAInstallBanner from './components/ui/PWAInstallBanner'
+import ScrollToTop from './components/layout/ScrollToTop'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import HomePage           from './pages/HomePage'
@@ -15,6 +16,7 @@ import ProfilePage        from './pages/ProfilePage'
 import DashboardPage      from './pages/DashboardPage'
 import CalendarPage       from './pages/CalendarPage'
 import ActivityPage       from './pages/ActivityPage'
+import ActivityInfoPage   from './pages/ActivityInfoPage'
 import AdminDashboard     from './pages/admin/AdminDashboard'
 import AdminActivities    from './pages/admin/AdminActivities'
 import AdminRegistrations from './pages/admin/AdminRegistrations'
@@ -23,6 +25,8 @@ import AdminInterest      from './pages/admin/AdminInterest'
 import AdminDocuments     from './pages/admin/AdminDocuments'
 import AdminPoints        from './pages/admin/AdminPoints'
 import AdminStats         from './pages/admin/AdminStats'
+import AdminMessages      from './pages/admin/AdminMessages'
+import AdminAttendance    from './pages/admin/AdminAttendance'
 import './styles/global.css'
 import './pages/admin/AdminDashboard.css'
 import './components/ui/PWAInstallBanner.css'
@@ -43,11 +47,13 @@ function AppRoutes() {
 
   return (
     <>
+      <ScrollToTop />
       <PWAInstallBanner />
       <Routes>
         <Route path="/"                element={<PublicLayout><HomePage /></PublicLayout>} />
         <Route path="/calendrier"      element={<CalendarPage />} />
-        <Route path="/activites/:id"   element={<ActivityPage />} />
+        <Route path="/activites/:id"        element={<ActivityPage />} />
+        <Route path="/activites-info/:slug" element={<ActivityInfoPage />} />
         <Route path="/login"           element={<LoginPage />} />
         <Route path="/register"        element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -64,6 +70,8 @@ function AppRoutes() {
         <Route path="/admin/interest"      element={<ProtectedRoute adminOnly><AdminInterest /></ProtectedRoute>} />
         <Route path="/admin/stats"         element={<ProtectedRoute adminOnly><AdminStats /></ProtectedRoute>} />
         <Route path="/admin/points"        element={<ProtectedRoute adminOnly><AdminPoints /></ProtectedRoute>} />
+        <Route path="/admin/messages"      element={<ProtectedRoute adminOnly><AdminMessages /></ProtectedRoute>} />
+        <Route path="/admin/attendance"    element={<ProtectedRoute adminOnly><AdminAttendance /></ProtectedRoute>} />
 
         <Route path="*" element={
           <PublicLayout>

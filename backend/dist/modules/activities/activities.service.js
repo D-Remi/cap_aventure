@@ -26,9 +26,11 @@ let ActivitiesService = class ActivitiesService {
     async findAll(onlyActif = false) {
         const qb = this.repo.createQueryBuilder('a')
             .loadRelationCountAndMap('a.inscriptions_count', 'a.registrations', 'r', (qb) => qb.where("r.status != 'cancelled'"))
-            .orderBy('a.date', 'ASC');
+            .orderBy('ISNULL(a.date)', 'ASC')
+            .addOrderBy('a.date', 'ASC');
         if (onlyActif) {
-            qb.where('a.actif = true AND a.date >= :now', { now: new Date() });
+            qb.where('a.actif = true')
+                .andWhere('(a.schedule_type != :p OR a.date >= :now)', { p: 'ponctuelle', now: new Date() });
         }
         const activities = await qb.getMany();
         return activities.map((a) => ({
@@ -37,10 +39,18 @@ let ActivitiesService = class ActivitiesService {
         }));
     }
     async findOne(id) {
-        const a = await this.repo.findOne({ where: { id } });
+        const a = await this.repo
+            .createQueryBuilder('a')
+            .leftJoinAndSelect('a.registrations', 'r', "r.status != 'cancelled'")
+            .where('a.id = :id', { id })
+            .getOne();
         if (!a)
             throw new common_1.NotFoundException();
-        return a;
+        const inscriptions = (a.registrations || []).length;
+        return {
+            ...a,
+            places_restantes: Math.max(0, a.places_max - inscriptions),
+        };
     }
     create(dto) {
         return this.repo.save(this.repo.create(dto));

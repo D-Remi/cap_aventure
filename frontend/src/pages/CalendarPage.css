@@ -238,3 +238,71 @@
   .calendar-layout { grid-template-columns: 1fr; }
   .calendar-sidebar { position: relative; top: 0; max-height: none; }
 }
+
+/* ── Filtres calendrier ── */
+.cal-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  align-items: center;
+  background: var(--blanc);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+.cal-filters__group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.cal-filters__label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-right: 0.2rem;
+  white-space: nowrap;
+}
+.cal-filter-btn {
+  padding: 0.35rem 0.75rem;
+  border: 1.5px solid #dde8e1;
+  border-radius: 50px;
+  background: var(--blanc);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.cal-filter-btn:hover { border-color: var(--vert-clair); color: var(--bleu-nuit); }
+.cal-filter-btn.active { border-color: var(--vert-clair); }
+.cal-filter-select {
+  padding: 0.35rem 0.75rem;
+  border: 1.5px solid #dde8e1;
+  border-radius: 50px;
+  background: var(--blanc);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.cal-filter-reset {
+  padding: 0.35rem 0.75rem;
+  border: 1.5px solid #fca5a5;
+  border-radius: 50px;
+  background: #fee2e2;
+  color: #dc2626;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.18s;
+  margin-left: auto;
+}
+.cal-filter-reset:hover { background: #fecaca; }

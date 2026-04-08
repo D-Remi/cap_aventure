@@ -1,18 +1,31 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 
-export const dbConfig = (): TypeOrmModuleOptions => ({
-  type: 'mysql',
-  host:     process.env.DB_HOST     || 'localhost',
-  port:     parseInt(process.env.DB_PORT || '3306'),
-  username: process.env.DB_USER     || 'capaventure',
-  password: process.env.DB_PASS     || 'capaventure',
-  database: process.env.DB_NAME     || 'capaventure',
-  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-  synchronize: process.env.NODE_ENV !== 'production', // auto-migrate en dev
-  logging: process.env.NODE_ENV === 'development',
-})
+export function dbConfig(): TypeOrmModuleOptions {
+  // Railway fournit DATABASE_URL automatiquement pour MySQL
+  const url = process.env.DATABASE_URL
 
-export const jwtConfig = {
-  secret:     process.env.JWT_SECRET || 'capaventure-super-secret-change-in-prod',
-  expiresIn:  '7d',
+  if (url) {
+    return {
+      type: 'mysql',
+      url,
+      autoLoadEntities: true,
+      // En prod : jamais synchronize:true — utiliser les migrations SQL
+      synchronize: process.env.NODE_ENV !== 'production',
+      ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined,
+      extra: { connectionLimit: 10 },
+    }
+  }
+
+  // Fallback : variables séparées (dev local WAMP)
+  return {
+    type: 'mysql',
+    host:     process.env.DB_HOST || 'localhost',
+    port:     parseInt(process.env.DB_PORT || '3306', 10),
+    username: process.env.DB_USER || 'root',
+    password: process.env.DB_PASS || '',
+    database: process.env.DB_NAME || 'capaventure',
+    autoLoadEntities: true,
+    synchronize: process.env.NODE_ENV !== 'production',
+    extra: { connectionLimit: 10 },
+  }
 }

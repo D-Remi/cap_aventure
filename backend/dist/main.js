@@ -21,7 +21,7 @@ async function bootstrap() {
         forbidNonWhitelisted: true,
         disableErrorMessages: false,
     }));
-    const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://127.0.0.1:3000').split(',');
+    const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(',').map(s => s.trim());
     app.enableCors({
         origin: (origin, callback) => {
             if (!origin || allowedOrigins.includes(origin)) {
@@ -35,16 +35,16 @@ async function bootstrap() {
         methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'Authorization'],
     });
-    const uploadsRoot = (0, path_1.join)(process.cwd(), 'uploads');
+    const uploadsRoot = process.env.UPLOADS_PATH || (0, path_1.join)(process.cwd(), 'uploads');
     ['activities', 'documents'].forEach(dir => {
         const p = (0, path_1.join)(uploadsRoot, dir);
         if (!(0, fs_1.existsSync)(p))
             (0, fs_1.mkdirSync)(p, { recursive: true });
     });
-    const port = process.env.PORT || 3001;
-    await app.listen(port);
-    console.log(`🚀 CapAventure API sur http://127.0.0.1:${port}/api`);
-    console.log(`🔒 Sécurité : Helmet + Rate limiting + Validation stricte`);
+    app.useStaticAssets(uploadsRoot, { prefix: '/uploads' });
+    const port = parseInt(process.env.PORT || '3001', 10);
+    await app.listen(port, '0.0.0.0');
+    console.log(`🚀 CapAventure API démarrée sur port ${port}`);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

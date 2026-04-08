@@ -13,7 +13,7 @@ export default function Projet() {
           <p>
             CapAventure, c'est une initiative portée par un animateur passionné — assistant
             d'éducation en collège, chef scout et animateur de colos — pour proposer aux enfants
-            de Haute-Savoie des activités outdoor encadrées et enrichissantes.
+            de Thonon-les-Bains et du Chablais des activités outdoor encadrées et enrichissantes.
           </p>
           <p>
             Les mercredis après-midi, les week-ends et certains soirs, on sort, on explore
@@ -30,7 +30,7 @@ export default function Projet() {
           <div className="projet__card">
             <img
               src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80"
-              alt="Montagne Haute-Savoie"
+              alt="Montagne Chablais Bernex"
               className="projet__card-img"
             />
             <div className="projet__card-body">

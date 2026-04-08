@@ -1,31 +1,28 @@
 import axios from 'axios'
 
-// En production : pointe vers le backend Railway
-// En développement : le proxy Vite redirige /api → localhost:3001
+// En dev : proxy Vite (/api → localhost:3001)
+// En prod Railway : VITE_API_URL = https://ton-backend.up.railway.app
+const baseURL = import.meta.env.VITE_API_URL || ''
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '',
+  baseURL,
+  withCredentials: true,
 })
 
-// Injecter le token JWT automatiquement sur chaque requête
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('cap_token')
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('token')
   if (token) config.headers.Authorization = `Bearer ${token}`
   return config
 })
 
-// Gérer les erreurs 401 globalement (token expiré)
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('cap_token')
-      localStorage.removeItem('cap_user')
-      // Rediriger vers login si pas déjà dessus
-      if (!window.location.pathname.includes('/login')) {
-        window.location.href = '/login'
-      }
+  r => r,
+  err => {
+    if (err.response?.status === 401) {
+      localStorage.removeItem('token')
+      window.location.href = '/login'
     }
-    return Promise.reject(error)
+    return Promise.reject(err)
   }
 )
 

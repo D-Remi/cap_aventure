@@ -35,6 +35,18 @@ __decorate([
     __metadata("design:type", String)
 ], Registration.prototype, "status", void 0);
 __decorate([
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: ['seance', 'mensuel', 'trimestriel', 'semestriel', 'annuel', 'essai'],
+        default: 'seance',
+    }),
+    __metadata("design:type", String)
+], Registration.prototype, "subscription_type", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, type: 'text' }),
+    __metadata("design:type", String)
+], Registration.prototype, "notes", void 0);
+__decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], Registration.prototype, "created_at", void 0);

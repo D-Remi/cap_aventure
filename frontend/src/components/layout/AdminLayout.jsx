@@ -11,7 +11,9 @@ const NAV_ITEMS = [
   { key: 'points',       label: 'Points',             icon: '🏆', path: '/admin/points' },
   { key: 'users',        label: 'Parents & Enfants',  icon: '👨‍👩‍👧', path: '/admin/users' },
   { key: 'documents',    label: 'Documents',          icon: '📁', path: '/admin/documents' },
+  { key: 'messages',     label: 'Messages',           icon: '💬', path: '/admin/messages' },
   { key: 'interest',     label: 'Demandes contact',   icon: '📩', path: '/admin/interest' },
+  { key: 'attendance',   label: 'Présences',          icon: '✅', path: '/admin/attendance' },
 ]
 
 export default function AdminLayout({ children }) {

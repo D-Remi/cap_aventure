@@ -47,7 +47,7 @@ export class RegistrationsService {
     })
   }
 
-  async create(user: User, dto: { activity_id: number; child_id: number }) {
+  async create(user: User, dto: { activity_id: number; child_id: number; subscription_type?: string; notes?: string }) {
     const child = await this.childRepo.findOne({
       where: { id: dto.child_id },
       relations: ['user'],
@@ -77,7 +77,13 @@ export class RegistrationsService {
       throw new BadRequestException('Cet enfant est déjà inscrit à cette activité.')
     }
 
-    const reg = this.repo.create({ child, activity, status: 'pending' })
+    const reg = this.repo.create({
+      child,
+      activity,
+      status: 'pending',
+      subscription_type: (dto.subscription_type as any) || 'seance',
+      notes: dto.notes,
+    })
     await this.repo.save(reg)
 
     // Email de confirmation d'inscription au parent

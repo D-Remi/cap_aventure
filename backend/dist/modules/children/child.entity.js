@@ -34,13 +34,45 @@ __decorate([
     __metadata("design:type", String)
 ], Child.prototype, "nom", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'date' }),
+    (0, typeorm_1.Column)({ type: 'date', nullable: true }),
     __metadata("design:type", String)
 ], Child.prototype, "date_naissance", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'text', nullable: true }),
     __metadata("design:type", String)
 ], Child.prototype, "infos_medicales", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Child.prototype, "allergie", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Child.prototype, "medecin_nom", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Child.prototype, "medecin_telephone", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Child.prototype, "contact_urgence_nom", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Child.prototype, "contact_urgence_telephone", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Child.prototype, "contact_urgence_lien", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Child.prototype, "niveau_natation", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'text', nullable: true }),
+    __metadata("design:type", String)
+], Child.prototype, "notes_animateur", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => registration_entity_1.Registration, (reg) => reg.child),
     __metadata("design:type", Array)

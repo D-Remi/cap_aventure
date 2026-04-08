@@ -7,6 +7,14 @@ export declare class Child {
     nom: string;
     date_naissance: string;
     infos_medicales: string;
+    allergie: string;
+    medecin_nom: string;
+    medecin_telephone: string;
+    contact_urgence_nom: string;
+    contact_urgence_telephone: string;
+    contact_urgence_lien: string;
+    niveau_natation: string;
+    notes_animateur: string;
     registrations: Registration[];
     created_at: Date;
 }

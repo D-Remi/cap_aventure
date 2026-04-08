@@ -81,7 +81,13 @@ let RegistrationsService = class RegistrationsService {
         if (existing && existing.status !== 'cancelled') {
             throw new common_1.BadRequestException('Cet enfant est déjà inscrit à cette activité.');
         }
-        const reg = this.repo.create({ child, activity, status: 'pending' });
+        const reg = this.repo.create({
+            child,
+            activity,
+            status: 'pending',
+            subscription_type: dto.subscription_type || 'seance',
+            notes: dto.notes,
+        });
         await this.repo.save(reg);
         this.email.sendRegistrationPending(child.user.email, child.user.prenom, `${child.prenom} ${child.nom}`, activity.titre);
         this.points.addPoints(child.id, POINTS_INSCRIPTION, 'inscription', `Inscription à "${activity.titre}"`, activity.id).catch(() => { });

@@ -16,7 +16,7 @@ const VALEURS = [
   {
     icon: '🌱',
     title: 'Respect de la nature',
-    desc: "Apprendre à aimer et à protéger l'environnement naturel exceptionnel de la Haute-Savoie, à chaque sortie.",
+    desc: "Apprendre à aimer et à protéger l'environnement naturel exceptionnel du Chablais — le lac Léman, les montagnes de Bernex et Thollon — à chaque sortie.",
     img: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=500&q=75',
   },
   {

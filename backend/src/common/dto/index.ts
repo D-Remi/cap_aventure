@@ -86,6 +86,9 @@ export class CreateChildDto {
 export class CreateRegistrationDto {
   @IsInt() @Type(() => Number) activity_id: number
   @IsInt() @Type(() => Number) child_id: number
+  @IsOptional() @IsEnum(['seance','mensuel','trimestriel','semestriel','annuel','essai'])
+  subscription_type?: string
+  @IsOptional() @IsString() notes?: string
 }
 
 export class UpdateRegistrationStatusDto {

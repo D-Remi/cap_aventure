@@ -19,10 +19,16 @@ export class ActivitiesService {
         'r',
         (qb) => qb.where("r.status != 'cancelled'"),
       )
-      .orderBy('a.date', 'ASC')
+      // MySQL : ISNULL() met les NULL à la fin
+      .orderBy('ISNULL(a.date)', 'ASC')
+      .addOrderBy('a.date', 'ASC')
 
     if (onlyActif) {
-      qb.where('a.actif = true AND a.date >= :now', { now: new Date() })
+      qb.where('a.actif = true')
+        .andWhere(
+          '(a.schedule_type != :p OR a.date >= :now)',
+          { p: 'ponctuelle', now: new Date() }
+        )
     }
 
     const activities = await qb.getMany()
@@ -34,9 +40,17 @@ export class ActivitiesService {
   }
 
   async findOne(id: number) {
-    const a = await this.repo.findOne({ where: { id } })
+    const a = await this.repo
+      .createQueryBuilder('a')
+      .leftJoinAndSelect('a.registrations', 'r', "r.status != 'cancelled'")
+      .where('a.id = :id', { id })
+      .getOne()
     if (!a) throw new NotFoundException()
-    return a
+    const inscriptions = (a.registrations || []).length
+    return {
+      ...a,
+      places_restantes: Math.max(0, a.places_max - inscriptions),
+    }
   }
 
   create(dto: Partial<Activity>) {

@@ -15,6 +15,15 @@ const PAYMENT_INFO = {
 }
 const POINTS_FOR_FREE = 200
 
+const SUBSCRIPTION_OPTIONS = [
+  { value: 'essai',       label: '🎯 Journée d\'essai', price: 10,   desc: 'Une séance pour tester' },
+  { value: 'seance',      label: '📅 À la séance',       price: null, desc: 'Prix affiché' },
+  { value: 'mensuel',     label: '📆 Mensuel',           price: 50,   desc: '4 séances · 50€' },
+  { value: 'trimestriel', label: '🗓️ Trimestriel',       price: 135,  desc: '3 mois · 135€' },
+  { value: 'semestriel',  label: '📊 Semestriel',        price: 255,  desc: '6 mois · 255€' },
+  { value: 'annuel',      label: '🏆 Annuel',            price: 460,  desc: 'Sept→Juin · 460€' },
+]
+
 function formatScheduleDisplay(a) {
   if (!a) return ''
   if (a.schedule_type === 'ponctuelle' && a.date) {
@@ -45,14 +54,17 @@ export default function ActivityPage() {
   const { id }          = useParams()
   const { user }        = useAuth()
   const navigate        = useNavigate()
-  const [activity, setActivity]     = useState(null)
-  const [children, setChildren]     = useState([])
-  const [pointsData, setPointsData] = useState([])
-  const [loading, setLoading]       = useState(true)
-  const [childId, setChildId]       = useState('')
-  const [payMode, setPayMode]       = useState('normal') // 'normal' | 'points'
-  const [regStatus, setRegStatus]   = useState('idle')
-  const [regMsg, setRegMsg]         = useState('')
+  const [activity, setActivity]         = useState(null)
+  const [children, setChildren]         = useState([])
+  const [pointsData, setPointsData]     = useState([])
+  const [loading, setLoading]           = useState(true)
+  const [childId, setChildId]           = useState('')
+  const [payMode, setPayMode]           = useState('normal')
+  const [subscriptionType, setSubType]  = useState('seance')
+  const [regStatus, setRegStatus]       = useState('idle')
+  const [regMsg, setRegMsg]             = useState('')
+
+  const isClub = activity?.schedule_type === 'multi_dates' || activity?.schedule_type === 'recurrente'
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,6 +91,12 @@ export default function ActivityPage() {
     return found?.total || 0
   }
 
+  const getSubPrice = () => {
+    if (!activity) return 0
+    const opt = SUBSCRIPTION_OPTIONS.find(o => o.value === subscriptionType)
+    return opt?.price ?? parseFloat(activity.prix)
+  }
+
   const handleRegister = async () => {
     if (!user) { navigate('/login'); return }
     if (!childId) { setRegMsg('Sélectionnez un enfant.'); return }
@@ -88,9 +106,12 @@ export default function ActivityPage() {
     }
     setRegStatus('loading'); setRegMsg('')
     try {
+      const subLabel = SUBSCRIPTION_OPTIONS.find(o => o.value === subscriptionType)?.label || ''
       await axios.post('/api/registrations', {
-        activity_id: parseInt(id),
-        child_id: parseInt(childId),
+        activity_id:       parseInt(id),
+        child_id:          parseInt(childId),
+        subscription_type: isClub ? subscriptionType : 'seance',
+        notes:             isClub ? `Formule : ${subLabel}` : undefined,
       })
       if (payMode === 'points') {
         await axios.post('/api/points/redeem', {
@@ -100,9 +121,10 @@ export default function ActivityPage() {
         }).catch(() => {})
       }
       setRegStatus('success')
+      const priceStr = isClub ? ` (${subLabel} — ${getSubPrice()}€)` : ''
       setRegMsg(payMode === 'points'
         ? `🎉 Inscription gratuite ! ${POINTS_FOR_FREE} points déduits.`
-        : 'Inscription enregistrée ! Vous recevrez un email de confirmation.'
+        : `Inscription enregistrée${priceStr} ! Vous recevrez un email de confirmation.`
       )
     } catch (e) {
       setRegStatus('error')
@@ -122,7 +144,8 @@ export default function ActivityPage() {
 
   if (!activity) return null
 
-  const isFull    = activity.places_restantes === 0
+  const placesRestantes = activity.places_restantes ?? activity.places_max
+  const isFull    = placesRestantes === 0
   const sched     = formatScheduleDisplay(activity)
   const selPts    = childId ? getChildPoints(childId) : 0
   const canPayPts = selPts >= POINTS_FOR_FREE
@@ -150,7 +173,7 @@ export default function ActivityPage() {
               {sched.recurring && <span>🔄 {sched.recurring}</span>}
               {sched.period && <span>📆 {sched.period}</span>}
               {sched.dates  && <span>📆 {sched.dates.length} dates</span>}
-              <span>👥 {isFull ? '🚫 Complet' : `${activity.places_restantes} place${activity.places_restantes > 1 ? 's' : ''} restante${activity.places_restantes > 1 ? 's' : ''}`}</span>
+              <span>👥 {isFull ? '🚫 Complet' : `${placesRestantes} place${placesRestantes > 1 ? 's' : ''} restante${placesRestantes > 1 ? 's' : ''}`}</span>
             </div>
           </div>
         </div>
@@ -201,7 +224,7 @@ export default function ActivityPage() {
                     {activity.prix_seance && <> · {parseFloat(activity.prix_seance).toFixed(2)}€/séance</>}
                   </span>
                 </div></div>
-                <div className="activity-info-card"><span className="activity-info-card__icon">👥</span><div><strong>Places</strong><span>{isFull ? 'Complet' : `${activity.places_restantes} / ${activity.places_max} disponibles`}</span></div></div>
+                <div className="activity-info-card"><span className="activity-info-card__icon">👥</span><div><strong>Places</strong><span>{isFull ? 'Complet' : `${placesRestantes} / ${activity.places_max} disponibles`}</span></div></div>
                 {activity.lieu && <div className="activity-info-card"><span className="activity-info-card__icon">📍</span><div><strong>Lieu</strong><span>{activity.lieu}</span></div></div>}
                 <div className="activity-info-card"><span className="activity-info-card__icon">✅</span><div><strong>Encadrement</strong><span>Animateur certifié BAFA</span></div></div>
                 {(activity.age_min || activity.age_max) && (
@@ -242,8 +265,13 @@ export default function ActivityPage() {
           <div className="activity-sidebar">
             <div className="activity-register-card">
               <div className="activity-register-card__price">
-                <span className="activity-register-card__price-num">{parseFloat(activity.prix).toFixed(2)}€</span>
-                <span>par enfant</span>
+                <span className="activity-register-card__price-num">
+                  {isClub && subscriptionType !== 'seance'
+                    ? `${getSubPrice()}€`
+                    : `${parseFloat(activity.prix).toFixed(2)}€`
+                  }
+                </span>
+                <span>{isClub ? 'formule choisie' : 'par enfant'}</span>
               </div>
 
               {isFull ? (
@@ -281,7 +309,39 @@ export default function ActivityPage() {
                             </select>
                           </div>
 
-                          {/* Choix mode de paiement */}
+                          {/* Formule d'abonnement (clubs / multi-dates uniquement) */}
+                          {isClub && (
+                            <div style={{ marginBottom:'1rem' }}>
+                              <label style={{ fontSize:'0.8rem', fontWeight:700, color:'var(--text-muted)', textTransform:'uppercase', letterSpacing:'0.5px', display:'block', marginBottom:'0.5rem' }}>
+                                Formule d'inscription
+                              </label>
+                              <div style={{ display:'flex', flexDirection:'column', gap:'0.4rem' }}>
+                                {SUBSCRIPTION_OPTIONS.map(opt => (
+                                  <button
+                                    key={opt.value}
+                                    type="button"
+                                    onClick={() => setSubType(opt.value)}
+                                    style={{
+                                      display:'flex', alignItems:'center', justifyContent:'space-between',
+                                      padding:'0.6rem 0.85rem', borderRadius:'var(--radius-md)',
+                                      border: `2px solid ${subscriptionType === opt.value ? 'var(--vert-clair)' : '#dde8e1'}`,
+                                      background: subscriptionType === opt.value ? '#e8f5ed' : 'var(--blanc)',
+                                      cursor:'pointer', textAlign:'left', width:'100%',
+                                      transition:'all 0.18s',
+                                    }}
+                                  >
+                                    <div>
+                                      <div style={{ fontWeight:700, fontSize:'0.85rem', color:'var(--bleu-nuit)' }}>{opt.label}</div>
+                                      <div style={{ fontSize:'0.73rem', color:'var(--text-muted)' }}>{opt.desc}</div>
+                                    </div>
+                                    <div style={{ fontFamily:"'Baloo 2',cursive", fontWeight:800, fontSize:'0.9rem', color:'var(--vert-foret)', flexShrink:0, marginLeft:'0.5rem' }}>
+                                      {opt.price !== null ? `${opt.price}€` : `${parseFloat(activity.prix).toFixed(0)}€`}
+                                    </div>
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
                           <div style={{ marginBottom:'1rem' }}>
                             <label style={{ fontSize:'0.8rem', fontWeight:700, color:'var(--text-muted)', textTransform:'uppercase', letterSpacing:'0.5px', display:'block', marginBottom:'0.5rem' }}>
                               Mode de paiement
@@ -359,7 +419,9 @@ export default function ActivityPage() {
                               ? '⏳ Inscription...'
                               : payMode === 'points'
                                 ? `🏆 S'inscrire gratuitement (${POINTS_FOR_FREE} pts)`
-                                : '🎿 S\'inscrire à cette activité'
+                                : isClub
+                                  ? `✅ S'inscrire — ${SUBSCRIPTION_OPTIONS.find(o=>o.value===subscriptionType)?.label || ''}`
+                                  : '🎿 S\'inscrire à cette activité'
                             }
                           </button>
                         </>

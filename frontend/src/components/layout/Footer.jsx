@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="container footer__inner">
         <div className="footer__brand">
           <Link to="/" className="footer__logo">Cap<span>Aventure</span></Link>
-          <p>Activités outdoor encadrées pour les 6–14 ans en Haute-Savoie.</p>
+          <p>Activités outdoor encadrées pour les 6–14 ans à Thonon-les-Bains et dans le Chablais.</p>
         </div>
 
         <div className="footer__links">
@@ -36,7 +36,7 @@ export default function Footer() {
 
         <div className="footer__info">
           <h4>Infos</h4>
-          <p>📍 Haute-Savoie (74)</p>
+          <p>📍 Thonon-les-Bains (74200)</p>
           <p>📅 Mercredis, week-ends & vacances</p>
           <p>🎒 6 à 14 ans</p>
           <p>✅ Encadrement certifié BAFA</p>
@@ -44,7 +44,7 @@ export default function Footer() {
       </div>
 
       <div className="footer__bottom">
-        <p>© {new Date().getFullYear()} <strong>CapAventure</strong> — Projet en cours de lancement · Haute-Savoie</p>
+        <p>© {new Date().getFullYear()} <strong>CapAventure</strong> — Projet en cours de lancement · Thonon-les-Bains</p>
       </div>
     </footer>
   )

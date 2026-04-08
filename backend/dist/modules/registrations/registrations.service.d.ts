@@ -20,6 +20,8 @@ export declare class RegistrationsService {
     create(user: User, dto: {
         activity_id: number;
         child_id: number;
+        subscription_type?: string;
+        notes?: string;
     }): Promise<Registration>;
     updateStatus(id: number, status: 'pending' | 'confirmed' | 'cancelled'): Promise<Registration>;
     cancel(id: number, user: User): Promise<Registration>;

@@ -25,6 +25,7 @@ const interest_module_1 = require("./modules/interest/interest.module");
 const upload_module_1 = require("./modules/upload/upload.module");
 const documents_module_1 = require("./modules/documents/documents.module");
 const points_module_1 = require("./modules/points/points.module");
+const messages_module_1 = require("./modules/messages/messages.module");
 const stats_module_1 = require("./modules/stats/stats.module");
 let AppModule = class AppModule {
 };
@@ -37,7 +38,7 @@ exports.AppModule = AppModule = __decorate([
             throttler_1.ThrottlerModule.forRoot([{
                     name: 'global',
                     ttl: 60000,
-                    limit: 100,
+                    limit: 2000,
                 }, {
                     name: 'auth',
                     ttl: 60000,
@@ -54,10 +55,10 @@ exports.AppModule = AppModule = __decorate([
             upload_module_1.UploadModule,
             documents_module_1.DocumentsModule,
             points_module_1.PointsModule,
+            messages_module_1.MessagesModule,
             stats_module_1.StatsModule,
         ],
         providers: [
-            { provide: core_1.APP_GUARD, useClass: throttler_1.ThrottlerGuard },
             {
                 provide: core_1.APP_PIPE,
                 useValue: new common_2.ValidationPipe({

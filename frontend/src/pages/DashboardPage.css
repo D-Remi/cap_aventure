@@ -337,3 +337,37 @@
   .dash-main { padding: 1.5rem; }
   .dash-stats, .dash-quick__grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* ── Carte inscription avec dates à choisir ── */
+.dash-booking-card--needs-dates {
+  border-left: 4px solid #f59e0b;
+}
+.dash-dates-btn {
+  background: var(--bg-light);
+  border: 1.5px solid #dde8e1;
+  border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--bleu-nuit);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.dash-dates-btn:hover { border-color: var(--vert-clair); background: #e8f5ed; }
+.dash-dates-btn--urgent {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #92400e;
+}
+.dash-dates-btn--urgent:hover { background: #fde68a; }
+
+.dash-booking-dates-preview {
+  display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: 0.25rem;
+}
+.dash-booking-dates-preview span {
+  background: #e8f5ed; color: var(--vert-foret);
+  font-size: 0.72rem; font-weight: 700;
+  padding: 0.1rem 0.45rem; border-radius: 50px;
+}

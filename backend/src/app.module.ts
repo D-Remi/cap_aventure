@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { MulterModule } from '@nestjs/platform-express'
-import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler'
+import { ThrottlerModule } from '@nestjs/throttler'
+import { CustomThrottlerGuard } from './common/guards/custom-throttler.guard'
 import { APP_GUARD, APP_PIPE } from '@nestjs/core'
 import { ValidationPipe } from '@nestjs/common'
 
@@ -17,6 +18,7 @@ import { InterestModule }      from './modules/interest/interest.module'
 import { UploadModule }        from './modules/upload/upload.module'
 import { DocumentsModule }     from './modules/documents/documents.module'
 import { PointsModule }         from './modules/points/points.module'
+import { MessagesModule }         from './modules/messages/messages.module'
 import { StatsModule }         from './modules/stats/stats.module'
 
 @Module({
@@ -24,17 +26,17 @@ import { StatsModule }         from './modules/stats/stats.module'
     TypeOrmModule.forRoot(dbConfig()),
     MulterModule.register({}),
 
-    // ── Rate limiting global ──────────────────────────────────
-    // 100 requêtes / minute par IP par défaut
-    // Les routes sensibles ont leur propre limite via @Throttle()
+    // ── Rate limiting ─────────────────────────────────────────
+    // Limite généreuse pour l'usage normal du site
+    // Les routes auth sensibles ont @Throttle() plus strict
     ThrottlerModule.forRoot([{
       name:  'global',
-      ttl:   60000,   // 1 minute
-      limit: 100,
-    }, {
-      name:  'auth',   // Pour login/register : plus strict
       ttl:   60000,
-      limit: 10,
+      limit: 2000,    // ~33 req/sec — admin navigue sans jamais toucher la limite
+    }, {
+      name:  'auth',
+      ttl:   60000,
+      limit: 10,      // login/register : 10/min reste strict
     }]),
 
     EmailModule,
@@ -48,11 +50,11 @@ import { StatsModule }         from './modules/stats/stats.module'
     UploadModule,
     DocumentsModule,
     PointsModule,
+    MessagesModule,
     StatsModule,
   ],
   providers: [
-    // Rate limiting appliqué globalement
-    { provide: APP_GUARD, useClass: ThrottlerGuard },
+    // ThrottlerGuard retiré du global — appliqué uniquement sur les routes @Throttle() (auth)
     {
       provide: APP_PIPE,
       useValue: new ValidationPipe({

@@ -14,21 +14,18 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api')
 
-  // ── Sécurité HTTP headers ─────────────────────────────────────
   app.use(helmet.default({
     crossOriginResourcePolicy: { policy: 'cross-origin' },
   }))
 
-  // ── Validation stricte + transformation ───────────────────────
   app.useGlobalPipes(new ValidationPipe({
-    whitelist:            true,   // Supprime les champs non déclarés dans le DTO
-    transform:            true,   // Transforme les types automatiquement
-    forbidNonWhitelisted: true,   // Rejette les requêtes avec des champs inconnus
+    whitelist:            true,
+    transform:            true,
+    forbidNonWhitelisted: true,
     disableErrorMessages: false,
   }))
 
-  // ── CORS strict ───────────────────────────────────────────────
-  const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://127.0.0.1:3000').split(',')
+  const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(',').map(s => s.trim())
   app.enableCors({
     origin: (origin, callback) => {
       if (!origin || allowedOrigins.includes(origin)) {
@@ -42,17 +39,18 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type','Authorization'],
   })
 
-  // ── Uploads ───────────────────────────────────────────────────
-  const uploadsRoot = join(process.cwd(), 'uploads')
+  // Dossiers uploads (persistants via Railway Volume)
+  const uploadsRoot = process.env.UPLOADS_PATH || join(process.cwd(), 'uploads')
   ;['activities', 'documents'].forEach(dir => {
     const p = join(uploadsRoot, dir)
     if (!existsSync(p)) mkdirSync(p, { recursive: true })
   })
+  app.useStaticAssets(uploadsRoot, { prefix: '/uploads' })
 
-  const port = process.env.PORT || 3001
-  await app.listen(port)
-  console.log(`🚀 CapAventure API sur http://127.0.0.1:${port}/api`)
-  console.log(`🔒 Sécurité : Helmet + Rate limiting + Validation stricte`)
+  const port = parseInt(process.env.PORT || '3001', 10)
+  // 0.0.0.0 obligatoire pour Railway/Docker
+  await app.listen(port, '0.0.0.0')
+  console.log(`🚀 CapAventure API démarrée sur port ${port}`)
 }
 
 bootstrap()

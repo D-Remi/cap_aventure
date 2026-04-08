@@ -2,19 +2,14 @@ import './Clubs.css'
 
 const CLUBS = [
   {
-    icon: '⛺',
-    title: 'Club Initiation Scout',
-    desc: 'Découvrir les valeurs et techniques scoutes, semaine après semaine',
+    icon: '🌲',
+    title: 'Club Scout',
+    desc: 'Techniques scoutes, jeux en forêt, bivouac et sorties nature dans le Chablais — chaque samedi matin',
   },
   {
-    icon: '🚵',
-    title: 'Club VTT Jeunes',
-    desc: 'Progression technique, sorties régulières et esprit d\'équipe',
-  },
-  {
-    icon: '🥾',
-    title: 'Club Explorateurs',
-    desc: 'Rando, orientation, observation nature — pour les aventuriers en herbe',
+    icon: '🛼',
+    title: 'Club Roller',
+    desc: 'Sorties régulières sur les bords du lac Léman — slalom, vitesse et progression à ton rythme',
   },
 ]
 
@@ -26,11 +21,10 @@ export default function Clubs() {
       <div className="container">
         <div className="clubs__inner reveal">
           <div className="clubs__text">
-            <h2>Les mini-clubs <span>CapAventure</span></h2>
+            <h2>Les clubs <span>CapAventure</span></h2>
             <p>
-              Au-delà des sorties ponctuelles, CapAventure propose aussi des clubs réguliers
-              pour les enfants qui veulent aller plus loin, apprendre progressivement
-              et créer des liens durables.
+              Au-delà des sorties ponctuelles, CapAventure propose des clubs réguliers
+              pour les enfants qui veulent s'engager sur la durée, progresser et créer des liens durables.
             </p>
             <button className="btn-primary" onClick={() => scrollTo('contact')}>
               Je suis intéressé(e)
