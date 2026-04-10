@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbConfig = dbConfig;
+exports.jwtConfig = jwtConfig;
 function dbConfig() {
     const url = process.env.DATABASE_URL;
     if (url) {
@@ -23,6 +24,12 @@ function dbConfig() {
         autoLoadEntities: true,
         synchronize: process.env.NODE_ENV !== 'production',
         extra: { connectionLimit: 10 },
+    };
+}
+function jwtConfig() {
+    return {
+        secret: process.env.JWT_SECRET || 'dev-secret-change-in-prod',
+        expiresIn: process.env.JWT_EXPIRES || '7d',
     };
 }
 //# sourceMappingURL=database.config.js.map

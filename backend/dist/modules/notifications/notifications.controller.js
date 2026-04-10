@@ -21,7 +21,6 @@ const jwt_1 = require("@nestjs/jwt");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("../users/user.entity");
-const database_config_1 = require("../../config/database.config");
 let NotificationsController = class NotificationsController {
     constructor(notifService, jwtService, userRepo) {
         this.notifService = notifService;
@@ -30,7 +29,8 @@ let NotificationsController = class NotificationsController {
     }
     async getUserFromToken(token) {
         try {
-            const payload = this.jwtService.verify(token, { secret: database_config_1.jwtConfig.secret });
+            const secret = process.env.JWT_SECRET || 'dev-secret-change-in-prod';
+            const payload = this.jwtService.verify(token, { secret });
             const user = await this.userRepo.findOne({ where: { id: payload.sub } });
             if (!user)
                 throw new common_1.UnauthorizedException();

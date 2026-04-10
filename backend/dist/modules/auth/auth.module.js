@@ -16,7 +16,6 @@ const auth_service_1 = require("./auth.service");
 const jwt_strategy_1 = require("./jwt.strategy");
 const user_entity_1 = require("../users/user.entity");
 const password_reset_entity_1 = require("./password-reset.entity");
-const database_config_1 = require("../../config/database.config");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -25,14 +24,16 @@ exports.AuthModule = AuthModule = __decorate([
         imports: [
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, password_reset_entity_1.PasswordResetToken]),
             passport_1.PassportModule,
-            jwt_1.JwtModule.register({
-                secret: database_config_1.jwtConfig.secret,
-                signOptions: { expiresIn: database_config_1.jwtConfig.expiresIn },
+            jwt_1.JwtModule.registerAsync({
+                useFactory: () => ({
+                    secret: process.env.JWT_SECRET || 'dev-secret-change-in-prod',
+                    signOptions: { expiresIn: process.env.JWT_EXPIRES || '7d' },
+                }),
             }),
         ],
         controllers: [auth_controller_1.AuthController],
         providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy],
-        exports: [auth_service_1.AuthService],
+        exports: [auth_service_1.AuthService, jwt_1.JwtModule],
     })
 ], AuthModule);
 //# sourceMappingURL=auth.module.js.map

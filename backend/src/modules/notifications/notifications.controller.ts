@@ -6,7 +6,6 @@ import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { User } from '../users/user.entity'
-import { jwtConfig } from '../../config/database.config'
 
 @Controller('notifications')
 export class NotificationsController {
@@ -18,7 +17,8 @@ export class NotificationsController {
 
   private async getUserFromToken(token: string): Promise<User> {
     try {
-      const payload = this.jwtService.verify(token, { secret: jwtConfig.secret })
+      const secret = process.env.JWT_SECRET || 'dev-secret-change-in-prod'
+      const payload = this.jwtService.verify(token, { secret })
       const user = await this.userRepo.findOne({ where: { id: payload.sub } })
       if (!user) throw new UnauthorizedException()
       return user
@@ -31,7 +31,6 @@ export class NotificationsController {
   @Sse()
   async streamForUser(@Query('token') token: string): Promise<Observable<MessageEvent>> {
     const user = await this.getUserFromToken(token)
-
     const userStream$ = this.notifService.getUserStream$(user.id)
 
     if (user.role === 'admin' || (user.role as string) === 'animateur') {

@@ -29,3 +29,10 @@ export function dbConfig(): TypeOrmModuleOptions {
     extra: { connectionLimit: 10 },
   }
 }
+
+export function jwtConfig() {
+  return {
+    secret:     process.env.JWT_SECRET || 'dev-secret-change-in-prod',
+    expiresIn:  process.env.JWT_EXPIRES || '7d',
+  }
+}
