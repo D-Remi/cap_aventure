@@ -12,13 +12,13 @@ const S = (icon, title, content) => ({ icon, title, content })
 const PAGES = {
   multi: {
     emoji: '🎯', title: 'Multi-activités', tag: '🔥 Toute saison', tagColor: '#f07d2a',
-    hero: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=1400&q=80',
+    hero: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1400&q=80',
     intro: "Chaque sortie multi-activités est une surprise ! Jeux collectifs, défis sportifs, ateliers nature, parcours d'orientation… Le programme change à chaque fois pour garder la curiosité et l'envie de revenir.",
     gallery: [
-      G('https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=700&q=80', 'Jeux collectifs en plein air'),
-      G('https://images.unsplash.com/photo-1526976668912-1a811878dd37?w=700&q=80', 'Défis sportifs en groupe'),
-      G('https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=700&q=80', 'Sorties nature autour de Thonon'),
-      G('https://images.unsplash.com/photo-1472162072942-cd5147eb3902?w=700&q=80', 'Activités bords du lac Léman'),
+      G('https://images.unsplash.com/photo-1543701124-ed04ce23bf50?w=700&q=80', 'Jeux collectifs en plein air'),
+      G('https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=700&q=80', 'Défis sportifs en groupe'),
+      G('https://images.unsplash.com/photo-1559311648-d4b4a1fc1148?w=700&q=80', 'Sorties nature autour de Thonon'),
+      G('https://images.unsplash.com/photo-1526401485004-46910ecc8e2e?w=700&q=80', 'Activités bords du lac Léman'),
     ],
     sections: [
       S('🗓️', 'Le programme', "Mercredis après-midi et dimanches matin. Le programme est annoncé la veille pour maintenir la surprise. Jeux de coopération, parcours sportifs, ateliers, sorties nature. Jamais la même chose !"),
@@ -31,13 +31,13 @@ const PAGES = {
 
   vtt: {
     emoji: '🚵', title: 'VTT & Vélo', tag: '🚵 Printemps / Été', tagColor: '#4ecb71',
-    hero: 'https://images.unsplash.com/photo-1544191696-15693072e0c0?w=1400&q=80',
+    hero: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80',
     intro: "Des sorties VTT accompagnées sur les chemins du Chablais et les pistes cyclables des bords du lac Léman. On roule ensemble, on explore, on profite — pas une compétition, une aventure collective !",
     gallery: [
-      G('https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=700&q=80', 'Pistes cyclables du lac Léman'),
-      G('https://images.unsplash.com/photo-1533387520709-752d83de3630?w=700&q=80', 'Chemins forestiers du Chablais'),
-      G('https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=700&q=80', 'Sorties en groupe encadrées'),
-      G('https://images.unsplash.com/photo-1517649763962-0c623066013b?w=700&q=80', 'Découverte de la nature à vélo'),
+      G('https://images.unsplash.com/photo-1541625602434-3ef3c65e6c2d?w=700&q=80', 'Pistes cyclables du lac Léman'),
+      G('https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=700&q=80', 'Chemins forestiers du Chablais'),
+      G('https://images.unsplash.com/photo-1571188654248-7a89213915f7?w=700&q=80', 'Sorties en groupe encadrées'),
+      G('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=700&q=80', 'Découverte de la nature à vélo'),
     ],
     sections: [
       S('🗓️', 'Le programme', "Mercredis après-midi (printemps/été). Sorties de 2h sur les pistes cyclables des bords du lac et les chemins balisés du Chablais. Adapté au niveau du groupe."),
@@ -50,13 +50,13 @@ const PAGES = {
 
   club: {
     emoji: '🌲', title: 'Club Scout', tag: '📅 Samedi matin', tagColor: '#a78bfa',
-    hero: 'https://images.unsplash.com/photo-1741421963851-2ab751f036bb?w=1400&q=80',
+    hero: 'https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=1400&q=80',
     intro: "Le club scout du samedi matin, c'est le cœur de CapAventure. Un groupe fixe qui se retrouve chaque semaine pour des aventures en forêt, des jeux, des techniques scouts et des sorties dans le Chablais.",
     gallery: [
-      G('https://images.unsplash.com/photo-1590005354167-6da97870c757?w=700&q=80', 'Jeux en forêt et orientation'),
-      G('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=700&q=80', 'Sorties nature dans le Chablais'),
-      G('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=700&q=80', 'Activités plein air en groupe'),
-      G('https://images.unsplash.com/photo-1532274402911-5a369e4c4bb5?w=700&q=80', 'Bords du lac Léman'),
+      G('https://images.unsplash.com/photo-1464207687429-7505649dae38?w=700&q=80', 'Jeux en forêt et orientation'),
+      G('https://images.unsplash.com/photo-1474947556013-a0583c566c3d?w=700&q=80', 'Sorties nature dans le Chablais'),
+      G('https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=700&q=80', 'Activités plein air en groupe'),
+      G('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=700&q=80', 'Bords du lac Léman'),
     ],
     sections: [
       S('🗓️', 'Le programme', "Chaque samedi matin de 9h30 à 12h00. Techniques scouts, jeux en forêt, orientation, bivouac, sorties nature autour de Thonon. Le programme varie chaque semaine."),
@@ -76,13 +76,13 @@ const PAGES = {
 
   velo: {
     emoji: '🚲', title: 'Vélo École', tag: '🚲 4–10 ans', tagColor: '#4ecb71',
-    hero: 'https://images.unsplash.com/photo-1452421822248-d4c2b47f0c81?w=1400&q=80',
+    hero: 'https://images.unsplash.com/photo-1526401485004-46910ecc8e2e?w=1400&q=80',
     intro: "Apprendre à faire du vélo en petit groupe, à son rythme, dans un cadre sécurisé et bienveillant. De l'équilibre jusqu'à pédaler seul — avec patience et beaucoup de sourires !",
     gallery: [
-      G('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&q=80', "Apprentissage de l'équilibre"),
-      G('https://images.unsplash.com/photo-1565728744382-61accd4aa148?w=700&q=80', 'Premiers tours de roue'),
-      G('https://images.unsplash.com/photo-1473091534298-04dcbce3278c?w=700&q=80', 'Espace plat et sécurisé'),
-      G('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=700&q=80', 'Progression à son rythme'),
+      G('https://images.unsplash.com/photo-1530143311094-34d807f3f971?w=700&q=80', "Apprentissage de l'équilibre"),
+      G('https://images.unsplash.com/photo-1576086213369-97a306d36557?w=700&q=80', 'Premiers tours de roue'),
+      G('https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=700&q=80', 'Espace plat et sécurisé'),
+      G('https://images.unsplash.com/photo-1571068316344-9e54bd199192?w=700&q=80', 'Progression à son rythme'),
     ],
     sections: [
       S('🚲', 'Le programme', "Séances progressives en petit groupe (max 5 enfants) : équilibre sans pédales, pédalage, freinage, virages. On avance au rythme de chaque enfant, sans stress."),
@@ -98,10 +98,10 @@ const PAGES = {
     hero: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1400&q=80',
     intro: "Anniversaires, sorties, kermesses… Vous ne pouvez pas être présent ou avez besoin d'un encadrant supplémentaire ? J'accompagne et j'anime votre groupe d'enfants pour que la fête soit réussie !",
     gallery: [
-      G('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=700&q=80', 'Animations anniversaires'),
-      G('https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=700&q=80', 'Jeux de groupe et défis'),
+      G('https://images.unsplash.com/photo-1578632767115-351597cf2477?w=700&q=80', 'Animations anniversaires'),
+      G('https://images.unsplash.com/photo-1527525443983-6e60c75fff46?w=700&q=80', 'Jeux de groupe et défis'),
       G('https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=700&q=80', 'Sorties encadrées en toute sécurité'),
-      G('https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=700&q=80', 'Moments de partage et de joie'),
+      G('https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=700&q=80', 'Moments de partage et de joie'),
     ],
     sections: [
       S('🎂', 'Anniversaires', "Vous organisez un anniversaire ? J'interviens pour animer : jeux de groupe, parcours sportifs, chasse au trésor… Des enfants qui s'amusent, des parents qui soufflent !"),
@@ -173,7 +173,7 @@ export default function ActivityInfoPage() {
   )
 
   return (
-    <>
+    <div className="activity-info-page-root">
       <Navbar />
 
       {/* ── Barre navigation prev/next ── */}
@@ -317,6 +317,6 @@ export default function ActivityInfoPage() {
       </div>
 
       <Footer />
-    </>
+    </div>
   )
 }
