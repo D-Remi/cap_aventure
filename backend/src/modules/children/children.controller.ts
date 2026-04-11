@@ -1,6 +1,5 @@
-import { Controller, Get, Post, Delete, Param, Body, UseGuards } from '@nestjs/common'
+import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards } from '@nestjs/common'
 import { ChildrenService } from './children.service'
-import { CreateChildDto } from '../../common/dto'
 import { User } from '../users/user.entity'
 import { JwtAuthGuard, RolesGuard, CurrentUser } from '../../common/guards/auth.guard'
 
@@ -16,8 +15,13 @@ export class ChildrenController {
   }
 
   @Post()
-  create(@CurrentUser() user: User, @Body() dto: CreateChildDto) {
+  create(@CurrentUser() user: User, @Body() dto: any) {
     return this.service.create(user, dto)
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @CurrentUser() user: User, @Body() dto: any) {
+    return this.service.update(+id, user, dto)
   }
 
   @Delete(':id')

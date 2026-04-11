@@ -8,9 +8,8 @@ import { JwtAuthGuard, RolesGuard, Roles } from '../../common/guards/auth.guard'
 export class InterestController {
   constructor(private service: InterestService) {}
 
-  // Max 3 soumissions / 10 minutes par IP
-  @Throttle({ short: { limit: 3, ttl: 600000 }, medium: { limit: 3, ttl: 600000 } })
   @Post()
+  @Throttle({ global: { limit: 5, ttl: 600000 } })
   create(@Body() dto: CreateInterestDto) {
     return this.service.create(dto)
   }

@@ -24,6 +24,14 @@ export class ChildrenService {
     return this.repo.save(child)
   }
 
+  async update(id: number, user: User, dto: Partial<Child>) {
+    const child = await this.repo.findOne({ where: { id }, relations: ['user'] })
+    if (!child) throw new NotFoundException()
+    if (user.role !== 'admin' && child.user.id !== user.id) throw new ForbiddenException()
+    await this.repo.update(id, dto)
+    return this.repo.findOne({ where: { id } })
+  }
+
   async remove(id: number, user: User) {
     const child = await this.repo.findOne({ where: { id }, relations: ['user'] })
     if (!child) throw new NotFoundException()

@@ -25,7 +25,9 @@ async function bootstrap() {
     disableErrorMessages: false,
   }))
 
-  const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(',').map(s => s.trim())
+  const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000')
+    .split(',').map(s => s.trim())
+
   app.enableCors({
     origin: (origin, callback) => {
       if (!origin || allowedOrigins.includes(origin)) {
@@ -35,11 +37,11 @@ async function bootstrap() {
       }
     },
     credentials: true,
-    methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
-    allowedHeaders: ['Content-Type','Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   })
 
-  // Dossiers uploads (persistants via Railway Volume)
+  // Dossier uploads
   const uploadsRoot = process.env.UPLOADS_PATH || join(process.cwd(), 'uploads')
   ;['activities', 'documents'].forEach(dir => {
     const p = join(uploadsRoot, dir)
@@ -48,9 +50,8 @@ async function bootstrap() {
   app.useStaticAssets(uploadsRoot, { prefix: '/uploads' })
 
   const port = parseInt(process.env.PORT || '3001', 10)
-  // 0.0.0.0 obligatoire pour Railway/Docker
   await app.listen(port, '0.0.0.0')
-  console.log(`🚀 CapAventure API démarrée sur port ${port}`)
+  console.log(`🚀 CapAventure API démarrée sur le port ${port}`)
 }
 
 bootstrap()
