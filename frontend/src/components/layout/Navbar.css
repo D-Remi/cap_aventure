@@ -9,9 +9,11 @@
   background: rgba(13, 44, 74, 0.85);
   backdrop-filter: blur(12px);
   transition: padding 0.3s, box-shadow 0.3s;
+  min-height: 64px;
 }
 .navbar.scrolled {
   padding: 0.7rem 2.5rem;
+  min-height: 64px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.18);
 }
 

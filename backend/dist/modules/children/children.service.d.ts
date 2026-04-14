@@ -7,5 +7,6 @@ export declare class ChildrenService {
     findByUser(userId: number): Promise<Child[]>;
     findAll(): Promise<Child[]>;
     create(user: User, dto: Partial<Child>): Promise<Child>;
+    update(id: number, user: User, dto: Partial<Child>): Promise<Child>;
     remove(id: number, user: User): Promise<Child>;
 }

@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChildrenController = void 0;
 const common_1 = require("@nestjs/common");
 const children_service_1 = require("./children.service");
-const dto_1 = require("../../common/dto");
 const user_entity_1 = require("../users/user.entity");
 const auth_guard_1 = require("../../common/guards/auth.guard");
 let ChildrenController = class ChildrenController {
@@ -29,6 +28,9 @@ let ChildrenController = class ChildrenController {
     }
     create(user, dto) {
         return this.service.create(user, dto);
+    }
+    update(id, user, dto) {
+        return this.service.update(+id, user, dto);
     }
     remove(id, user) {
         return this.service.remove(+id, user);
@@ -47,9 +49,18 @@ __decorate([
     __param(0, (0, auth_guard_1.CurrentUser)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_entity_1.User, dto_1.CreateChildDto]),
+    __metadata("design:paramtypes", [user_entity_1.User, Object]),
     __metadata("design:returntype", void 0)
 ], ChildrenController.prototype, "create", null);
+__decorate([
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, auth_guard_1.CurrentUser)()),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, user_entity_1.User, Object]),
+    __metadata("design:returntype", void 0)
+], ChildrenController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),

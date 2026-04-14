@@ -21,7 +21,8 @@ async function bootstrap() {
         forbidNonWhitelisted: true,
         disableErrorMessages: false,
     }));
-    const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(',').map(s => s.trim());
+    const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000')
+        .split(',').map(s => s.trim());
     app.enableCors({
         origin: (origin, callback) => {
             if (!origin || allowedOrigins.includes(origin)) {
@@ -44,7 +45,7 @@ async function bootstrap() {
     app.useStaticAssets(uploadsRoot, { prefix: '/uploads' });
     const port = parseInt(process.env.PORT || '3001', 10);
     await app.listen(port, '0.0.0.0');
-    console.log(`🚀 CapAventure API démarrée sur port ${port}`);
+    console.log(`🚀 CapAventure API démarrée sur le port ${port}`);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

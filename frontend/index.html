@@ -3,29 +3,80 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CapAventure — Activités outdoor Haute-Savoie</title>
-    <meta name="description" content="CapAventure propose des activités outdoor encadrées pour les enfants de 6 à 14 ans en Haute-Savoie : ski, VTT, randonnée, scouts." />
 
-    <!-- PWA -->
+    <!-- ── SEO Principal ── -->
+    <title>CapAventure — Activités outdoor pour enfants à Thonon-les-Bains (74)</title>
+    <meta name="description" content="CapAventure propose des activités outdoor encadrées pour enfants de 6 à 14 ans à Thonon-les-Bains (Haute-Savoie) : VTT, club scout, vélo école, multi-activités, accompagnement événements. Animateur diplômé BAFA." />
+    <meta name="keywords" content="activités enfants Thonon-les-Bains, VTT enfants Chablais, club scout Thonon, vélo école Haute-Savoie, animateur BAFA Thonon, loisirs enfants 74, activités outdoor Lac Léman, multi-activités enfants Haute-Savoie" />
+    <meta name="author" content="CapAventure" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://capaventure74.fun" />
+
+    <!-- ── Open Graph (partage réseaux sociaux) ── -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://capaventure74.fun" />
+    <meta property="og:site_name" content="CapAventure" />
+    <meta property="og:title" content="CapAventure — Activités outdoor pour enfants à Thonon-les-Bains" />
+    <meta property="og:description" content="VTT, club scout, vélo école, multi-activités et accompagnement événements pour enfants de 6 à 14 ans. Animateur diplômé BAFA, Thonon-les-Bains (74)." />
+    <meta property="og:image" content="https://capaventure74.fun/og-image.jpg" />
+    <meta property="og:locale" content="fr_FR" />
+
+    <!-- ── Twitter Card ── -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CapAventure — Activités outdoor pour enfants à Thonon-les-Bains" />
+    <meta name="twitter:description" content="VTT, club scout, vélo école, multi-activités. Animateur BAFA, 6–14 ans, Thonon-les-Bains (74)." />
+    <meta name="twitter:image" content="https://capaventure74.fun/og-image.jpg" />
+
+    <!-- ── Données structurées JSON-LD ── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "CapAventure",
+      "description": "Activités outdoor encadrées pour enfants de 6 à 14 ans à Thonon-les-Bains. VTT, club scout, vélo école, multi-activités, accompagnement événements. Animateur diplômé BAFA.",
+      "url": "https://capaventure74.fun",
+      "telephone": "",
+      "email": "",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Thonon-les-Bains",
+        "postalCode": "74200",
+        "addressRegion": "Haute-Savoie",
+        "addressCountry": "FR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 46.3705,
+        "longitude": 6.4786
+      },
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": 46.3705,
+          "longitude": 6.4786
+        },
+        "geoRadius": "30000"
+      },
+      "serviceType": ["Activités enfants", "Animation BAFA", "Club scout", "Vélo école", "VTT enfants", "Accompagnement événements"],
+      "priceRange": "€€",
+      "openingHours": ["Sa 09:30-12:00", "Su 10:00-12:00", "We 14:00-17:00"],
+      "image": "https://capaventure74.fun/og-image.jpg",
+      "sameAs": []
+    }
+    </script>
+
+    <!-- ── Favicons & PWA ── -->
+    <link rel="icon" type="image/png" href="/icons/icon-96.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#0d2c4a" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="CapAventure" />
 
-    <!-- Apple touch icons -->
-    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152.png" />
-    <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.png" />
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
-    <link rel="icon" type="image/png" sizes="96x96"  href="/icons/icon-96.png" />
-
-    <!-- Open Graph -->
-    <meta property="og:title"       content="CapAventure — Activités outdoor Haute-Savoie" />
-    <meta property="og:description" content="Ski, VTT, randonnée, scouts — activités encadrées pour les 6–14 ans" />
-    <meta property="og:type"        content="website" />
-    <meta property="og:image"       content="/icons/icon-512.png" />
+    <!-- ── Performance ── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="preconnect" href="https://plus.unsplash.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
   </head>
   <body>
     <div id="root"></div>

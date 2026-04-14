@@ -6,7 +6,7 @@ import './Activites.css'
 const ACTIVITES = [
   {
     slug: 'multi',
-    img: 'https://images.unsplash.com/photo-1472162072942-cd5147eb3902?w=520&q=75',
+    img: 'https://plus.unsplash.com/premium_photo-1726783237316-f5ae95126471?w=520&q=75',
     title: 'Multi-activités',
     desc: "Jeux collectifs, défis sportifs, sorties nature… Chaque sortie est différente ! Idéal pour s'amuser en groupe.",
     tag: '🔥 Toute saison',
@@ -14,7 +14,7 @@ const ACTIVITES = [
   },
   {
     slug: 'vtt',
-    img: 'https://images.unsplash.com/photo-1558981359-219d6364c9c8?w=520&q=75',
+    img: 'https://plus.unsplash.com/premium_photo-1726873269417-cbcaf06ff1e7?w=520&q=75',
     title: 'VTT & Vélo',
     desc: "Sorties VTT accompagnées sur les chemins du Chablais et les bords du lac Léman. On roule ensemble, à son rythme !",
     tag: '🚵 Printemps / Été',
@@ -22,7 +22,7 @@ const ACTIVITES = [
   },
   {
     slug: 'club',
-    img: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=520&q=75',
+    img: 'https://images.unsplash.com/photo-1741421963851-2ab751f036bb?w=520&q=75',
     title: 'Club Scout',
     desc: "Jeux en forêt, techniques scouts, sorties nature dans le Chablais. Un groupe soudé, chaque samedi matin.",
     tag: '📅 Samedi matin',
@@ -30,7 +30,7 @@ const ACTIVITES = [
   },
   {
     slug: 'velo',
-    img: 'https://images.unsplash.com/photo-1471506480208-91b3a4cc78be?w=520&q=75',
+    img: 'https://images.unsplash.com/photo-1566728060299-ad216d6fa3c1?w=520&q=75',
     title: 'Vélo École',
     desc: "Apprendre à faire du vélo en petit groupe (3–5 enfants), à son rythme, dans un espace sécurisé.",
     tag: '🚲 4–10 ans',
@@ -38,7 +38,7 @@ const ACTIVITES = [
   },
   {
     slug: 'evenements',
-    img: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=520&q=75',
+    img: 'https://images.unsplash.com/photo-1587135374648-7518dc14b7ad?w=520&q=75',
     title: 'Accompagnement Événements',
     desc: "Anniversaires, sorties, kermesses… J'encadre et j'anime votre groupe d'enfants pour que la fête soit réussie !",
     tag: '🎉 Sur demande',

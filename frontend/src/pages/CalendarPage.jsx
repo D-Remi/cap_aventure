@@ -4,6 +4,7 @@ import axios from 'axios'
 import Navbar from '../components/layout/Navbar'
 import Footer from '../components/layout/Footer'
 import './CalendarPage.css'
+import { useSeo } from '../hooks/useSeo'
 
 const MONTHS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre']
 const DAYS   = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim']
@@ -54,6 +55,11 @@ function getNextOccurrence(activity) {
 }
 
 export default function CalendarPage() {
+  useSeo({
+    title: "Calendrier des activités",
+    description: "Consultez toutes les sorties CapAventure à venir à Thonon-les-Bains : VTT, club scout, vélo école, multi-activités. Inscrivez votre enfant en ligne.",
+    canonical: "/calendrier",
+  })
   const [activities, setActivities] = useState([])
   const [loading, setLoading]       = useState(true)
   const [current, setCurrent]       = useState(() => {

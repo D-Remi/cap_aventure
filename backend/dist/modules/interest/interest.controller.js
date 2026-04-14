@@ -31,8 +31,8 @@ let InterestController = class InterestController {
 };
 exports.InterestController = InterestController;
 __decorate([
-    (0, throttler_1.Throttle)({ short: { limit: 3, ttl: 600000 }, medium: { limit: 3, ttl: 600000 } }),
     (0, common_1.Post)(),
+    (0, throttler_1.Throttle)({ global: { limit: 5, ttl: 600000 } }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [dto_1.CreateInterestDto]),

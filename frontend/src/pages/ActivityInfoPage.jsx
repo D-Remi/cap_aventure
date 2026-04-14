@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from '../components/layout/Navbar'
 import Footer from '../components/layout/Footer'
 import { useAuth } from '../context/AuthContext'
+import { useSeo } from '../hooks/useSeo'
 import './ActivityInfoPage.css'
 
 const G = (img, caption) => ({ img, caption })
@@ -12,13 +13,12 @@ const S = (icon, title, content) => ({ icon, title, content })
 const PAGES = {
   multi: {
     emoji: '🎯', title: 'Multi-activités', tag: '🔥 Toute saison', tagColor: '#f07d2a',
-    hero: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1400&q=80',
     intro: "Chaque sortie multi-activités est une surprise ! Jeux collectifs, défis sportifs, ateliers nature, parcours d'orientation… Le programme change à chaque fois pour garder la curiosité et l'envie de revenir.",
     gallery: [
-      G('https://images.unsplash.com/photo-1543701124-ed04ce23bf50?w=700&q=80', 'Jeux collectifs en plein air'),
-      G('https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=700&q=80', 'Défis sportifs en groupe'),
-      G('https://images.unsplash.com/photo-1559311648-d4b4a1fc1148?w=700&q=80', 'Sorties nature autour de Thonon'),
-      G('https://images.unsplash.com/photo-1526401485004-46910ecc8e2e?w=700&q=80', 'Activités bords du lac Léman'),
+      G('https://plus.unsplash.com/premium_photo-1726783237316-f5ae95126471?w=700&q=80', ''),
+      G('https://images.unsplash.com/photo-1554728432-e8f16e88503e?w=700&q=80', ''),
+      G('https://images.unsplash.com/photo-1588072400380-8e4f902281fb?w=700&q=80', ''),
+      G('https://images.unsplash.com/photo-1614982515601-4e58aedc59fa?w=700&q=80', ''),
     ],
     sections: [
       S('🗓️', 'Le programme', "Mercredis après-midi et dimanches matin. Le programme est annoncé la veille pour maintenir la surprise. Jeux de coopération, parcours sportifs, ateliers, sorties nature. Jamais la même chose !"),
@@ -31,13 +31,12 @@ const PAGES = {
 
   vtt: {
     emoji: '🚵', title: 'VTT & Vélo', tag: '🚵 Printemps / Été', tagColor: '#4ecb71',
-    hero: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80',
     intro: "Des sorties VTT accompagnées sur les chemins du Chablais et les pistes cyclables des bords du lac Léman. On roule ensemble, on explore, on profite — pas une compétition, une aventure collective !",
     gallery: [
-      G('https://images.unsplash.com/photo-1541625602434-3ef3c65e6c2d?w=700&q=80', 'Pistes cyclables du lac Léman'),
-      G('https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=700&q=80', 'Chemins forestiers du Chablais'),
-      G('https://images.unsplash.com/photo-1571188654248-7a89213915f7?w=700&q=80', 'Sorties en groupe encadrées'),
-      G('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=700&q=80', 'Découverte de la nature à vélo'),
+      G('https://plus.unsplash.com/premium_photo-1726873269417-cbcaf06ff1e7?w=700&q=80', ''),
+      G('https://images.unsplash.com/photo-1596126429924-321cf3522a17?w=700&q=80', ''),
+      G('https://images.unsplash.com/photo-1660665630199-9270f79cf779?w=700&q=80', ''),
+      G('https://images.unsplash.com/photo-1579861431227-405b9e9db520?w=700&q=80', ''),
     ],
     sections: [
       S('🗓️', 'Le programme', "Mercredis après-midi (printemps/été). Sorties de 2h sur les pistes cyclables des bords du lac et les chemins balisés du Chablais. Adapté au niveau du groupe."),
@@ -50,13 +49,12 @@ const PAGES = {
 
   club: {
     emoji: '🌲', title: 'Club Scout', tag: '📅 Samedi matin', tagColor: '#a78bfa',
-    hero: 'https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=1400&q=80',
     intro: "Le club scout du samedi matin, c'est le cœur de CapAventure. Un groupe fixe qui se retrouve chaque semaine pour des aventures en forêt, des jeux, des techniques scouts et des sorties dans le Chablais.",
     gallery: [
-      G('https://images.unsplash.com/photo-1464207687429-7505649dae38?w=700&q=80', 'Jeux en forêt et orientation'),
-      G('https://images.unsplash.com/photo-1474947556013-a0583c566c3d?w=700&q=80', 'Sorties nature dans le Chablais'),
-      G('https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=700&q=80', 'Activités plein air en groupe'),
-      G('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=700&q=80', 'Bords du lac Léman'),
+      G('https://images.unsplash.com/photo-1741421963851-2ab751f036bb?w=700&q=80', ''),
+      G('https://images.unsplash.com/photo-1647621692835-682e0babde97?w=700&q=80', ''),
+      G('https://images.unsplash.com/photo-1551398766-791b80fde370?w=700&q=80', ''),
+      G('https://images.unsplash.com/photo-1656378068262-055bffff5b87?w=700&q=80', ''),
     ],
     sections: [
       S('🗓️', 'Le programme', "Chaque samedi matin de 9h30 à 12h00. Techniques scouts, jeux en forêt, orientation, bivouac, sorties nature autour de Thonon. Le programme varie chaque semaine."),
@@ -76,13 +74,12 @@ const PAGES = {
 
   velo: {
     emoji: '🚲', title: 'Vélo École', tag: '🚲 4–10 ans', tagColor: '#4ecb71',
-    hero: 'https://images.unsplash.com/photo-1526401485004-46910ecc8e2e?w=1400&q=80',
     intro: "Apprendre à faire du vélo en petit groupe, à son rythme, dans un cadre sécurisé et bienveillant. De l'équilibre jusqu'à pédaler seul — avec patience et beaucoup de sourires !",
     gallery: [
-      G('https://images.unsplash.com/photo-1530143311094-34d807f3f971?w=700&q=80', "Apprentissage de l'équilibre"),
-      G('https://images.unsplash.com/photo-1576086213369-97a306d36557?w=700&q=80', 'Premiers tours de roue'),
-      G('https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=700&q=80', 'Espace plat et sécurisé'),
-      G('https://images.unsplash.com/photo-1571068316344-9e54bd199192?w=700&q=80', 'Progression à son rythme'),
+      G('https://images.unsplash.com/photo-1566728060299-ad216d6fa3c1?w=700&q=80', ''),
+      G('https://images.unsplash.com/photo-1666967533949-05b195343804?w=700&q=80', ''),
+      G('https://images.unsplash.com/photo-1692681261954-bbd8aaf9919b?w=700&q=80', ''),
+      G('https://images.unsplash.com/photo-1607444433383-c9938621ea2e?w=700&q=80', ''),
     ],
     sections: [
       S('🚲', 'Le programme', "Séances progressives en petit groupe (max 5 enfants) : équilibre sans pédales, pédalage, freinage, virages. On avance au rythme de chaque enfant, sans stress."),
@@ -95,13 +92,12 @@ const PAGES = {
 
   evenements: {
     emoji: '🎉', title: 'Accompagnement Événements', tag: '🎉 Sur demande', tagColor: '#f5c842',
-    hero: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1400&q=80',
     intro: "Anniversaires, sorties, kermesses… Vous ne pouvez pas être présent ou avez besoin d'un encadrant supplémentaire ? J'accompagne et j'anime votre groupe d'enfants pour que la fête soit réussie !",
     gallery: [
-      G('https://images.unsplash.com/photo-1578632767115-351597cf2477?w=700&q=80', 'Animations anniversaires'),
-      G('https://images.unsplash.com/photo-1527525443983-6e60c75fff46?w=700&q=80', 'Jeux de groupe et défis'),
-      G('https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=700&q=80', 'Sorties encadrées en toute sécurité'),
-      G('https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=700&q=80', 'Moments de partage et de joie'),
+      G('https://images.unsplash.com/photo-1587135374648-7518dc14b7ad?w=700&q=80', ''),
+      G('https://images.unsplash.com/photo-1765947389862-afcc9035ba12?w=700&q=80', ''),
+      G('https://plus.unsplash.com/premium_photo-1661964438203-0a5f5b40fcfd?w=700&q=80', ''),
+      G('https://images.unsplash.com/photo-1688953690793-4cffa6891495?w=700&q=80', ''),
     ],
     sections: [
       S('🎂', 'Anniversaires', "Vous organisez un anniversaire ? J'interviens pour animer : jeux de groupe, parcours sportifs, chasse au trésor… Des enfants qui s'amusent, des parents qui soufflent !"),
@@ -133,10 +129,9 @@ function formatActivityDate(a) {
 }
 
 export default function ActivityInfoPage() {
-  const { slug }  = useParams()
-  const { user }  = useAuth()
-  const navigate  = useNavigate()
-  const page      = PAGES[slug]
+  const { slug } = useParams()
+  const { user } = useAuth()
+  const page     = PAGES[slug]
 
   const slugIdx  = SLUG_ORDER.indexOf(slug)
   const prevSlug = slugIdx > 0 ? SLUG_ORDER[slugIdx - 1] : null
@@ -144,9 +139,15 @@ export default function ActivityInfoPage() {
   const prevPage = prevSlug ? PAGES[prevSlug] : null
   const nextPage = nextSlug ? PAGES[nextSlug] : null
 
-  const [activities, setActivities]   = useState([])
+  const [activities, setActivities] = useState([])
   const [loadingActs, setLoadingActs] = useState(true)
   const [activePhoto, setActivePhoto] = useState(0)
+
+  useSeo({
+    title: page ? `${page.title} à Thonon-les-Bains` : null,
+    description: page ? `${page.intro?.slice(0, 140)}…` : null,
+    canonical: slug ? `/activites-info/${slug}` : null,
+  })
 
   useEffect(() => {
     if (!page) return
@@ -176,7 +177,7 @@ export default function ActivityInfoPage() {
     <div className="activity-info-page-root">
       <Navbar />
 
-      {/* ── Barre navigation prev/next ── */}
+      {/* ── Barre nav activités sticky sous la navbar ── */}
       <div className="aip-hero-bar">
         <div className="container aip-hero-bar__inner">
           <Link to="/#activites" className="aip-back">← Activités</Link>
@@ -198,34 +199,38 @@ export default function ActivityInfoPage() {
         </div>
       </div>
 
-      {/* ── Layout principal : galerie gauche + contenu droite ── */}
+      {/* ══════════════════════════════════════════════════════
+          BLOC PRINCIPAL : photo gauche | texte droite
+          padding-top 1rem sous la barre de nav
+      ════════════════════════════════════════════════════════ */}
       <div className="aip-main container">
 
-        {/* Galerie photos */}
+        {/* ── Colonne gauche : galerie photos ── */}
         <div className="aip-gallery">
           <div className="aip-gallery__main">
             <img
               src={page.gallery[activePhoto]?.img}
-              alt={page.gallery[activePhoto]?.caption || page.title}
+              alt={page.title}
               key={activePhoto}
             />
-            <span className="aip-gallery__tag" style={{ background: page.tagColor }}>{page.tag}</span>
-            {page.gallery[activePhoto]?.caption && (
-              <div className="aip-gallery__caption">{page.gallery[activePhoto].caption}</div>
-            )}
+            <span className="aip-gallery__tag" style={{ background: page.tagColor }}>
+              {page.tag}
+            </span>
           </div>
           <div className="aip-gallery__thumbs">
-            {page.gallery.map(({img, caption}, i) => (
-              <button key={i}
+            {page.gallery.map(({ img }, i) => (
+              <button
+                key={i}
                 className={`aip-gallery__thumb ${i === activePhoto ? 'active' : ''}`}
-                onClick={() => setActivePhoto(i)}>
-                <img src={img} alt={caption} />
+                onClick={() => setActivePhoto(i)}
+              >
+                <img src={img} alt="" />
               </button>
             ))}
           </div>
         </div>
 
-        {/* Contenu */}
+        {/* ── Colonne droite : titre + chips + sections ── */}
         <div className="aip-content">
           <div className="aip-content__header">
             <h1>{page.emoji} {page.title}</h1>
@@ -236,20 +241,27 @@ export default function ActivityInfoPage() {
               <span>✅ {page.encadrement}</span>
             </div>
           </div>
+
           <div className="aip-sections-list">
             {page.sections.map((s, i) => (
               <div key={i} className="aip-section-row">
                 <div className="aip-section-row__icon">{s.icon}</div>
-                <div><h3>{s.title}</h3><p>{s.content}</p></div>
+                <div>
+                  <h3>{s.title}</h3>
+                  <p>{s.content}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
-      </div>
 
-      {/* ── Formules club ── */}
+      </div>{/* fin aip-main */}
+
+      {/* ══════════════════════════════════════════════════════
+          BLOC PRIX — formules abonnement (club scout uniquement)
+      ════════════════════════════════════════════════════════ */}
       {page.subscriptions && (
-        <div className="container" style={{ marginBottom:'2rem' }}>
+        <div className="container aip-section-below">
           <div className="aip-subscriptions">
             <h2 className="aip-dates-title">💶 Formules d'inscription</h2>
             <div className="aip-subs-grid">
@@ -269,8 +281,10 @@ export default function ActivityInfoPage() {
         </div>
       )}
 
-      {/* ── Prochaines dates BDD ── */}
-      <div className="container" style={{ marginBottom:'2rem' }}>
+      {/* ══════════════════════════════════════════════════════
+          BLOC DATES — prochaines séances BDD
+      ════════════════════════════════════════════════════════ */}
+      <div className="container aip-section-below">
         <div className="aip-dates-section">
           <h2 className="aip-dates-title">📅 Prochaines dates</h2>
           {loadingActs ? (
@@ -285,7 +299,9 @@ export default function ActivityInfoPage() {
                     <span>{formatActivityDate(a)}</span>
                     <div className="aip-date-card__meta">
                       <span>💶 {parseFloat(a.prix).toFixed(0)}€</span>
-                      {a.places_restantes !== undefined && <span>👥 {a.places_restantes} place{a.places_restantes > 1 ? 's' : ''}</span>}
+                      {a.places_restantes !== undefined && (
+                        <span>👥 {a.places_restantes} place{a.places_restantes > 1 ? 's' : ''}</span>
+                      )}
                       {a.lieu && <span>📍 {a.lieu}</span>}
                     </div>
                   </div>
@@ -298,25 +314,34 @@ export default function ActivityInfoPage() {
               <div className="aip-no-dates__icon">📬</div>
               <h3>Pas encore de date affichée</h3>
               <p>Contacte-nous pour être prévenu dès qu'une date est ajoutée !</p>
-              <Link to="/#contact" className="btn-primary" style={{ textDecoration:'none' }}>Demander les dates</Link>
+              <Link to="/#contact" className="btn-primary" style={{ textDecoration:'none' }}>
+                Demander les dates
+              </Link>
             </div>
           )}
         </div>
       </div>
 
-      {/* ── CTA bas ── */}
-      <div className="container" style={{ marginBottom:'3rem' }}>
+      {/* ══════════════════════════════════════════════════════
+          BLOC CTA — nous contacter / calendrier
+      ════════════════════════════════════════════════════════ */}
+      <div className="container aip-section-below">
         <div className="aip-cta">
           <h2>Une question ? Une date à demander ?</h2>
           <p>Contacte-nous pour plus d'infos sur cette activité ou pour t'inscrire.</p>
           <div style={{ display:'flex', gap:'1rem', justifyContent:'center', flexWrap:'wrap' }}>
-            <Link to="/#contact" className="btn-primary" style={{ textDecoration:'none' }}>Nous contacter</Link>
-            <Link to="/calendrier" className="btn-secondary" style={{ textDecoration:'none' }}>Voir le calendrier</Link>
+            <Link to="/#contact" className="btn-primary" style={{ textDecoration:'none' }}>
+              Nous contacter
+            </Link>
+            <Link to="/calendrier" className="btn-secondary" style={{ textDecoration:'none' }}>
+              Voir le calendrier
+            </Link>
           </div>
         </div>
       </div>
 
       <Footer />
+
     </div>
   )
 }

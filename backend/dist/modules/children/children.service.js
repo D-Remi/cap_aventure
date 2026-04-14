@@ -34,6 +34,15 @@ let ChildrenService = class ChildrenService {
         const child = this.repo.create({ ...dto, user });
         return this.repo.save(child);
     }
+    async update(id, user, dto) {
+        const child = await this.repo.findOne({ where: { id }, relations: ['user'] });
+        if (!child)
+            throw new common_1.NotFoundException();
+        if (user.role !== 'admin' && child.user.id !== user.id)
+            throw new common_1.ForbiddenException();
+        await this.repo.update(id, dto);
+        return this.repo.findOne({ where: { id } });
+    }
     async remove(id, user) {
         const child = await this.repo.findOne({ where: { id }, relations: ['user'] });
         if (!child)
