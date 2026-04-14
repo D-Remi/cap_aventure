@@ -7,17 +7,17 @@ USE capaventure;
 
 -- ── Colonnes enfant ──────────────────────────────────────────
 ALTER TABLE children
-  ADD COLUMN IF NOT EXISTS allergie VARCHAR(255) NULL AFTER infos_medicales,
-  ADD COLUMN IF NOT EXISTS medecin_nom VARCHAR(255) NULL AFTER allergie,
-  ADD COLUMN IF NOT EXISTS medecin_telephone VARCHAR(50) NULL AFTER medecin_nom,
-  ADD COLUMN IF NOT EXISTS contact_urgence_nom VARCHAR(255) NULL AFTER medecin_telephone,
-  ADD COLUMN IF NOT EXISTS contact_urgence_telephone VARCHAR(50) NULL AFTER contact_urgence_nom,
-  ADD COLUMN IF NOT EXISTS contact_urgence_lien VARCHAR(100) NULL AFTER contact_urgence_telephone,
-  ADD COLUMN IF NOT EXISTS niveau_natation VARCHAR(50) NULL AFTER contact_urgence_lien,
-  ADD COLUMN IF NOT EXISTS notes_animateur TEXT NULL AFTER niveau_natation;
+  ADD COLUMN  allergie VARCHAR(255) NULL AFTER infos_medicales,
+  ADD COLUMN  medecin_nom VARCHAR(255) NULL AFTER allergie,
+  ADD COLUMN  medecin_telephone VARCHAR(50) NULL AFTER medecin_nom,
+  ADD COLUMN  contact_urgence_nom VARCHAR(255) NULL AFTER medecin_telephone,
+  ADD COLUMN  contact_urgence_telephone VARCHAR(50) NULL AFTER contact_urgence_nom,
+  ADD COLUMN  contact_urgence_lien VARCHAR(100) NULL AFTER contact_urgence_telephone,
+  ADD COLUMN  niveau_natation VARCHAR(50) NULL AFTER contact_urgence_lien,
+  ADD COLUMN  notes_animateur TEXT NULL AFTER niveau_natation;
 
 -- ── Table messages ──────────────────────────────────────────
-CREATE TABLE IF NOT EXISTS messages (
+CREATE TABLE  messages (
   id INT AUTO_INCREMENT PRIMARY KEY,
   sender_id INT NOT NULL,
   receiver_id INT NOT NULL,
@@ -40,7 +40,7 @@ DESCRIBE messages;
 
 -- ── Messages : colonnes soft delete et archive ───────────────
 ALTER TABLE messages
-  ADD COLUMN IF NOT EXISTS archived TINYINT(1) NOT NULL DEFAULT 0 AFTER `read`,
-  ADD COLUMN IF NOT EXISTS deleted_at DATETIME NULL AFTER created_at;
+  ADD COLUMN  archived TINYINT(1) NOT NULL DEFAULT 0 AFTER `read`,
+  ADD COLUMN  deleted_at DATETIME NULL AFTER created_at;
 
-CREATE INDEX IF NOT EXISTS idx_msg_archived ON messages(archived);
+CREATE INDEX  idx_msg_archived ON messages(archived);

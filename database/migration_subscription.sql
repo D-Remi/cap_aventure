@@ -22,7 +22,7 @@ DESCRIBE registrations;
 -- ============================================================
 -- Table registration_dates (dates choisies par les parents)
 -- ============================================================
-CREATE TABLE IF NOT EXISTS registration_dates (
+CREATE TABLE  registration_dates (
   id INT AUTO_INCREMENT PRIMARY KEY,
   registration_id INT NOT NULL,
   date DATETIME NOT NULL,
