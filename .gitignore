@@ -14,7 +14,8 @@ build/
 
 # Uploads (gérer via Railway Volume)
 backend/uploads/
-
+backend/node_modules/
+backend/.env
 # Logs
 *.log
 npm-debug.log*
