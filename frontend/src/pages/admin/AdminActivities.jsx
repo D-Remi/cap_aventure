@@ -58,6 +58,7 @@ export default function AdminActivities() {
       date_debut: a.date_debut || '', date_fin: a.date_fin || '',
       periode_label: a.periode_label || '',
       prix: a.prix, prix_seance: a.prix_seance || '',
+      tarifs: a.tarifs || [],
       places_max: a.places_max,
       payment_methods: a.payment_methods || ['especes'],
       virement_info: a.virement_info || '', cesu_info: a.cesu_info || '',
@@ -145,8 +146,23 @@ export default function AdminActivities() {
                       </div>
                     </td>
                     <td>
-                      <div>{parseFloat(a.prix).toFixed(2)}€</div>
-                      {a.prix_seance && <div style={{ fontSize:'0.75rem', color:'var(--text-muted)' }}>{parseFloat(a.prix_seance).toFixed(2)}€/séance</div>}
+                      {a.tarifs?.length > 0 ? (
+                        <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
+                          {a.tarifs.map((t, i) => (
+                            <div key={i} style={{ fontSize:'0.78rem', display:'flex', gap:'4px', alignItems:'center' }}>
+                              {t.popular && <span title="Populaire">⭐</span>}
+                              <span style={{ color:'var(--bleu-nuit)', fontWeight: t.popular ? 700 : 400 }}>
+                                {t.label}
+                              </span>
+                              <span style={{ color:'var(--vert-foret)', fontWeight:700 }}>
+                                {parseFloat(t.prix).toFixed(0)}€
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div style={{ color:'var(--text-muted)', fontSize:'0.8rem' }}>—</div>
+                      )}
                     </td>
                     <td>{a.places_max}</td>
                     <td>
@@ -186,6 +202,7 @@ export default function AdminActivities() {
           <div className="admin-modal" style={{ maxWidth:640 }} onClick={e => e.stopPropagation()}>
             <h2>{modal === 'create' ? '➕ Nouvelle activité' : '✏️ Modifier l\'activité'}</h2>
             <ActivityForm
+              key={JSON.stringify(modal)}
               initial={editInitial}
               onSave={handleSave}
               onCancel={() => setModal(null)}

@@ -26,6 +26,7 @@ import AdminDocuments     from './pages/admin/AdminDocuments'
 import AdminPoints        from './pages/admin/AdminPoints'
 import AdminStats         from './pages/admin/AdminStats'
 import AdminMessages      from './pages/admin/AdminMessages'
+import AdminPlanning   from './pages/admin/AdminPlanning'
 import AdminAttendance    from './pages/admin/AdminAttendance'
 import './styles/global.css'
 import './pages/admin/AdminDashboard.css'
@@ -71,7 +72,8 @@ function AppRoutes() {
         <Route path="/admin/stats"         element={<ProtectedRoute adminOnly><AdminStats /></ProtectedRoute>} />
         <Route path="/admin/points"        element={<ProtectedRoute adminOnly><AdminPoints /></ProtectedRoute>} />
         <Route path="/admin/messages"      element={<ProtectedRoute adminOnly><AdminMessages /></ProtectedRoute>} />
-        <Route path="/admin/attendance"    element={<ProtectedRoute adminOnly><AdminAttendance /></ProtectedRoute>} />
+        <Route path="/admin/planning" element={<AdminPlanning />} />
+          <Route path="/admin/attendance"    element={<ProtectedRoute adminOnly><AdminAttendance /></ProtectedRoute>} />
 
         <Route path="*" element={
           <PublicLayout>

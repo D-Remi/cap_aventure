@@ -20,6 +20,7 @@ export declare class ActivitiesController {
         periode_label: string;
         prix: number;
         prix_seance: number;
+        tarifs: import("./activity.entity").Tarif[];
         payment_methods: import("./activity.entity").PaymentMethod[];
         virement_info: string;
         cesu_info: string;
@@ -49,6 +50,7 @@ export declare class ActivitiesController {
         periode_label: string;
         prix: number;
         prix_seance: number;
+        tarifs: import("./activity.entity").Tarif[];
         payment_methods: import("./activity.entity").PaymentMethod[];
         virement_info: string;
         cesu_info: string;
@@ -79,6 +81,7 @@ export declare class ActivitiesController {
         periode_label: string;
         prix: number;
         prix_seance: number;
+        tarifs: import("./activity.entity").Tarif[];
         payment_methods: import("./activity.entity").PaymentMethod[];
         virement_info: string;
         cesu_info: string;

@@ -1,124 +1,270 @@
-.act-form { display: flex; flex-direction: column; gap: 0; }
+/* ══════════════════════════════════════════
+   ActivityForm — styles complets
+══════════════════════════════════════════ */
+.activity-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
 
-.act-form__section {
+/* ── Sections ── */
+.af-section {
   padding: 1.5rem 0;
   border-bottom: 1px solid #eef2ee;
 }
-.act-form__section:last-child { border-bottom: none; }
-.act-form__section h3 {
+.af-section:last-of-type { border-bottom: none; }
+
+.af-section__title {
   font-family: 'Baloo 2', cursive;
   font-size: 1rem;
   color: var(--bleu-nuit);
   margin-bottom: 1rem;
-}
-.act-form__section--inline {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
+  font-weight: 700;
 }
 
-/* Schedule type */
-.act-form__schedule-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.6rem;
-}
-.act-form__schedule-card {
+/* ── Champs ── */
+.af-field {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  border: 2px solid #dde8e1;
-  border-radius: var(--radius-md);
-  padding: 0.85rem 1rem;
-  cursor: pointer;
-  transition: all 0.18s;
-  position: relative;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
 }
-.act-form__schedule-card input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  width: 0; height: 0;
-}
-.act-form__schedule-card:hover { border-color: var(--vert-clair); background: #f0f9f4; }
-.act-form__schedule-card.selected {
-  border-color: var(--vert-clair);
-  background: #e8f5ed;
-}
-.act-form__schedule-card__label { font-weight: 700; font-size: 0.9rem; color: var(--bleu-nuit); }
-.act-form__schedule-card__desc  { font-size: 0.78rem; color: var(--text-muted); }
+.af-field:last-child { margin-bottom: 0; }
 
-/* Days selector */
-.act-form__days { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-.act-form__day-btn {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  border: 2px solid #dde8e1;
-  background: none;
-  font-size: 0.75rem;
+.af-field label {
+  font-size: 0.8rem;
   font-weight: 700;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: all 0.18s;
-}
-.act-form__day-btn:hover { border-color: var(--vert-clair); color: var(--vert-clair); }
-.act-form__day-btn.active {
-  background: var(--vert-flash);
-  border-color: var(--vert-flash);
   color: var(--bleu-nuit);
 }
 
-/* Multi dates */
-.act-form__multi-dates { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; min-height: 2rem; }
-.act-form__date-pill {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: #e8f5ed;
-  color: var(--vert-foret);
-  border-radius: 50px;
-  padding: 0.3rem 0.85rem;
-  font-size: 0.82rem;
+.af-field input,
+.af-field select,
+.af-field textarea {
+  padding: 0.55rem 0.85rem;
+  border: 1.5px solid #d4e4d4;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--bleu-nuit);
+  background: var(--blanc);
+  transition: border-color 0.18s;
+  width: 100%;
+  box-sizing: border-box;
+}
+.af-field input:focus,
+.af-field select:focus,
+.af-field textarea:focus {
+  outline: none;
+  border-color: var(--vert-clair);
+}
+.af-field input.error,
+.af-field select.error,
+.af-field textarea.error { border-color: #e53e3e; }
+
+.af-error {
+  font-size: 0.78rem;
+  color: #e53e3e;
   font-weight: 600;
 }
-.act-form__date-pill button {
-  background: none; border: none;
-  color: var(--vert-foret); cursor: pointer;
-  font-size: 0.8rem; line-height: 1;
-  padding: 0; opacity: 0.6;
-}
-.act-form__date-pill button:hover { opacity: 1; }
-.act-form__add-date { display: flex; gap: 0.5rem; align-items: center; }
-.act-form__add-date input { flex: 1; }
 
-/* Payment */
-.act-form__payment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
-.act-form__payment-card {
+/* ── Ligne 2-3 colonnes ── */
+.af-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.75rem;
+}
+
+/* ── Schedule options ── */
+.af-schedule-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.af-option {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
   border: 2px solid #dde8e1;
   border-radius: var(--radius-md);
-  padding: 0.85rem 1rem;
+  padding: 0.75rem 1rem;
   cursor: pointer;
   transition: all 0.18s;
+}
+.af-option:hover { border-color: var(--vert-clair); background: #f0f9f4; }
+.af-option.selected { border-color: var(--vert-clair); background: #e8f5ed; }
+.af-option__label { font-weight: 700; font-size: 0.88rem; color: var(--bleu-nuit); }
+.af-option__desc  { font-size: 0.76rem; color: var(--text-muted); }
+
+/* ── Payment options ── */
+.af-payment-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+
+/* ── Jours récurrence ── */
+.af-days {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.af-day {
+  padding: 0.3rem 0.7rem;
+  border: 1.5px solid #d4e4d4;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--blanc);
+  color: var(--text-muted);
+  font-family: inherit;
+  transition: all 0.18s;
+}
+.af-day.selected {
+  background: var(--vert-foret);
+  color: var(--blanc);
+  border-color: var(--vert-foret);
+}
+
+/* ── Toggle actif ── */
+.af-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+.af-toggle input { display: none; }
+.af-toggle__track {
+  width: 40px; height: 22px;
+  background: #ccc;
+  border-radius: 50px;
   position: relative;
+  transition: background 0.2s;
+  flex-shrink: 0;
 }
-.act-form__payment-card input[type="checkbox"] {
-  position: absolute; top: 0.6rem; right: 0.6rem;
-  width: 16px; height: 16px; cursor: pointer;
+.af-toggle__track::after {
+  content: '';
+  position: absolute;
+  width: 16px; height: 16px;
+  background: white;
+  border-radius: 50%;
+  top: 3px; left: 3px;
+  transition: transform 0.2s;
 }
-.act-form__payment-card:hover { border-color: var(--vert-clair); background: #f0f9f4; }
-.act-form__payment-card.selected { border-color: var(--vert-clair); background: #e8f5ed; }
-.act-form__payment-card__label { font-weight: 700; font-size: 0.9rem; color: var(--bleu-nuit); }
-.act-form__payment-card__desc  { font-size: 0.75rem; color: var(--text-muted); }
+.af-toggle input:checked ~ .af-toggle__track { background: var(--vert-foret); }
+.af-toggle input:checked ~ .af-toggle__track::after { transform: translateX(18px); }
+.af-toggle__label { font-size: 0.88rem; font-weight: 600; color: var(--bleu-nuit); }
 
-/* Error */
-.act-form__error { color: #dc2626; font-size: 0.78rem; font-weight: 600; display: block; margin-top: 0.25rem; }
+/* ── Actions ── */
+.af-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  padding-top: 1.25rem;
+  border-top: 1px solid #eef2ee;
+  margin-top: 0.5rem;
+}
 
-/* Actions */
-.act-form__actions { display: flex; gap: 0.75rem; padding-top: 1.25rem; }
+/* ══════════════════════════════════════════
+   TARIFS
+══════════════════════════════════════════ */
+.af-tarifs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
 
-@media (max-width: 500px) {
-  .act-form__schedule-grid,
-  .act-form__payment-grid { grid-template-columns: 1fr; }
+.af-tarif-row {
+  display: grid;
+  grid-template-columns: 32px 1fr 90px 1fr 32px;
+  gap: 0.5rem;
+  align-items: end;
+  padding: 0.75rem;
+  background: #f9fbf9;
+  border-radius: 10px;
+  border: 1.5px solid #eef2ee;
+  transition: border-color 0.2s;
+}
+.af-tarif-row.popular {
+  border-color: var(--vert-clair);
+  background: #e8f5ed;
+}
+
+.af-tarif-star {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0;
+  line-height: 1;
+  align-self: center;
+  margin-bottom: 2px;
+  transition: transform 0.15s;
+}
+.af-tarif-star:hover { transform: scale(1.2); }
+
+.af-tarif-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.af-tarif-field label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.af-tarif-field input,
+.af-tarif-field select {
+  padding: 0.4rem 0.6rem;
+  border: 1.5px solid #d4e4d4;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  background: var(--blanc);
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+.af-tarif-field--prix input { text-align: right; }
+
+.af-tarif-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0;
+  align-self: center;
+  margin-bottom: 2px;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+}
+.af-tarif-remove:hover { opacity: 1; }
+
+.af-tarif-add {
+  width: 100%;
+  padding: 0.6rem;
+  background: none;
+  border: 1.5px dashed var(--vert-clair);
+  border-radius: 10px;
+  color: var(--vert-foret);
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.18s;
+  font-family: inherit;
+}
+.af-tarif-add:hover {
+  background: #e8f5ed;
+  border-style: solid;
+}
+
+/* ── Responsive ── */
+@media (max-width: 580px) {
+  .af-schedule-options { grid-template-columns: 1fr; }
+  .af-payment-options  { grid-template-columns: 1fr; }
+  .af-tarif-row { grid-template-columns: 32px 1fr 80px 32px; }
+  .af-tarif-field--desc { display: none; }
 }

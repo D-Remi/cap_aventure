@@ -25,7 +25,7 @@ async function bootstrap() {
     disableErrorMessages: false,
   }))
 
-  const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000' || 'https://capaventure74.fun')
+  const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000')
     .split(',').map(s => s.trim())
 
   app.enableCors({

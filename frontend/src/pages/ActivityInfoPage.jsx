@@ -110,7 +110,7 @@ const PAGES = {
 }
 
 const SLUG_ORDER   = ['multi', 'vtt', 'club', 'velo', 'evenements']
-const SLUG_TO_TYPE = { multi:'autre', vtt:'vtt', club:'scout', velo:'vtt', evenements:'autre' }
+const SLUG_TO_TYPE = { multi:'autre', vtt:'vtt', club:'scout', velo:'velo', evenements:'evenement' }
 const SCHEDULE_ICONS = { ponctuelle:'📅', multi_dates:'🗓️', recurrente:'🔁', saisonniere:'🌿' }
 
 function formatActivityDate(a) {
@@ -142,6 +142,7 @@ export default function ActivityInfoPage() {
   const [activities, setActivities] = useState([])
   const [loadingActs, setLoadingActs] = useState(true)
   const [activePhoto, setActivePhoto] = useState(0)
+  const [tarifs, setTarifs] = useState([])
 
   useSeo({
     title: page ? `${page.title} à Thonon-les-Bains` : null,
@@ -154,11 +155,18 @@ export default function ActivityInfoPage() {
     setActivePhoto(0)
     const type = SLUG_TO_TYPE[slug]
     axios.get('/api/activities')
-      .then(r => setActivities(r.data.filter(a =>
-        a.type === type && a.actif &&
-        (a.schedule_type !== 'ponctuelle' || new Date(a.date) >= new Date())
-      )))
-      .catch(() => setActivities([]))
+      .then(r => {
+        const filtered = r.data.filter(a =>
+          a.type === type && a.actif &&
+          (a.schedule_type !== 'ponctuelle' || new Date(a.date) >= new Date())
+        )
+        setActivities(filtered)
+        // Récupérer les tarifs de la première activité du type
+        const withTarifs = filtered.find(a => a.tarifs?.length > 0)
+        if (withTarifs) setTarifs(withTarifs.tarifs)
+        else setTarifs([])
+      })
+      .catch(() => { setActivities([]); setTarifs([]) })
       .finally(() => setLoadingActs(false))
   }, [slug])
 
@@ -258,21 +266,21 @@ export default function ActivityInfoPage() {
       </div>{/* fin aip-main */}
 
       {/* ══════════════════════════════════════════════════════
-          BLOC PRIX — formules abonnement (club scout uniquement)
+          BLOC PRIX — tarifs dynamiques depuis l'API
       ════════════════════════════════════════════════════════ */}
-      {page.subscriptions && (
+      {tarifs.length > 0 && (
         <div className="container aip-section-below">
           <div className="aip-subscriptions">
             <h2 className="aip-dates-title">💶 Formules d'inscription</h2>
             <div className="aip-subs-grid">
-              {page.subscriptions.map((s, i) => (
-                <div key={i} className={`aip-sub-card ${s.highlight ? 'highlighted' : ''}`}>
-                  {s.highlight && <div className="aip-sub-card__badge">⭐ Populaire</div>}
-                  <div className="aip-sub-card__label">{s.label}</div>
-                  <div className="aip-sub-card__price">{s.price}</div>
-                  <div className="aip-sub-card__desc">{s.desc}</div>
+              {tarifs.map((t, i) => (
+                <div key={i} className={`aip-sub-card ${t.popular ? 'highlighted' : ''}`}>
+                  {t.popular && <div className="aip-sub-card__badge">⭐ Populaire</div>}
+                  <div className="aip-sub-card__label">{t.label}</div>
+                  <div className="aip-sub-card__price">{parseFloat(t.prix).toFixed(0)}€</div>
+                  <div className="aip-sub-card__desc">{t.desc || ''}</div>
                   <Link to="/#contact" className="aip-sub-card__btn" style={{ textDecoration:'none' }}>
-                    {s.label === "Journée d'essai" ? '🎯 Réserver un essai' : "S'inscrire"}
+                    {t.label === 'Séance' ? '🎯 Réserver' : "S'inscrire"}
                   </Link>
                 </div>
               ))}

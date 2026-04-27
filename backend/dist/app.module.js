@@ -27,6 +27,7 @@ const documents_module_1 = require("./modules/documents/documents.module");
 const points_module_1 = require("./modules/points/points.module");
 const messages_module_1 = require("./modules/messages/messages.module");
 const stats_module_1 = require("./modules/stats/stats.module");
+const planning_module_1 = require("./modules/planning/planning.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -57,6 +58,7 @@ exports.AppModule = AppModule = __decorate([
             points_module_1.PointsModule,
             messages_module_1.MessagesModule,
             stats_module_1.StatsModule,
+            planning_module_1.PlanningModule,
         ],
         providers: [
             {

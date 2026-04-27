@@ -1,8 +1,14 @@
 import { Registration } from '../registrations/registration.entity';
-export type ActivityType = 'ski' | 'vtt' | 'rando' | 'scout' | 'autre';
+export type ActivityType = 'ski' | 'vtt' | 'rando' | 'scout' | 'autre' | 'velo' | 'evenement';
 export type ScheduleType = 'ponctuelle' | 'multi_dates' | 'recurrente' | 'saisonniere';
 export type PaymentMethod = 'especes' | 'virement' | 'cesu';
 export type RecurrenceDay = 'lundi' | 'mardi' | 'mercredi' | 'jeudi' | 'vendredi' | 'samedi' | 'dimanche';
+export interface Tarif {
+    label: string;
+    prix: number;
+    popular: boolean;
+    desc?: string;
+}
 export declare class Activity {
     id: number;
     titre: string;
@@ -18,6 +24,7 @@ export declare class Activity {
     periode_label: string;
     prix: number;
     prix_seance: number;
+    tarifs: Tarif[];
     payment_methods: PaymentMethod[];
     virement_info: string;
     cesu_info: string;

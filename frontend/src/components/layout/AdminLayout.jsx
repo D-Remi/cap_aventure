@@ -13,6 +13,7 @@ const NAV_ITEMS = [
   { key: 'documents',    label: 'Documents',          icon: '📁', path: '/admin/documents' },
   { key: 'messages',     label: 'Messages',           icon: '💬', path: '/admin/messages' },
   { key: 'interest',     label: 'Demandes contact',   icon: '📩', path: '/admin/interest' },
+  { key: 'planning',     label: 'Planning',           icon: '📅', path: '/admin/planning' },
   { key: 'attendance',   label: 'Présences',          icon: '✅', path: '/admin/attendance' },
 ]
 

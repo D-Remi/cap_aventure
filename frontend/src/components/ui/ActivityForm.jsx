@@ -1,314 +1,312 @@
 import { useState } from 'react'
-import ImageUploader from './ImageUploader'
 import './ActivityForm.css'
 
-const TYPES      = ['ski','vtt','rando','scout','autre']
+const TYPES      = ['vtt','scout','velo','evenement','rando','autre']
 const DAYS_FR    = ['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche']
 const DAYS_LABEL = { lundi:'Lun', mardi:'Mar', mercredi:'Mer', jeudi:'Jeu', vendredi:'Ven', samedi:'Sam', dimanche:'Dim' }
 const PAYMENT_OPTIONS = [
-  { value:'especes',  label:'💵 Espèces', desc:'Paiement en main propre' },
-  { value:'virement', label:'🏦 Virement', desc:'Virement bancaire' },
-  { value:'cesu',     label:'🎫 CESU', desc:'Chèque emploi service universel' },
+  { value:'especes',  label:'💵 Espèces' },
+  { value:'virement', label:'🏦 Virement' },
+  { value:'cesu',     label:'🎫 CESU' },
 ]
 const SCHEDULE_OPTIONS = [
-  { value:'ponctuelle',   label:'📅 Date unique',     desc:'Une sortie à une date précise' },
-  { value:'multi_dates',  label:'📆 Plusieurs dates',  desc:'Plusieurs sorties (ex: ski 3 mercredis)' },
-  { value:'recurrente',   label:'🔄 Récurrente',       desc:'Tous les semaines (ex: club scout)' },
-  { value:'saisonniere',  label:'🌨️ Saisonnière',      desc:'Sur une période (ex: ski tout l\'hiver)' },
+  { value:'ponctuelle',  label:'📅 Date unique',     desc:'Une sortie précise' },
+  { value:'multi_dates', label:'📆 Plusieurs dates',  desc:'Plusieurs sorties' },
+  { value:'recurrente',  label:'🔄 Récurrente',       desc:'Toutes les semaines' },
+  { value:'saisonniere', label:'🌿 Saisonnière',      desc:'Sur une période' },
 ]
+const TARIF_LABELS = ['Séance','Mensuel','Trimestriel','Semestriel','Annuel']
+const TARIF_DESCS  = { 'Séance':'Par sortie', 'Mensuel':'4 séances/mois', 'Trimestriel':'3 mois', 'Semestriel':'6 mois', 'Annuel':'Sept → Juin' }
 
 const EMPTY = {
-  titre:'', description:'', type:'ski', schedule_type:'ponctuelle',
-  // ponctuelle
-  date:'',
-  // multi_dates
-  dates:[],
-  // recurrente
-  recurrence_days:[], recurrence_time:'14:00',
+  titre:'', description:'', type:'autre', schedule_type:'ponctuelle',
+  date:'', dates:[], recurrence_days:[], recurrence_time:'14:00',
   date_debut:'', date_fin:'', periode_label:'',
-  // tarif
-  prix:'', prix_seance:'', places_max:'',
-  // paiement
+  prix: 0, tarifs:[],
   payment_methods:['especes'], virement_info:'', cesu_info:'',
-  // autres
-  lieu:'', age_min:'', age_max:'', image_url:'', actif:true,
+  lieu:'', age_min:'', age_max:'', places_max:'', actif:true,
 }
 
 export default function ActivityForm({ initial = {}, onSave, onCancel, saving }) {
-  const [form, setForm] = useState({ ...EMPTY, ...initial })
+  const [form, setForm]    = useState({ ...EMPTY, ...initial, tarifs: initial.tarifs || [] })
   const [newDate, setNewDate] = useState('')
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors]  = useState({})
 
   const set = (k) => (e) => {
     const val = e.target.type === 'checkbox' ? e.target.checked : e.target.value
     setForm(f => ({ ...f, [k]: val }))
-    if (errors[k]) setErrors(e => ({ ...e, [k]: null }))
+    if (errors[k]) setErrors(ex => ({ ...ex, [k]: null }))
   }
 
-  const toggleDay = (day) => {
-    setForm(f => ({
-      ...f,
-      recurrence_days: f.recurrence_days.includes(day)
-        ? f.recurrence_days.filter(d => d !== day)
-        : [...f.recurrence_days, day],
-    }))
-  }
+  const toggleDay = (day) => setForm(f => ({
+    ...f,
+    recurrence_days: f.recurrence_days.includes(day)
+      ? f.recurrence_days.filter(d => d !== day)
+      : [...f.recurrence_days, day],
+  }))
 
-  const togglePayment = (method) => {
-    setForm(f => ({
-      ...f,
-      payment_methods: f.payment_methods.includes(method)
-        ? f.payment_methods.filter(m => m !== method)
-        : [...f.payment_methods, method],
-    }))
-  }
+  const togglePayment = (m) => setForm(f => ({
+    ...f,
+    payment_methods: f.payment_methods.includes(m)
+      ? f.payment_methods.filter(x => x !== m)
+      : [...f.payment_methods, m],
+  }))
 
   const addDate = () => {
-    if (!newDate) return
-    if (!form.dates.includes(newDate)) {
-      setForm(f => ({ ...f, dates: [...f.dates, newDate].sort() }))
-    }
+    if (!newDate || form.dates.includes(newDate)) return
+    setForm(f => ({ ...f, dates: [...f.dates, newDate].sort() }))
     setNewDate('')
   }
-
   const removeDate = (d) => setForm(f => ({ ...f, dates: f.dates.filter(x => x !== d) }))
+
+  // ── Tarifs ──
+  const addTarif    = () => setForm(f => ({ ...f, tarifs: [...f.tarifs, { label:'Séance', prix:'', desc:'', popular:false }] }))
+  const removeTarif = (i) => setForm(f => ({ ...f, tarifs: f.tarifs.filter((_, idx) => idx !== i) }))
+  const updateTarif = (i, k, v) => setForm(f => ({ ...f, tarifs: f.tarifs.map((t, idx) => idx === i ? { ...t, [k]: v } : t) }))
+  const setPopular  = (i) => setForm(f => ({ ...f, tarifs: f.tarifs.map((t, idx) => ({ ...t, popular: idx === i })) }))
 
   const validate = () => {
     const e = {}
-    if (!form.titre.trim())       e.titre = 'Titre obligatoire'
-    if (!form.description.trim()) e.description = 'Description obligatoire'
-    if (!form.prix)               e.prix = 'Prix obligatoire'
-    if (!form.places_max)         e.places_max = 'Nombre de places obligatoire'
-    if (form.payment_methods.length === 0) e.payment_methods = 'Choisissez au moins un mode de paiement'
-
-    if (form.schedule_type === 'ponctuelle' && !form.date)
-      e.date = 'Date obligatoire'
-    if (form.schedule_type === 'multi_dates' && form.dates.length < 2)
-      e.dates = 'Ajoutez au moins 2 dates'
-    if ((form.schedule_type === 'recurrente' || form.schedule_type === 'saisonniere') && form.recurrence_days.length === 0)
-      e.recurrence_days = 'Choisissez au moins un jour'
-    if ((form.schedule_type === 'recurrente' || form.schedule_type === 'saisonniere') && (!form.date_debut || !form.date_fin))
-      e.date_debut = 'Dates de début et fin obligatoires'
-
+    if (!form.titre?.trim())       e.titre       = 'Titre obligatoire'
+    if (!form.description?.trim()) e.description = 'Description obligatoire'
+    if (!form.places_max)          e.places_max  = 'Obligatoire'
+    // Tarifs : si remplis, le prix doit être valide
+    if (form.tarifs?.some(t => t.prix !== '' && isNaN(Number(t.prix)))) e.tarifs = 'Prix invalide sur un tarif'
     setErrors(e)
     return Object.keys(e).length === 0
+  }
+
+  const toISO = (v) => {
+    if (!v) return undefined
+    // datetime-local → ajouter :00.000Z si manquant
+    if (v.length === 16) return new Date(v).toISOString()
+    // date seule → ISO date
+    if (v.length === 10) return v
+    return v
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!validate()) return
-    onSave(form)
+    const prixLegacy = form.tarifs.length > 0 ? Number(form.tarifs[0].prix) : Number(form.prix) || 0
+    onSave({
+      ...form,
+      date:       toISO(form.date),
+      date_debut: toISO(form.date_debut),
+      date_fin:   toISO(form.date_fin),
+      dates:      (form.dates || []).map(d => toISO(d)),
+      prix:       prixLegacy,
+      tarifs:     form.tarifs.map(t => ({ ...t, prix: Number(t.prix) })),
+    })
   }
 
-  const st = form.schedule_type
-
   return (
-    <form className="act-form" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="activity-form" noValidate>
 
       {/* ── Infos générales ── */}
-      <div className="act-form__section">
-        <h3>Informations générales</h3>
-        <div className="form-group">
+      <div className="af-section">
+        <h3 className="af-section__title">📋 Informations générales</h3>
+        <div className="af-field">
           <label>Titre *</label>
-          <input value={form.titre} onChange={set('titre')} placeholder="Ex: Sortie ski aux Contamines" />
-          {errors.titre && <span className="act-form__error">{errors.titre}</span>}
+          <input value={form.titre} onChange={set('titre')} placeholder="Ex: Club Scout — Samedi matin" className={errors.titre ? 'error' : ''} />
+          {errors.titre && <span className="af-error">{errors.titre}</span>}
         </div>
-        <div className="form-group">
+        <div className="af-field">
           <label>Description *</label>
-          <textarea value={form.description} onChange={set('description')} rows={3} placeholder="Décrivez l'activité..." />
-          {errors.description && <span className="act-form__error">{errors.description}</span>}
+          <textarea value={form.description} onChange={set('description')} rows={3} placeholder="Décrivez l'activité..." className={errors.description ? 'error' : ''} />
+          {errors.description && <span className="af-error">{errors.description}</span>}
         </div>
-        <div className="form-row">
-          <div className="form-group">
+        <div className="af-row">
+          <div className="af-field">
             <label>Type</label>
             <select value={form.type} onChange={set('type')}>
-              {TYPES.map(t => <option key={t} value={t} style={{ textTransform:'capitalize' }}>{t}</option>)}
+              {TYPES.map(t => {
+                const LABELS = { vtt:'VTT & Vélo', scout:'Club Scout', velo:'Vélo École', evenement:'Événements', rando:'Rando', autre:'Multi-activités / Autre' }
+                return <option key={t} value={t}>{LABELS[t] || t}</option>
+              })}
             </select>
           </div>
-          <div className="form-group">
+          <div className="af-field">
             <label>Lieu</label>
-            <input value={form.lieu} onChange={set('lieu')} placeholder="Ex: Contamines-Montjoie" />
+            <input value={form.lieu} onChange={set('lieu')} placeholder="Ex: Parc de la Grange" />
           </div>
         </div>
-        <div className="form-row">
-          <div className="form-group">
+        <div className="af-row">
+          <div className="af-field">
             <label>Âge min</label>
-            <input type="number" min={4} max={18} value={form.age_min} onChange={set('age_min')} placeholder="6" />
+            <input type="number" value={form.age_min} onChange={set('age_min')} placeholder="6" min={0} max={18} />
           </div>
-          <div className="form-group">
+          <div className="af-field">
             <label>Âge max</label>
-            <input type="number" min={4} max={18} value={form.age_max} onChange={set('age_max')} placeholder="14" />
+            <input type="number" value={form.age_max} onChange={set('age_max')} placeholder="14" min={0} max={18} />
+          </div>
+          <div className="af-field">
+            <label>Places max *</label>
+            <input type="number" value={form.places_max} onChange={set('places_max')} placeholder="10" min={1} className={errors.places_max ? 'error' : ''} />
+            {errors.places_max && <span className="af-error">{errors.places_max}</span>}
           </div>
         </div>
       </div>
 
-      {/* ── Mode de planification ── */}
-      <div className="act-form__section">
-        <h3>📅 Planification</h3>
-        <div className="act-form__schedule-grid">
-          {SCHEDULE_OPTIONS.map(opt => (
-            <label key={opt.value} className={`act-form__schedule-card ${form.schedule_type === opt.value ? 'selected' : ''}`}>
-              <input type="radio" name="schedule_type" value={opt.value} checked={form.schedule_type === opt.value} onChange={set('schedule_type')} />
-              <span className="act-form__schedule-card__label">{opt.label}</span>
-              <span className="act-form__schedule-card__desc">{opt.desc}</span>
+      {/* ── Planning ── */}
+      <div className="af-section">
+        <h3 className="af-section__title">🗓️ Planning</h3>
+        <div className="af-schedule-options">
+          {SCHEDULE_OPTIONS.map(o => (
+            <label key={o.value} className={`af-option ${form.schedule_type === o.value ? 'selected' : ''}`}>
+              <input type="radio" name="schedule_type" value={o.value} checked={form.schedule_type === o.value} onChange={set('schedule_type')} hidden />
+              <span className="af-option__label">{o.label}</span>
+              <span className="af-option__desc">{o.desc}</span>
             </label>
           ))}
         </div>
 
-        {/* Ponctuelle */}
-        {st === 'ponctuelle' && (
-          <div className="form-group" style={{ marginTop:'1rem' }}>
-            <label>Date et heure *</label>
-            <input type="datetime-local" value={form.date} onChange={set('date')} />
-            {errors.date && <span className="act-form__error">{errors.date}</span>}
+        {form.schedule_type === 'ponctuelle' && (
+          <div className="af-field">
+            <label>Date & heure *</label>
+            <input type="datetime-local" value={form.date} onChange={set('date')} className={errors.date ? 'error' : ''} />
+            {errors.date && <span className="af-error">{errors.date}</span>}
           </div>
         )}
 
-        {/* Multi-dates */}
-        {st === 'multi_dates' && (
-          <div style={{ marginTop:'1rem' }}>
-            <label className="form-group" style={{ display:'block', marginBottom:'0.5rem', fontSize:'0.8rem', fontWeight:700, color:'var(--text-muted)', textTransform:'uppercase', letterSpacing:'0.5px' }}>
-              Dates des séances *
-            </label>
-            <div className="act-form__multi-dates">
+        {form.schedule_type === 'multi_dates' && (
+          <div className="af-field">
+            <label>Dates *</label>
+            <div style={{ display:'flex', gap:'0.5rem', marginBottom:'0.5rem' }}>
+              <input type="datetime-local" value={newDate} onChange={e => setNewDate(e.target.value)} style={{ flex:1 }} />
+              <button type="button" className="btn-secondary" onClick={addDate}>+ Ajouter</button>
+            </div>
+            {errors.dates && <span className="af-error">{errors.dates}</span>}
+            <div style={{ display:'flex', flexWrap:'wrap', gap:'0.4rem' }}>
               {form.dates.map(d => (
-                <div key={d} className="act-form__date-pill">
-                  📅 {new Date(d).toLocaleDateString('fr-FR', { weekday:'short', day:'numeric', month:'short' })}
-                  <button type="button" onClick={() => removeDate(d)}>✕</button>
-                </div>
+                <span key={d} style={{ background:'#e8f5ed', color:'var(--vert-foret)', padding:'3px 10px', borderRadius:50, fontSize:'0.8rem', display:'flex', alignItems:'center', gap:'4px' }}>
+                  {new Date(d).toLocaleDateString('fr-FR', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' })}
+                  <button type="button" onClick={() => removeDate(d)} style={{ background:'none', border:'none', cursor:'pointer', color:'#c00', fontWeight:700, lineHeight:1, padding:0 }}>×</button>
+                </span>
               ))}
             </div>
-            <div className="act-form__add-date">
-              <input type="datetime-local" value={newDate} onChange={e => setNewDate(e.target.value)} />
-              <button type="button" className="btn-primary" onClick={addDate} style={{ padding:'0.6rem 1rem', fontSize:'0.88rem' }}>
-                + Ajouter
-              </button>
-            </div>
-            {errors.dates && <span className="act-form__error">{errors.dates}</span>}
           </div>
         )}
 
-        {/* Récurrente */}
-        {(st === 'recurrente' || st === 'saisonniere') && (
-          <div style={{ marginTop:'1rem', display:'flex', flexDirection:'column', gap:'1rem' }}>
-            <div className="form-group">
-              <label>Jours de la semaine *</label>
-              <div className="act-form__days">
-                {DAYS_FR.map(day => (
-                  <button
-                    key={day}
-                    type="button"
-                    className={`act-form__day-btn ${form.recurrence_days.includes(day) ? 'active' : ''}`}
-                    onClick={() => toggleDay(day)}
-                  >
-                    {DAYS_LABEL[day]}
-                  </button>
+        {['recurrente','saisonniere'].includes(form.schedule_type) && (
+          <>
+            <div className="af-field">
+              <label>Jours *</label>
+              <div className="af-days">
+                {DAYS_FR.map(d => (
+                  <button type="button" key={d}
+                    className={`af-day ${form.recurrence_days.includes(d) ? 'selected' : ''}`}
+                    onClick={() => toggleDay(d)}>{DAYS_LABEL[d]}</button>
                 ))}
               </div>
-              {errors.recurrence_days && <span className="act-form__error">{errors.recurrence_days}</span>}
+              {errors.recurrence_days && <span className="af-error">{errors.recurrence_days}</span>}
             </div>
-
-            {st === 'recurrente' && (
-              <div className="form-group">
-                <label>Heure de début</label>
+            <div className="af-row">
+              <div className="af-field">
+                <label>Heure</label>
                 <input type="time" value={form.recurrence_time} onChange={set('recurrence_time')} />
               </div>
-            )}
-
-            <div className="form-row">
-              <div className="form-group">
-                <label>Date de début *</label>
-                <input type="date" value={form.date_debut} onChange={set('date_debut')} />
+              <div className="af-field">
+                <label>Début *</label>
+                <input type="date" value={form.date_debut} onChange={set('date_debut')} className={errors.date_debut ? 'error' : ''} />
+                {errors.date_debut && <span className="af-error">{errors.date_debut}</span>}
               </div>
-              <div className="form-group">
-                <label>Date de fin *</label>
+              <div className="af-field">
+                <label>Fin *</label>
                 <input type="date" value={form.date_fin} onChange={set('date_fin')} />
               </div>
             </div>
-            {errors.date_debut && <span className="act-form__error">{errors.date_debut}</span>}
-
-            <div className="form-group">
-              <label>Label période (affiché aux parents)</label>
-              <input value={form.periode_label} onChange={set('periode_label')} placeholder="Ex: Tous les mercredis, de septembre à juin" />
+            <div className="af-field">
+              <label>Label période</label>
+              <input value={form.periode_label} onChange={set('periode_label')} placeholder="Ex: Saison 2025-2026" />
             </div>
-          </div>
+          </>
         )}
       </div>
 
-      {/* ── Tarif ── */}
-      <div className="act-form__section">
-        <h3>💶 Tarif</h3>
-        <div className="form-row">
-          <div className="form-group">
-            <label>Prix {st === 'recurrente' || st === 'saisonniere' ? 'total' : ''} (€) *</label>
-            <input type="number" min={0} step={0.01} value={form.prix} onChange={set('prix')} placeholder="25.00" />
-            {errors.prix && <span className="act-form__error">{errors.prix}</span>}
+      {/* ── Tarifs ── */}
+      <div className="af-section">
+        <h3 className="af-section__title">💶 Tarifs <span style={{ fontSize:'0.75rem', color:'var(--text-muted)', fontWeight:400 }}>(optionnel)</span></h3>
+        <p style={{ fontSize:'0.82rem', color:'var(--text-muted)', marginBottom:'0.75rem' }}>
+          Ajoutez une formule par ligne. Cliquez ☆ pour mettre une formule en avant.
+        </p>
+        {errors.tarifs && <div className="af-error" style={{ marginBottom:'0.5rem' }}>{errors.tarifs}</div>}
+
+        {form.tarifs.length === 0 && (
+          <div style={{ textAlign:'center', padding:'0.85rem', background:'#f9fbf9', borderRadius:10, border:'1.5px dashed #c8e6d4', marginBottom:'0.75rem', color:'var(--text-muted)', fontSize:'0.83rem' }}>
+            Aucun tarif configuré
           </div>
-          {(st === 'recurrente' || st === 'saisonniere') && (
-            <div className="form-group">
-              <label>Prix à la séance (€)</label>
-              <input type="number" min={0} step={0.01} value={form.prix_seance} onChange={set('prix_seance')} placeholder="8.00" />
+        )}
+
+        <div className="af-tarifs-list">
+          {form.tarifs.map((t, i) => (
+            <div key={i} className={`af-tarif-row ${t.popular ? 'popular' : ''}`}>
+              <button type="button" className="af-tarif-star" onClick={() => setPopular(i)} title="Populaire">
+                {t.popular ? '⭐' : '☆'}
+              </button>
+              <div className="af-tarif-field">
+                <label>Formule</label>
+                <select value={t.label} onChange={e => updateTarif(i, 'label', e.target.value)}>
+                  {TARIF_LABELS.map(l => <option key={l} value={l}>{l}</option>)}
+                </select>
+              </div>
+              <div className="af-tarif-field af-tarif-field--prix">
+                <label>Prix €</label>
+                <input type="number" min="0" step="0.5" value={t.prix} onChange={e => updateTarif(i, 'prix', e.target.value)} placeholder="25" />
+              </div>
+              <div className="af-tarif-field af-tarif-field--desc">
+                <label>Description</label>
+                <input value={t.desc || ''} onChange={e => updateTarif(i, 'desc', e.target.value)} placeholder={TARIF_DESCS[t.label] || ''} />
+              </div>
+              <button type="button" className="af-tarif-remove" onClick={() => removeTarif(i)}>🗑️</button>
             </div>
-          )}
-          <div className="form-group">
-            <label>Places max *</label>
-            <input type="number" min={1} value={form.places_max} onChange={set('places_max')} placeholder="12" />
-            {errors.places_max && <span className="act-form__error">{errors.places_max}</span>}
-          </div>
+          ))}
         </div>
+        <button type="button" className="af-tarif-add" onClick={addTarif}>+ Ajouter une formule</button>
       </div>
 
       {/* ── Paiement ── */}
-      <div className="act-form__section">
-        <h3>💳 Modes de paiement acceptés</h3>
-        <div className="act-form__payment-grid">
-          {PAYMENT_OPTIONS.map(opt => (
-            <label key={opt.value} className={`act-form__payment-card ${form.payment_methods.includes(opt.value) ? 'selected' : ''}`}>
-              <input type="checkbox" checked={form.payment_methods.includes(opt.value)} onChange={() => togglePayment(opt.value)} />
-              <span className="act-form__payment-card__label">{opt.label}</span>
-              <span className="act-form__payment-card__desc">{opt.desc}</span>
+      <div className="af-section">
+        <h3 className="af-section__title">💳 Modes de paiement *</h3>
+        <div className="af-payment-options">
+          {PAYMENT_OPTIONS.map(o => (
+            <label key={o.value} className={`af-option ${form.payment_methods.includes(o.value) ? 'selected' : ''}`}>
+              <input type="checkbox" checked={form.payment_methods.includes(o.value)} onChange={() => togglePayment(o.value)} hidden />
+              <span className="af-option__label">{o.label}</span>
             </label>
           ))}
         </div>
-        {errors.payment_methods && <span className="act-form__error">{errors.payment_methods}</span>}
-
+        {errors.payment_methods && <span className="af-error">{errors.payment_methods}</span>}
         {form.payment_methods.includes('virement') && (
-          <div className="form-group" style={{ marginTop:'0.75rem' }}>
-            <label>Informations virement (IBAN, banque...)</label>
-            <textarea value={form.virement_info} onChange={set('virement_info')} rows={2}
-              placeholder="IBAN : FR76 XXXX XXXX XXXX XXXX&#10;Banque : Crédit Agricole&#10;Référence : Prénom + Activité" />
+          <div className="af-field" style={{ marginTop:'0.75rem' }}>
+            <label>Infos virement</label>
+            <input value={form.virement_info} onChange={set('virement_info')} placeholder="IBAN, banque..." />
           </div>
         )}
         {form.payment_methods.includes('cesu') && (
-          <div className="form-group" style={{ marginTop:'0.75rem' }}>
-            <label>Informations CESU</label>
-            <textarea value={form.cesu_info} onChange={set('cesu_info')} rows={2}
-              placeholder="Chèques CESU acceptés, à remettre en main propre." />
+          <div className="af-field" style={{ marginTop:'0.75rem' }}>
+            <label>Infos CESU</label>
+            <input value={form.cesu_info} onChange={set('cesu_info')} placeholder="Infos CESU..." />
           </div>
         )}
       </div>
 
-      {/* ── Photo ── */}
-      <div className="act-form__section">
-        <h3>📷 Photo</h3>
-        <ImageUploader value={form.image_url} onChange={(url) => setForm(f => ({ ...f, image_url: url }))} />
-      </div>
-
-      {/* ── Visibilité ── */}
-      <div className="act-form__section act-form__section--inline">
-        <input type="checkbox" id="actif" checked={form.actif} onChange={set('actif')} />
-        <label htmlFor="actif" style={{ margin:0, fontSize:'0.95rem', fontWeight:600, color:'var(--text-dark)', textTransform:'none', letterSpacing:0 }}>
-          Activité visible et ouverte aux inscriptions
+      {/* ── Statut ── */}
+      <div className="af-section">
+        <label className="af-toggle">
+          <input type="checkbox" checked={form.actif} onChange={set('actif')} />
+          <span className="af-toggle__track" />
+          <span className="af-toggle__label">{form.actif ? '✅ Activité visible' : '🔴 Activité masquée'}</span>
         </label>
       </div>
 
-      {/* ── Actions ── */}
-      <div className="act-form__actions">
+      <div className="af-actions">
+        <button type="button" className="btn-secondary" onClick={onCancel} disabled={saving}>Annuler</button>
         <button type="submit" className="btn-primary" disabled={saving}>
-          {saving ? 'Enregistrement...' : 'Enregistrer l\'activité'}
+          {saving ? 'Enregistrement...' : 'Enregistrer'}
         </button>
-        <button type="button" className="btn-secondary" onClick={onCancel}>Annuler</button>
       </div>
+
     </form>
   )
 }

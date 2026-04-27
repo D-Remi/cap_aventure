@@ -45,6 +45,7 @@ export class ActivitiesController {
       age_max:          dto.age_max,
       image_url:        dto.image_url,
       actif:            dto.actif ?? true,
+      tarifs:           dto.tarifs,
     }
     return this.service.create(payload)
   }
@@ -76,6 +77,7 @@ export class ActivitiesController {
     if (dto.age_max         !== undefined) payload.age_max         = dto.age_max
     if (dto.image_url       !== undefined) payload.image_url       = dto.image_url
     if (dto.actif           !== undefined) payload.actif           = dto.actif
+    if (dto.tarifs          !== undefined) payload.tarifs          = dto.tarifs
     return this.service.update(+id, payload)
   }
 

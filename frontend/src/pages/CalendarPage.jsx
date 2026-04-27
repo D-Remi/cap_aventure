@@ -11,11 +11,11 @@ const DAYS   = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim']
 const JOURS_LABELS = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche']
 
 const TYPE_COLORS = {
-  ski:   { bg: '#dbeafe', text: '#1d4ed8', dot: '#3b82f6', label: '⛷️ Ski' },
-  vtt:   { bg: '#dcfce7', text: '#166534', dot: '#22c55e', label: '🚵 VTT / Roller' },
-  scout: { bg: '#f0fdf4', text: '#14532d', dot: '#16a34a', label: '🌲 Scout' },
-  autre: { bg: '#fff7ed', text: '#92400e', dot: '#f97316', label: '🎯 Multi-activités' },
-  rando: { bg: '#fef9c3', text: '#92400e', dot: '#f59e0b', label: '🥾 Rando' },
+  vtt:   { bg: '#dcfce7', text: '#166534', dot: '#22c55e', label: '🚵 VTT & Vélo' },
+  scout: { bg: '#ede9fe', text: '#5b21b6', dot: '#a78bfa', label: '🌲 Club Scout' },
+  autre: { bg: '#fff7ed', text: '#c2410c', dot: '#f97316', label: '🎯 Multi-activités' },
+  velo:  { bg: '#d1fae5', text: '#065f46', dot: '#10b981', label: '🚲 Vélo École' },
+  evenement: { bg: '#fef9c3', text: '#854d0e', dot: '#f5c842', label: '🎉 Événements' },
 }
 
 // ── Helpers dates ──────────────────────────────────────────────
@@ -34,6 +34,15 @@ function getOccurrencesOnDay(activity, date) {
   if (activity.schedule_type === 'multi_dates' && activity.dates?.length) {
     const match = activity.dates.find(ds => sameDay(new Date(ds), date))
     if (match) return [{ ...activity, _occurrenceDate: match }]
+  }
+  if ((activity.schedule_type === 'recurrente' || activity.schedule_type === 'saisonniere') && activity.recurrence_days?.length) {
+    const jsFriDay = (date.getDay() + 6) % 7
+    const DAYS_IDX = ['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche']
+    const dayName  = DAYS_IDX[jsFriDay]
+    const inSeason = (!activity.date_debut || date >= new Date(activity.date_debut)) &&
+                     (!activity.date_fin   || date <= new Date(activity.date_fin))
+    if (activity.recurrence_days.includes(dayName) && inSeason)
+      return [{ ...activity, _occurrenceDate: date.toISOString() }]
   }
   return []
 }

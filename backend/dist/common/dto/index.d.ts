@@ -14,6 +14,12 @@ export declare class CreateActivityDto {
     periode_label?: string;
     prix: number;
     prix_seance?: number;
+    tarifs?: Array<{
+        label: string;
+        prix: number;
+        popular: boolean;
+        desc?: string;
+    }>;
     places_max: number;
     payment_methods?: string[];
     virement_info?: string;
@@ -45,6 +51,12 @@ export declare class UpdateActivityDto {
     lieu?: string;
     age_min?: number;
     age_max?: number;
+    tarifs?: Array<{
+        label: string;
+        prix: number;
+        popular: boolean;
+        desc?: string;
+    }>;
     image_url?: string;
     actif?: boolean;
 }

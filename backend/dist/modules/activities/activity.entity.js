@@ -28,7 +28,7 @@ __decorate([
     __metadata("design:type", String)
 ], Activity.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'enum', enum: ['ski', 'vtt', 'rando', 'scout', 'autre'], default: 'autre' }),
+    (0, typeorm_1.Column)({ type: 'enum', enum: ['ski', 'vtt', 'rando', 'scout', 'autre', 'velo', 'evenement'], default: 'autre' }),
     __metadata("design:type", String)
 ], Activity.prototype, "type", void 0);
 __decorate([
@@ -64,13 +64,17 @@ __decorate([
     __metadata("design:type", String)
 ], Activity.prototype, "periode_label", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'decimal', precision: 8, scale: 2 }),
+    (0, typeorm_1.Column)({ type: 'decimal', precision: 8, scale: 2, default: 0 }),
     __metadata("design:type", Number)
 ], Activity.prototype, "prix", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'decimal', precision: 8, scale: 2, nullable: true }),
     __metadata("design:type", Number)
 ], Activity.prototype, "prix_seance", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'json', nullable: true }),
+    __metadata("design:type", Array)
+], Activity.prototype, "tarifs", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'json', nullable: true }),
     __metadata("design:type", Array)

@@ -10,14 +10,8 @@ module.exports = {
     env: {
       NODE_ENV: 'production',
       PORT:     3001,
-      DB_HOST: 'localhost',
-      DB_PORT: 3306,
-      DB_USER: 'capaventure',
-      DB_PASS: 'CapAv2024!',
-      DB_NAME: 'capaventure',
     },
     error_file: '/var/log/pm2/capaventure-error.log',
     out_file:   '/var/log/pm2/capaventure-out.log',
   }],
 }
-

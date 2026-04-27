@@ -19,6 +19,7 @@ import { DocumentsModule }     from './modules/documents/documents.module'
 import { PointsModule }        from './modules/points/points.module'
 import { MessagesModule }      from './modules/messages/messages.module'
 import { StatsModule }         from './modules/stats/stats.module'
+import { PlanningModule }      from './modules/planning/planning.module'
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { StatsModule }         from './modules/stats/stats.module'
     PointsModule,
     MessagesModule,
     StatsModule,
+    PlanningModule,
   ],
   providers: [
     {

@@ -6,6 +6,7 @@ import DocumentsTab from '../components/ui/DocumentUploader'
 import PointsTab from '../components/ui/PointsTab'
 import DatePickerModal from '../components/ui/DatePickerModal'
 import MessagingTab from '../components/ui/MessagingTab'
+import PlanningTab from '../components/ui/PlanningTab'
 import { exportPlanningPDF } from '../services/planningExport'
 import '../components/ui/DocumentUploader.css'
 import '../components/ui/ImageUploader.css'
@@ -53,10 +54,11 @@ export default function DashboardPage() {
         <nav className="dash-nav">
           <button className={tab === 'overview'    ? 'active' : ''} onClick={() => setTab('overview')}>🏠 Tableau de bord</button>
           <button className={tab === 'children'    ? 'active' : ''} onClick={() => setTab('children')}>👧 Mes enfants</button>
-          <button className={tab === 'activities'  ? 'active' : ''} onClick={() => setTab('activities')}>🎿 Les activités</button>
+          <button className={tab === 'activities'  ? 'active' : ''} onClick={() => setTab('activities')}>🎯 Les activités</button>
           <button className={tab === 'bookings'    ? 'active' : ''} onClick={() => setTab('bookings')}>📋 Mes inscriptions</button>
           <button className={tab === 'points'      ? 'active' : ''} onClick={() => setTab('points')}>🏆 Mes points</button>
           <button className={tab === 'messages'    ? 'active' : ''} onClick={() => setTab('messages')}>💬 Messages</button>
+          <button className={tab === 'planning'    ? 'active' : ''} onClick={() => setTab('planning')}>📅 Planning</button>
           <button className={tab === 'documents'   ? 'active' : ''} onClick={() => setTab('documents')}>📁 Mes documents</button>
         </nav>
 
@@ -87,6 +89,7 @@ export default function DashboardPage() {
         {tab === 'bookings'   && <Bookings registrations={registrations} refresh={fetchAll} user={user} />}
         {tab === 'points'     && <PointsTab children={children} />}
         {tab === 'messages'   && <MessagingTab />}
+        {tab === 'planning'   && <PlanningTab />}
         {tab === 'documents'  && <DocumentsTab children={children} />}
       </main>
     </div>

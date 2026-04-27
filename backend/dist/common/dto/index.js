@@ -29,7 +29,7 @@ __decorate([
     __metadata("design:type", String)
 ], CreateActivityDto.prototype, "description", void 0);
 __decorate([
-    (0, class_validator_1.IsEnum)(['ski', 'vtt', 'rando', 'scout', 'autre']),
+    (0, class_validator_1.IsEnum)(['ski', 'vtt', 'rando', 'scout', 'autre', 'velo', 'evenement']),
     __metadata("design:type", String)
 ], CreateActivityDto.prototype, "type", void 0);
 __decorate([
@@ -37,38 +37,34 @@ __decorate([
     __metadata("design:type", String)
 ], CreateActivityDto.prototype, "schedule_type", void 0);
 __decorate([
-    (0, class_validator_1.ValidateIf)(o => o.schedule_type === 'ponctuelle'),
-    (0, class_validator_1.IsDateString)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateActivityDto.prototype, "date", void 0);
 __decorate([
-    (0, class_validator_1.ValidateIf)(o => o.schedule_type === 'multi_dates'),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsArray)(),
-    (0, class_validator_1.ArrayMinSize)(2),
-    (0, class_validator_1.IsDateString)({}, { each: true }),
     __metadata("design:type", Array)
 ], CreateActivityDto.prototype, "dates", void 0);
 __decorate([
-    (0, class_validator_1.ValidateIf)(o => o.schedule_type === 'recurrente' || o.schedule_type === 'saisonniere'),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsArray)(),
-    (0, class_validator_1.ArrayMinSize)(1),
     (0, class_validator_1.IsIn)(DAYS, { each: true }),
     __metadata("design:type", Array)
 ], CreateActivityDto.prototype, "recurrence_days", void 0);
 __decorate([
-    (0, class_validator_1.ValidateIf)(o => o.schedule_type === 'recurrente'),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateActivityDto.prototype, "recurrence_time", void 0);
 __decorate([
-    (0, class_validator_1.ValidateIf)(o => o.schedule_type === 'recurrente' || o.schedule_type === 'saisonniere'),
-    (0, class_validator_1.IsDateString)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateActivityDto.prototype, "date_debut", void 0);
 __decorate([
-    (0, class_validator_1.ValidateIf)(o => o.schedule_type === 'recurrente' || o.schedule_type === 'saisonniere'),
-    (0, class_validator_1.IsDateString)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateActivityDto.prototype, "date_fin", void 0);
 __decorate([
@@ -90,6 +86,11 @@ __decorate([
     (0, class_validator_1.Min)(0),
     __metadata("design:type", Number)
 ], CreateActivityDto.prototype, "prix_seance", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsArray)(),
+    __metadata("design:type", Array)
+], CreateActivityDto.prototype, "tarifs", void 0);
 __decorate([
     (0, class_validator_1.IsInt)(),
     (0, class_transformer_1.Type)(() => Number),
@@ -161,7 +162,7 @@ __decorate([
 ], UpdateActivityDto.prototype, "description", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsEnum)(['ski', 'vtt', 'rando', 'scout', 'autre']),
+    (0, class_validator_1.IsEnum)(['ski', 'vtt', 'rando', 'scout', 'autre', 'velo', 'evenement']),
     __metadata("design:type", String)
 ], UpdateActivityDto.prototype, "type", void 0);
 __decorate([
@@ -261,6 +262,11 @@ __decorate([
     (0, class_transformer_1.Type)(() => Number),
     __metadata("design:type", Number)
 ], UpdateActivityDto.prototype, "age_max", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsArray)(),
+    __metadata("design:type", Array)
+], UpdateActivityDto.prototype, "tarifs", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
