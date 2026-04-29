@@ -5,4 +5,5 @@ export declare class InterestController {
     constructor(service: InterestService);
     create(dto: CreateInterestDto): Promise<import("./interest.entity").InterestForm>;
     findAll(): Promise<import("./interest.entity").InterestForm[]>;
+    remove(id: string): Promise<import("typeorm").DeleteResult>;
 }

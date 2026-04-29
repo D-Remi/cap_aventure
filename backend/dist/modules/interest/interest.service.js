@@ -47,6 +47,9 @@ let InterestService = class InterestService {
     findAll() {
         return this.repo.find({ order: { created_at: 'DESC' } });
     }
+    remove(id) {
+        return this.repo.delete(id);
+    }
 };
 exports.InterestService = InterestService;
 exports.InterestService = InterestService = __decorate([

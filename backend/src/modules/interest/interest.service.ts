@@ -37,4 +37,8 @@ export class InterestService {
   findAll() {
     return this.repo.find({ order: { created_at: 'DESC' } })
   }
+
+  remove(id: number) {
+    return this.repo.delete(id)
+  }
 }

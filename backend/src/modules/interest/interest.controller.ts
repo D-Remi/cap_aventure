@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common'
+import { Controller, Get, Post, Delete, Param, Body, UseGuards } from '@nestjs/common'
 import { Throttle } from '@nestjs/throttler'
 import { InterestService } from './interest.service'
 import { CreateInterestDto } from '../../common/dto'
@@ -19,5 +19,12 @@ export class InterestController {
   @Roles('admin')
   findAll() {
     return this.service.findAll()
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
+  remove(@Param('id') id: string) {
+    return this.service.remove(+id)
   }
 }

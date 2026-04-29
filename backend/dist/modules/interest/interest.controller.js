@@ -28,6 +28,9 @@ let InterestController = class InterestController {
     findAll() {
         return this.service.findAll();
     }
+    remove(id) {
+        return this.service.remove(+id);
+    }
 };
 exports.InterestController = InterestController;
 __decorate([
@@ -46,6 +49,15 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], InterestController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    (0, common_1.UseGuards)(auth_guard_1.JwtAuthGuard, auth_guard_1.RolesGuard),
+    (0, auth_guard_1.Roles)('admin'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], InterestController.prototype, "remove", null);
 exports.InterestController = InterestController = __decorate([
     (0, common_1.Controller)('interest'),
     __metadata("design:paramtypes", [interest_service_1.InterestService])

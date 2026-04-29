@@ -9,4 +9,5 @@ export declare class InterestService {
     constructor(repo: Repository<InterestForm>, email: EmailService, notif: NotificationsService);
     create(dto: Partial<InterestForm>): Promise<InterestForm>;
     findAll(): Promise<InterestForm[]>;
+    remove(id: number): Promise<import("typeorm").DeleteResult>;
 }

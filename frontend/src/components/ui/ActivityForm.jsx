@@ -67,11 +67,18 @@ export default function ActivityForm({ initial = {}, onSave, onCancel, saving })
 
   const validate = () => {
     const e = {}
-    if (!form.titre?.trim())       e.titre       = 'Titre obligatoire'
-    if (!form.description?.trim()) e.description = 'Description obligatoire'
-    if (!form.places_max)          e.places_max  = 'Obligatoire'
-    // Tarifs : si remplis, le prix doit être valide
-    if (form.tarifs?.some(t => t.prix !== '' && isNaN(Number(t.prix)))) e.tarifs = 'Prix invalide sur un tarif'
+    if (!form.titre.trim())       e.titre       = 'Titre obligatoire'
+    if (!form.description.trim()) e.description = 'Description obligatoire'
+    if (!form.places_max)         e.places_max  = 'Obligatoire'
+    if (form.payment_methods.length === 0) e.payment_methods = 'Choisissez au moins un mode'
+    if (form.schedule_type === 'ponctuelle' && !form.date) e.date = 'Date obligatoire'
+    if (form.schedule_type === 'multi_dates' && form.dates.length < 2) e.dates = 'Minimum 2 dates'
+    if (['recurrente','saisonniere'].includes(form.schedule_type)) {
+      if (form.recurrence_days.length === 0) e.recurrence_days = 'Choisissez un jour'
+      if (!form.date_debut || !form.date_fin) e.date_debut = 'Début et fin obligatoires'
+    }
+    // Tarifs : optionnels mais si remplis doivent avoir un prix
+    if (form.tarifs.some(t => !t.prix || isNaN(Number(t.prix)))) e.tarifs = 'Prix invalide sur un tarif'
     setErrors(e)
     return Object.keys(e).length === 0
   }

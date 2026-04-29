@@ -110,7 +110,7 @@ const PAGES = {
 }
 
 const SLUG_ORDER   = ['multi', 'vtt', 'club', 'velo', 'evenements']
-const SLUG_TO_TYPE = { multi:'autre', vtt:'vtt', club:'scout', velo:'velo', evenements:'evenement' }
+const SLUG_TO_TYPE = { multi:'autre', vtt:'vtt', club:'scout', velo:'vtt', evenements:'autre' }
 const SCHEDULE_ICONS = { ponctuelle:'📅', multi_dates:'🗓️', recurrente:'🔁', saisonniere:'🌿' }
 
 function formatActivityDate(a) {
