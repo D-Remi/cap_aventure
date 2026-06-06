@@ -21,7 +21,15 @@ __decorate([
     __metadata("design:type", Number)
 ], Document.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => child_entity_1.Child, { onDelete: 'CASCADE', nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], Document.prototype, "child_id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Document.prototype, "user_id", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => child_entity_1.Child, { onDelete: 'SET NULL', nullable: true, eager: false }),
     (0, typeorm_1.JoinColumn)({ name: 'child_id' }),
     __metadata("design:type", child_entity_1.Child)
 ], Document.prototype, "child", void 0);
@@ -31,29 +39,37 @@ __decorate([
     __metadata("design:type", user_entity_1.User)
 ], Document.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.Column)({
-        type: 'enum',
-        enum: ['fiche_sanitaire', 'autorisation', 'assurance', 'autre'],
-        default: 'autre',
-    }),
+    (0, typeorm_1.Column)({ type: 'enum', enum: ['ordonnance', 'pap', 'mdph', 'autorisation_sortie', 'autorisation_photo', 'autre'], default: 'autre' }),
     __metadata("design:type", String)
 ], Document.prototype, "type", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
+], Document.prototype, "nom", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
 ], Document.prototype, "filename", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: 'longtext', nullable: true }),
     __metadata("design:type", String)
-], Document.prototype, "original_name", void 0);
+], Document.prototype, "data", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'int' }),
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Document.prototype, "mimetype", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
-], Document.prototype, "size", void 0);
+], Document.prototype, "taille", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: 'tinyint', nullable: true }),
+    __metadata("design:type", Boolean)
+], Document.prototype, "valide", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'text', nullable: true }),
     __metadata("design:type", String)
-], Document.prototype, "url", void 0);
+], Document.prototype, "note_admin", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)

@@ -13,7 +13,6 @@ let EmailModule = class EmailModule {
 };
 exports.EmailModule = EmailModule;
 exports.EmailModule = EmailModule = __decorate([
-    (0, common_1.Global)(),
     (0, common_1.Module)({
         providers: [email_service_1.EmailService],
         exports: [email_service_1.EmailService],

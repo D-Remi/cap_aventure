@@ -1,14 +1,18 @@
 import { Child } from '../children/child.entity';
 import { User } from '../users/user.entity';
-export type DocumentType = 'fiche_sanitaire' | 'autorisation' | 'assurance' | 'autre';
 export declare class Document {
     id: number;
+    child_id: number;
+    user_id: number;
     child: Child;
     user: User;
-    type: DocumentType;
+    type: string;
+    nom: string;
     filename: string;
-    original_name: string;
-    size: number;
-    url: string;
+    data: string;
+    mimetype: string;
+    taille: number;
+    valide: boolean;
+    note_admin: string;
     created_at: Date;
 }

@@ -12,7 +12,7 @@ export default function AdminAttendance() {
   const [saving, setSaving]         = useState({})
 
   useEffect(() => {
-    axios.get('/api/activities?all=true').then(r => setActivities(r.data))
+    axios.get('/api/slots?all=true').then(r => setActivities(r.data))
   }, [])
 
   const loadActivity = async (act) => {
@@ -28,7 +28,7 @@ export default function AdminAttendance() {
     setLoading(true)
     try {
       // Charger toutes les inscriptions de cette activité
-      const { data: regs } = await axios.get(`/api/registrations/activity/${selected.id}`)
+      const { data: regs } = await axios.get(`/api/bookings/activity/${selected.id}`)
       setRegs(regs.filter(r => r.status !== 'cancelled'))
 
       // Charger les dates choisies pour chaque inscription

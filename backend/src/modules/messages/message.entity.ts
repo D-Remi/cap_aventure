@@ -17,7 +17,7 @@ export class Message {
   @Column({ type: 'text' })
   content: string
 
-  @Column({ default: false })
+  @Column({ name:'lu', default: false })
   read: boolean
 
   @Column({ default: false })

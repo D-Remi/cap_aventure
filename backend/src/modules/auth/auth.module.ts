@@ -7,6 +7,7 @@ import { AuthService } from './auth.service'
 import { JwtStrategy } from './jwt.strategy'
 import { User } from '../users/user.entity'
 import { PasswordResetToken } from './password-reset.entity'
+import { EmailModule } from '../email/email.module'
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { PasswordResetToken } from './password-reset.entity'
         signOptions: { expiresIn: process.env.JWT_EXPIRES || '7d' },
       }),
     }),
+    EmailModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

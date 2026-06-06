@@ -1,125 +1,102 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
-import './AuthPages.css'
-import './ProfilePage.css'
+import Navbar from '../components/layout/Navbar'
+import Footer from '../components/layout/Footer'
 
 export default function ProfilePage() {
-  const { user, login } = useAuth()
+  const { user, setUser } = useAuth()
+  const [form, setForm] = useState({
+    prenom:    user?.prenom    || '',
+    nom:       user?.nom       || '',
+    telephone: user?.telephone || '',
+  })
+  const [pwd, setPwd]     = useState({ current:'', next:'', confirm:'' })
+  const [saving, setSaving] = useState(false)
+  const [savingPwd, setSavingPwd] = useState(false)
+  const set  = k => e => setForm(f=>({...f,[k]:e.target.value}))
+  const setP = k => e => setPwd(p=>({...p,[k]:e.target.value}))
 
-  const [info, setInfo]     = useState({ prenom: user?.prenom || '', nom: user?.nom || '', telephone: user?.telephone || '' })
-  const [pass, setPass]     = useState({ currentPassword: '', newPassword: '', confirm: '' })
-  const [infoMsg, setInfoMsg] = useState('')
-  const [passMsg, setPassMsg] = useState('')
-  const [infoErr, setInfoErr] = useState('')
-  const [passErr, setPassErr] = useState('')
-  const [loadInfo, setLoadInfo] = useState(false)
-  const [loadPass, setLoadPass] = useState(false)
-
-  const setI = (k) => (e) => setInfo(f => ({ ...f, [k]: e.target.value }))
-  const setP = (k) => (e) => setPass(f => ({ ...f, [k]: e.target.value }))
-
-  const handleInfoSubmit = async (e) => {
+  const saveProfile = async e => {
     e.preventDefault()
-    setInfoErr(''); setInfoMsg(''); setLoadInfo(true)
+    setSaving(true)
     try {
-      await axios.patch('/api/auth/profile', { prenom: info.prenom, nom: info.nom, telephone: info.telephone })
-      setInfoMsg('Profil mis à jour ✅')
-    } catch (err) {
-      setInfoErr(err.response?.data?.message || 'Erreur lors de la mise à jour.')
-    } finally { setLoadInfo(false) }
+      const { data } = await axios.put('/api/users/me', form)
+      if (setUser) setUser(data)
+      toast.success('Profil mis à jour')
+    } catch { toast.error('Erreur') } finally { setSaving(false) }
   }
 
-  const handlePassSubmit = async (e) => {
+  const savePassword = async e => {
     e.preventDefault()
-    setPassErr(''); setPassMsg('')
-    if (pass.newPassword !== pass.confirm) { setPassErr('Les mots de passe ne correspondent pas.'); return }
-    if (pass.newPassword.length < 8) { setPassErr('Au moins 8 caractères.'); return }
-    setLoadPass(true)
+    if (pwd.next !== pwd.confirm) { toast.error('Les mots de passe ne correspondent pas'); return }
+    if (pwd.next.length < 6) { toast.error('Minimum 6 caractères'); return }
+    setSavingPwd(true)
     try {
-      await axios.patch('/api/auth/profile', {
-        currentPassword: pass.currentPassword,
-        newPassword: pass.newPassword,
-      })
-      setPassMsg('Mot de passe modifié ✅')
-      setPass({ currentPassword: '', newPassword: '', confirm: '' })
-    } catch (err) {
-      setPassErr(err.response?.data?.message || 'Erreur lors du changement de mot de passe.')
-    } finally { setLoadPass(false) }
+      await axios.put('/api/users/me/password', { current: pwd.current, password: pwd.next })
+      toast.success('Mot de passe modifié')
+      setPwd({ current:'', next:'', confirm:'' })
+    } catch(e) { toast.error(e.response?.data?.message || 'Erreur') } finally { setSavingPwd(false) }
   }
+
+  const FG = ({label, children}) => (
+    <div style={{marginBottom:'.85rem'}}>
+      <label style={{display:'block',fontSize:'.78rem',fontWeight:700,color:'var(--nuit)',marginBottom:'.3rem',textTransform:'uppercase',letterSpacing:'.5px'}}>{label}</label>
+      {children}
+    </div>
+  )
+  const inp = (val, onChange, type='text', ph='') => (
+    <input type={type} value={val} onChange={onChange} placeholder={ph}
+      style={{width:'100%',padding:'.6rem .85rem',border:'2px solid var(--sable-dark)',borderRadius:10,fontFamily:'inherit',fontSize:'.9rem',background:'var(--blanc)'}}/>
+  )
 
   return (
-    <div className="profile-page">
-      <div className="profile-container">
-        <div className="profile-header">
-          <Link to="/dashboard" className="profile-back">← Retour au tableau de bord</Link>
-          <div className="profile-avatar">
-            {user?.prenom?.[0]}{user?.nom?.[0]}
+    <>
+      <Navbar />
+      <div style={{paddingTop:'6rem',paddingBottom:'4rem',minHeight:'100vh',background:'var(--sable-light)'}}>
+        <div className="container" style={{maxWidth:600}}>
+          <div style={{display:'flex',alignItems:'center',gap:'1rem',marginBottom:'2rem'}}>
+            <Link to="/dashboard" style={{color:'var(--text-muted)',fontWeight:700,fontSize:'.88rem',textDecoration:'none'}}>← Mon espace</Link>
+            <h1 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.8rem',fontWeight:800,margin:0}}>Mon profil</h1>
           </div>
-          <h1>{user?.prenom} {user?.nom}</h1>
-          <p>{user?.email}</p>
-          <span className={`badge badge--${user?.role}`} style={{ marginTop: '0.5rem' }}>
-            {user?.role}
-          </span>
-        </div>
 
-        <div className="profile-cards">
-          {/* Informations personnelles */}
-          <div className="profile-card">
-            <h2>👤 Informations personnelles</h2>
-            <form onSubmit={handleInfoSubmit} className="auth-form">
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Prénom</label>
-                  <input value={info.prenom} onChange={setI('prenom')} required />
-                </div>
-                <div className="form-group">
-                  <label>Nom</label>
-                  <input value={info.nom} onChange={setI('nom')} required />
-                </div>
-              </div>
-              <div className="form-group">
-                <label>Téléphone</label>
-                <input type="tel" placeholder="06 12 34 56 78" value={info.telephone} onChange={setI('telephone')} />
-              </div>
-              <div className="form-group">
-                <label>Email</label>
-                <input value={user?.email} disabled style={{ opacity: 0.6, cursor: 'not-allowed' }} />
-              </div>
-              {infoErr && <p className="auth-error">{infoErr}</p>}
-              {infoMsg && <p className="profile-success">{infoMsg}</p>}
-              <button type="submit" className="btn-primary" disabled={loadInfo}>
-                {loadInfo ? 'Enregistrement...' : 'Enregistrer'}
-              </button>
-            </form>
+          {/* Avatar */}
+          <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)',marginBottom:'1.25rem',display:'flex',alignItems:'center',gap:'1.25rem'}}>
+            <div style={{width:64,height:64,background:'var(--sauge)',color:'white',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Baloo 2',cursive",fontWeight:800,fontSize:'1.4rem',flexShrink:0}}>
+              {(user?.prenom?.[0]||'').toUpperCase()}{(user?.nom?.[0]||'').toUpperCase()}
+            </div>
+            <div>
+              <div style={{fontFamily:"'Baloo 2',cursive",fontWeight:800,fontSize:'1.2rem',color:'var(--nuit)'}}>{user?.prenom} {user?.nom}</div>
+              <div style={{fontSize:'.85rem',color:'var(--text-muted)'}}>{user?.email}</div>
+              <div style={{fontSize:'.78rem',color:'var(--sauge)',fontWeight:700,marginTop:4}}>Espace parent</div>
+            </div>
           </div>
+
+          {/* Infos perso */}
+          <form onSubmit={saveProfile} style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)',marginBottom:'1.25rem'}}>
+            <h2 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.1rem',marginBottom:'1.25rem'}}>Informations personnelles</h2>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'.75rem'}}>
+              <FG label="Prénom">{inp(form.prenom, set('prenom'))}</FG>
+              <FG label="Nom">{inp(form.nom, set('nom'))}</FG>
+            </div>
+            <FG label="Email"><input value={user?.email||''} disabled style={{width:'100%',padding:'.6rem .85rem',border:'2px solid var(--sable-light)',borderRadius:10,fontFamily:'inherit',fontSize:'.9rem',background:'#f5f5f5',color:'var(--text-muted)'}}/></FG>
+            <FG label="Téléphone">{inp(form.telephone, set('telephone'), 'tel', '06...')}</FG>
+            <button type="submit" className="btn-primary" disabled={saving}>{saving?'Enregistrement…':'Enregistrer les modifications'}</button>
+          </form>
 
           {/* Mot de passe */}
-          <div className="profile-card">
-            <h2>🔑 Changer le mot de passe</h2>
-            <form onSubmit={handlePassSubmit} className="auth-form">
-              <div className="form-group">
-                <label>Mot de passe actuel</label>
-                <input type="password" placeholder="••••••••" value={pass.currentPassword} onChange={setP('currentPassword')} required />
-              </div>
-              <div className="form-group">
-                <label>Nouveau mot de passe</label>
-                <input type="password" placeholder="8 caractères min." value={pass.newPassword} onChange={setP('newPassword')} required />
-              </div>
-              <div className="form-group">
-                <label>Confirmer le nouveau</label>
-                <input type="password" placeholder="••••••••" value={pass.confirm} onChange={setP('confirm')} required />
-              </div>
-              {passErr && <p className="auth-error">{passErr}</p>}
-              {passMsg && <p className="profile-success">{passMsg}</p>}
-              <button type="submit" className="btn-primary" disabled={loadPass}>
-                {loadPass ? 'Modification...' : 'Changer le mot de passe'}
-              </button>
-            </form>
-          </div>
+          <form onSubmit={savePassword} style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)'}}>
+            <h2 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.1rem',marginBottom:'1.25rem'}}>Changer le mot de passe</h2>
+            <FG label="Mot de passe actuel">{inp(pwd.current, setP('current'), 'password')}</FG>
+            <FG label="Nouveau mot de passe">{inp(pwd.next, setP('next'), 'password', 'Minimum 6 caractères')}</FG>
+            <FG label="Confirmer">{inp(pwd.confirm, setP('confirm'), 'password')}</FG>
+            <button type="submit" className="btn-primary" disabled={savingPwd}>{savingPwd?'Modification…':'Changer le mot de passe'}</button>
+          </form>
         </div>
       </div>
-    </div>
+      <Footer />
+    </>
   )
 }

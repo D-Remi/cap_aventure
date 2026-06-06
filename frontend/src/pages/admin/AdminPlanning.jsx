@@ -1,161 +1,174 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import toast from 'react-hot-toast'
 import AdminLayout from '../../components/layout/AdminLayout'
+import WeekCalendar from '../../components/ui/WeekCalendar'
 
-const STATUT_COLORS = {
-  planifiee:  { bg:'#fff7ed', text:'#c2410c',  label:'📅 Planifiée' },
-  confirmee:  { bg:'#dcfce7', text:'#166534',  label:'✅ Confirmée' },
-  annulee:    { bg:'#fee2e2', text:'#991b1b',   label:'❌ Annulée' },
-}
-
-const EMPTY_SEANCE = {
-  date:'', titre:'', description:'', lieu:'',
-  notes_animateur:'', statut:'planifiee', activity_id:'',
+const EMPTY = {
+  date:'', periode:'journee', heure_debut:'09:00', heure_fin:'17:30',
+  places_max:3, type_accueil:'mixte', titre:'', description:'',
+  lieu:'Biganos', tarif:'25', statut:'ouvert', actif:true
 }
 
 export default function AdminPlanning() {
-  const [seances,    setSeances]    = useState([])
-  const [activities, setActivities] = useState([])
-  const [modal,      setModal]      = useState(null)  // null | 'create' | {id}
-  const [form,       setForm]       = useState(EMPTY_SEANCE)
-  const [saving,     setSaving]     = useState(false)
-  const [filterAct,  setFilterAct]  = useState('')
+  const [slots,  setSlots]  = useState([])
+  const [modal,  setModal]  = useState(null)
+  const [form,   setForm]   = useState(EMPTY)
+  const [saving, setSaving] = useState(false)
+  const [view,   setView]   = useState('calendar') // calendar | list
 
-  useEffect(() => {
-    fetchSeances()
-    axios.get('/api/activities?all=true').then(r => setActivities(r.data)).catch(() => {})
-  }, [])
+  useEffect(() => { fetch() }, [])
 
-  const fetchSeances = () => {
-    axios.get('/api/planning').then(r => setSeances(r.data)).catch(() => setSeances([]))
-  }
+  const fetch = () =>
+    axios.get('/api/slots?all=true').then(r => setSlots(r.data)).catch(() => {})
 
-  const openCreate = () => { setForm(EMPTY_SEANCE); setModal('create') }
-  const openEdit   = (s) => {
+  const set = k => e =>
+    setForm(f => ({ ...f, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }))
+
+  const openCreate = () => { setForm(EMPTY); setModal('create') }
+  const openEdit   = s  => {
     setForm({
-      date:             s.date ? new Date(s.date).toISOString().slice(0,16) : '',
-      titre:            s.titre,
-      description:      s.description || '',
-      lieu:             s.lieu || '',
-      notes_animateur:  s.notes_animateur || '',
-      statut:           s.statut,
-      activity_id:      s.activity_id || '',
+      ...s,
+      heure_debut: s.heure_debut?.slice(0,5) || '09:00',
+      heure_fin:   s.heure_fin?.slice(0,5)   || '17:30',
+      tarif:       String(s.tarif || 25),
     })
     setModal({ id: s.id })
   }
 
-  const handleSave = async () => {
-    if (!form.date || !form.titre) return
+  const save = async () => {
+    if (!form.date) return toast.error('Date obligatoire')
     setSaving(true)
     try {
-      const payload = { ...form, activity_id: form.activity_id ? +form.activity_id : null }
-      if (modal === 'create') await axios.post('/api/planning', payload)
-      else                    await axios.put(`/api/planning/${modal.id}`, payload)
-      setModal(null)
-      fetchSeances()
-    } finally { setSaving(false) }
+      const payload = {
+        ...form,
+        places_max: Math.min(Number(form.places_max), 3),
+        tarif: parseFloat(form.tarif),
+      }
+      if (modal === 'create') await axios.post('/api/slots', payload)
+      else                    await axios.put(`/api/slots/${modal.id}`, payload)
+      setModal(null); fetch(); toast.success('Créneau enregistré')
+    } catch(e) { toast.error(e.response?.data?.message || 'Erreur') }
+    finally { setSaving(false) }
   }
 
-  const handleDelete = async (id) => {
-    if (!window.confirm('Supprimer cette séance ?')) return
-    await axios.delete(`/api/planning/${id}`)
-    fetchSeances()
+  const del = async id => {
+    if (!window.confirm('Supprimer ce créneau ?')) return
+    await axios.delete(`/api/slots/${id}`)
+    fetch(); toast.success('Créneau supprimé')
   }
 
-  const set = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }))
-
-  const filtered = seances.filter(s =>
-    !filterAct || String(s.activity_id) === filterAct
+  const fi = (label, key, type = 'text') => (
+    <div style={{ marginBottom:'.75rem' }}>
+      <label style={{ fontSize:'.78rem', fontWeight:700, color:'var(--nuit)', display:'block', marginBottom:4, textTransform:'uppercase', letterSpacing:'.5px' }}>{label}</label>
+      <input type={type} value={form[key]} onChange={set(key)}
+        style={{ width:'100%', padding:'.5rem', border:'1.5px solid var(--sable-dark)', borderRadius:8, fontFamily:'inherit', fontSize:'.9rem' }}/>
+    </div>
   )
 
-  // Grouper par activité pour affichage
-  const grouped = filtered.reduce((acc, s) => {
-    const key = s.activity?.titre || 'Sans activité'
-    if (!acc[key]) acc[key] = { activity: s.activity, seances: [] }
-    acc[key].seances.push(s)
-    return acc
-  }, {})
+  const fs = (label, key, opts) => (
+    <div style={{ marginBottom:'.75rem' }}>
+      <label style={{ fontSize:'.78rem', fontWeight:700, color:'var(--nuit)', display:'block', marginBottom:4, textTransform:'uppercase', letterSpacing:'.5px' }}>{label}</label>
+      <select value={form[key]} onChange={set(key)}
+        style={{ width:'100%', padding:'.5rem', border:'1.5px solid var(--sable-dark)', borderRadius:8, fontFamily:'inherit', fontSize:'.9rem' }}>
+        {opts.map(([v,l]) => <option key={v} value={v}>{l}</option>)}
+      </select>
+    </div>
+  )
 
   return (
     <AdminLayout>
       <div className="admin-page">
         <div className="admin-page__header">
           <div>
-            <h1>📅 Planning des séances</h1>
-            <p className="admin-page__subtitle">{seances.length} séance{seances.length > 1 ? 's' : ''} programmée{seances.length > 1 ? 's' : ''}</p>
+            <h1>📅 Créneaux & Planning</h1>
+            <p className="admin-page__subtitle">{slots.length} créneau{slots.length > 1 ? 'x' : ''} · Max 3 enfants</p>
           </div>
-          <button className="btn-primary" onClick={openCreate}>+ Nouvelle séance</button>
+          <div style={{ display:'flex', gap:'.75rem', alignItems:'center' }}>
+            {/* Toggle vue */}
+            <div style={{ display:'flex', background:'#f3f4f6', borderRadius:8, padding:2 }}>
+              {[['calendar','📅 Calendrier'],['list','📋 Liste']].map(([v,l]) => (
+                <button key={v} onClick={() => setView(v)}
+                  style={{ padding:'.35rem .85rem', borderRadius:6, border:'none', cursor:'pointer',
+                    fontFamily:'inherit', fontWeight:700, fontSize:'.82rem',
+                    background: view===v ? 'white' : 'transparent',
+                    color: view===v ? 'var(--nuit)' : '#6b7280',
+                    boxShadow: view===v ? '0 1px 3px rgba(0,0,0,.1)' : 'none' }}>
+                  {l}
+                </button>
+              ))}
+            </div>
+            <button className="btn-primary" onClick={openCreate}>+ Nouveau créneau</button>
+          </div>
         </div>
 
-        {/* Filtre par activité */}
-        <div style={{ marginBottom:'1.5rem' }}>
-          <select value={filterAct} onChange={e => setFilterAct(e.target.value)}
-            style={{ padding:'0.5rem 1rem', borderRadius:8, border:'1.5px solid #d4e4d4', fontSize:'0.88rem', fontFamily:'inherit' }}>
-            <option value="">Toutes les activités</option>
-            {activities.map(a => <option key={a.id} value={String(a.id)}>{a.titre}</option>)}
-          </select>
-        </div>
+        {/* Vue calendrier */}
+        {view === 'calendar' && (
+          <WeekCalendar
+            slots={slots}
+            onSlotClick={openEdit}
+            showEmpty={true}
+            mode="admin"
+          />
+        )}
 
-        {/* Séances groupées par activité */}
-        {Object.keys(grouped).length === 0 ? (
-          <div className="admin-empty">
-            <div style={{ fontSize:'2rem' }}>📅</div>
-            <h3>Aucune séance planifiée</h3>
-            <p>Créez des séances pour construire votre planning.</p>
-            <button className="btn-primary" onClick={openCreate}>+ Créer une séance</button>
-          </div>
-        ) : (
-          <div style={{ display:'flex', flexDirection:'column', gap:'2rem' }}>
-            {Object.entries(grouped).map(([actTitre, { seances: ss }]) => (
-              <div key={actTitre} style={{ background:'var(--blanc)', borderRadius:'var(--radius-xl)', boxShadow:'var(--shadow-sm)', overflow:'hidden' }}>
-                <div style={{ padding:'1rem 1.5rem', background:'var(--bleu-nuit)', color:'var(--blanc)', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-                  <h3 style={{ fontFamily:"'Baloo 2',cursive", fontSize:'1rem', margin:0 }}>{actTitre}</h3>
-                  <span style={{ opacity:0.7, fontSize:'0.82rem' }}>{ss.length} séance{ss.length > 1 ? 's' : ''}</span>
-                </div>
-                <table className="admin-table" style={{ margin:0 }}>
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Titre / Programme</th>
-                      <th>Lieu</th>
-                      <th>Statut</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {ss.map(s => {
-                      const st = STATUT_COLORS[s.statut] || STATUT_COLORS.planifiee
-                      return (
-                        <tr key={s.id}>
-                          <td style={{ whiteSpace:'nowrap', fontWeight:700 }}>
-                            {new Date(s.date).toLocaleDateString('fr-FR', { weekday:'short', day:'numeric', month:'short' })}
-                            <div style={{ fontSize:'0.75rem', color:'var(--text-muted)', fontWeight:400 }}>
-                              {new Date(s.date).toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' })}
-                            </div>
-                          </td>
-                          <td>
-                            <div style={{ fontWeight:600, color:'var(--bleu-nuit)' }}>{s.titre}</div>
-                            {s.description && <div style={{ fontSize:'0.78rem', color:'var(--text-muted)', marginTop:2 }}>{s.description.slice(0,80)}{s.description.length > 80 ? '…' : ''}</div>}
-                          </td>
-                          <td style={{ fontSize:'0.85rem', color:'var(--text-muted)' }}>{s.lieu || '—'}</td>
-                          <td>
-                            <span style={{ background:st.bg, color:st.text, padding:'3px 10px', borderRadius:50, fontSize:'0.75rem', fontWeight:700, whiteSpace:'nowrap' }}>
-                              {st.label}
-                            </span>
-                          </td>
-                          <td>
-                            <div style={{ display:'flex', gap:'0.4rem' }}>
-                              <button className="btn-icon btn-icon--edit" onClick={() => openEdit(s)} title="Modifier">✏️</button>
-                              <button className="btn-icon btn-icon--delete" onClick={() => handleDelete(s.id)} title="Supprimer">🗑️</button>
-                            </div>
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
+        {/* Vue liste */}
+        {view === 'list' && (
+          <div className="admin-table-wrap">
+            {slots.length === 0 ? (
+              <div className="admin-empty">
+                <div style={{ fontSize:'2rem' }}>📅</div>
+                <p>Aucun créneau. Créez-en un avec le bouton ci-dessus.</p>
               </div>
-            ))}
+            ) : (
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th>Date</th><th>Créneau</th><th>Type</th>
+                    <th>Places</th><th>Tarif</th><th>Statut</th><th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {slots.map(s => (
+                    <tr key={s.id}>
+                      <td style={{ fontWeight:700, whiteSpace:'nowrap' }}>
+                        {new Date(s.date+'T00:00:00').toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})}
+                      </td>
+                      <td>
+                        <div style={{ fontWeight:700, color:'var(--nuit)', fontSize:'.9rem' }}>{s.titre || '—'}</div>
+                        <div style={{ fontSize:'.75rem', color:'var(--text-muted)' }}>{s.heure_debut?.slice(0,5)}–{s.heure_fin?.slice(0,5)}</div>
+                      </td>
+                      <td style={{ fontSize:'.82rem' }}>
+                        {s.type_accueil==='adapte'?'🌿 Adapté':s.type_accueil==='mixte'?'👥 Mixte':'🏠 Standard'}
+                      </td>
+                      <td>
+                        <div style={{ display:'flex', alignItems:'center', gap:'.4rem' }}>
+                          <div style={{ width:52, height:7, background:'#e0e0e0', borderRadius:4, overflow:'hidden' }}>
+                            <div style={{ width:`${(s.places_prises/s.places_max)*100}%`, height:'100%',
+                              background: s.places_prises>=s.places_max ? '#ef4444' : 'var(--sauge)', borderRadius:4 }}/>
+                          </div>
+                          <span style={{ fontSize:'.8rem', fontWeight:700 }}>{s.places_prises}/{s.places_max}</span>
+                        </div>
+                      </td>
+                      <td style={{ fontWeight:700, color:'var(--sauge)' }}>{parseFloat(s.tarif).toFixed(0)}€</td>
+                      <td>
+                        <span style={{
+                          background: {ouvert:'#e8f5e9',complet:'#fee2e2',annule:'#f3f4f6',passe:'#f9fafb'}[s.statut],
+                          color: {ouvert:'#2e7d32',complet:'#991b1b',annule:'#6b7280',passe:'#9ca3af'}[s.statut],
+                          padding:'3px 10px', borderRadius:50, fontSize:'.75rem', fontWeight:700
+                        }}>{s.statut}</span>
+                      </td>
+                      <td>
+                        <div style={{ display:'flex', gap:'.4rem' }}>
+                          <button className="btn-icon btn-icon--edit" onClick={() => openEdit(s)}>✏️</button>
+                          <button className="btn-icon btn-icon--delete" onClick={() => del(s.id)}>🗑️</button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         )}
 
@@ -163,69 +176,28 @@ export default function AdminPlanning() {
         {modal && (
           <div className="admin-modal-overlay" onClick={() => !saving && setModal(null)}>
             <div className="admin-modal" style={{ maxWidth:560 }} onClick={e => e.stopPropagation()}>
-              <h2>{modal === 'create' ? '➕ Nouvelle séance' : '✏️ Modifier la séance'}</h2>
-
-              <div style={{ display:'flex', flexDirection:'column', gap:'0.85rem' }}>
-                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'0.75rem' }}>
-                  <div>
-                    <label style={{ fontSize:'0.8rem', fontWeight:700, color:'var(--bleu-nuit)', display:'block', marginBottom:4 }}>Date & heure *</label>
-                    <input type="datetime-local" value={form.date} onChange={set('date')}
-                      style={{ width:'100%', padding:'0.5rem', border:'1.5px solid #d4e4d4', borderRadius:8, fontFamily:'inherit', boxSizing:'border-box' }} />
-                  </div>
-                  <div>
-                    <label style={{ fontSize:'0.8rem', fontWeight:700, color:'var(--bleu-nuit)', display:'block', marginBottom:4 }}>Activité</label>
-                    <select value={form.activity_id} onChange={set('activity_id')}
-                      style={{ width:'100%', padding:'0.5rem', border:'1.5px solid #d4e4d4', borderRadius:8, fontFamily:'inherit', boxSizing:'border-box' }}>
-                      <option value="">— Aucune —</option>
-                      {activities.map(a => <option key={a.id} value={a.id}>{a.titre}</option>)}
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label style={{ fontSize:'0.8rem', fontWeight:700, color:'var(--bleu-nuit)', display:'block', marginBottom:4 }}>Titre / Programme *</label>
-                  <input value={form.titre} onChange={set('titre')} placeholder="Ex: Jeux en forêt — orientation"
-                    style={{ width:'100%', padding:'0.5rem', border:'1.5px solid #d4e4d4', borderRadius:8, fontFamily:'inherit', boxSizing:'border-box' }} />
-                </div>
-
-                <div>
-                  <label style={{ fontSize:'0.8rem', fontWeight:700, color:'var(--bleu-nuit)', display:'block', marginBottom:4 }}>Description</label>
-                  <textarea value={form.description} onChange={set('description')} rows={2}
-                    placeholder="Détails de la séance, matériel à apporter..."
-                    style={{ width:'100%', padding:'0.5rem', border:'1.5px solid #d4e4d4', borderRadius:8, fontFamily:'inherit', resize:'vertical', boxSizing:'border-box' }} />
-                </div>
-
-                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'0.75rem' }}>
-                  <div>
-                    <label style={{ fontSize:'0.8rem', fontWeight:700, color:'var(--bleu-nuit)', display:'block', marginBottom:4 }}>Lieu</label>
-                    <input value={form.lieu} onChange={set('lieu')} placeholder="Ex: Forêt de Vongy"
-                      style={{ width:'100%', padding:'0.5rem', border:'1.5px solid #d4e4d4', borderRadius:8, fontFamily:'inherit', boxSizing:'border-box' }} />
-                  </div>
-                  <div>
-                    <label style={{ fontSize:'0.8rem', fontWeight:700, color:'var(--bleu-nuit)', display:'block', marginBottom:4 }}>Statut</label>
-                    <select value={form.statut} onChange={set('statut')}
-                      style={{ width:'100%', padding:'0.5rem', border:'1.5px solid #d4e4d4', borderRadius:8, fontFamily:'inherit', boxSizing:'border-box' }}>
-                      <option value="planifiee">📅 Planifiée</option>
-                      <option value="confirmee">✅ Confirmée</option>
-                      <option value="annulee">❌ Annulée</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label style={{ fontSize:'0.8rem', fontWeight:700, color:'var(--bleu-nuit)', display:'block', marginBottom:4 }}>
-                    Notes animateur <span style={{ fontWeight:400, color:'var(--text-muted)' }}>(non visible par les parents)</span>
-                  </label>
-                  <textarea value={form.notes_animateur} onChange={set('notes_animateur')} rows={2}
-                    placeholder="Notes privées..."
-                    style={{ width:'100%', padding:'0.5rem', border:'1.5px solid #d4e4d4', borderRadius:8, fontFamily:'inherit', resize:'vertical', boxSizing:'border-box' }} />
-                </div>
+              <h2>{modal === 'create' ? '➕ Nouveau créneau' : '✏️ Modifier le créneau'}</h2>
+              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'.75rem' }}>
+                <div style={{ gridColumn:'1/-1' }}>{fi('Date *', 'date', 'date')}</div>
+                {fs('Période', 'periode', [['matin','🌅 Matin'],['apres_midi','☀️ Après-midi'],['journee','📅 Journée']])}
+                {fs('Type d\'accueil', 'type_accueil', [['standard','🏠 Garde standard'],['adapte','🌿 Adapté TSA/TDAH'],['mixte','👥 Mixte']])}
+                {fi('Heure début', 'heure_debut', 'time')}
+                {fi('Heure fin',   'heure_fin',   'time')}
+                {fi('Places max (≤3)', 'places_max', 'number')}
+                {fi('Tarif (€)',       'tarif',      'number')}
+                {fs('Statut', 'statut', [['ouvert','✅ Ouvert'],['complet','🔴 Complet'],['annule','❌ Annulé']])}
               </div>
-
+              {fi('Titre / Programme', 'titre')}
+              <div style={{ marginBottom:'.75rem' }}>
+                <label style={{ fontSize:'.78rem', fontWeight:700, color:'var(--nuit)', display:'block', marginBottom:4, textTransform:'uppercase' }}>Description</label>
+                <textarea value={form.description} onChange={set('description')} rows={2}
+                  style={{ width:'100%', padding:'.5rem', border:'1.5px solid var(--sable-dark)', borderRadius:8, fontFamily:'inherit', resize:'vertical' }}/>
+              </div>
+              {fi('Lieu', 'lieu')}
               <div className="admin-modal__actions">
                 <button className="btn-secondary" onClick={() => setModal(null)} disabled={saving}>Annuler</button>
-                <button className="btn-primary" onClick={handleSave} disabled={saving || !form.date || !form.titre}>
-                  {saving ? 'Enregistrement...' : 'Enregistrer'}
+                <button className="btn-primary" onClick={save} disabled={saving || !form.date}>
+                  {saving ? 'Enregistrement…' : 'Enregistrer'}
                 </button>
               </div>
             </div>

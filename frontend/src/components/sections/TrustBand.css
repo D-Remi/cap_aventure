@@ -1,0 +1,4 @@
+.trust-band{background:var(--nuit);padding:1.25rem 0}
+.trust-band__inner{display:flex;align-items:center;justify-content:center;gap:2.5rem;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:.6rem;color:rgba(210,225,255,.85);font-size:.88rem;font-weight:600}
+.trust-item strong{color:white}

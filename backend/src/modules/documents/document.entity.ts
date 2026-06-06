@@ -2,40 +2,33 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDa
 import { Child } from '../children/child.entity'
 import { User } from '../users/user.entity'
 
-export type DocumentType = 'fiche_sanitaire' | 'autorisation' | 'assurance' | 'autre'
-
 @Entity('documents')
 export class Document {
-  @PrimaryGeneratedColumn()
-  id: number
+  @PrimaryGeneratedColumn() id: number
+  @Column({ nullable:true }) child_id: number
+  @Column() user_id: number
 
-  @ManyToOne(() => Child, { onDelete: 'CASCADE', nullable: true })
-  @JoinColumn({ name: 'child_id' })
+  @ManyToOne(() => Child, { onDelete:'SET NULL', nullable:true, eager:false })
+  @JoinColumn({ name:'child_id' })
   child: Child
 
-  @ManyToOne(() => User, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'user_id' })
+  @ManyToOne(() => User, { onDelete:'CASCADE' })
+  @JoinColumn({ name:'user_id' })
   user: User
 
-  @Column({
-    type: 'enum',
-    enum: ['fiche_sanitaire', 'autorisation', 'assurance', 'autre'],
-    default: 'autre',
-  })
-  type: DocumentType
+  @Column({ type:'enum', enum:['ordonnance','pap','mdph','autorisation_sortie','autorisation_photo','autre'], default:'autre' })
+  type: string
 
-  @Column()
-  filename: string
+  @Column() nom: string
+  @Column() filename: string
 
-  @Column()
-  original_name: string
+  // Fichier stocké en base64 — accessible directement depuis le navigateur
+  @Column({ type:'longtext', nullable:true }) data: string
 
-  @Column({ type: 'int' })
-  size: number
+  @Column({ nullable:true }) mimetype: string
+  @Column({ nullable:true }) taille: number
+  @Column({ type:'tinyint', nullable:true }) valide: boolean
+  @Column({ type:'text', nullable:true }) note_admin: string
 
-  @Column()
-  url: string
-
-  @CreateDateColumn()
-  created_at: Date
+  @CreateDateColumn() created_at: Date
 }

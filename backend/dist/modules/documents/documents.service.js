@@ -17,53 +17,58 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const document_entity_1 = require("./document.entity");
-const fs_1 = require("fs");
-const path_1 = require("path");
 let DocumentsService = class DocumentsService {
     constructor(repo) {
         this.repo = repo;
     }
     findByUser(userId) {
         return this.repo.find({
-            where: { user: { id: userId } },
+            where: { user_id: userId },
+            select: ['id', 'child_id', 'user_id', 'type', 'nom', 'filename', 'mimetype', 'taille', 'valide', 'note_admin', 'created_at'],
             relations: ['child'],
             order: { created_at: 'DESC' },
         });
     }
     findAll() {
         return this.repo.find({
+            select: ['id', 'child_id', 'user_id', 'type', 'nom', 'filename', 'mimetype', 'taille', 'valide', 'note_admin', 'created_at'],
             relations: ['child', 'user'],
             order: { created_at: 'DESC' },
         });
     }
-    findByChild(childId) {
-        return this.repo.find({
-            where: { child: { id: childId } },
-            order: { created_at: 'DESC' },
-        });
+    findOneWithData(id) {
+        return this.repo.findOne({ where: { id } });
     }
     async create(user, dto) {
         const doc = this.repo.create({
-            user,
-            child: dto.child_id ? { id: dto.child_id } : null,
+            user_id: user.id,
+            child_id: dto.child_id || null,
             type: dto.type,
+            nom: dto.nom,
             filename: dto.filename,
-            original_name: dto.original_name,
-            size: dto.size,
-            url: dto.url,
+            mimetype: dto.mimetype,
+            taille: dto.taille,
+            data: dto.data,
         });
-        return this.repo.save(doc);
+        const saved = await this.repo.save(doc);
+        const { data: _, ...rest } = saved;
+        return rest;
+    }
+    async validate(id, valide, note) {
+        await this.repo.update(id, { valide, note_admin: note || null });
+        return this.repo.findOne({
+            where: { id },
+            select: ['id', 'child_id', 'user_id', 'type', 'nom', 'filename', 'mimetype', 'taille', 'valide', 'note_admin', 'created_at'],
+            relations: ['child', 'user'],
+        });
     }
     async remove(id, user) {
-        const doc = await this.repo.findOne({ where: { id }, relations: ['user'] });
+        const doc = await this.repo.findOne({ where: { id } });
         if (!doc)
             throw new common_1.NotFoundException();
-        if (user.role !== 'admin' && doc.user.id !== user.id)
+        if (user.role !== 'admin' && doc.user_id !== user.id)
             throw new common_1.ForbiddenException();
-        const filePath = (0, path_1.join)(process.cwd(), 'uploads', 'documents', doc.filename);
-        if ((0, fs_1.existsSync)(filePath))
-            (0, fs_1.unlinkSync)(filePath);
-        return this.repo.remove(doc);
+        return this.repo.delete(id);
     }
 };
 exports.DocumentsService = DocumentsService;

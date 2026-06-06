@@ -6,14 +6,16 @@ export declare class DocumentsService {
     constructor(repo: Repository<Document>);
     findByUser(userId: number): Promise<Document[]>;
     findAll(): Promise<Document[]>;
-    findByChild(childId: number): Promise<Document[]>;
+    findOneWithData(id: number): Promise<Document>;
     create(user: User, dto: {
         child_id?: number;
         type: string;
         filename: string;
-        original_name: string;
-        size: number;
-        url: string;
-    }): Promise<Document>;
-    remove(id: number, user: User): Promise<Document>;
+        nom: string;
+        mimetype: string;
+        taille: number;
+        data: string;
+    }): Promise<any>;
+    validate(id: number, valide: boolean, note?: string): Promise<Document>;
+    remove(id: number, user: User): Promise<import("typeorm").DeleteResult>;
 }

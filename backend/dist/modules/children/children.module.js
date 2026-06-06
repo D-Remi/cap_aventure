@@ -18,8 +18,8 @@ exports.ChildrenModule = ChildrenModule;
 exports.ChildrenModule = ChildrenModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([child_entity_1.Child])],
-        controllers: [children_controller_1.ChildrenController],
         providers: [children_service_1.ChildrenService],
+        controllers: [children_controller_1.ChildrenController],
         exports: [children_service_1.ChildrenService],
     })
 ], ChildrenModule);

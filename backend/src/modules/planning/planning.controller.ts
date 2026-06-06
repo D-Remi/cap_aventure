@@ -11,9 +11,9 @@ export class PlanningController {
     return this.service.findAll(from)
   }
 
-  @Get('activity/:id')
-  findByActivity(@Param('id') id: string) {
-    return this.service.findByActivity(+id)
+  @Get('slot/:id')
+  findBySlot(@Param('id') id: string) {
+    return this.service.findBySlot(+id)
   }
 
   @Post()

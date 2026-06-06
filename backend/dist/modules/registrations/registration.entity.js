@@ -21,12 +21,20 @@ __decorate([
     __metadata("design:type", Number)
 ], Registration.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => child_entity_1.Child, (child) => child.registrations, { onDelete: 'CASCADE' }),
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], Registration.prototype, "child_id", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], Registration.prototype, "activity_id", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => child_entity_1.Child, { onDelete: 'CASCADE', nullable: true }),
     (0, typeorm_1.JoinColumn)({ name: 'child_id' }),
     __metadata("design:type", child_entity_1.Child)
 ], Registration.prototype, "child", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => activity_entity_1.Activity, (activity) => activity.registrations, { onDelete: 'CASCADE' }),
+    (0, typeorm_1.ManyToOne)(() => activity_entity_1.Activity, (activity) => activity.registrations, { onDelete: 'CASCADE', nullable: true }),
     (0, typeorm_1.JoinColumn)({ name: 'activity_id' }),
     __metadata("design:type", activity_entity_1.Activity)
 ], Registration.prototype, "activity", void 0);
@@ -35,11 +43,7 @@ __decorate([
     __metadata("design:type", String)
 ], Registration.prototype, "status", void 0);
 __decorate([
-    (0, typeorm_1.Column)({
-        type: 'enum',
-        enum: ['seance', 'mensuel', 'trimestriel', 'semestriel', 'annuel', 'essai'],
-        default: 'seance',
-    }),
+    (0, typeorm_1.Column)({ type: 'enum', enum: ['seance', 'mensuel', 'trimestriel', 'semestriel', 'annuel', 'essai'], default: 'seance' }),
     __metadata("design:type", String)
 ], Registration.prototype, "subscription_type", void 0);
 __decorate([

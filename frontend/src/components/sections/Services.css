@@ -1,0 +1,15 @@
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.svc-card{border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-md);transition:all .25s;background:white}
+.svc-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg)}
+.svc-card__img{height:220px;position:relative;overflow:hidden}
+.svc-card__img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.svc-card:hover .svc-card__img img{transform:scale(1.07)}
+.svc-card__overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(20,15,5,.75) 100%)}
+.svc-card__badge{position:absolute;top:1rem;left:1rem;font-size:.72rem;font-weight:700;padding:.3rem .9rem;border-radius:50px}
+.svc-card__body{padding:1.5rem}
+.svc-card__icon{font-size:2rem;margin-bottom:.75rem;display:block}
+.svc-card__body h3{font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800;color:var(--nuit);margin-bottom:.6rem}
+.svc-card__body p{font-size:.88rem;color:var(--text-muted);line-height:1.65;margin-bottom:1rem}
+.svc-card__details{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.25rem}
+.svc-card__details div{font-size:.82rem;color:var(--text-dark);font-weight:600}
+@media(max-width:900px){.svc-grid{grid-template-columns:1fr}}

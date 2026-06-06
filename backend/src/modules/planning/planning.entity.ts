@@ -1,10 +1,18 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm'
-import { Activity } from '../activities/activity.entity'
+import { Slot } from '../slots/slot.entity'
 
 @Entity('planning_seances')
 export class PlanningSeance {
   @PrimaryGeneratedColumn()
   id: number
+
+  @Column({ nullable: true })
+  slot_id: number
+
+  // Relation vers Slot (remplace Activity)
+  @ManyToOne(() => Slot, { nullable: true, onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'slot_id' })
+  slot: Slot
 
   @Column({ type: 'datetime' })
   date: Date
@@ -23,13 +31,6 @@ export class PlanningSeance {
 
   @Column({ type: 'enum', enum: ['planifiee','confirmee','annulee'], default: 'planifiee' })
   statut: 'planifiee' | 'confirmee' | 'annulee'
-
-  @ManyToOne(() => Activity, { nullable: true, onDelete: 'SET NULL' })
-  @JoinColumn({ name: 'activity_id' })
-  activity: Activity
-
-  @Column({ nullable: true })
-  activity_id: number
 
   @CreateDateColumn()
   created_at: Date

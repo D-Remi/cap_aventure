@@ -11,23 +11,19 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const platform_express_1 = require("@nestjs/platform-express");
 const throttler_1 = require("@nestjs/throttler");
-const core_1 = require("@nestjs/core");
-const common_2 = require("@nestjs/common");
 const database_config_1 = require("./config/database.config");
-const email_module_1 = require("./modules/email/email.module");
-const notifications_module_1 = require("./modules/notifications/notifications.module");
 const auth_module_1 = require("./modules/auth/auth.module");
 const users_module_1 = require("./modules/users/users.module");
 const children_module_1 = require("./modules/children/children.module");
-const activities_module_1 = require("./modules/activities/activities.module");
-const registrations_module_1 = require("./modules/registrations/registrations.module");
-const interest_module_1 = require("./modules/interest/interest.module");
-const upload_module_1 = require("./modules/upload/upload.module");
+const slots_module_1 = require("./modules/slots/slots.module");
+const bookings_module_1 = require("./modules/bookings/bookings.module");
 const documents_module_1 = require("./modules/documents/documents.module");
-const points_module_1 = require("./modules/points/points.module");
 const messages_module_1 = require("./modules/messages/messages.module");
-const stats_module_1 = require("./modules/stats/stats.module");
 const planning_module_1 = require("./modules/planning/planning.module");
+const email_module_1 = require("./modules/email/email.module");
+const contact_module_1 = require("./modules/contact/contact.module");
+const contrats_module_1 = require("./modules/contrats/contrats.module");
+const notifications_module_1 = require("./modules/notifications/notifications.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -36,39 +32,9 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             typeorm_1.TypeOrmModule.forRoot((0, database_config_1.dbConfig)()),
             platform_express_1.MulterModule.register({}),
-            throttler_1.ThrottlerModule.forRoot([{
-                    name: 'global',
-                    ttl: 60000,
-                    limit: 2000,
-                }, {
-                    name: 'auth',
-                    ttl: 60000,
-                    limit: 10,
-                }]),
-            email_module_1.EmailModule,
-            notifications_module_1.NotificationsModule,
-            auth_module_1.AuthModule,
-            users_module_1.UsersModule,
-            children_module_1.ChildrenModule,
-            activities_module_1.ActivitiesModule,
-            registrations_module_1.RegistrationsModule,
-            interest_module_1.InterestModule,
-            upload_module_1.UploadModule,
-            documents_module_1.DocumentsModule,
-            points_module_1.PointsModule,
-            messages_module_1.MessagesModule,
-            stats_module_1.StatsModule,
-            planning_module_1.PlanningModule,
-        ],
-        providers: [
-            {
-                provide: core_1.APP_PIPE,
-                useValue: new common_2.ValidationPipe({
-                    whitelist: true,
-                    transform: true,
-                    forbidNonWhitelisted: true,
-                }),
-            },
+            throttler_1.ThrottlerModule.forRoot([{ name: 'global', ttl: 60000, limit: 1000 }, { name: 'auth', ttl: 60000, limit: 10 }]),
+            auth_module_1.AuthModule, users_module_1.UsersModule, children_module_1.ChildrenModule, slots_module_1.SlotsModule, bookings_module_1.BookingsModule,
+            documents_module_1.DocumentsModule, messages_module_1.MessagesModule, planning_module_1.PlanningModule, email_module_1.EmailModule, contact_module_1.ContactModule, notifications_module_1.NotificationsModule, contrats_module_1.ContratsModule,
         ],
     })
 ], AppModule);

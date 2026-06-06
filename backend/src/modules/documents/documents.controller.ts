@@ -1,53 +1,47 @@
-import {
-  Controller, Get, Post, Delete, Param, Body,
-  UseGuards, UseInterceptors, UploadedFile, Query,
-} from '@nestjs/common'
-import { FileInterceptor } from '@nestjs/platform-express'
+import { Controller, Get, Post, Patch, Delete, Param, Body, UseGuards } from '@nestjs/common'
 import { DocumentsService } from './documents.service'
 import { User } from '../users/user.entity'
 import { JwtAuthGuard, RolesGuard, Roles, CurrentUser } from '../../common/guards/auth.guard'
-import { documentStorage, documentFilter } from '../upload/upload.module'
 
 @Controller('documents')
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(JwtAuthGuard)
 export class DocumentsController {
-  constructor(private service: DocumentsService) {}
+  constructor(private svc: DocumentsService) {}
 
   @Get()
   findMine(@CurrentUser() user: User) {
-    if (user.role === 'admin') return this.service.findAll()
-    return this.service.findByUser(user.id)
+    return user.role === 'admin' ? this.svc.findAll() : this.svc.findByUser(user.id)
   }
 
-  @Get('child/:childId')
-  findByChild(@Param('childId') childId: string, @CurrentUser() user: User) {
-    return this.service.findByChild(+childId)
+  @Get(':id/data')
+  getData(@Param('id') id: string) {
+    return this.svc.findOneWithData(+id)
   }
 
   @Post('upload')
-  @UseInterceptors(FileInterceptor('file', {
-    storage: documentStorage,
-    fileFilter: documentFilter,
-    limits: { fileSize: 10 * 1024 * 1024 },
-  }))
-  async upload(
-    @UploadedFile() file: Express.Multer.File,
+  upload(
     @CurrentUser() user: User,
-    @Body('child_id') childId: string,
-    @Body('type') type: string,
+    @Body() body: {
+      child_id?: number
+      type: string
+      filename: string
+      nom: string
+      mimetype: string
+      taille: number
+      data: string
+    },
   ) {
-    return this.service.create(user, {
-      child_id: childId ? +childId : undefined,
-      type: type || 'autre',
-      filename: file.filename,
-      original_name: file.originalname,
-      size: file.size,
-      url: `/api/upload/documents/${file.filename}`,
-    })
+    return this.svc.create(user, body)
+  }
+
+  @Patch(':id/validate')
+  @UseGuards(RolesGuard) @Roles('admin')
+  validate(@Param('id') id: string, @Body('valide') valide: boolean, @Body('note') note: string) {
+    return this.svc.validate(+id, valide, note)
   }
 
   @Delete(':id')
   remove(@Param('id') id: string, @CurrentUser() user: User) {
-    return this.service.remove(+id, user)
+    return this.svc.remove(+id, user)
   }
 }

@@ -19,8 +19,8 @@ export default function AdminRegistrations() {
   const fetchAll = async () => {
     try {
       const [regs, acts] = await Promise.all([
-        axios.get('/api/registrations'),
-        axios.get('/api/activities?all=true'),
+        axios.get('/api/bookings'),
+        axios.get('/api/slots?all=true'),
       ])
       setRegistrations(regs.data)
       setActivities(acts.data)
@@ -28,7 +28,7 @@ export default function AdminRegistrations() {
   }
 
   const updateStatus = async (id, status) => {
-    await axios.patch(`/api/registrations/${id}/status`, { status })
+    await axios.patch(`/api/bookings/${id}/status`, { status })
     setRegistrations(prev => prev.map(r => r.id === id ? { ...r, status } : r))
   }
 

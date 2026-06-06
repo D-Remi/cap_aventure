@@ -3,67 +3,71 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Document } from './document.entity'
 import { User } from '../users/user.entity'
-import { existsSync, unlinkSync } from 'fs'
-import { join } from 'path'
 
 @Injectable()
 export class DocumentsService {
   constructor(@InjectRepository(Document) private repo: Repository<Document>) {}
 
-  // Docs d'un parent (tous ses enfants)
   findByUser(userId: number) {
     return this.repo.find({
-      where: { user: { id: userId } },
+      where: { user_id: userId },
+      select: ['id','child_id','user_id','type','nom','filename','mimetype','taille','valide','note_admin','created_at'],
       relations: ['child'],
       order: { created_at: 'DESC' },
     })
   }
 
-  // Tous les docs (admin)
   findAll() {
     return this.repo.find({
-      relations: ['child', 'user'],
+      select: ['id','child_id','user_id','type','nom','filename','mimetype','taille','valide','note_admin','created_at'],
+      relations: ['child','user'],
       order: { created_at: 'DESC' },
     })
   }
 
-  // Docs d'un enfant spécifique
-  findByChild(childId: number) {
-    return this.repo.find({
-      where: { child: { id: childId } },
-      order: { created_at: 'DESC' },
-    })
+  // Récupérer UN document avec ses données (pour visualisation)
+  findOneWithData(id: number) {
+    return this.repo.findOne({ where: { id } })
   }
 
   async create(user: User, dto: {
     child_id?: number
     type: string
     filename: string
-    original_name: string
-    size: number
-    url: string
+    nom: string
+    mimetype: string
+    taille: number
+    data: string   // base64
   }) {
     const doc = this.repo.create({
-      user,
-      child: dto.child_id ? { id: dto.child_id } as any : null,
-      type: dto.type as any,
+      user_id:  user.id,
+      child_id: dto.child_id || null,
+      type:     dto.type as any,
+      nom:      dto.nom,
       filename: dto.filename,
-      original_name: dto.original_name,
-      size: dto.size,
-      url: dto.url,
+      mimetype: dto.mimetype,
+      taille:   dto.taille,
+      data:     dto.data,
     })
-    return this.repo.save(doc)
+    const saved = await this.repo.save(doc)
+    // Retourner sans la data pour ne pas saturer la réponse
+    const { data: _, ...rest } = saved as any
+    return rest
+  }
+
+  async validate(id: number, valide: boolean, note?: string) {
+    await this.repo.update(id, { valide, note_admin: note || null })
+    return this.repo.findOne({
+      where: { id },
+      select: ['id','child_id','user_id','type','nom','filename','mimetype','taille','valide','note_admin','created_at'],
+      relations: ['child','user'],
+    })
   }
 
   async remove(id: number, user: User) {
-    const doc = await this.repo.findOne({ where: { id }, relations: ['user'] })
+    const doc = await this.repo.findOne({ where: { id } })
     if (!doc) throw new NotFoundException()
-    if (user.role !== 'admin' && doc.user.id !== user.id) throw new ForbiddenException()
-
-    // Supprimer le fichier physique
-    const filePath = join(process.cwd(), 'uploads', 'documents', doc.filename)
-    if (existsSync(filePath)) unlinkSync(filePath)
-
-    return this.repo.remove(doc)
+    if (user.role !== 'admin' && doc.user_id !== user.id) throw new ForbiddenException()
+    return this.repo.delete(id)
   }
 }

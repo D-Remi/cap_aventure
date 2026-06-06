@@ -1,81 +1,38 @@
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import './Navbar.css'
-
 export default function Navbar() {
-  const [scrolled, setScrolled]   = useState(false)
-  const [menuOpen, setMenuOpen]   = useState(false)
-  const location  = useLocation()
-  const { user }  = useAuth()
-
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
+  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
+    const fn = () => setScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', fn)
+    return () => window.removeEventListener('scroll', fn)
   }, [])
-
-  const scrollTo = (id) => {
-    setMenuOpen(false)
-    if (location.pathname !== '/') {
-      window.location.href = `/#${id}`
-      return
-    }
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-  }
-
+  const go = (id) => { setOpen(false); const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth'}); else navigate('/#'+id) }
   return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-      <Link to="/" className="navbar__logo">
-        Cap<span>Aventure</span>
-      </Link>
-
-      <ul className={`navbar__links ${menuOpen ? 'open' : ''}`}>
-        <li><button onClick={() => scrollTo('projet')}>Le projet</button></li>
-        <li><button onClick={() => scrollTo('activites')}>Activités</button></li>
-        <li><button onClick={() => { setMenuOpen(false); window.location.pathname !== '/calendrier' && (window.location.href = '/calendrier') }}>Calendrier</button></li>
-        <li><button onClick={() => scrollTo('clubs')}>Clubs</button></li>
-        <li><button onClick={() => scrollTo('contact')}>Contact</button></li>
-
-        <li className="navbar__links--divider" />
-
+    <nav className={`navbar ${scrolled?'scrolled':''}`}>
+      <Link to="/" className="navbar__logo">Cap<span>Aventure</span></Link>
+      <div className={`navbar__links ${open?'open':''}`}>
+        <button onClick={()=>go('services')}>Services</button>
+        <button onClick={()=>go('repit')}>Répit</button>
+        <button onClick={()=>go('comment')}>Comment</button>
+        <button onClick={()=>go('tarifs')}>Tarifs</button>
+        <button onClick={()=>go('contact')}>Contact</button>
+        {user && <Link to="/dashboard" onClick={()=>setOpen(false)}>Mon espace</Link>}
+        {user?.role==='admin' && <Link to="/admin" onClick={()=>setOpen(false)}>Admin</Link>}
+      </div>
+      <div className="navbar__actions">
         {user ? (
-          /* ── Connecté ── */
-          <>
-            <li>
-              <Link
-                to="/dashboard"
-                className="navbar__btn-dashboard"
-                onClick={() => setMenuOpen(false)}
-              >
-                <span className="navbar__user-avatar">{user.prenom?.[0]}{user.nom?.[0]}</span>
-                Mon espace
-              </Link>
-            </li>
-            {(user.role === 'admin' || user.role === 'animateur') && (
-              <li>
-                <Link to="/admin" className="navbar__btn-admin" onClick={() => setMenuOpen(false)}>
-                  ⚙️ Admin
-                </Link>
-              </li>
-            )}
-          </>
+          <><Link to="/dashboard" className="navbar__btn">Mon espace</Link><button className="navbar__out" onClick={logout}>Déco</button></>
         ) : (
-          /* ── Non connecté ── */
-          <>
-            <li><Link to="/login"    className="navbar__btn-login"    onClick={() => setMenuOpen(false)}>Connexion</Link></li>
-            <li><Link to="/register" className="navbar__btn-register" onClick={() => setMenuOpen(false)}>S'inscrire</Link></li>
-          </>
+          <><Link to="/login" className="navbar__login">Connexion</Link><Link to="/register" className="navbar__btn">S'inscrire</Link></>
         )}
-      </ul>
-
-      <button
-        className={`navbar__burger ${menuOpen ? 'open' : ''}`}
-        onClick={() => setMenuOpen(!menuOpen)}
-        aria-label="Menu"
-      >
-        <span /><span /><span />
-      </button>
+        <button className="navbar__burger" onClick={()=>setOpen(!open)}><span/><span/><span/></button>
+      </div>
     </nav>
   )
 }

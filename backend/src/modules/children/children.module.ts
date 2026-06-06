@@ -6,8 +6,8 @@ import { ChildrenController } from './children.controller'
 
 @Module({
   imports: [TypeOrmModule.forFeature([Child])],
-  controllers: [ChildrenController],
   providers: [ChildrenService],
+  controllers: [ChildrenController],
   exports: [ChildrenService],
 })
 export class ChildrenModule {}

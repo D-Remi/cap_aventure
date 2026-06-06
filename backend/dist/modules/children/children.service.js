@@ -21,35 +21,43 @@ let ChildrenService = class ChildrenService {
     constructor(repo) {
         this.repo = repo;
     }
-    findByUser(userId) {
-        return this.repo.find({
-            where: { user: { id: userId } },
-            order: { created_at: 'ASC' },
-        });
-    }
-    findAll() {
-        return this.repo.find({ relations: ['user'], order: { created_at: 'DESC' } });
-    }
-    async create(user, dto) {
-        const child = this.repo.create({ ...dto, user });
-        return this.repo.save(child);
-    }
-    async update(id, user, dto) {
-        const child = await this.repo.findOne({ where: { id }, relations: ['user'] });
-        if (!child)
+    findByUser(uid) { return this.repo.find({ where: { user_id: uid }, order: { created_at: 'ASC' } }); }
+    findAll() { return this.repo.find({ relations: ['user'], order: { created_at: 'DESC' } }); }
+    findOne(id) { return this.repo.findOne({ where: { id }, relations: ['user'] }); }
+    create(user, dto) { return this.repo.save(this.repo.create({ ...dto, user_id: user.id })); }
+    async updateStep1(id, user, dto) {
+        const c = await this.repo.findOne({ where: { id } });
+        if (!c)
             throw new common_1.NotFoundException();
-        if (user.role !== 'admin' && child.user.id !== user.id)
+        if (user.role !== 'admin' && c.user_id !== user.id)
             throw new common_1.ForbiddenException();
-        await this.repo.update(id, dto);
+        const fields = ['prenom', 'nom', 'date_naissance', 'allergie', 'medecin_nom', 'medecin_telephone', 'contact_urgence_nom', 'contact_urgence_telephone', 'contact_urgence_lien'];
+        const payload = {};
+        fields.forEach(f => { if (dto[f] !== undefined)
+            payload[f] = dto[f]; });
+        await this.repo.update(id, payload);
+        return this.repo.findOne({ where: { id } });
+    }
+    async updateStep2(id, user, dto) {
+        const c = await this.repo.findOne({ where: { id } });
+        if (!c)
+            throw new common_1.NotFoundException();
+        if (user.role !== 'admin' && c.user_id !== user.id)
+            throw new common_1.ForbiddenException();
+        await this.repo.update(id, { ...dto, dossier_complete: true });
+        return this.repo.findOne({ where: { id } });
+    }
+    async updateNotesAnimateur(id, notes) {
+        await this.repo.update(id, { notes_animateur: notes });
         return this.repo.findOne({ where: { id } });
     }
     async remove(id, user) {
-        const child = await this.repo.findOne({ where: { id }, relations: ['user'] });
-        if (!child)
+        const c = await this.repo.findOne({ where: { id } });
+        if (!c)
             throw new common_1.NotFoundException();
-        if (user.role !== 'admin' && child.user.id !== user.id)
+        if (user.role !== 'admin' && c.user_id !== user.id)
             throw new common_1.ForbiddenException();
-        return this.repo.remove(child);
+        return this.repo.delete(id);
     }
 };
 exports.ChildrenService = ChildrenService;

@@ -1,0 +1,15 @@
+.tarifs__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.tarif-card{border-radius:var(--radius-xl);border:2px solid var(--sable-dark);padding:2rem 1.5rem;text-align:center;position:relative;background:white;transition:all .2s;display:flex;flex-direction:column;gap:.5rem}
+.tarif-card:hover{border-color:var(--sauge);transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.tarif-card--pop{border-color:var(--sauge);background:#eef5f2}
+.tarif-card__badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--sauge);color:white;font-size:.7rem;font-weight:800;padding:.2rem .9rem;border-radius:50px;white-space:nowrap}
+.tarif-card__icon{font-size:2.2rem;margin-bottom:.25rem}
+.tarif-card h3{font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800;color:var(--nuit)}
+.tarif-card__price{font-family:'Baloo 2',cursive;font-size:2.5rem;font-weight:800;color:var(--sauge);line-height:1}
+.tarif-card__price span{font-size:1rem;color:var(--text-muted);font-weight:600}
+.tarif-card__desc{font-size:.82rem;color:var(--text-muted);line-height:1.55}
+.tarif-card__list{display:flex;flex-direction:column;gap:.4rem;text-align:left;margin-top:.5rem}
+.tarif-card__list li{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--text-dark)}
+.tarif-card__list li::before{content:'✓';color:var(--sauge);font-weight:800;flex-shrink:0}
+.tarifs__note{text-align:center;font-size:.83rem;color:var(--text-muted);margin-top:1.5rem;background:var(--sable-light);border-radius:12px;padding:.85rem 1.5rem}
+@media(max-width:768px){.tarifs__grid{grid-template-columns:1fr}}

@@ -41,7 +41,7 @@ export default function AdminActivities() {
 
   const fetchActivities = async () => {
     try {
-      const { data } = await axios.get('/api/activities?all=true')
+      const { data } = await axios.get('/api/slots?all=true')
       setActivities(data)
     } finally { setLoading(false) }
   }
@@ -71,8 +71,8 @@ export default function AdminActivities() {
   const handleSave = async (form) => {
     setSaving(true)
     try {
-      if (modal === 'create') await axios.post('/api/activities', form)
-      else                    await axios.put(`/api/activities/${modal.id}`, form)
+      if (modal === 'create') await axios.post('/api/slots', form)
+      else                    await axios.put(`/api/slots/${modal.id}`, form)
       setModal(null)
       fetchActivities()
     } finally { setSaving(false) }
@@ -80,7 +80,7 @@ export default function AdminActivities() {
 
   const handleDelete = async (id) => {
     if (!window.confirm('Supprimer cette activité ?')) return
-    await axios.delete(`/api/activities/${id}`)
+    await axios.delete(`/api/slots/${id}`)
     fetchActivities()
   }
 

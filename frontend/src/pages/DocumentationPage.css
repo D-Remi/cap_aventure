@@ -1,0 +1,23 @@
+.doc-page{padding:7rem 0 5rem;min-height:100vh;background:var(--sable-light)}
+.doc-page__header{text-align:center;margin-bottom:2.5rem}
+.doc-page__header h1{font-family:'Baloo 2',cursive;font-size:2.4rem;font-weight:800;color:var(--nuit);margin-bottom:.5rem}
+.doc-page__header p{color:var(--text-muted);max-width:520px;margin:0 auto}
+.doc-quick{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:3rem}
+.doc-quick-card{background:white;border-radius:var(--radius-xl);padding:1.25rem;text-align:center;text-decoration:none;color:var(--nuit);box-shadow:var(--shadow-sm);transition:all .2s;border:2px solid transparent;display:flex;flex-direction:column;gap:.5rem;align-items:center}
+.doc-quick-card:hover{border-color:var(--sauge);transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.doc-quick-card span:first-child{font-size:1.75rem}
+.doc-quick-card span:last-child{font-weight:700;font-size:.88rem}
+.doc-section{margin-bottom:2.5rem}
+.doc-section h2{font-family:'Baloo 2',cursive;font-size:1.5rem;font-weight:800;color:var(--nuit);margin-bottom:1rem}
+.doc-items{display:flex;flex-direction:column;gap:.6rem}
+.doc-item{background:white;border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;border:1.5px solid var(--sable-light);transition:border-color .18s}
+.doc-item[open]{border-color:var(--sauge)}
+.doc-item__q{padding:1rem 1.25rem;font-weight:700;color:var(--nuit);font-size:.95rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.doc-item__q::after{content:'▸';color:var(--sauge);transition:transform .2s;flex-shrink:0}
+.doc-item[open] .doc-item__q::after{transform:rotate(90deg)}
+.doc-item__a{padding:.25rem 1.25rem 1.25rem;border-top:1px solid var(--sable-light)}
+.doc-item__a p{font-size:.9rem;color:var(--text-dark);line-height:1.7;margin:.5rem 0 0}
+.doc-cta{background:white;border-radius:var(--radius-xl);padding:3rem;text-align:center;box-shadow:var(--shadow-md);margin-top:2rem}
+.doc-cta h2{font-family:'Baloo 2',cursive;font-size:1.6rem;color:var(--nuit);margin-bottom:.5rem}
+.doc-cta p{color:var(--text-muted);margin-bottom:1.5rem}
+@media(max-width:768px){.doc-quick{grid-template-columns:repeat(2,1fr)}}
