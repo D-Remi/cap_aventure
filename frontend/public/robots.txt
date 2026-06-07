@@ -8,4 +8,4 @@ Disallow: /register
 Disallow: /reset-password
 Disallow: /forgot-password
 
-Sitemap: https://capaventure74.fun/sitemap.xml
+Sitemap: https://capaventure33.fun/sitemap.xml
