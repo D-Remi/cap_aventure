@@ -11,11 +11,13 @@ export default function CalendarPage() {
   const { user } = useAuth()
   const [slots,    setSlots]    = useState([])
   const [contractedDates, setContractedDates] = useState([])
+  const [indispos, setIndispos] = useState([])
   const [contactDate, setContactDate] = useState(null)
   const [children, setChildren] = useState([])
 
   useEffect(() => {
     axios.get('/api/slots?all=true').then(r => setSlots(r.data)).catch(() => {})
+    axios.get('/api/indisponibilites').then(r => setIndispos(r.data)).catch(() => {})
     // Charger les contrats actifs pour marquer les jours
     axios.get('/api/contrats/calendrier').then(r => {
       const dates = []
@@ -56,6 +58,7 @@ export default function CalendarPage() {
             showEmpty={true}
             mode="public"
             contractedDates={contractedDates}
+            indisponibilites={indispos}
           />
         </div>
       </div>

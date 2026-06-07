@@ -16,11 +16,30 @@ export default function AdminPlanning() {
   const [form,   setForm]   = useState(EMPTY)
   const [saving, setSaving] = useState(false)
   const [view,   setView]   = useState('calendar') // calendar | list
+  const [indispos, setIndispos] = useState([])
+  const [indModal, setIndModal] = useState(false)
+  const [indForm,  setIndForm]  = useState({ date:'', heure_debut:'09:00', heure_fin:'17:00', motif:'' })
 
-  useEffect(() => { fetch() }, [])
+  useEffect(() => { fetch(); fetchIndispos() }, [])
 
   const fetch = () =>
     axios.get('/api/slots?all=true').then(r => setSlots(r.data)).catch(() => {})
+
+  const fetchIndispos = () =>
+    axios.get('/api/indisponibilites').then(r => setIndispos(r.data)).catch(() => {})
+
+  const saveIndispo = async () => {
+    if (!indForm.date) return toast.error('Date obligatoire')
+    await axios.post('/api/indisponibilites', indForm)
+    fetchIndispos(); setIndModal(false)
+    setIndForm({ date:'', heure_debut:'09:00', heure_fin:'17:00', motif:'' })
+    toast.success('Indisponibilité ajoutée')
+  }
+
+  const delIndispo = async (id) => {
+    await axios.delete(`/api/indisponibilites/${id}`)
+    fetchIndispos(); toast.success('Indisponibilité supprimée')
+  }
 
   const set = k => e =>
     setForm(f => ({ ...f, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }))
@@ -98,6 +117,7 @@ export default function AdminPlanning() {
                 </button>
               ))}
             </div>
+            <button className="btn-secondary" onClick={() => setIndModal(true)} style={{fontSize:'.88rem'}}>🚫 Indisponibilité</button>
             <button className="btn-primary" onClick={openCreate}>+ Nouveau créneau</button>
           </div>
         </div>
@@ -109,7 +129,26 @@ export default function AdminPlanning() {
             onSlotClick={openEdit}
             showEmpty={true}
             mode="admin"
+            indisponibilites={indispos}
           />
+          {/* Liste indisponibilités */}
+          {indispos.length > 0 && (
+            <div style={{marginTop:'1.25rem',background:'white',borderRadius:'var(--radius-xl)',padding:'1.25rem 1.5rem',boxShadow:'var(--shadow-sm)'}}>
+              <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>🚫 Indisponibilités ({indispos.length})</h3>
+              <div style={{display:'flex',flexDirection:'column',gap:'.5rem'}}>
+                {indispos.map(i => (
+                  <div key={i.id} style={{display:'flex',alignItems:'center',gap:'.85rem',padding:'.6rem .85rem',background:'#fff5f5',borderRadius:8,border:'1px solid #fecaca'}}>
+                    <span style={{fontSize:'.85rem',fontWeight:700,color:'#991b1b',whiteSpace:'nowrap'}}>
+                      {new Date(i.date+'T00:00:00').toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})}
+                    </span>
+                    <span style={{fontSize:'.82rem',color:'#b91c1c'}}>{i.heure_debut?.slice(0,5)} → {i.heure_fin?.slice(0,5)}</span>
+                    <span style={{fontSize:'.82rem',color:'var(--text-muted)',flex:1}}>{i.motif || '—'}</span>
+                    <button onClick={() => delIndispo(i.id)} style={{background:'#fee2e2',color:'#991b1b',border:'none',borderRadius:6,padding:'2px 8px',cursor:'pointer',fontSize:'.8rem',fontFamily:'inherit'}}>🗑️</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         )}
 
         {/* Vue liste */}
@@ -205,5 +244,43 @@ export default function AdminPlanning() {
         )}
       </div>
     </AdminLayout>
+
+      {/* Modal indisponibilité */}
+      {indModal && (
+        <div className="admin-modal-overlay" onClick={() => setIndModal(false)}>
+          <div className="admin-modal" style={{maxWidth:400}} onClick={e => e.stopPropagation()}>
+            <h2>🚫 Ajouter une indisponibilité</h2>
+            <div style={{display:'flex',flexDirection:'column',gap:'.85rem'}}>
+              <div>
+                <label style={{fontSize:'.78rem',fontWeight:700,display:'block',marginBottom:4,textTransform:'uppercase',color:'var(--nuit)'}}>Date *</label>
+                <input type="date" value={indForm.date} onChange={e => setIndForm(f=>({...f,date:e.target.value}))}
+                  style={{width:'100%',padding:'.5rem',border:'1.5px solid var(--sable-dark)',borderRadius:8,fontFamily:'inherit'}}/>
+              </div>
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'.75rem'}}>
+                <div>
+                  <label style={{fontSize:'.78rem',fontWeight:700,display:'block',marginBottom:4,textTransform:'uppercase',color:'var(--nuit)'}}>Début</label>
+                  <input type="time" value={indForm.heure_debut} onChange={e => setIndForm(f=>({...f,heure_debut:e.target.value}))}
+                    style={{width:'100%',padding:'.5rem',border:'1.5px solid var(--sable-dark)',borderRadius:8,fontFamily:'inherit'}}/>
+                </div>
+                <div>
+                  <label style={{fontSize:'.78rem',fontWeight:700,display:'block',marginBottom:4,textTransform:'uppercase',color:'var(--nuit)'}}>Fin</label>
+                  <input type="time" value={indForm.heure_fin} onChange={e => setIndForm(f=>({...f,heure_fin:e.target.value}))}
+                    style={{width:'100%',padding:'.5rem',border:'1.5px solid var(--sable-dark)',borderRadius:8,fontFamily:'inherit'}}/>
+                </div>
+              </div>
+              <div>
+                <label style={{fontSize:'.78rem',fontWeight:700,display:'block',marginBottom:4,textTransform:'uppercase',color:'var(--nuit)'}}>Motif</label>
+                <input value={indForm.motif} onChange={e => setIndForm(f=>({...f,motif:e.target.value}))}
+                  placeholder="Ex: RDV médecin, Vacances..."
+                  style={{width:'100%',padding:'.5rem',border:'1.5px solid var(--sable-dark)',borderRadius:8,fontFamily:'inherit'}}/>
+              </div>
+            </div>
+            <div className="admin-modal__actions">
+              <button className="btn-secondary" onClick={() => setIndModal(false)}>Annuler</button>
+              <button className="btn-primary" onClick={saveIndispo} disabled={!indForm.date}>Enregistrer</button>
+            </div>
+          </div>
+        </div>
+      )}
   )
 }

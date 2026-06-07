@@ -8,6 +8,7 @@ export default function PlanningTab() {
   const [slots,    setSlots]    = useState([])
   const [children, setChildren] = useState([])
   const [bookings, setBookings] = useState([])
+  const [indispos, setIndispos] = useState([])
   const [loading,  setLoading]  = useState(true)
 
   const fetchAll = () => Promise.all([
@@ -35,6 +36,7 @@ export default function PlanningTab() {
       onBooked={fetchAll}
       showEmpty={true}
       mode="parent"
+      indisponibilites={indispos}
     />
   )
 }

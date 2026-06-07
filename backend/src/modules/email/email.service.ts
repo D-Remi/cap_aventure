@@ -7,12 +7,20 @@ export class EmailService {
   private transporter: nodemailer.Transporter
 
   constructor() {
-    this.transporter = nodemailer.createTransport({
-      host:   process.env.MAIL_HOST   || 'smtp.gmail.com',
-      port:   parseInt(process.env.MAIL_PORT || '587'),
-      secure: process.env.MAIL_SECURE === 'true',
-      auth: { user: process.env.MAIL_USER || '', pass: process.env.MAIL_PASS || '' },
-    })
+    const user = process.env.MAIL_USER
+    const pass = process.env.MAIL_PASS
+    // Si pas de credentials → mode test (pas d'envoi réel, pas de crash)
+    if (!user || !pass) {
+      this.transporter = nodemailer.createTransport({ jsonTransport: true })
+      this.logger.warn('Email non configuré — MAIL_USER/MAIL_PASS manquants dans .env')
+    } else {
+      this.transporter = nodemailer.createTransport({
+        host:   process.env.MAIL_HOST   || 'smtp.gmail.com',
+        port:   parseInt(process.env.MAIL_PORT || '587'),
+        secure: process.env.MAIL_SECURE === 'true',
+        auth:   { user, pass },
+      })
+    }
   }
 
   private async send(to: string, subject: string, html: string) {

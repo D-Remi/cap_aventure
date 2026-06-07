@@ -120,7 +120,7 @@ function SlotModal({ slot, children, onClose, onBooked, isLoggedIn }) {
   )
 }
 
-export default function WeekCalendar({ slots=[], children=[], onBooked, showEmpty=true, mode='public', isLoggedIn=false, contractedDates=[] }) {
+export default function WeekCalendar({ slots=[], children=[], onBooked, showEmpty=true, mode='public', isLoggedIn=false, contractedDates=[], indisponibilites=[] }) {
   const [refDate, setRef] = useState(new Date())
   const [modal, setModal] = useState(null)
   const weekDates = getWeekDates(refDate)
@@ -148,7 +148,14 @@ export default function WeekCalendar({ slots=[], children=[], onBooked, showEmpt
     let key = s.type_accueil || 'standard'
     if (s.statut==='complet') key='complet'
     if (s.statut==='annule')  key='annule'
-    return { top, height, ...TYPE_STYLE[key] }
+    // Remplissage partiel — teinte orangée si 2/3 places prises
+    const fill = s.places_max > 0 ? s.places_prises / s.places_max : 0
+    let fillOverlay = null
+    if (key !== 'complet' && key !== 'annule') {
+      if (fill >= 1)        fillOverlay = '#ef444422'
+      else if (fill >= 0.6) fillOverlay = '#f59e0b18'
+    }
+    return { top, height, fillOverlay, ...TYPE_STYLE[key] }
   }
 
   const monthRange = () => {
@@ -179,6 +186,7 @@ export default function WeekCalendar({ slots=[], children=[], onBooked, showEmpt
       </div>
 
       <div className="wk-legend">
+        <span className="wk-legend-item" style={{background:'#fee2e2',borderColor:'#ef4444',color:'#991b1b'}}>🚫 Indisponible</span>
         {Object.entries(TYPE_STYLE).map(([k,v]) => (
           <span key={k} className="wk-legend-item" style={{background:v.bg,borderColor:v.border,color:v.text}}>{v.label}</span>
         ))}
@@ -204,6 +212,24 @@ export default function WeekCalendar({ slots=[], children=[], onBooked, showEmpt
               <div className="wk-day-body">
                 {HOURS.map(h => <div key={h} className="wk-hour-line"/>)}
 
+                {/* Indisponibilités */}
+                {indisponibilites.filter(i => i.date === ds).map(ind => {
+                  const top    = (timeToMin(ind.heure_debut||'00:00') - TOP_OFFSET) * PX_MIN
+                  const height = (timeToMin(ind.heure_fin||'23:59') - timeToMin(ind.heure_debut||'00:00')) * PX_MIN
+                  return (
+                    <div key={ind.id} style={{
+                      position:'absolute', left:0, right:0,
+                      top: Math.max(0, top), height: Math.max(height, 20),
+                      background:'repeating-linear-gradient(45deg,#fca5a522,#fca5a522 5px,#fee2e233 5px,#fee2e233 10px)',
+                      borderLeft:'3px solid #ef4444', zIndex:1, pointerEvents:'none',
+                      display:'flex', alignItems:'center', justifyContent:'center',
+                    }}>
+                      <span style={{fontSize:'.65rem',color:'#991b1b',fontWeight:700,background:'#fee2e2',padding:'1px 6px',borderRadius:4}}>
+                        🚫 {ind.motif || 'Indisponible'}
+                      </span>
+                    </div>
+                  )
+                })}
                 {contractedDates.includes(ds) && (
                   <div style={{position:'absolute',inset:0,background:'rgba(83,74,183,0.08)',borderLeft:'3px solid #534AB7',pointerEvents:'none',zIndex:0}}/>
                 )}
@@ -221,13 +247,18 @@ export default function WeekCalendar({ slots=[], children=[], onBooked, showEmpt
                   return (
                     <div key={s.id}
                       className={`wk-slot ${clickable?'wk-slot--clickable':''}`}
-                      style={{top:p.top,height:p.height,background:p.bg,borderLeftColor:p.border,color:p.text}}
+                      style={{top:p.top,height:p.height,background:p.fillOverlay?`linear-gradient(${p.fillOverlay},${p.fillOverlay}),${p.bg}`:p.bg,borderLeftColor:p.border,color:p.text,zIndex:2}}
                       onClick={() => clickable && handleClick(s)}
                     >
                       <span className="wk-slot__type" style={{color:p.text}}>{p.label}</span>
                       {s.titre && <span className="wk-slot__title">{s.titre}</span>}
                       <span className="wk-slot__time">{s.heure_debut?.slice(0,5)}–{s.heure_fin?.slice(0,5)}</span>
-                      {s.statut==='ouvert' && <span className="wk-slot__places">{s.places_max-s.places_prises} pl.</span>}
+                      {s.statut==='ouvert' && (
+                        <span className="wk-slot__places" style={{color: s.places_prises>=s.places_max-1?'#f57f17':'#2e7d32'}}>
+                          {s.places_max-s.places_prises}/{s.places_max} pl.
+                        </span>
+                      )}
+                      {s.statut==='complet' && <span className="wk-slot__places" style={{color:'#991b1b'}}>🔴 Complet</span>}
                     </div>
                   )
                 })}
