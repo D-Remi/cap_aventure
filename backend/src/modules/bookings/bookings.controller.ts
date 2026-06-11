@@ -25,6 +25,24 @@ export class BookingsController {
   @UseGuards(RolesGuard) @Roles('admin')
   confirm(@Param('id') id: string) { return this.svc.confirm(+id) }
 
+  @Patch(':id/paiement')
+  @UseGuards(JwtAuthGuard)
+  declarerPaiement(@Param('id') id: string, @Body() dto: any) {
+    return this.svc.declarerPaiement(+id, dto)
+  }
+
+  @Patch(':id/valider-paiement')
+  @UseGuards(JwtAuthGuard, RolesGuard) @Roles('admin')
+  validerPaiement(@Param('id') id: string) {
+    return this.svc.validerPaiement(+id)
+  }
+
+  @Patch(':id/tarif')
+  @UseGuards(JwtAuthGuard, RolesGuard) @Roles('admin')
+  setTarif(@Param('id') id: string, @Body('tarif') tarif: number) {
+    return this.svc.setTarif(+id, tarif)
+  }
+
   @Patch(':id/cancel')
   cancel(@Param('id') id: string, @CurrentUser() u: User) { return this.svc.cancel(+id, u) }
 

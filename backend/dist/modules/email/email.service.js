@@ -16,12 +16,20 @@ const nodemailer = require("nodemailer");
 let EmailService = EmailService_1 = class EmailService {
     constructor() {
         this.logger = new common_1.Logger(EmailService_1.name);
-        this.transporter = nodemailer.createTransport({
-            host: process.env.MAIL_HOST || 'smtp.gmail.com',
-            port: parseInt(process.env.MAIL_PORT || '587'),
-            secure: process.env.MAIL_SECURE === 'true',
-            auth: { user: process.env.MAIL_USER || '', pass: process.env.MAIL_PASS || '' },
-        });
+        const user = process.env.MAIL_USER;
+        const pass = process.env.MAIL_PASS;
+        if (!user || !pass) {
+            this.transporter = nodemailer.createTransport({ jsonTransport: true });
+            this.logger.warn('Email non configuré — MAIL_USER/MAIL_PASS manquants dans .env');
+        }
+        else {
+            this.transporter = nodemailer.createTransport({
+                host: process.env.MAIL_HOST || 'smtp.gmail.com',
+                port: parseInt(process.env.MAIL_PORT || '587'),
+                secure: process.env.MAIL_SECURE === 'true',
+                auth: { user, pass },
+            });
+        }
     }
     async send(to, subject, html) {
         try {

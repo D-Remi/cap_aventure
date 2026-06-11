@@ -86,4 +86,24 @@ export class BookingsService {
     await this.repo.update(id, { present:dto.present, heure_arrivee:dto.heure_arrivee, heure_depart:dto.heure_depart })
     return this.findOne(id)
   }
+
+  async declarerPaiement(id: number, dto: any) {
+    await this.repo.update(id, {
+      paiement_mode:    dto.paiement_mode,
+      paiement_ref:     dto.paiement_ref || null,
+      paiement_declare: true,
+      paiement_date:    new Date(),
+    })
+    return this.findOne(id)
+  }
+
+  async validerPaiement(id: number) {
+    await this.repo.update(id, { paiement_valide: true, paiement_statut: 'recu' })
+    return this.findOne(id)
+  }
+
+  async setTarif(id: number, tarif: number) {
+    await this.repo.update(id, { tarif_propose: tarif })
+    return this.findOne(id)
+  }
 }

@@ -17,6 +17,12 @@ export class Booking {
   @Column({ type:'decimal', precision:8, scale:2, default:25 }) tarif_applique: number
   @Column({ type:'enum', enum:['especes','virement','cesu'], nullable:true }) paiement: string
   @Column({ type:'enum', enum:['en_attente','recu','rembourse'], default:'en_attente' }) paiement_statut: string
+  @Column({ type:'decimal', precision:8, scale:2, nullable:true }) tarif_propose: number
+  @Column({ type:'enum', enum:['cesu','virement'], nullable:true }) paiement_mode: string
+  @Column({ nullable:true }) paiement_ref: string
+  @Column({ default:false }) paiement_declare: boolean
+  @Column({ default:false }) paiement_valide: boolean
+  @Column({ type:'datetime', nullable:true }) paiement_date: Date
   @Column({ type:'text', nullable:true }) notes_parent: string
   @Column({ type:'text', nullable:true }) notes_animateur: string
   @Column({ type:'text', nullable:true }) compte_rendu: string

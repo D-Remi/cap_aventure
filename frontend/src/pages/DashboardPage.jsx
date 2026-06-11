@@ -4,7 +4,9 @@ import axios from 'axios'
 import { useAuth } from '../context/AuthContext'
 import MessagingTab from '../components/ui/MessagingTab'
 import ContratTab   from '../components/ui/ContratTab'
-import PlanningTab  from '../components/ui/PlanningTab'
+import PlanningTab       from '../components/ui/PlanningTab'
+import PaiementTab      from '../components/ui/PaiementTab'
+import MultiDateBooking from '../components/ui/MultiDateBooking'
 import './DashboardPage.css'
 
 export default function DashboardPage() {
@@ -33,6 +35,7 @@ export default function DashboardPage() {
     { id:'reservations',  label:'📋 Mes réservations' },
     { id:'enfants',       label:'👶 Mes enfants' },
     { id:'planning',      label:'🗓️ Planning' },
+    { id:'paiements',     label:'💶 Paiements' },
     { id:'contrats',      label:'📄 Contrats' },
     { id:'documents',     label:'📁 Documents' },
     { id:'messages',      label:'💬 Messages' },
@@ -79,6 +82,11 @@ export default function DashboardPage() {
                 <strong>Mes enfants</strong>
                 <p>{children.length} fiche{children.length > 1 ? 's' : ''} enregistrée{children.length > 1 ? 's' : ''}</p>
               </div>
+              <div className="dash-card" onClick={() => setTab('paiements')}>
+                <span>💶</span>
+                <strong>Paiements</strong>
+                <p>CESU, virement, suivi</p>
+              </div>
               <div className="dash-card" onClick={() => setTab('contrats')}>
                 <span>📄</span>
                 <strong>Contrats répit</strong>
@@ -99,7 +107,8 @@ export default function DashboardPage() {
         )}
 
         {/* CRÉNEAUX */}
-        {tab === 'creneaux' && (
+        {tab === 'creneaux' && children.length > 0 && <MultiDateBooking children={children} isLoggedIn={true} onClose={() => setTab('accueil')} />}
+        {tab === 'creneaux' && children.length === 0 && (
           <div className="dash-tab">
             <h2>📅 Créneaux disponibles</h2>
             <p className="dash-subtitle">Réservez une journée pour votre enfant</p>

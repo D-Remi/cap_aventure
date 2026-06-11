@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import MultiDateBooking from './MultiDateBooking'
 import ContactModal from './ContactModal'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -123,6 +124,8 @@ function SlotModal({ slot, children, onClose, onBooked, isLoggedIn }) {
 export default function WeekCalendar({ slots=[], children=[], onBooked, showEmpty=true, mode='public', isLoggedIn=false, contractedDates=[], indisponibilites=[] }) {
   const [refDate, setRef] = useState(new Date())
   const [modal, setModal] = useState(null)
+  const [multiModal, setMultiModal] = useState(false)
+  const [multiPrefill, setMultiPrefill] = useState(null)
   const weekDates = getWeekDates(refDate)
 
   const prev = () => { const d=new Date(refDate); d.setDate(d.getDate()-7); setRef(d) }
@@ -167,8 +170,9 @@ export default function WeekCalendar({ slots=[], children=[], onBooked, showEmpt
 
   const handleClick = (slot) => {
     if (slot._libre) {
-      // Créneau libre → demande libre
-      setModal({ type:'libre', date: slot.date })
+      setMultiPrefill(slot.date)
+      setMultiModal(true)
+      return
     } else if (slot.statut === 'ouvert') {
       setModal(slot)
     }
@@ -181,6 +185,13 @@ export default function WeekCalendar({ slots=[], children=[], onBooked, showEmpt
         <div className="wk-cal__title">
           <span className="wk-cal__month">{monthRange()}</span>
           <button className="wk-today-btn" onClick={() => setRef(new Date())}>Aujourd'hui</button>
+          {mode !== 'admin' && (
+            <button onClick={() => setMultiModal(true)}
+              style={{background:'rgba(255,255,255,.15)',border:'none',color:'white',fontFamily:'inherit',
+                fontSize:'.78rem',fontWeight:700,padding:'.3rem .85rem',borderRadius:50,cursor:'pointer',whiteSpace:'nowrap'}}>
+              📅 Plusieurs dates
+            </button>
+          )}
         </div>
         <button className="wk-nav-btn" onClick={next}>›</button>
       </div>
@@ -279,11 +290,13 @@ export default function WeekCalendar({ slots=[], children=[], onBooked, showEmpt
         />
       )}
 
-      {/* Modal demande créneau libre → ContactModal */}
-      {modal && (modal._libre || modal.type === 'libre') && (
-        <ContactModal
-          onClose={() => setModal(null)}
-          prefillDate={modal.date || null}
+      {/* Multi-dates booking */}
+      {multiModal && (
+        <MultiDateBooking
+          children={children}
+          isLoggedIn={isLoggedIn}
+          prefillDate={multiPrefill}
+          onClose={() => { setMultiModal(false); setMultiPrefill(null) }}
         />
       )}
     </div>
