@@ -3,10 +3,10 @@ import { useEffect } from 'react'
 
 export function useSeo({ title, description, canonical }) {
   useEffect(() => {
-    const base = 'CapAventure — Activités outdoor enfants Thonon-les-Bains'
+    const base = 'CapAventure — Garde & répit enfants Biganos Bassin d'Arcachon'
 
     // Title
-    document.title = title ? `${title} | CapAventure Thonon` : base
+    document.title = title ? `${title} | CapAventure` : base
 
     // Description
     const metaDesc = document.querySelector('meta[name="description"]')
@@ -22,10 +22,10 @@ export function useSeo({ title, description, canonical }) {
 
     // Canonical
     const link = document.querySelector('link[rel="canonical"]')
-    if (link && canonical) link.setAttribute('href', `https://capaventure74.fun${canonical}`)
+    if (link && canonical) link.setAttribute('href', `https://capaventure33.fun${canonical}`)
 
     // OG url
     const ogUrl = document.querySelector('meta[property="og:url"]')
-    if (ogUrl && canonical) ogUrl.setAttribute('content', `https://capaventure74.fun${canonical}`)
+    if (ogUrl && canonical) ogUrl.setAttribute('content', `https://capaventure33.fun${canonical}`)
   }, [title, description, canonical])
 }

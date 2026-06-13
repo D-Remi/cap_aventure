@@ -16,6 +16,7 @@ exports.NotificationsController = void 0;
 const common_1 = require("@nestjs/common");
 const rxjs_1 = require("rxjs");
 const operators_1 = require("rxjs/operators");
+const auth_guard_1 = require("../../common/guards/auth.guard");
 const notifications_service_1 = require("./notifications.service");
 const jwt_1 = require("@nestjs/jwt");
 const typeorm_1 = require("@nestjs/typeorm");
@@ -60,6 +61,7 @@ __decorate([
 ], NotificationsController.prototype, "streamForUser", null);
 exports.NotificationsController = NotificationsController = __decorate([
     (0, common_1.Controller)('notifications'),
+    (0, common_1.UseGuards)(auth_guard_1.JwtAuthGuard),
     __param(2, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __metadata("design:paramtypes", [notifications_service_1.NotificationsService,
         jwt_1.JwtService,

@@ -18,6 +18,7 @@ import ProfilePage      from './pages/ProfilePage'
 import AdminDashboard   from './pages/admin/AdminDashboard'
 import AdminActivities  from './pages/admin/AdminActivities'
 import AdminContrats    from './pages/admin/AdminContrats'
+import AdminTemoignages from './pages/admin/AdminTemoignages'
 import AdminBookings    from './pages/admin/AdminBookings'
 import AdminChildren    from './pages/admin/AdminChildren'
 import AdminPlanning    from './pages/admin/AdminPlanning'
@@ -49,6 +50,7 @@ export default function App() {
           <Route path="/profil"          element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
           <Route path="/admin"               element={<ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>} />
           <Route path="/admin/slots"         element={<ProtectedRoute adminOnly><AdminActivities /></ProtectedRoute>} />
+          <Route path="/admin/temoignages" element={<ProtectedRoute adminOnly><AdminTemoignages /></ProtectedRoute>} />
           <Route path="/admin/contrats"      element={<ProtectedRoute adminOnly><AdminContrats /></ProtectedRoute>} />
           <Route path="/admin/bookings"      element={<ProtectedRoute adminOnly><AdminBookings /></ProtectedRoute>} />
           <Route path="/admin/children"      element={<ProtectedRoute adminOnly><AdminChildren /></ProtectedRoute>} />

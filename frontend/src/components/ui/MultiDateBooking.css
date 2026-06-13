@@ -13,3 +13,11 @@
 .mdb__date-tag { background:var(--sauge);color:white;font-size:.78rem;font-weight:700;padding:.25rem .65rem;border-radius:50px;display:flex;align-items:center;gap:.35rem }
 .mdb__date-tag button { background:none;border:none;color:rgba(255,255,255,.8);cursor:pointer;font-size:.85rem;padding:0;line-height:1;font-family:inherit }
 .mdb__dates-preview { display:flex;flex-direction:column;gap:.4rem }
+
+@media (max-width: 540px) {
+  .mdb { max-height: 95vh; border-radius: 16px; }
+  .mdb__head { padding: 1rem 1.25rem; }
+  .mdb__head h3 { font-size: 1rem; }
+  .mdb__body { padding: 1rem 1.25rem; }
+  .mdb__mode-toggle button { font-size: .78rem; padding: .4rem; }
+}

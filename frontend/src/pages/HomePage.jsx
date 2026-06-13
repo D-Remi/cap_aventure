@@ -7,7 +7,8 @@ import Services    from '../components/sections/Services'
 import Projet      from '../components/sections/Projet'
 import Clubs       from '../components/sections/Clubs'
 import Valeurs     from '../components/sections/Valeurs'
-import NatureBand  from '../components/sections/NatureBand'
+import NatureBand   from '../components/sections/NatureBand'
+import Temoignages  from '../components/sections/Temoignages'
 import Contact     from '../components/sections/Contact'
 
 export default function HomePage() {
@@ -29,6 +30,7 @@ export default function HomePage() {
         <Projet />
         <Clubs />
         <Valeurs />
+        <Temoignages />
         <NatureBand />
         <Contact />
       </main>

@@ -1,3 +1,4 @@
+import { genererDossierEnfantPDF } from '../../utils/pdfGenerator'
 import './DossierEnfant.css'
 const AGE = dob => dob ? Math.floor((Date.now()-new Date(dob))/(365.25*86400000)) : null
 const COMM = {verbal:'Verbal',pictogrammes:'Pictogrammes',mixte:'Mixte',lsf:'LSF',autre:'Autre'}

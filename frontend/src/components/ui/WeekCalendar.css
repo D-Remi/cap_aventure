@@ -66,3 +66,24 @@
 @keyframes fadeIn  { from{opacity:0} to{opacity:1} }
 @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 @media(max-width:640px) { .wk-day-col{min-width:80px} }
+
+/* ══ Responsive mobile ══ */
+@media (max-width: 768px) {
+  .wk-cal { border-radius: 12px; }
+  .wk-cal__nav { flex-wrap: wrap; gap: .5rem; padding: .75rem; }
+  .wk-cal__title { font-size: .9rem; width: 100%; text-align: center; order: -1; }
+  .wk-grid { font-size: .7rem; overflow-x: auto; }
+  .wk-grid__times { width: 34px; font-size: .6rem; }
+  .wk-day-col { min-width: 90px; }
+  .wk-day-head { font-size: .65rem; padding: .4rem .2rem; }
+  .wk-day-head strong { font-size: .85rem; }
+  .wk-slot { font-size: .62rem; padding: 2px 4px; }
+  .wk-slot__title { font-size: .62rem; }
+  .wk-slot__places { font-size: .58rem; }
+  .wk-legend { flex-wrap: wrap; gap: .4rem; padding: .6rem; }
+  .wk-legend-item { font-size: .65rem; padding: 2px 8px; }
+}
+@media (max-width: 480px) {
+  .wk-day-col { min-width: 76px; }
+  .wk-grid__times { width: 30px; }
+}

@@ -63,7 +63,7 @@ export default function GardePage() {
                   <div className="service-info-row"><span>🕐</span><div><strong>Durée</strong><span>Demi-journée (matin ou après-midi) ou journée complète</span></div></div>
                   <div className="service-info-row"><span>📍</span><div><strong>Zone</strong><span>Biganos et Bassin d'Arcachon (33)</span></div></div>
                   <div className="service-info-row"><span>🗓️</span><div><strong>Disponibilités</strong><span>Mercredis, week-ends et vacances scolaires</span></div></div>
-                  <div className="service-info-row"><span>💶</span><div><strong>Tarif</strong><span>À partir de 12€/heure · CESU accepté</span></div></div>
+                  <div className="service-info-row"><span>💶</span><div><strong>Tarif</strong><span>Sur devis selon la situation · CESU accepté</span></div></div>
                 </div>
               </div>
               <div className="service-info-img">

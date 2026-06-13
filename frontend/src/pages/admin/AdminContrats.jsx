@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/layout/AdminLayout'
+import { genererFacturePDF } from '../../utils/pdfGenerator'
 import SignatureCanvas from '../../components/ui/SignatureCanvas'
 
 const STATUT = {
@@ -316,7 +317,11 @@ export default function AdminContrats() {
                             </div>
                           </div>
                           <div style={{display:'flex',alignItems:'center',gap:'.75rem'}}>
-                            <span style={{fontFamily:"'Baloo 2',cursive",fontSize:'1.3rem',fontWeight:800,color:'var(--sauge)'}}>{parseFloat(f.montant_total).toFixed(2)} €</span>
+                            <span style={{fontFamily:"'Baloo 2',cursive",fontSize:'1.3rem',fontWeight:800,color:'var(--sauge)'}}>{parseFloat(f.montant_total).toFixed(2)} €
+                      <button onClick={(e)=>{e.stopPropagation();genererFacturePDF(f, selected, selected.user, [])}}
+                        style={{marginLeft:'.5rem',background:'#e0f2fe',color:'#0369a1',border:'none',borderRadius:6,padding:'2px 8px',cursor:'pointer',fontSize:'.72rem',fontWeight:700,fontFamily:'inherit'}}>
+                        ⬇️ PDF
+                      </button></span>
                             <span style={{background:f.statut==='payee'?'#e8f5e9':f.statut==='envoyee'?'#fff8e1':'#f3f4f6',color:f.statut==='payee'?'#2e7d32':f.statut==='envoyee'?'#f57f17':'#6b7280',fontSize:'.72rem',fontWeight:700,padding:'2px 8px',borderRadius:50}}>
                               {f.statut==='payee'?'💰 Payée':f.statut==='envoyee'?'📤 Envoyée':'📝 Brouillon'}
                             </span>

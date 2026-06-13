@@ -10,3 +10,12 @@
 .hero__pill{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);color:white;font-size:.82rem;font-weight:700;padding:.4rem 1rem;border-radius:50px;backdrop-filter:blur(4px)}
 .hero__wave{position:absolute;bottom:-2px;left:0;right:0;height:80px;background:var(--blanc);clip-path:ellipse(55% 100% at 50% 100%)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+@media (max-width: 768px) {
+  .hero { padding-top: 5rem; min-height: auto; }
+  .hero h1 { font-size: 2rem !important; }
+  .hero p { font-size: .95rem; }
+  .hero__cta { flex-direction: column; width: 100%; }
+  .hero__cta a, .hero__cta button { width: 100%; justify-content: center; }
+  .hero__badges { flex-wrap: wrap; justify-content: center; gap: .5rem; }
+}

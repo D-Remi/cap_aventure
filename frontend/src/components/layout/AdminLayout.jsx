@@ -12,6 +12,7 @@ const NAV = [
   {path:'/admin/contacts',       label:'📩 Contacts'},
   {path:'/admin/messages',       label:'💬 Messages'},
   {path:'/admin/documents',      label:'📁 Documents'},
+  {path:'/admin/temoignages',    label:'⭐ Témoignages'},
   {path:'/admin/stats',          label:'📈 Statistiques'},
 ]
 export default function AdminLayout({ children }) {

@@ -6,6 +6,7 @@ import MessagingTab from '../components/ui/MessagingTab'
 import ContratTab   from '../components/ui/ContratTab'
 import PlanningTab       from '../components/ui/PlanningTab'
 import PaiementTab      from '../components/ui/PaiementTab'
+import LaisserAvis      from '../components/ui/LaisserAvis'
 import MultiDateBooking from '../components/ui/MultiDateBooking'
 import './DashboardPage.css'
 

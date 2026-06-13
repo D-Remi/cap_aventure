@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/layout/AdminLayout'
+import { genererDossierEnfantPDF } from '../../utils/pdfGenerator'
 import DossierEnfant from '../../components/ui/DossierEnfant'
 
 export default function AdminChildren() {
@@ -73,6 +74,12 @@ export default function AdminChildren() {
           {/* Dossier */}
           {selected ? (
             <div style={{display:'flex',flexDirection:'column',gap:'1rem'}}>
+              <div style={{display:'flex',justifyContent:'flex-end',marginBottom:'.75rem'}}>
+                <button onClick={() => genererDossierEnfantPDF(selected)}
+                  style={{background:'var(--sauge)',color:'white',border:'none',borderRadius:8,padding:'.5rem 1rem',fontWeight:700,fontSize:'.85rem',cursor:'pointer',fontFamily:'inherit'}}>
+                  ⬇️ Exporter le dossier (PDF)
+                </button>
+              </div>
               <DossierEnfant child={selected} showPrivate={true} />
               {/* Notes animateur éditables */}
               <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.5rem',boxShadow:'var(--shadow-sm)'}}>

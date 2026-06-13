@@ -22,6 +22,7 @@ const messages_module_1 = require("./modules/messages/messages.module");
 const planning_module_1 = require("./modules/planning/planning.module");
 const email_module_1 = require("./modules/email/email.module");
 const contact_module_1 = require("./modules/contact/contact.module");
+const temoignages_module_1 = require("./modules/temoignages/temoignages.module");
 const indisponibilites_module_1 = require("./modules/indisponibilites/indisponibilites.module");
 const contrats_module_1 = require("./modules/contrats/contrats.module");
 const notifications_module_1 = require("./modules/notifications/notifications.module");
@@ -35,7 +36,7 @@ exports.AppModule = AppModule = __decorate([
             platform_express_1.MulterModule.register({}),
             throttler_1.ThrottlerModule.forRoot([{ name: 'global', ttl: 60000, limit: 1000 }, { name: 'auth', ttl: 60000, limit: 10 }]),
             auth_module_1.AuthModule, users_module_1.UsersModule, children_module_1.ChildrenModule, slots_module_1.SlotsModule, bookings_module_1.BookingsModule,
-            documents_module_1.DocumentsModule, messages_module_1.MessagesModule, planning_module_1.PlanningModule, email_module_1.EmailModule, contact_module_1.ContactModule, notifications_module_1.NotificationsModule, contrats_module_1.ContratsModule, indisponibilites_module_1.IndisponibilitesModule,
+            documents_module_1.DocumentsModule, messages_module_1.MessagesModule, planning_module_1.PlanningModule, email_module_1.EmailModule, contact_module_1.ContactModule, notifications_module_1.NotificationsModule, contrats_module_1.ContratsModule, indisponibilites_module_1.IndisponibilitesModule, temoignages_module_1.TemoignagesModule,
         ],
     })
 ], AppModule);

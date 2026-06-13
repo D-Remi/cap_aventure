@@ -1,6 +1,7 @@
-import { Controller, Get, Sse, MessageEvent, Query, UnauthorizedException } from '@nestjs/common'
+import { UseGuards, Controller, Get, Sse, MessageEvent, Query, UnauthorizedException } from '@nestjs/common'
 import { Observable, merge } from 'rxjs'
 import { map } from 'rxjs/operators'
+import { JwtAuthGuard } from '../../common/guards/auth.guard'
 import { NotificationsService } from './notifications.service'
 import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -8,6 +9,7 @@ import { Repository } from 'typeorm'
 import { User } from '../users/user.entity'
 
 @Controller('notifications')
+@UseGuards(JwtAuthGuard)
 export class NotificationsController {
   constructor(
     private notifService: NotificationsService,

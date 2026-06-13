@@ -35,3 +35,13 @@ input,select,textarea{font-family:inherit}
 .form-group textarea{resize:vertical;min-height:90px}
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ══ Responsive globals ══ */
+@media (max-width: 768px) {
+  html { font-size: 15px; }
+  .container { padding: 0 1.1rem; }
+  .section { padding: 3rem 0; }
+  .section-header h2 { font-size: 1.6rem; }
+  button, .btn-primary, .btn-secondary { min-height: 44px; }
+  input, select, textarea { font-size: 16px !important; } /* évite zoom iOS */
+}

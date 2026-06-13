@@ -25,3 +25,10 @@
 .msg-send-btn { width:42px; height:42px; background:var(--sauge); color:white; border:none; border-radius:50%; cursor:pointer; font-size:1.1rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .18s; }
 .msg-send-btn:hover:not(:disabled) { background:var(--nuit); }
 .msg-send-btn:disabled { background:var(--sable-dark); cursor:not-allowed; }
+
+@media (max-width: 768px) {
+  .msg-tab { grid-template-columns: 1fr !important; }
+  .msg-conversations { max-height: 200px; overflow-y: auto; }
+  .msg-thread { min-height: 350px; }
+  .msg-bubble { max-width: 85%; font-size: .85rem; }
+}
