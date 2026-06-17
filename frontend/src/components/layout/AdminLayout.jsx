@@ -11,8 +11,10 @@ const NAV = [
   {path:'/admin/users',          label:'👥 Familles'},
   {path:'/admin/contacts',       label:'📩 Contacts'},
   {path:'/admin/messages',       label:'💬 Messages'},
+  {path:'/admin/photos',         label:'📸 Photos séances'},
   {path:'/admin/documents',      label:'📁 Documents'},
   {path:'/admin/temoignages',    label:'⭐ Témoignages'},
+  {path:'/admin/compta',         label:'💰 Comptabilité'},
   {path:'/admin/stats',          label:'📈 Statistiques'},
 ]
 export default function AdminLayout({ children }) {

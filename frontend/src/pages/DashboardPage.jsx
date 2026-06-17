@@ -7,6 +7,7 @@ import ContratTab   from '../components/ui/ContratTab'
 import PlanningTab       from '../components/ui/PlanningTab'
 import PaiementTab      from '../components/ui/PaiementTab'
 import LaisserAvis      from '../components/ui/LaisserAvis'
+import PhotosTab        from '../components/ui/PhotosTab'
 import MultiDateBooking from '../components/ui/MultiDateBooking'
 import './DashboardPage.css'
 
@@ -36,6 +37,7 @@ export default function DashboardPage() {
     { id:'reservations',  label:'📋 Mes réservations' },
     { id:'enfants',       label:'👶 Mes enfants' },
     { id:'planning',      label:'🗓️ Planning' },
+    { id:'photos',        label:'📸 Photos' },
     { id:'paiements',     label:'💶 Paiements' },
     { id:'contrats',      label:'📄 Contrats' },
     { id:'documents',     label:'📁 Documents' },
@@ -82,6 +84,11 @@ export default function DashboardPage() {
                 <span>👶</span>
                 <strong>Mes enfants</strong>
                 <p>{children.length} fiche{children.length > 1 ? 's' : ''} enregistrée{children.length > 1 ? 's' : ''}</p>
+              </div>
+              <div className="dash-card" onClick={() => setTab('photos')}>
+                <span>📸</span>
+                <strong>Photos</strong>
+                <p>Albums des séances</p>
               </div>
               <div className="dash-card" onClick={() => setTab('paiements')}>
                 <span>💶</span>
@@ -202,7 +209,9 @@ export default function DashboardPage() {
         {tab === 'planning' && <div className="dash-tab"><h2>🗓️ Planning</h2><PlanningTab /></div>}
 
         {/* MESSAGES */}
-        {tab === 'messages' && <div className="dash-tab"><h2>💬 Messages</h2><MessagingTab /></div>}
+        {tab === 'messages'  && <div className="dash-tab"><h2>💬 Messages</h2><MessagingTab /></div>}
+        {tab === 'photos'    && <div className="dash-tab"><PhotosTab /></div>}
+        {tab === 'paiements' && <div className="dash-tab"><PaiementTab /></div>}
 
       </div>
     </div>
