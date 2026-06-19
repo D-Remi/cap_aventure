@@ -4,7 +4,7 @@ import toast from 'react-hot-toast'
 import './Contact.css'
 
 // ⚠️ Remplace par ton vrai numéro WhatsApp (format international sans +)
-const WA_NUM = "33600000000"
+const WA_NUM = "33752096698"
 
 const SERVICES = [
   { val:'garde',      label:'🏠 Garde accompagnée',     msg:'garde de mon enfant' },
