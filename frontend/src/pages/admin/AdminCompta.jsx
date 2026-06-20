@@ -5,7 +5,7 @@ import AdminLayout from '../../components/layout/AdminLayout'
 
 const MOIS_LABELS = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc']
 const MOIS_FULL   = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre']
-const MODES = { cesu:'🎫 CESU', virement:'🏦 Virement', especes:'💵 Espèces' }
+const MODES = { cesu:'CESU', virement:'Virement', especes:'Espèces' }
 const CATS  = ['Garde','Répit','Animation','Kilométrage','Matériel','Formation','Autre']
 
 const EMPTY = { date: new Date().toISOString().slice(0,10), montant:'', mode:'virement', reference:'', description:'', famille:'', type:'recette', categorie:'Garde' }
@@ -114,7 +114,7 @@ export default function AdminCompta() {
       <div className="admin-page">
         <div className="admin-page__header">
           <div>
-            <h1>💰 Comptabilité</h1>
+            <h1>Comptabilité</h1>
             <p className="admin-page__subtitle">Suivi des recettes et dépenses — {annee}</p>
           </div>
           <div style={{display:'flex',gap:'.75rem',alignItems:'center'}}>
@@ -123,7 +123,7 @@ export default function AdminCompta() {
               {[2024,2025,2026,2027].map(y => <option key={y} value={y}>{y}</option>)}
             </select>
             <button onClick={() => exportCSV(entrees, moisSel, annee)} className="btn-secondary" style={{fontSize:'.85rem'}}>
-              ⬇️ Export CSV
+              ⬇Export CSV
             </button>
             <button onClick={openAdd} className="btn-primary">+ Nouvelle entrée</button>
           </div>
@@ -205,7 +205,7 @@ export default function AdminCompta() {
             <div style={{padding:'2rem',textAlign:'center',color:'var(--text-muted)'}}>Chargement…</div>
           ) : entrees.length === 0 ? (
             <div style={{padding:'2.5rem',textAlign:'center',color:'var(--text-muted)'}}>
-              <div style={{fontSize:'2rem',marginBottom:'.5rem'}}>📭</div>
+              <div style={{fontSize:'2rem',marginBottom:'.5rem'}}></div>
               <p>Aucune entrée ce mois-ci</p>
               <button onClick={openAdd} className="btn-primary" style={{marginTop:'1rem',fontSize:'.85rem'}}>+ Ajouter une entrée</button>
             </div>
@@ -240,8 +240,8 @@ export default function AdminCompta() {
                     <td style={{padding:'.75rem 1rem',color:'var(--text-muted)',maxWidth:200,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{e.description||'—'}</td>
                     <td style={{padding:'.75rem 1rem'}}>
                       <div style={{display:'flex',gap:'.35rem'}}>
-                        <button onClick={() => openEdit(e)} style={{background:'var(--sable-light)',border:'none',borderRadius:6,padding:'3px 8px',cursor:'pointer',fontSize:'.78rem',fontFamily:'inherit'}}>✏️</button>
-                        <button onClick={() => remove(e.id)} style={{background:'#fee2e2',color:'#991b1b',border:'none',borderRadius:6,padding:'3px 8px',cursor:'pointer',fontSize:'.78rem',fontFamily:'inherit'}}>🗑️</button>
+                        <button onClick={() => openEdit(e)} style={{background:'var(--sable-light)',border:'none',borderRadius:6,padding:'3px 8px',cursor:'pointer',fontSize:'.78rem',fontFamily:'inherit'}}></button>
+                        <button onClick={() => remove(e.id)} style={{background:'#fee2e2',color:'#991b1b',border:'none',borderRadius:6,padding:'3px 8px',cursor:'pointer',fontSize:'.78rem',fontFamily:'inherit'}}></button>
                       </div>
                     </td>
                   </tr>
@@ -255,7 +255,7 @@ export default function AdminCompta() {
         {recettes.filter(e => e.mode==='cesu').length > 0 && (
           <div style={{background:'#e0f2fe',borderRadius:'var(--radius-lg)',padding:'1.25rem 1.5rem',marginTop:'1.25rem',border:'1px solid #bae6fd'}}>
             <div style={{fontWeight:700,color:'#0369a1',marginBottom:'.5rem',fontSize:'.9rem'}}>
-              🎫 CESU reçus ce mois — {recettes.filter(e=>e.mode==='cesu').reduce((s,e)=>s+parseFloat(e.montant),0).toFixed(2)} €
+              CESU reçus ce mois — {recettes.filter(e=>e.mode==='cesu').reduce((s,e)=>s+parseFloat(e.montant),0).toFixed(2)} €
             </div>
             <div style={{display:'flex',flexWrap:'wrap',gap:'.5rem'}}>
               {recettes.filter(e => e.mode==='cesu').map(e => (
@@ -275,9 +275,9 @@ export default function AdminCompta() {
               onClick={e => e.stopPropagation()}>
               <div style={{background:'var(--nuit)',padding:'1.25rem 1.5rem',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                 <h3 style={{fontFamily:"'Baloo 2',cursive",color:'white',fontSize:'1.1rem',margin:0}}>
-                  {editing ? '✏️ Modifier' : '➕ Nouvelle entrée'}
+                  {editing ? 'Modifier' : 'Nouvelle entrée'}
                 </h3>
-                <button onClick={() => setModal(false)} style={{background:'rgba(255,255,255,.15)',border:'none',color:'white',width:30,height:30,borderRadius:'50%',cursor:'pointer',fontFamily:'inherit',fontSize:'1rem'}}>✕</button>
+                <button onClick={() => setModal(false)} style={{background:'rgba(255,255,255,.15)',border:'none',color:'white',width:30,height:30,borderRadius:'50%',cursor:'pointer',fontFamily:'inherit',fontSize:'1rem'}}></button>
               </div>
               <div style={{padding:'1.5rem',display:'flex',flexDirection:'column',gap:'.1rem'}}>
                 <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
@@ -286,7 +286,7 @@ export default function AdminCompta() {
                 </div>
                 <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
                   {fs('Type', 'type', [['recette','↑ Recette'],['depense','↓ Dépense']])}
-                  {fs('Mode de paiement', 'mode', [['virement','🏦 Virement'],['cesu','🎫 CESU'],['especes','💵 Espèces']])}
+                  {fs('Mode de paiement', 'mode', [['virement','Virement'],['cesu','CESU'],['especes','Espèces']])}
                 </div>
                 <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
                   {fs('Catégorie', 'categorie', CATS.map(c => [c,c]))}

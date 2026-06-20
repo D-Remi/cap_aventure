@@ -96,12 +96,12 @@ export default function AdminPlanning() {
         {/* Header */}
         <div className="admin-page__header">
           <div>
-            <h1>📅 Créneaux & Planning</h1>
+            <h1>Créneaux & Planning</h1>
             <p className="admin-page__subtitle">{slots.length} créneau{slots.length > 1 ? 'x' : ''} · Max 3 enfants</p>
           </div>
           <div style={{ display:'flex', gap:'.75rem', alignItems:'center' }}>
             <div style={{ display:'flex', background:'#f3f4f6', borderRadius:8, padding:2 }}>
-              {[['calendar','📅 Calendrier'],['list','📋 Liste']].map(([v,l]) => (
+              {[['calendar','Calendrier'],['list','Liste']].map(([v,l]) => (
                 <button key={v} onClick={() => setView(v)} style={{
                   padding:'.35rem .85rem', borderRadius:6, border:'none', cursor:'pointer',
                   fontFamily:'inherit', fontWeight:700, fontSize:'.82rem',
@@ -111,7 +111,7 @@ export default function AdminPlanning() {
                 }}>{l}</button>
               ))}
             </div>
-            <button className="btn-secondary" onClick={() => setIndModal(true)} style={{ fontSize:'.88rem' }}>🚫 Indisponibilité</button>
+            <button className="btn-secondary" onClick={() => setIndModal(true)} style={{ fontSize:'.88rem' }}>Indisponibilité</button>
             <button className="btn-primary" onClick={openCreate}>+ Nouveau créneau</button>
           </div>
         </div>
@@ -128,7 +128,7 @@ export default function AdminPlanning() {
             />
             {indispos.length > 0 && (
               <div style={{ marginTop:'1.25rem', background:'white', borderRadius:'var(--radius-xl)', padding:'1.25rem 1.5rem', boxShadow:'var(--shadow-sm)' }}>
-                <h3 style={{ fontFamily:"'Baloo 2',cursive", color:'var(--nuit)', fontSize:'1rem', marginBottom:'1rem' }}>🚫 Indisponibilités ({indispos.length})</h3>
+                <h3 style={{ fontFamily:"'Baloo 2',cursive", color:'var(--nuit)', fontSize:'1rem', marginBottom:'1rem' }}>Indisponibilités ({indispos.length})</h3>
                 <div style={{ display:'flex', flexDirection:'column', gap:'.5rem' }}>
                   {indispos.map(i => (
                     <div key={i.id} style={{ display:'flex', alignItems:'center', gap:'.85rem', padding:'.6rem .85rem', background:'#fff5f5', borderRadius:8, border:'1px solid #fecaca' }}>
@@ -137,7 +137,7 @@ export default function AdminPlanning() {
                       </span>
                       <span style={{ fontSize:'.82rem', color:'#b91c1c' }}>{i.heure_debut?.slice(0,5)} → {i.heure_fin?.slice(0,5)}</span>
                       <span style={{ fontSize:'.82rem', color:'var(--text-muted)', flex:1 }}>{i.motif || '—'}</span>
-                      <button onClick={() => delIndispo(i.id)} style={{ background:'#fee2e2', color:'#991b1b', border:'none', borderRadius:6, padding:'2px 8px', cursor:'pointer', fontSize:'.8rem', fontFamily:'inherit' }}>🗑️</button>
+                      <button onClick={() => delIndispo(i.id)} style={{ background:'#fee2e2', color:'#991b1b', border:'none', borderRadius:6, padding:'2px 8px', cursor:'pointer', fontSize:'.8rem', fontFamily:'inherit' }}></button>
                     </div>
                   ))}
                 </div>
@@ -151,7 +151,7 @@ export default function AdminPlanning() {
           <div className="admin-table-wrap">
             {slots.length === 0 ? (
               <div className="admin-empty">
-                <div style={{ fontSize:'2rem' }}>📅</div>
+                <div style={{ fontSize:'2rem' }}></div>
                 <p>Aucun créneau. Créez-en un avec le bouton ci-dessus.</p>
               </div>
             ) : (
@@ -167,7 +167,7 @@ export default function AdminPlanning() {
                         <div style={{ fontWeight:700, color:'var(--nuit)', fontSize:'.9rem' }}>{s.titre || '—'}</div>
                         <div style={{ fontSize:'.75rem', color:'var(--text-muted)' }}>{s.heure_debut?.slice(0,5)}–{s.heure_fin?.slice(0,5)}</div>
                       </td>
-                      <td style={{ fontSize:'.82rem' }}>{s.type_accueil==='adapte'?'🌿 Adapté':s.type_accueil==='mixte'?'👥 Mixte':'🏠 Standard'}</td>
+                      <td style={{ fontSize:'.82rem' }}>{s.type_accueil==='adapte'?'Adapté':s.type_accueil==='mixte'?'Mixte':'Standard'}</td>
                       <td>
                         <div style={{ display:'flex', alignItems:'center', gap:'.4rem' }}>
                           <div style={{ width:52, height:7, background:'#e0e0e0', borderRadius:4, overflow:'hidden' }}>
@@ -186,8 +186,8 @@ export default function AdminPlanning() {
                       </td>
                       <td>
                         <div style={{ display:'flex', gap:'.4rem' }}>
-                          <button className="btn-icon btn-icon--edit" onClick={() => openEdit(s)}>✏️</button>
-                          <button className="btn-icon btn-icon--delete" onClick={() => delSlot(s.id)}>🗑️</button>
+                          <button className="btn-icon btn-icon--edit" onClick={() => openEdit(s)}></button>
+                          <button className="btn-icon btn-icon--delete" onClick={() => delSlot(s.id)}></button>
                         </div>
                       </td>
                     </tr>
@@ -202,16 +202,16 @@ export default function AdminPlanning() {
         {modal && (
           <div className="admin-modal-overlay" onClick={() => !saving && setModal(null)}>
             <div className="admin-modal" style={{ maxWidth:560 }} onClick={e => e.stopPropagation()}>
-              <h2>{modal === 'create' ? '➕ Nouveau créneau' : '✏️ Modifier le créneau'}</h2>
+              <h2>{modal === 'create' ? 'Nouveau créneau' : 'Modifier le créneau'}</h2>
               <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'.75rem' }}>
                 <div style={{ gridColumn:'1/-1' }}>{fi('Date *', 'date', 'date')}</div>
-                {fs('Période', 'periode', [['matin','🌅 Matin'],['apres_midi','☀️ Après-midi'],['journee','📅 Journée']])}
-                {fs('Type accueil', 'type_accueil', [['standard','🏠 Garde standard'],['adapte','🌿 Adapté TSA/TDAH'],['mixte','👥 Mixte']])}
+                {fs('Période', 'periode', [['matin','Matin'],['apres_midi','Après-midi'],['journee','Journée']])}
+                {fs('Type accueil', 'type_accueil', [['standard','Garde standard'],['adapte','Adapté TSA/TDAH'],['mixte','Mixte']])}
                 {fi('Heure début', 'heure_debut', 'time')}
                 {fi('Heure fin',   'heure_fin',   'time')}
                 {fi('Places max (≤3)', 'places_max', 'number')}
                 {fi('Tarif (€)',       'tarif',      'number')}
-                {fs('Statut', 'statut', [['ouvert','✅ Ouvert'],['complet','🔴 Complet'],['annule','❌ Annulé']])}
+                {fs('Statut', 'statut', [['ouvert','Ouvert'],['complet','Complet'],['annule','Annulé']])}
               </div>
               {fi('Titre / Programme', 'titre')}
               <div style={{ marginBottom:'.75rem' }}>
@@ -232,7 +232,7 @@ export default function AdminPlanning() {
         {indModal && (
           <div className="admin-modal-overlay" onClick={() => setIndModal(false)}>
             <div className="admin-modal" style={{ maxWidth:400 }} onClick={e => e.stopPropagation()}>
-              <h2>🚫 Ajouter une indisponibilité</h2>
+              <h2>Ajouter une indisponibilité</h2>
               <div style={{ display:'flex', flexDirection:'column', gap:'.85rem' }}>
                 {ii('Date *', 'date', 'date')}
                 <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'.75rem' }}>

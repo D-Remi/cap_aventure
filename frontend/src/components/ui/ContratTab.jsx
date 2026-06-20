@@ -5,13 +5,13 @@ import toast from 'react-hot-toast'
 import SignatureCanvas from './SignatureCanvas'
 
 const STATUT = {
-  brouillon:    { bg:'#f3f4f6', c:'#6b7280', l:'📝 Brouillon' },
-  envoye:       { bg:'#e3f2fd', c:'#1565c0', l:'📋 En attente de votre signature' },
-  signe_parent: { bg:'#fff8e1', c:'#f57f17', l:'⏳ En attente de signature animateur' },
-  signe_admin:  { bg:'#e8f5e9', c:'#2e7d32', l:'✅ Signé des deux parties' },
-  actif:        { bg:'#e8f5e9', c:'#1b5e20', l:'✅ Contrat actif' },
-  termine:      { bg:'#f5f5f5', c:'#9e9e9e', l:'🏁 Terminé' },
-  annule:       { bg:'#fee2e2', c:'#991b1b', l:'❌ Annulé' },
+  brouillon:    { bg:'#f3f4f6', c:'#6b7280', l:'Brouillon' },
+  envoye:       { bg:'#e3f2fd', c:'#1565c0', l:'En attente de votre signature' },
+  signe_parent: { bg:'#fff8e1', c:'#f57f17', l:'En attente de signature animateur' },
+  signe_admin:  { bg:'#e8f5e9', c:'#2e7d32', l:'Signé des deux parties' },
+  actif:        { bg:'#e8f5e9', c:'#1b5e20', l:'Contrat actif' },
+  termine:      { bg:'#f5f5f5', c:'#9e9e9e', l:'Terminé' },
+  annule:       { bg:'#fee2e2', c:'#991b1b', l:'Annulé' },
 }
 const JOURS_L = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche']
 
@@ -54,7 +54,7 @@ export default function ContratTab() {
 
   if (contrats.length === 0) return (
     <div style={{textAlign:'center',padding:'3rem'}}>
-      <div style={{fontSize:'2rem',marginBottom:'.75rem'}}>📄</div>
+      <div style={{fontSize:'2rem',marginBottom:'.75rem'}}></div>
       <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',marginBottom:'.5rem'}}>Aucun contrat répit</h3>
       <p style={{color:'var(--text-muted)',fontSize:'.88rem'}}>Contactez l'animateur pour établir un contrat de répit personnalisé.</p>
     </div>
@@ -80,13 +80,13 @@ export default function ContratTab() {
                 {badge(c.statut)}
               </div>
               <div style={{display:'flex',gap:'1rem',fontSize:'.82rem',color:'var(--text-muted)'}}>
-                <span>⏰ {c.heures_semaine} h/sem</span>
-                <span>💶 {c.tarif_horaire} €/h</span>
+                <span>{c.heures_semaine} h/sem</span>
+                <span>{c.tarif_horaire} €/h</span>
                 {c.montant_estime && <span>~{parseFloat(c.montant_estime).toFixed(0)} € estimé</span>}
               </div>
               {c.statut === 'envoye' && (
                 <div style={{marginTop:'.75rem',background:'#e3f2fd',borderRadius:8,padding:'.5rem .85rem',fontSize:'.82rem',color:'#1565c0',fontWeight:600}}>
-                  📋 Ce contrat attend votre signature — cliquez pour lire et signer
+                  Ce contrat attend votre signature — cliquez pour lire et signer
                 </div>
               )}
             </div>
@@ -146,7 +146,7 @@ export default function ContratTab() {
                 {selected.signature_parent
                   ? <><img src={selected.signature_parent} alt="Sig parent" style={{width:'100%',border:'1px solid var(--sable-dark)',borderRadius:8,background:'white'}}/><p style={{fontSize:'.75rem',color:'var(--text-muted)',marginTop:4}}>Signé le {new Date(selected.signature_parent_at).toLocaleString('fr-FR')}</p></>
                   : selected.statut === 'envoye'
-                    ? <><p style={{color:'#1565c0',fontSize:'.85rem',marginBottom:'.75rem'}}>Ce contrat est prêt. Veuillez le lire attentivement avant de signer.</p><button className="btn-primary" onClick={()=>setSigning(true)}>✍️ Signer le contrat</button></>
+                    ? <><p style={{color:'#1565c0',fontSize:'.85rem',marginBottom:'.75rem'}}>Ce contrat est prêt. Veuillez le lire attentivement avant de signer.</p><button className="btn-primary" onClick={()=>setSigning(true)}>Signer le contrat</button></>
                     : <p style={{color:'var(--text-muted)',fontSize:'.85rem'}}>Pas encore disponible</p>}
               </div>
             </div>
@@ -161,7 +161,7 @@ export default function ContratTab() {
           {/* Séances */}
           {seances.length > 0 && (
             <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.5rem',boxShadow:'var(--shadow-sm)',marginBottom:'1rem'}}>
-              <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>🕐 Séances ({seances.length})</h3>
+              <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Séances ({seances.length})</h3>
               <div style={{display:'flex',flexDirection:'column',gap:'.5rem'}}>
                 {seances.map(s => (
                   <div key={s.id} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'.6rem .85rem',background:'var(--sable-light)',borderRadius:8,fontSize:'.85rem'}}>
@@ -169,7 +169,7 @@ export default function ContratTab() {
                     <span style={{color:'var(--text-muted)'}}>{s.heure_debut?.slice(0,5)} – {s.heure_fin?.slice(0,5)}</span>
                     <span style={{color:'var(--text-muted)'}}>{(Number(s.km_aller||0)+Number(s.km_retour||0)).toFixed(0)} km</span>
                     <span style={{fontWeight:700,color:'var(--sauge)'}}>{parseFloat(s.montant_total||0).toFixed(2)} €</span>
-                    {s.facture_id && <span style={{fontSize:'.72rem',background:'#e8f5e9',color:'#2e7d32',padding:'1px 6px',borderRadius:50}}>✅ Facturé</span>}
+                    {s.facture_id && <span style={{fontSize:'.72rem',background:'#e8f5e9',color:'#2e7d32',padding:'1px 6px',borderRadius:50}}>Facturé</span>}
                   </div>
                 ))}
               </div>
@@ -179,7 +179,7 @@ export default function ContratTab() {
           {/* Factures */}
           {factures.length > 0 && (
             <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.5rem',boxShadow:'var(--shadow-sm)'}}>
-              <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>💶 Factures ({factures.length})</h3>
+              <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Factures ({factures.length})</h3>
               {factures.map(f => (
                 <div key={f.id} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'.85rem',background:'var(--sable-light)',borderRadius:10,marginBottom:'.5rem',flexWrap:'wrap',gap:'.5rem'}}>
                   <div>
@@ -193,10 +193,10 @@ export default function ContratTab() {
                     <span style={{fontFamily:"'Baloo 2',cursive",fontSize:'1.2rem',fontWeight:800,color:'var(--sauge)'}}>{parseFloat(f.montant_total).toFixed(2)} €
                   <button onClick={()=>genererFacturePDF(f, selected, user, [])}
                     style={{marginLeft:'.5rem',background:'var(--sauge)',color:'white',border:'none',borderRadius:6,padding:'3px 10px',cursor:'pointer',fontSize:'.75rem',fontWeight:700,fontFamily:'inherit'}}>
-                    ⬇️ Télécharger
+                    ⬇Télécharger
                   </button></span>
                     <span style={{background:f.statut==='payee'?'#e8f5e9':f.statut==='envoyee'?'#fff8e1':'#f3f4f6',color:f.statut==='payee'?'#2e7d32':f.statut==='envoyee'?'#f57f17':'#6b7280',fontSize:'.72rem',fontWeight:700,padding:'2px 8px',borderRadius:50}}>
-                      {f.statut==='payee'?'💰 Payée':f.statut==='envoyee'?'📤 Envoyée':'📝 En attente'}
+                      {f.statut==='payee'?'Payée':f.statut==='envoyee'?'Envoyée':'En attente'}
                     </span>
                   </div>
                 </div>

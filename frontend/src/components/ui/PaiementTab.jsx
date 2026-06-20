@@ -36,17 +36,17 @@ export default function PaiementTab() {
 
   return (
     <div className="dash-tab">
-      <h2>💶 Paiements</h2>
+      <h2>Paiements</h2>
       <p className="dash-subtitle">Gérez vos paiements pour les séances confirmées.</p>
 
       {nonPayes.length === 0 && payes.length === 0 && (
-        <div className="dash-empty"><div>💶</div><p>Aucune réservation confirmée pour le moment.</p></div>
+        <div className="dash-empty"><div></div><p>Aucune réservation confirmée pour le moment.</p></div>
       )}
 
       {/* En attente */}
       {nonPayes.length > 0 && (
         <div style={{marginBottom:'1.5rem'}}>
-          <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>⏳ À régler</h3>
+          <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>À régler</h3>
           <div style={{display:'flex',flexDirection:'column',gap:'.75rem'}}>
             {nonPayes.map(b => (
               <div key={b.id} style={{background:'white',borderRadius:'var(--radius-lg)',padding:'1.25rem',boxShadow:'var(--shadow-sm)',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:'.75rem',border:'1.5px solid var(--sable-light)'}}>
@@ -66,11 +66,11 @@ export default function PaiementTab() {
                 <div style={{display:'flex',alignItems:'center',gap:'.75rem'}}>
                   {b.paiement_declare ? (
                     <span style={{background:'#fff8e1',color:'#f57f17',fontSize:'.78rem',fontWeight:700,padding:'3px 10px',borderRadius:50}}>
-                      ⏳ En attente de validation
+                      En attente de validation
                     </span>
                   ) : b.tarif_propose ? (
                     <button className="btn-primary" onClick={() => { setModal(b); setForm({mode:'virement',ref:''}) }} style={{fontSize:'.85rem'}}>
-                      💶 Déclarer le paiement
+                      Déclarer le paiement
                     </button>
                   ) : (
                     <span style={{fontSize:'.82rem',color:'var(--text-muted)',fontStyle:'italic'}}>Tarif en attente</span>
@@ -85,16 +85,16 @@ export default function PaiementTab() {
       {/* Payés */}
       {payes.length > 0 && (
         <div>
-          <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>✅ Réglés</h3>
+          <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Réglés</h3>
           <div style={{display:'flex',flexDirection:'column',gap:'.5rem'}}>
             {payes.map(b => (
               <div key={b.id} style={{background:'#f0fdf4',borderRadius:'var(--radius-lg)',padding:'1rem 1.25rem',display:'flex',justifyContent:'space-between',alignItems:'center',border:'1px solid #bbf7d0'}}>
                 <div>
                   <div style={{fontWeight:700,color:'#15803d',fontSize:'.9rem'}}>
-                    ✅ {b.slot?.date ? new Date(b.slot.date+'T00:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'long'}) : '—'}
+                    {b.slot?.date ? new Date(b.slot.date+'T00:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'long'}) : '—'}
                   </div>
                   <div style={{fontSize:'.78rem',color:'#166534'}}>
-                    {b.paiement_mode === 'cesu' ? '🎫 CESU' : '🏦 Virement'}{b.paiement_ref ? ` · Réf: ${b.paiement_ref}` : ''}
+                    {b.paiement_mode === 'cesu' ? 'CESU' : 'Virement'}{b.paiement_ref ? ` · Réf: ${b.paiement_ref}` : ''}
                   </div>
                 </div>
                 <span style={{fontFamily:"'Baloo 2',cursive",fontWeight:800,color:'#15803d',fontSize:'1.1rem'}}>
@@ -112,18 +112,18 @@ export default function PaiementTab() {
           <div style={{background:'white',borderRadius:'var(--radius-xl)',width:'100%',maxWidth:420,overflow:'hidden',boxShadow:'0 24px 64px rgba(0,0,0,.2)'}} onClick={e=>e.stopPropagation()}>
             <div style={{background:'var(--nuit)',padding:'1.25rem 1.5rem',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
               <div>
-                <h3 style={{fontFamily:"'Baloo 2',cursive",color:'white',fontSize:'1.1rem',margin:0}}>💶 Déclarer le paiement</h3>
+                <h3 style={{fontFamily:"'Baloo 2',cursive",color:'white',fontSize:'1.1rem',margin:0}}>Déclarer le paiement</h3>
                 <span style={{fontSize:'.78rem',color:'rgba(210,225,255,.7)'}}>
                   {modal.slot?.date ? new Date(modal.slot.date+'T00:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'long'}) : ''} · {parseFloat(modal.tarif_propose||0).toFixed(2)} €
                 </span>
               </div>
-              <button onClick={() => setModal(null)} style={{background:'rgba(255,255,255,.15)',border:'none',color:'white',width:30,height:30,borderRadius:'50%',cursor:'pointer',fontFamily:'inherit',fontSize:'1rem'}}>✕</button>
+              <button onClick={() => setModal(null)} style={{background:'rgba(255,255,255,.15)',border:'none',color:'white',width:30,height:30,borderRadius:'50%',cursor:'pointer',fontFamily:'inherit',fontSize:'1rem'}}></button>
             </div>
             <div style={{padding:'1.5rem',display:'flex',flexDirection:'column',gap:'1rem'}}>
               <div>
                 <label style={{fontSize:'.78rem',fontWeight:700,color:'var(--nuit)',display:'block',marginBottom:6,textTransform:'uppercase'}}>Mode de paiement</label>
                 <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'.6rem'}}>
-                  {[['virement','🏦 Virement'],['cesu','🎫 CESU']].map(([v,l]) => (
+                  {[['virement','Virement'],['cesu','CESU']].map(([v,l]) => (
                     <button key={v} onClick={() => setForm(f=>({...f,mode:v}))}
                       style={{padding:'.75rem',border:`2px solid ${form.mode===v?'var(--sauge)':'var(--sable-dark)'}`,borderRadius:10,background:form.mode===v?'#f0fdf4':'white',fontWeight:700,fontSize:'.9rem',cursor:'pointer',fontFamily:'inherit',color:form.mode===v?'var(--sauge)':'var(--nuit)'}}>
                       {l}
@@ -151,7 +151,7 @@ export default function PaiementTab() {
                     placeholder="Numéro du chèque CESU"
                     style={{width:'100%',padding:'.6rem',border:'2px solid var(--sable-dark)',borderRadius:10,fontFamily:'inherit',fontSize:'.9rem'}}/>
                   <div style={{background:'#e0f2fe',borderRadius:8,padding:'.75rem',marginTop:'.5rem',fontSize:'.82rem',color:'#0369a1'}}>
-                    📮 Envoyez le(s) chèque(s) CESU à l'adresse communiquée lors de la réservation, avant la date de la séance.
+                    Envoyez le(s) chèque(s) CESU à l'adresse communiquée lors de la réservation, avant la date de la séance.
                   </div>
                 </div>
               )}

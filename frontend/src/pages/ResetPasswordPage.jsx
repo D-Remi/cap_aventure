@@ -48,7 +48,7 @@ export default function ResetPasswordPage() {
 
         {status === 'done' ? (
           <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
-            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✅</div>
+            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}></div>
             <h3 style={{ fontFamily: "'Baloo 2',cursive", color: 'var(--vert-foret)', marginBottom: '0.5rem' }}>
               Mot de passe modifié !
             </h3>

@@ -20,7 +20,7 @@ export default function MultiDateBooking({ children = [], isLoggedIn, onClose, p
   const [sending,    setSending]    = useState(false)
 
   const JOURS_L = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim']
-  const SERVICES = { garde:'🏠 Garde', repit:'🌿 Répit TSA/TDAH', evenement:'🎉 Animation' }
+  const SERVICES = { garde:'Garde', repit:'Répit TSA/TDAH', evenement:'Animation' }
 
   const addDate = () => {
     if (!dateInput) return
@@ -107,8 +107,8 @@ export default function MultiDateBooking({ children = [], isLoggedIn, onClose, p
     <div className="mdb-overlay" onClick={onClose}>
       <div className="mdb" onClick={e=>e.stopPropagation()}>
         <div className="mdb__head">
-          <div><h3>📅 Demander des créneaux</h3><span>Choisissez comment continuer</span></div>
-          <button onClick={onClose}>✕</button>
+          <div><h3>Demander des créneaux</h3><span>Choisissez comment continuer</span></div>
+          <button onClick={onClose}></button>
         </div>
         <div className="mdb__body">
 
@@ -123,7 +123,7 @@ export default function MultiDateBooking({ children = [], isLoggedIn, onClose, p
               <button onClick={() => navigate('/register')}
                 style={{background:'var(--nuit)',color:'white',border:'none',borderRadius:12,padding:'1.1rem 1.25rem',cursor:'pointer',fontFamily:'inherit',textAlign:'left',transition:'opacity .2s'}}
                 onMouseEnter={e=>e.currentTarget.style.opacity='.88'} onMouseLeave={e=>e.currentTarget.style.opacity='1'}>
-                <div style={{fontWeight:700,fontSize:'1rem',marginBottom:'.25rem'}}>📋 Créer un compte</div>
+                <div style={{fontWeight:700,fontSize:'1rem',marginBottom:'.25rem'}}>Créer un compte</div>
                 <div style={{fontSize:'.82rem',color:'rgba(255,255,255,.65)'}}>Suivez vos demandes, réservations, contrats et photos en un seul endroit.</div>
               </button>
 
@@ -132,7 +132,7 @@ export default function MultiDateBooking({ children = [], isLoggedIn, onClose, p
                 style={{background:'var(--sable-light)',color:'var(--nuit)',border:'1.5px solid var(--sable-dark)',borderRadius:12,padding:'1.1rem 1.25rem',cursor:'pointer',fontFamily:'inherit',textAlign:'left',transition:'all .2s'}}
                 onMouseEnter={e=>{e.currentTarget.style.background='white';e.currentTarget.style.borderColor='var(--sauge)'}}
                 onMouseLeave={e=>{e.currentTarget.style.background='var(--sable-light)';e.currentTarget.style.borderColor='var(--sable-dark)'}}>
-                <div style={{fontWeight:700,fontSize:'1rem',marginBottom:'.25rem'}}>🔑 Se connecter</div>
+                <div style={{fontWeight:700,fontSize:'1rem',marginBottom:'.25rem'}}>Se connecter</div>
                 <div style={{fontSize:'.82rem',color:'var(--text-muted)'}}>Vous avez déjà un compte ? Connectez-vous pour envoyer votre demande.</div>
               </button>
 
@@ -141,7 +141,7 @@ export default function MultiDateBooking({ children = [], isLoggedIn, onClose, p
                 style={{background:'white',color:'var(--nuit)',border:'1.5px solid var(--sable-dark)',borderRadius:12,padding:'1.1rem 1.25rem',cursor:'pointer',fontFamily:'inherit',textAlign:'left',transition:'all .2s'}}
                 onMouseEnter={e=>{e.currentTarget.style.borderColor='var(--sauge)'}}
                 onMouseLeave={e=>{e.currentTarget.style.borderColor='var(--sable-dark)'}}>
-                <div style={{fontWeight:700,fontSize:'1rem',marginBottom:'.25rem'}}>✉️ Envoyer sans s'inscrire</div>
+                <div style={{fontWeight:700,fontSize:'1rem',marginBottom:'.25rem'}}>Envoyer sans s'inscrire</div>
                 <div style={{fontSize:'.82rem',color:'var(--text-muted)'}}>Laissez juste vos coordonnées et les dates souhaitées. Je vous recontacte sous 24h.</div>
               </button>
 
@@ -177,8 +177,8 @@ export default function MultiDateBooking({ children = [], isLoggedIn, onClose, p
               {/* Sélection dates intégrée */}
               <div style={{marginBottom:'1rem'}}>
                 <div className="mdb__mode-toggle" style={{marginBottom:'1rem'}}>
-                  <button className={mode==='libre'?'active':''} onClick={()=>setMode('libre')}>📌 Dates libres</button>
-                  <button className={mode==='periode'?'active':''} onClick={()=>setMode('periode')}>📆 Période</button>
+                  <button className={mode==='libre'?'active':''} onClick={()=>setMode('libre')}>Dates libres</button>
+                  <button className={mode==='periode'?'active':''} onClick={()=>setMode('periode')}>Période</button>
                 </div>
                 {mode==='libre' && (
                   <div style={{display:'flex',gap:'.5rem',marginBottom:'.5rem'}}>
@@ -202,7 +202,7 @@ export default function MultiDateBooking({ children = [], isLoggedIn, onClose, p
                     {allDates.map((d,i) => (
                       <span key={i} className="mdb__date-tag">
                         {new Date(d+'T00:00:00').toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})}
-                        {mode==='libre' && <button onClick={()=>removeDate(d)}>✕</button>}
+                        {mode==='libre' && <button onClick={()=>removeDate(d)}></button>}
                       </span>
                     ))}
                   </div>
@@ -240,7 +240,7 @@ export default function MultiDateBooking({ children = [], isLoggedIn, onClose, p
           {/* Confirmation */}
           {guestSent && (
             <div style={{textAlign:'center',padding:'2rem'}}>
-              <div style={{fontSize:'3rem',marginBottom:'1rem'}}>🌲</div>
+              <div style={{fontSize:'3rem',marginBottom:'1rem'}}></div>
               <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',marginBottom:'.5rem'}}>Demande envoyée !</h3>
               <p style={{color:'var(--text-muted)'}}>Je vous recontacte sous 24h pour confirmer les disponibilités.</p>
               <button onClick={onClose} className="btn-primary" style={{marginTop:'1.5rem'}}>Fermer</button>
@@ -256,15 +256,15 @@ export default function MultiDateBooking({ children = [], isLoggedIn, onClose, p
     <div className="mdb-overlay" onClick={onClose}>
       <div className="mdb" onClick={e=>e.stopPropagation()}>
         <div className="mdb__head">
-          <div><h3>📅 Demander des créneaux</h3><span>{allDates.length} date{allDates.length>1?'s':''} sélectionnée{allDates.length>1?'s':''}</span></div>
-          <button onClick={onClose}>✕</button>
+          <div><h3>Demander des créneaux</h3><span>{allDates.length} date{allDates.length>1?'s':''} sélectionnée{allDates.length>1?'s':''}</span></div>
+          <button onClick={onClose}></button>
         </div>
         <div className="mdb__body">
 
           {/* Mode sélection */}
           <div className="mdb__mode-toggle">
-            <button className={mode==='libre'?'active':''} onClick={()=>setMode('libre')}>📌 Dates libres</button>
-            <button className={mode==='periode'?'active':''} onClick={()=>setMode('periode')}>📆 Période</button>
+            <button className={mode==='libre'?'active':''} onClick={()=>setMode('libre')}>Dates libres</button>
+            <button className={mode==='periode'?'active':''} onClick={()=>setMode('periode')}>Période</button>
           </div>
 
           {/* Mode dates libres */}
@@ -281,7 +281,7 @@ export default function MultiDateBooking({ children = [], isLoggedIn, onClose, p
                   {dates.map(d => (
                     <span key={d} className="mdb__date-tag">
                       {fmtDate(d)}
-                      <button onClick={()=>removeDate(d)}>✕</button>
+                      <button onClick={()=>removeDate(d)}></button>
                     </span>
                   ))}
                 </div>
@@ -368,7 +368,7 @@ export default function MultiDateBooking({ children = [], isLoggedIn, onClose, p
           {/* Résumé */}
           {allDates.length > 0 && (
             <div style={{background:'var(--sable-light)',borderRadius:10,padding:'.75rem 1rem',fontSize:'.82rem',color:'var(--nuit)',marginBottom:'.5rem'}}>
-              📋 <strong>{allDates.length} journée{allDates.length>1?'s':''}</strong> · {heureDebut}→{heureFin} · {SERVICES[service]}
+              <strong>{allDates.length} journée{allDates.length>1?'s':''}</strong> · {heureDebut}→{heureFin} · {SERVICES[service]}
             </div>
           )}
 

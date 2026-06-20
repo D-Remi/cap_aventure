@@ -36,13 +36,13 @@ export default function AdminChildren() {
       <div className="admin-page">
         <div className="admin-page__header">
           <div>
-            <h1>🌿 Dossiers enfants</h1>
+            <h1>Dossiers enfants</h1>
             <p className="admin-page__subtitle">{children.length} enfant{children.length>1?'s':''} enregistré{children.length>1?'s':''}</p>
           </div>
         </div>
 
         <div style={{display:'flex',gap:'.6rem',marginBottom:'1.5rem',flexWrap:'wrap'}}>
-          {[{v:'tous',l:'Tous'},{v:'specifiques',l:'🌿 Besoins spécifiques'},{v:'incomplet',l:'⚠️ Dossier incomplet'}].map(({v,l})=>(
+          {[{v:'tous',l:'Tous'},{v:'specifiques',l:'Besoins spécifiques'},{v:'incomplet',l:'Dossier incomplet'}].map(({v,l})=>(
             <button key={v} className={`cal-filter-btn ${filter===v?'active':''}`} onClick={()=>setFilter(v)}>{l}</button>
           ))}
         </div>
@@ -63,8 +63,8 @@ export default function AdminChildren() {
                   </div>
                 </div>
                 <div style={{display:'flex',gap:'.4rem',flexWrap:'wrap'}}>
-                  {c.besoins_specifiques && <span style={{fontSize:'.68rem',background:'#e3f2fd',color:'#1565c0',padding:'1px 6px',borderRadius:50,fontWeight:700}}>🌿 {c.type_besoin||'BS'}</span>}
-                  {!c.dossier_complete && <span style={{fontSize:'.68rem',background:'#fff8e1',color:'#f57f17',padding:'1px 6px',borderRadius:50,fontWeight:700}}>⚠️ Incomplet</span>}
+                  {c.besoins_specifiques && <span style={{fontSize:'.68rem',background:'#e3f2fd',color:'#1565c0',padding:'1px 6px',borderRadius:50,fontWeight:700}}>{c.type_besoin||'BS'}</span>}
+                  {!c.dossier_complete && <span style={{fontSize:'.68rem',background:'#fff8e1',color:'#f57f17',padding:'1px 6px',borderRadius:50,fontWeight:700}}>Incomplet</span>}
                 </div>
               </div>
             ))}
@@ -77,14 +77,14 @@ export default function AdminChildren() {
               <div style={{display:'flex',justifyContent:'flex-end',marginBottom:'.75rem'}}>
                 <button onClick={() => genererDossierEnfantPDF(selected)}
                   style={{background:'var(--sauge)',color:'white',border:'none',borderRadius:8,padding:'.5rem 1rem',fontWeight:700,fontSize:'.85rem',cursor:'pointer',fontFamily:'inherit'}}>
-                  ⬇️ Exporter le dossier (PDF)
+                  ⬇Exporter le dossier (PDF)
                 </button>
               </div>
               <DossierEnfant child={selected} showPrivate={true} />
               {/* Notes animateur éditables */}
               <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.5rem',boxShadow:'var(--shadow-sm)'}}>
                 <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'1rem'}}>
-                  <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem'}}>🔒 Notes animateur (privées)</h3>
+                  <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem'}}>Notes animateur (privées)</h3>
                   {!editing && <button className="btn-secondary" onClick={()=>setEditing(true)} style={{fontSize:'.82rem',padding:'.35rem .9rem'}}>Modifier</button>}
                 </div>
                 {editing ? (

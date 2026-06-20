@@ -59,7 +59,7 @@ export default function AdminMessages() {
         {/* Liste conversations */}
         <div style={{width:280,flexShrink:0,borderRight:'1px solid var(--sable-light)',display:'flex',flexDirection:'column',background:'white'}}>
           <div style={{padding:'1rem 1.25rem',borderBottom:'1px solid var(--sable-light)'}}>
-            <h2 style={{fontFamily:"'Baloo 2',cursive",fontSize:'1.1rem',color:'var(--nuit)',margin:0}}>💬 Messages</h2>
+            <h2 style={{fontFamily:"'Baloo 2',cursive",fontSize:'1.1rem',color:'var(--nuit)',margin:0}}>Messages</h2>
             <p style={{fontSize:'.78rem',color:'var(--text-muted)',margin:'4px 0 0'}}>{convs.length} conversation{convs.length>1?'s':''}</p>
           </div>
           <div style={{flex:1,overflowY:'auto'}}>
@@ -127,13 +127,12 @@ export default function AdminMessages() {
                 style={{flex:1,resize:'none',border:'2px solid var(--sable-dark)',borderRadius:12,padding:'.55rem .85rem',fontFamily:'inherit',fontSize:'.9rem',lineHeight:1.5,background:'var(--blanc)'}}/>
               <button onClick={send} disabled={!text.trim()||sending}
                 style={{width:42,height:42,background:'var(--sauge)',color:'white',border:'none',borderRadius:'50%',cursor:'pointer',fontSize:'1.1rem',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,transition:'background .18s'}}>
-                ➤
-              </button>
+                              </button>
             </div>
           </div>
         ) : (
           <div style={{flex:1,display:'flex',alignItems:'center',justifyContent:'center',flexDirection:'column',gap:'.75rem',color:'var(--text-muted)'}}>
-            <span style={{fontSize:'2.5rem'}}>💬</span>
+            <span style={{fontSize:'2.5rem'}}></span>
             <p style={{fontSize:'.9rem'}}>Sélectionnez une conversation</p>
           </div>
         )}

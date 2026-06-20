@@ -72,7 +72,7 @@ export default function AdminContacts() {
       <div className="admin-page">
         <div className="admin-page__header">
           <div>
-            <h1>📩 Demandes de contact</h1>
+            <h1>Demandes de contact</h1>
             <p className="admin-page__subtitle">
               {nonTraites} non traité{nonTraites > 1 ? 's' : ''} · {multis} demande{multis > 1 ? 's' : ''} multi-dates
             </p>
@@ -83,9 +83,9 @@ export default function AdminContacts() {
         <div style={{ display:'flex', gap:'.6rem', marginBottom:'1.5rem', flexWrap:'wrap' }}>
           {[
             { v:'tous',         l:'Toutes',               n: contacts.length },
-            { v:'non_traites',  l:'⏳ Non traitées',      n: nonTraites },
-            { v:'multi',        l:'📅 Demandes de dates', n: multis },
-            { v:'traites',      l:'✅ Traitées',           n: contacts.length - nonTraites },
+            { v:'non_traites',  l:'Non traitées',      n: nonTraites },
+            { v:'multi',        l:'Demandes de dates', n: multis },
+            { v:'traites',      l:'Traitées',           n: contacts.length - nonTraites },
           ].map(({ v, l, n }) => (
             <button key={v} onClick={() => setFilter(v)}
               className={`cal-filter-btn ${filter === v ? 'active' : ''}`}>
@@ -98,7 +98,7 @@ export default function AdminContacts() {
           <div className="admin-loading">Chargement…</div>
         ) : filtered.length === 0 ? (
           <div className="admin-empty">
-            <div style={{ fontSize:'2rem' }}>📭</div>
+            <div style={{ fontSize:'2rem' }}></div>
             <p>Aucune demande</p>
           </div>
         ) : (
@@ -118,7 +118,7 @@ export default function AdminContacts() {
                   }}>
                   <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:'.25rem' }}>
                     <span style={{ fontWeight:700, color:'var(--nuit)', fontSize:'.9rem' }}>
-                      {isMulti(c) ? '📅 ' : ''}{c.prenom} {c.nom || ''}
+                      {isMulti(c) ? '' : ''}{c.prenom} {c.nom || ''}
                     </span>
                     <span style={{ fontSize:'.7rem', color:'var(--text-muted)', whiteSpace:'nowrap', marginLeft:'.5rem' }}>
                       {new Date(c.created_at).toLocaleDateString('fr-FR', { day:'numeric', month:'short' })}
@@ -128,7 +128,7 @@ export default function AdminContacts() {
                   <div style={{ display:'flex', gap:'.4rem', marginTop:'.35rem', flexWrap:'wrap' }}>
                     {isMulti(c) && (
                       <span style={{ background:'#e0f2fe', color:'#0369a1', fontSize:'.7rem', fontWeight:700, padding:'2px 7px', borderRadius:50 }}>
-                        📅 {getDates(c).length} dates
+                        {getDates(c).length} dates
                       </span>
                     )}
                     {c.service && (
@@ -138,7 +138,7 @@ export default function AdminContacts() {
                     )}
                     {c.traite && (
                       <span style={{ background:'#f3f4f6', color:'#6b7280', fontSize:'.7rem', fontWeight:700, padding:'2px 7px', borderRadius:50 }}>
-                        ✅ Traité
+                        Traité
                       </span>
                     )}
                   </div>
@@ -152,14 +152,14 @@ export default function AdminContacts() {
                 <div style={{ background:'var(--nuit)', padding:'1.25rem 1.5rem', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
                   <div>
                     <h3 style={{ fontFamily:"'Baloo 2',cursive", color:'white', fontSize:'1.1rem', margin:0 }}>
-                      {isMulti(selected) ? '📅 Demande de dates — ' : ''}{selected.prenom} {selected.nom || ''}
+                      {isMulti(selected) ? 'Demande de dates — ' : ''}{selected.prenom} {selected.nom || ''}
                     </h3>
                     <span style={{ fontSize:'.78rem', color:'rgba(210,225,255,.7)' }}>
                       {new Date(selected.created_at).toLocaleString('fr-FR')}
                     </span>
                   </div>
                   {selected.traite && (
-                    <span style={{ background:'rgba(255,255,255,.15)', color:'white', fontSize:'.78rem', fontWeight:700, padding:'3px 10px', borderRadius:50 }}>✅ Traité</span>
+                    <span style={{ background:'rgba(255,255,255,.15)', color:'white', fontSize:'.78rem', fontWeight:700, padding:'3px 10px', borderRadius:50 }}>Traité</span>
                   )}
                 </div>
 
@@ -171,7 +171,7 @@ export default function AdminContacts() {
                       <div style={{ fontSize:'.75rem', fontWeight:700, color:'var(--text-muted)', textTransform:'uppercase', marginBottom:'.25rem' }}>Contact</div>
                       <div style={{ fontSize:'.9rem', color:'var(--nuit)', fontWeight:600 }}>{selected.prenom} {selected.nom || ''}</div>
                       <a href={`mailto:${selected.email}`} style={{ fontSize:'.85rem', color:'var(--sauge)', textDecoration:'none' }}>{selected.email}</a>
-                      {selected.telephone && <div style={{ fontSize:'.82rem', color:'var(--text-muted)', marginTop:2 }}>📞 {selected.telephone}</div>}
+                      {selected.telephone && <div style={{ fontSize:'.82rem', color:'var(--text-muted)', marginTop:2 }}>{selected.telephone}</div>}
                     </div>
                     {(selected.enfant_prenom || getEnfant(selected) !== '—') && (
                       <div>
@@ -190,7 +190,7 @@ export default function AdminContacts() {
                   {isMulti(selected) && getDates(selected).length > 0 && (
                     <div style={{ background:'#f0f9ff', borderRadius:12, padding:'1rem 1.25rem', border:'1px solid #bae6fd' }}>
                       <div style={{ fontWeight:700, color:'#0369a1', fontSize:'.88rem', marginBottom:'.75rem' }}>
-                        📅 {getDates(selected).length} dates demandées · {getHoraire(selected)}
+                        {getDates(selected).length} dates demandées · {getHoraire(selected)}
                       </div>
                       <div style={{ display:'flex', flexWrap:'wrap', gap:'.4rem' }}>
                         {getDates(selected).map((d, i) => (
@@ -228,23 +228,23 @@ export default function AdminContacts() {
                   {/* Besoins spécifiques */}
                   {selected.besoins_specifiques && (
                     <div style={{ background:'#e0f2fe', borderRadius:8, padding:'.75rem 1rem', fontSize:'.85rem', color:'#0369a1', fontWeight:600 }}>
-                      🌿 Enfant avec besoins spécifiques (TSA/TDAH)
+                      Enfant avec besoins spécifiques (TSA/TDAH)
                     </div>
                   )}
 
                   {/* Actions */}
                   <div style={{ display:'flex', gap:'.75rem', paddingTop:'.5rem', borderTop:'1px solid var(--sable-light)', flexWrap:'wrap' }}>
                     <a href={`mailto:${selected.email}`} className="btn-primary" style={{ textDecoration:'none', fontSize:'.88rem' }}>
-                      ✉️ Répondre par email
+                      Répondre par email
                     </a>
                     {!selected.traite && (
                       <button className="btn-secondary" onClick={() => marquerTraite(selected.id)} style={{ fontSize:'.88rem' }}>
-                        ✅ Marquer traité
+                        Marquer traité
                       </button>
                     )}
                     <button onClick={() => supprimer(selected.id)}
                       style={{ background:'#fee2e2', color:'#991b1b', border:'none', borderRadius:8, padding:'.5rem 1rem', fontWeight:700, fontSize:'.85rem', cursor:'pointer', fontFamily:'inherit' }}>
-                      🗑️ Supprimer
+                      Supprimer
                     </button>
                   </div>
                 </div>
@@ -264,7 +264,7 @@ export default function AdminContacts() {
           onClose={() => setSlotModal(null)}
           onCreated={(slot) => {
             setSlotModal(null)
-            toast.success(`Créneau créé pour le ${slot.date} ✅`)
+            toast.success(`Créneau créé pour le ${slot.date} `)
           }}
         />
       )}
@@ -316,13 +316,13 @@ function SlotCreateModal({ prefill, onClose, onCreated }) {
         onClick={e => e.stopPropagation()}>
         <div style={{ background:'var(--nuit)', padding:'1.25rem 1.5rem', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
           <h3 style={{ fontFamily:"'Baloo 2',cursive", color:'white', fontSize:'1.1rem', margin:0 }}>
-            📅 Créer le créneau
+            Créer le créneau
           </h3>
-          <button onClick={onClose} style={{ background:'rgba(255,255,255,.15)', border:'none', color:'white', width:30, height:30, borderRadius:'50%', cursor:'pointer', fontFamily:'inherit', fontSize:'1rem' }}>✕</button>
+          <button onClick={onClose} style={{ background:'rgba(255,255,255,.15)', border:'none', color:'white', width:30, height:30, borderRadius:'50%', cursor:'pointer', fontFamily:'inherit', fontSize:'1rem' }}></button>
         </div>
         <div style={{ padding:'1.5rem' }}>
           <div style={{ background:'#e0f2fe', borderRadius:8, padding:'.75rem 1rem', marginBottom:'1rem', fontSize:'.82rem', color:'#0369a1' }}>
-            📋 Pour : <strong>{prefill.enfant}</strong> · {prefill.service}
+            Pour : <strong>{prefill.enfant}</strong> · {prefill.service}
           </div>
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'.75rem' }}>
             <div style={{ gridColumn:'1/-1' }}>{fi('Date *', 'date', 'date')}</div>
@@ -333,9 +333,9 @@ function SlotCreateModal({ prefill, onClose, onCreated }) {
               <label style={{ fontSize:'.75rem', fontWeight:700, color:'var(--nuit)', display:'block', marginBottom:3, textTransform:'uppercase' }}>Type</label>
               <select value={form.type_accueil} onChange={set('type_accueil')}
                 style={{ width:'100%', padding:'.5rem', border:'1.5px solid var(--sable-dark)', borderRadius:8, fontFamily:'inherit' }}>
-                <option value="standard">🏠 Garde standard</option>
-                <option value="adapte">🌿 Adapté TSA/TDAH</option>
-                <option value="evenement">🎉 Événement</option>
+                <option value="standard">Garde standard</option>
+                <option value="adapte">Adapté TSA/TDAH</option>
+                <option value="evenement">Événement</option>
               </select>
             </div>
           </div>
@@ -343,7 +343,7 @@ function SlotCreateModal({ prefill, onClose, onCreated }) {
           <div style={{ display:'flex', gap:'.75rem', marginTop:'.5rem' }}>
             <button onClick={onClose} className="btn-secondary" style={{ flex:1 }}>Annuler</button>
             <button onClick={save} className="btn-primary" disabled={saving || !form.date || !form.tarif} style={{ flex:1, justifyContent:'center' }}>
-              {saving ? 'Création…' : '✅ Créer le créneau'}
+              {saving ? 'Création…' : 'Créer le créneau'}
             </button>
           </div>
         </div>

@@ -82,8 +82,8 @@ export default function AdminRegistrations() {
             <button className="btn-secondary" onClick={() => {
               const mockActivity = { titre: 'Toutes les activités', date: null, prix: 0, places_max: '—', type: '—' }
               exportRegistrationsPDF(mockActivity, filtered)
-            }}>📄 PDF</button>
-            <button className="btn-primary" onClick={exportCSV}>📥 CSV</button>
+            }}>PDF</button>
+            <button className="btn-primary" onClick={exportCSV}>CSV</button>
           </div>
         </div>
 
@@ -91,7 +91,7 @@ export default function AdminRegistrations() {
         <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
           <input
             className="admin-search"
-            placeholder="🔍 Chercher enfant, parent, activité..."
+            placeholder="Chercher enfant, parent, activité..."
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
@@ -150,7 +150,7 @@ export default function AdminRegistrations() {
           {loading ? (
             <div className="admin-loading">Chargement...</div>
           ) : filtered.length === 0 ? (
-            <div className="admin-empty"><span>📋</span>Aucune inscription trouvée</div>
+            <div className="admin-empty"><span></span>Aucune inscription trouvée</div>
           ) : (
             <table className="admin-table">
               <thead>
@@ -189,9 +189,9 @@ export default function AdminRegistrations() {
                         onChange={e => updateStatus(r.id, e.target.value)}
                         className={`status-select status-select--${STATUS_CLASS[r.status]}`}
                       >
-                        <option value="pending">⏳ En attente</option>
-                        <option value="confirmed">✅ Confirmée</option>
-                        <option value="cancelled">❌ Annulée</option>
+                        <option value="pending">En attente</option>
+                        <option value="confirmed">Confirmée</option>
+                        <option value="cancelled">Annulée</option>
                       </select>
                     </td>
                   </tr>

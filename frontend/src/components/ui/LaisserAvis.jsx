@@ -19,24 +19,24 @@ export default function LaisserAvis({ prenom }) {
 
   if (sent) return (
     <div style={{background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:12,padding:'1.25rem',textAlign:'center',color:'#15803d'}}>
-      ✅ Merci pour votre avis ! Il sera publié après validation.
+      Merci pour votre avis ! Il sera publié après validation.
     </div>
   )
 
   if (!open) return (
     <button onClick={()=>setOpen(true)} className="btn-secondary" style={{fontSize:'.88rem'}}>
-      ⭐ Laisser un avis
+      Laisser un avis
     </button>
   )
 
   return (
     <div style={{background:'white',border:'1.5px solid var(--sable-light)',borderRadius:12,padding:'1.5rem'}}>
-      <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>⭐ Votre avis</h3>
+      <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Votre avis</h3>
       <div style={{marginBottom:'1rem'}}>
         <label style={{fontSize:'.78rem',fontWeight:700,color:'var(--nuit)',display:'block',marginBottom:'.4rem',textTransform:'uppercase'}}>Note</label>
         <div style={{display:'flex',gap:'.25rem',fontSize:'1.6rem',cursor:'pointer'}}>
           {[1,2,3,4,5].map(n => (
-            <span key={n} onClick={()=>setNote(n)} style={{color:n<=note?'#f5a623':'#d1d5db',transition:'color .15s'}}>★</span>
+            <span key={n} onClick={()=>setNote(n)} style={{color:n<=note?'#f5a623':'#d1d5db',transition:'color .15s'}}></span>
           ))}
         </div>
       </div>

@@ -32,16 +32,16 @@ export default function DashboardPage() {
   }, [])
 
   const TABS = [
-    { id:'accueil',       label:'🏠 Accueil' },
-    { id:'creneaux',      label:'📅 Réserver' },
-    { id:'reservations',  label:'📋 Mes réservations' },
-    { id:'enfants',       label:'👶 Mes enfants' },
-    { id:'planning',      label:'🗓️ Planning' },
-    { id:'photos',        label:'📸 Photos' },
-    { id:'paiements',     label:'💶 Paiements' },
-    { id:'contrats',      label:'📄 Contrats' },
-    { id:'documents',     label:'📁 Documents' },
-    { id:'messages',      label:'💬 Messages' },
+    { id:'accueil',       label:'Accueil' },
+    { id:'creneaux',      label:'Réserver' },
+    { id:'reservations',  label:'Mes réservations' },
+    { id:'enfants',       label:'Mes enfants' },
+    { id:'planning',      label:'Planning' },
+    { id:'photos',        label:'Photos' },
+    { id:'paiements',     label:'Paiements' },
+    { id:'contrats',      label:'Contrats' },
+    { id:'documents',     label:'Documents' },
+    { id:'messages',      label:'Messages' },
   ]
 
   return (
@@ -67,46 +67,46 @@ export default function DashboardPage() {
         {/* ACCUEIL */}
         {tab === 'accueil' && (
           <div className="dash-tab">
-            <h2>Bonjour {user?.prenom} 👋</h2>
+            <h2>Bonjour {user?.prenom} </h2>
             <p className="dash-subtitle">Bienvenue dans votre espace CapAventure</p>
             <div className="dash-cards">
               <div className="dash-card" onClick={() => setTab('creneaux')}>
-                <span>📅</span>
+                <span></span>
                 <strong>Créneaux disponibles</strong>
                 <p>{slots.filter(s => s.statut === 'ouvert').length} créneau{slots.filter(s => s.statut === 'ouvert').length > 1 ? 'x' : ''} disponible{slots.filter(s => s.statut === 'ouvert').length > 1 ? 's' : ''}</p>
               </div>
               <div className="dash-card" onClick={() => setTab('reservations')}>
-                <span>📋</span>
+                <span></span>
                 <strong>Mes réservations</strong>
                 <p>{bookings.filter(b => b.status === 'confirmed').length} confirmée{bookings.filter(b => b.status === 'confirmed').length > 1 ? 's' : ''}</p>
               </div>
               <div className="dash-card" onClick={() => setTab('enfants')}>
-                <span>👶</span>
+                <span></span>
                 <strong>Mes enfants</strong>
                 <p>{children.length} fiche{children.length > 1 ? 's' : ''} enregistrée{children.length > 1 ? 's' : ''}</p>
               </div>
               <div className="dash-card" onClick={() => setTab('photos')}>
-                <span>📸</span>
+                <span></span>
                 <strong>Photos</strong>
                 <p>Albums des séances</p>
               </div>
               <div className="dash-card" onClick={() => setTab('paiements')}>
-                <span>💶</span>
+                <span></span>
                 <strong>Paiements</strong>
                 <p>CESU, virement, suivi</p>
               </div>
               <div className="dash-card" onClick={() => setTab('contrats')}>
-                <span>📄</span>
+                <span></span>
                 <strong>Contrats répit</strong>
                 <p>Lire et signer vos contrats</p>
               </div>
               <div className="dash-card" onClick={() => setTab('documents')}>
-                <span>📁</span>
+                <span></span>
                 <strong>Documents</strong>
                 <p>Ordonnances, PAP, autorisations</p>
               </div>
               <div className="dash-card" onClick={() => setTab('messages')}>
-                <span>💬</span>
+                <span></span>
                 <strong>Messages</strong>
                 <p>Contacter l'animateur</p>
               </div>
@@ -118,13 +118,13 @@ export default function DashboardPage() {
         {tab === 'creneaux' && children.length > 0 && <MultiDateBooking children={children} isLoggedIn={true} onClose={() => setTab('accueil')} />}
         {tab === 'creneaux' && children.length === 0 && (
           <div className="dash-tab">
-            <h2>📅 Créneaux disponibles</h2>
+            <h2>Créneaux disponibles</h2>
             <p className="dash-subtitle">Réservez une journée pour votre enfant</p>
             {loading ? <div className="dash-loading">Chargement...</div>
             : slots.length === 0 ? (
               <div className="dash-empty">
-                <div>📭</div>
-                <p>Aucun créneau disponible pour le moment.<br/>Revenez prochainement ou <a href="/#contact">contactez-nous</a>.</p>
+                <div></div>
+                <p>Aucun créneau disponible pour le moment.<br/>Revenez prochainement ou <a href="/#contact">contactez-moi</a>.</p>
               </div>
             ) : (
               <div className="slots-list">
@@ -132,17 +132,17 @@ export default function DashboardPage() {
                   <div key={s.id} className={`slot-card ${s.statut === 'complet' ? 'slot-card--full' : ''}`}>
                     <div className="slot-card__date">
                       <strong>{new Date(s.date+'T00:00:00').toLocaleDateString('fr-FR', { weekday:'short', day:'numeric', month:'short' })}</strong>
-                      <span>{s.periode === 'matin' ? '🌅 Matin' : s.periode === 'apres_midi' ? '☀️ Après-midi' : '📅 Journée'}</span>
+                      <span>{s.periode === 'matin' ? 'Matin' : s.periode === 'apres_midi' ? 'Après-midi' : 'Journée'}</span>
                     </div>
                     <div className="slot-card__info">
                       <div className="slot-card__title">{s.titre || "Créneau d'accueil"}</div>
                       {s.description && <div className="slot-card__desc">{s.description}</div>}
                       <div className="slot-card__meta">
-                        <span>🕐 {s.heure_debut?.slice(0,5)}–{s.heure_fin?.slice(0,5)}</span>
-                        <span>👥 {s.places_prises}/{s.places_max} places</span>
-                        {s.lieu && <span>📍 {s.lieu}</span>}
+                        <span>{s.heure_debut?.slice(0,5)}–{s.heure_fin?.slice(0,5)}</span>
+                        <span>{s.places_prises}/{s.places_max} places</span>
+                        {s.lieu && <span>{s.lieu}</span>}
                         <span className={`slot-tag ${s.type_accueil === 'adapte' ? 'slot-tag--adapte' : ''}`}>
-                          {s.type_accueil === 'adapte' ? '🌿 Accueil adapté' : s.type_accueil === 'mixte' ? '👥 Mixte' : '🏠 Standard'}
+                          {s.type_accueil === 'adapte' ? 'Accueil adapté' : s.type_accueil === 'mixte' ? 'Mixte' : 'Standard'}
                         </span>
                       </div>
                     </div>
@@ -164,10 +164,10 @@ export default function DashboardPage() {
         {/* RÉSERVATIONS */}
         {tab === 'reservations' && (
           <div className="dash-tab">
-            <h2>📋 Mes réservations</h2>
+            <h2>Mes réservations</h2>
             {bookings.length === 0 ? (
               <div className="dash-empty">
-                <div>📭</div>
+                <div></div>
                 <p>Aucune réservation.<br/><button className="btn-primary" onClick={() => setTab('creneaux')}>Voir les créneaux</button></p>
               </div>
             ) : (
@@ -177,19 +177,19 @@ export default function DashboardPage() {
                     <div className="slot-card__date">
                       <strong>{b.slot?.date ? new Date(b.slot.date+'T00:00:00').toLocaleDateString('fr-FR', { weekday:'short', day:'numeric', month:'short' }) : '—'}</strong>
                       <span className={`booking-status booking-status--${b.status}`}>
-                        {b.status === 'confirmed' ? '✅ Confirmé' : b.status === 'pending' ? '⏳ En attente' : '❌ Annulé'}
+                        {b.status === 'confirmed' ? 'Confirmé' : b.status === 'pending' ? 'En attente' : 'Annulé'}
                       </span>
                     </div>
                     <div className="slot-card__info">
                       <div className="slot-card__title">{b.slot?.titre || "Créneau d'accueil"}</div>
                       <div className="slot-card__meta">
-                        <span>👶 {b.child?.prenom}</span>
-                        <span>💶 {parseFloat(b.tarif_applique || 0).toFixed(0)}€</span>
+                        <span>{b.child?.prenom}</span>
+                        <span>{parseFloat(b.tarif_applique || 0).toFixed(0)}€</span>
                         <span>{b.formule}</span>
                       </div>
                       {b.compte_rendu && (
                         <div className="booking-cr">
-                          <span>📝 Compte-rendu :</span> {b.compte_rendu}
+                          <span>Compte-rendu :</span> {b.compte_rendu}
                         </div>
                       )}
                     </div>
@@ -204,12 +204,12 @@ export default function DashboardPage() {
         {tab === 'enfants' && <EnfantsTab children={children} setChildren={setChildren} />}
 
         {/* PLANNING */}
-        {tab === 'contrats'  && <div className="dash-tab"><h2>📄 Contrats répit</h2><p className="dash-subtitle">Consultez et signez vos contrats de répit.</p><ContratTab /></div>}
+        {tab === 'contrats'  && <div className="dash-tab"><h2>Contrats répit</h2><p className="dash-subtitle">Consultez et signez vos contrats de répit.</p><ContratTab /></div>}
         {tab === 'documents' && <DocumentsTab />}
-        {tab === 'planning' && <div className="dash-tab"><h2>🗓️ Planning</h2><PlanningTab /></div>}
+        {tab === 'planning' && <div className="dash-tab"><h2>Planning</h2><PlanningTab /></div>}
 
         {/* MESSAGES */}
-        {tab === 'messages'  && <div className="dash-tab"><h2>💬 Messages</h2><MessagingTab /></div>}
+        {tab === 'messages'  && <div className="dash-tab"><h2>Messages</h2><MessagingTab /></div>}
         {tab === 'photos'    && <div className="dash-tab"><PhotosTab /></div>}
         {tab === 'paiements' && <div className="dash-tab"><PaiementTab /></div>}
 
@@ -357,7 +357,7 @@ function EnfantsTab({ children, setChildren }) {
     <div className="dash-tab">
       <div style={{display:'flex',alignItems:'center',gap:'.75rem',marginBottom:'1.5rem'}}>
         <button onClick={() => setDossierChild(null)} style={{background:'none',border:'none',cursor:'pointer',color:'var(--text-muted)',fontSize:'1rem'}}>← Retour</button>
-        <h2 style={{margin:0}}>🌿 Dossier de {dossierChild.prenom}</h2>
+        <h2 style={{margin:0}}>Dossier de {dossierChild.prenom}</h2>
       </div>
       <form onSubmit={saveDossier}>
 
@@ -384,32 +384,32 @@ function EnfantsTab({ children, setChildren }) {
         </div>
 
         <div className="child-form" style={{marginBottom:'1rem'}}>
-          <div className="child-form__section">❤️ Centres d'intérêt & activités</div>
+          <div className="child-form__section">Centres d'intérêt & activités</div>
           {ta("Centres d'intérêt & canaux d'attention", 'centres_interet')}
           {ta('Activités appréciées', 'activites_aimees')}
           {ta('Activités à éviter', 'activites_a_eviter')}
         </div>
 
         <div className="child-form" style={{marginBottom:'1rem'}}>
-          <div className="child-form__section">⚠️ Facteurs déclencheurs de crise</div>
+          <div className="child-form__section">Facteurs déclencheurs de crise</div>
           {ta('Facteurs déclencheurs (bruits, transitions, frustration...)', 'declencheurs_crise')}
           {ta('Signaux précoces observables (avant la crise)', 'signes_avant_crise')}
         </div>
 
         <div className="child-form" style={{marginBottom:'1rem'}}>
-          <div className="child-form__section">🔔 Hypersensibilités sensorielles</div>
+          <div className="child-form__section">Hypersensibilités sensorielles</div>
           {ta('Hypersensibilités (sons, textures, lumière, foule...)', 'hypersensibilites')}
           {ta('Hyposensibilités (manque de sensibilité à la douleur...)', 'hyposensibilites')}
         </div>
 
         <div className="child-form" style={{marginBottom:'1rem'}}>
-          <div className="child-form__section">✅ Protocole d'apaisement</div>
+          <div className="child-form__section">Protocole d'apaisement</div>
           {ta("Méthodes d'apaisement validées", 'methodes_apaisement')}
           {ta("Protocole d'urgence (que faire / ne pas faire en cas de crise grave)", 'protocole_urgence')}
         </div>
 
         <div className="child-form" style={{marginBottom:'1rem'}}>
-          <div className="child-form__section">💊 Santé & Suivi</div>
+          <div className="child-form__section">Santé & Suivi</div>
           <label style={{display:'flex',alignItems:'center',gap:'.6rem',marginBottom:'.75rem',fontWeight:600,fontSize:'.9rem',color:'var(--nuit)'}}>
             <input type="checkbox" checked={dossier.traitement_medicamenteux} onChange={setD('traitement_medicamenteux')} style={{width:16,height:16,accentColor:'var(--sauge)'}}/>
             Traitement médicamenteux en cours
@@ -420,22 +420,22 @@ function EnfantsTab({ children, setChildren }) {
         </div>
 
         <div className="child-form" style={{marginBottom:'1.5rem'}}>
-          <div className="child-form__section">✅ Autorisations</div>
+          <div className="child-form__section">Autorisations</div>
           <div style={{display:'flex',flexDirection:'column',gap:'.65rem'}}>
             <label style={{display:'flex',alignItems:'center',gap:'.6rem',fontWeight:600,fontSize:'.9rem',color:'var(--nuit)'}}>
               <input type="checkbox" checked={dossier.autorisation_sortie} onChange={setD('autorisation_sortie')} style={{width:16,height:16,accentColor:'var(--sauge)'}}/>
-              ✅ Autorisé(e) à quitter le domicile pour les sorties
+              Autorisé(e) à quitter le domicile pour les sorties
             </label>
             <label style={{display:'flex',alignItems:'center',gap:'.6rem',fontWeight:600,fontSize:'.9rem',color:'var(--nuit)'}}>
               <input type="checkbox" checked={dossier.autorisation_photo} onChange={setD('autorisation_photo')} style={{width:16,height:16,accentColor:'var(--sauge)'}}/>
-              📷 Autorisation de prise de photo
+              Autorisation de prise de photo
             </label>
           </div>
         </div>
 
         <div style={{display:'flex',gap:'.75rem'}}>
           <button type="button" className="btn-secondary" onClick={() => setDossierChild(null)}>Annuler</button>
-          <button type="submit" className="btn-primary" disabled={saving}>{saving ? 'Enregistrement...' : '✅ Enregistrer le dossier'}</button>
+          <button type="submit" className="btn-primary" disabled={saving}>{saving ? 'Enregistrement...' : 'Enregistrer le dossier'}</button>
         </div>
       </form>
     </div>
@@ -443,7 +443,7 @@ function EnfantsTab({ children, setChildren }) {
 
   return (
     <div className="dash-tab">
-      <h2>👶 Mes enfants</h2>
+      <h2>Mes enfants</h2>
       <div className="children-list">
         {children.map(c => (
           <div key={c.id} className="child-card">
@@ -452,13 +452,13 @@ function EnfantsTab({ children, setChildren }) {
               <strong>{c.prenom} {c.nom}</strong>
               {c.date_naissance && <span>{Math.floor((Date.now()-new Date(c.date_naissance))/(365.25*86400000))} ans</span>}
               <div style={{display:'flex',gap:'.4rem',flexWrap:'wrap',marginTop:'.2rem'}}>
-                {c.besoins_specifiques && <span className="child-badge">🌿 {c.type_besoin || 'Besoins spécifiques'}</span>}
-                {!c.dossier_complete && <span className="child-badge child-badge--warn">⚠️ Dossier incomplet</span>}
-                {c.dossier_complete && <span className="child-badge" style={{background:'#e8f5e9',color:'#2e7d32'}}>✅ Dossier complet</span>}
+                {c.besoins_specifiques && <span className="child-badge">{c.type_besoin || 'Besoins spécifiques'}</span>}
+                {!c.dossier_complete && <span className="child-badge child-badge--warn">Dossier incomplet</span>}
+                {c.dossier_complete && <span className="child-badge" style={{background:'#e8f5e9',color:'#2e7d32'}}>Dossier complet</span>}
               </div>
             </div>
             <button className="btn-secondary" onClick={() => openDossier(c)} style={{fontSize:'.82rem',padding:'.38rem .9rem',flexShrink:0}}>
-              {c.dossier_complete ? '✏️ Modifier' : '📋 Compléter le dossier'}
+              {c.dossier_complete ? 'Modifier' : 'Compléter le dossier'}
             </button>
           </div>
         ))}
@@ -467,7 +467,7 @@ function EnfantsTab({ children, setChildren }) {
           <button className="btn-secondary" onClick={() => setAdding(true)}>+ Ajouter un enfant</button>
         ) : (
           <form onSubmit={saveStep1} className="child-form">
-            <h3>🧒 Nouveau profil enfant</h3>
+            <h3>Nouveau profil enfant</h3>
             <div className="child-form__section">IDENTITÉ</div>
             <div className="child-form__row">
               <div className="form-group"><label>Prénom *</label><input value={form.prenom} onChange={setF('prenom')} placeholder="Prénom"/></div>
@@ -528,12 +528,12 @@ function DocumentsTab() {
   }, [])
 
   const TYPE_LABEL = {
-    ordonnance:         '💊 Ordonnance',
-    pap:                '📋 PAP / PPS',
-    mdph:               '🏛️ MDPH',
-    autorisation_sortie:'✅ Autorisation sortie',
-    autorisation_photo: '📷 Autorisation photo',
-    autre:              '📄 Autre document',
+    ordonnance:         'Ordonnance',
+    pap:                'PAP / PPS',
+    mdph:               'MDPH',
+    autorisation_sortie:'Autorisation sortie',
+    autorisation_photo: 'Autorisation photo',
+    autre:              'Autre document',
   }
 
   const upload = (e) => {
@@ -555,7 +555,7 @@ function DocumentsTab() {
         })
         setDocs(d => [data, ...d])
         fileRef.current.value = ''
-        toast.success('Document envoyé ✅')
+        toast.success('Document envoyé ')
       } catch (err) {
         toast.error(err.response?.data?.message || "Erreur lors de l'envoi")
       } finally { setUploading(false) }
@@ -582,7 +582,7 @@ function DocumentsTab() {
 
   return (
     <div className="dash-tab">
-      <h2>📁 Mes documents</h2>
+      <h2>Mes documents</h2>
       <p className="dash-subtitle">Partagez vos documents avec l'animateur (ordonnances, PAP, autorisations…)</p>
 
       {/* Zone upload */}
@@ -603,7 +603,7 @@ function DocumentsTab() {
           </div>
         </div>
         <label className={`doc-upload-btn ${uploading?'doc-upload-btn--loading':''}`}>
-          {uploading ? '⏳ Envoi en cours…' : '📤 Choisir un fichier à envoyer'}
+          {uploading ? 'Envoi en cours…' : 'Choisir un fichier à envoyer'}
           <input ref={fileRef} type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" onChange={upload} style={{display:'none'}} disabled={uploading}/>
         </label>
         <p className="doc-upload-hint">Formats acceptés : PDF, images, Word · Max 10 Mo · Stocké de façon sécurisée</p>
@@ -612,7 +612,7 @@ function DocumentsTab() {
       {/* Liste documents */}
       {docs.length === 0 ? (
         <div className="dash-empty">
-          <div>📭</div>
+          <div></div>
           <p>Aucun document envoyé pour le moment.</p>
         </div>
       ) : (
@@ -620,22 +620,22 @@ function DocumentsTab() {
           {docs.map(d => (
             <div key={d.id} className="doc-item">
               <div className="doc-item__icon">
-                {d.mimetype?.includes('image') ? '🖼️' : d.mimetype?.includes('pdf') ? '📕' : '📄'}
+                {d.mimetype?.includes('image') ? '' : d.mimetype?.includes('pdf') ? '' : ''}
               </div>
               <div className="doc-item__info">
-                <strong>{TYPE_LABEL[d.type] || '📄'} — {d.nom}</strong>
+                <strong>{TYPE_LABEL[d.type] || ''} — {d.nom}</strong>
                 <span>
                   {d.child ? `${d.child.prenom} ${d.child.nom} · ` : ''}
                   {new Date(d.created_at).toLocaleDateString('fr-FR')}
                   {d.taille ? ` · ${(d.taille/1024).toFixed(0)} Ko` : ''}
                 </span>
                 <span className={`doc-status ${d.valide===true?'doc-status--ok':d.valide===false?'doc-status--ko':'doc-status--wait'}`}>
-                  {d.valide===true ? '✅ Validé par l\'animateur' : d.valide===false ? '❌ Refusé — '+( d.note_admin||'') : '⏳ En attente de vérification'}
+                  {d.valide===true ? 'Validé par l\'animateur' : d.valide===false ? 'Refusé — '+( d.note_admin||'') : 'En attente de vérification'}
                 </span>
               </div>
               <div className="doc-item__actions">
-                <button className="doc-btn doc-btn--view" onClick={() => viewDoc(d)} title="Visualiser">👁️</button>
-                <button className="doc-btn doc-btn--del"  onClick={() => del(d.id)} title="Supprimer">🗑️</button>
+                <button className="doc-btn doc-btn--view" onClick={() => viewDoc(d)} title="Visualiser"></button>
+                <button className="doc-btn doc-btn--del"  onClick={() => del(d.id)} title="Supprimer"></button>
               </div>
             </div>
           ))}
@@ -653,10 +653,10 @@ function DocumentsTab() {
               <div style={{display:'flex',gap:'.5rem'}}>
                 <a href={viewing.data} download={viewing.filename}
                   style={{background:'rgba(255,255,255,.15)',color:'white',padding:'.3rem .85rem',borderRadius:8,fontSize:'.82rem',fontWeight:700,textDecoration:'none'}}>
-                  ⬇️ Télécharger
+                  ⬇Télécharger
                 </a>
                 <button onClick={() => setViewing(null)}
-                  style={{background:'rgba(255,255,255,.15)',border:'none',color:'white',width:30,height:30,borderRadius:'50%',cursor:'pointer',fontSize:'1rem',display:'flex',alignItems:'center',justifyContent:'center'}}>✕</button>
+                  style={{background:'rgba(255,255,255,.15)',border:'none',color:'white',width:30,height:30,borderRadius:'50%',cursor:'pointer',fontSize:'1rem',display:'flex',alignItems:'center',justifyContent:'center'}}></button>
               </div>
             </div>
             <div style={{flex:1,overflow:'auto',padding:'1rem',textAlign:'center',background:'#f5f5f5'}}>
@@ -666,10 +666,10 @@ function DocumentsTab() {
                 <iframe src={viewing.data} title={viewing.nom} style={{width:'100%',height:'70vh',border:'none',borderRadius:8}}/>
               ) : (
                 <div style={{padding:'3rem',color:'var(--text-muted)'}}>
-                  <div style={{fontSize:'3rem',marginBottom:'1rem'}}>📄</div>
+                  <div style={{fontSize:'3rem',marginBottom:'1rem'}}></div>
                   <p>Prévisualisation non disponible pour ce format.</p>
                   <a href={viewing.data} download={viewing.filename} className="btn-primary" style={{textDecoration:'none',marginTop:'1rem',display:'inline-flex'}}>
-                    ⬇️ Télécharger le fichier
+                    ⬇Télécharger le fichier
                   </a>
                 </div>
               )}

@@ -64,7 +64,7 @@ export default function SignatureCanvas({ onSave, onCancel, label = 'Signez ici'
           onMouseDown={start} onMouseMove={move} onMouseUp={end} onMouseLeave={end}
           onTouchStart={start} onTouchMove={move} onTouchEnd={end}
         />
-        {empty && <div className="sig-placeholder">✍️ Tracez votre signature</div>}
+        {empty && <div className="sig-placeholder">Tracez votre signature</div>}
       </div>
       <div className="sig-actions">
         <button type="button" className="btn-secondary" onClick={clear} style={{fontSize:'.85rem'}}>Effacer</button>

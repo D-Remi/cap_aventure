@@ -99,7 +99,7 @@ export default function MessagingTab() {
       <div className="msg-body">
         {messages.length === 0 && (
           <div className="msg-empty">
-            <span>💬</span>
+            <span></span>
             <p>Commencez la conversation ! Posez vos questions à l'animateur.</p>
           </div>
         )}
@@ -129,7 +129,7 @@ export default function MessagingTab() {
           disabled={sending}
         />
         <button className="msg-send-btn" onClick={send} disabled={!text.trim() || sending || !adminId}>
-          {sending ? '…' : '➤'}
+          {sending ? '…' : ''}
         </button>
       </div>
     </div>

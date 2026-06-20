@@ -26,7 +26,7 @@ export default function AdminUsers() {
     <AdminLayout>
       <div className="admin-page">
         <div className="admin-page__header">
-          <div><h1>👥 Familles</h1>
+          <div><h1>Familles</h1>
             <p className="admin-page__subtitle">{users.length} famille{users.length>1?'s':''} inscrite{users.length>1?'s':''}</p>
           </div>
         </div>
@@ -58,14 +58,14 @@ export default function AdminUsers() {
                   </div>
                 </div>
                 <div style={{display:'flex',gap:'.75rem',flexWrap:'wrap'}}>
-                  {selected.telephone && <span style={{fontSize:'.85rem',color:'var(--text-muted)'}}>📞 {selected.telephone}</span>}
-                  <span style={{fontSize:'.85rem',color:'var(--text-muted)'}}>📅 Inscrit le {new Date(selected.created_at).toLocaleDateString('fr-FR')}</span>
+                  {selected.telephone && <span style={{fontSize:'.85rem',color:'var(--text-muted)'}}>{selected.telephone}</span>}
+                  <span style={{fontSize:'.85rem',color:'var(--text-muted)'}}>Inscrit le {new Date(selected.created_at).toLocaleDateString('fr-FR')}</span>
                 </div>
               </div>
 
               {/* Enfants */}
               <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.5rem',boxShadow:'var(--shadow-sm)'}}>
-                <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>👶 Enfants ({childrenOf(selected.id).length})</h3>
+                <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Enfants ({childrenOf(selected.id).length})</h3>
                 {childrenOf(selected.id).length === 0 ? <p style={{color:'var(--text-muted)',fontSize:'.85rem'}}>Aucun enfant enregistré</p> : (
                   <div style={{display:'flex',flexDirection:'column',gap:'.65rem'}}>
                     {childrenOf(selected.id).map(c => (
@@ -75,9 +75,9 @@ export default function AdminUsers() {
                           <div style={{fontWeight:700,color:'var(--nuit)',fontSize:'.88rem'}}>{c.prenom} {c.nom}</div>
                           <div style={{fontSize:'.74rem',color:'var(--text-muted)',display:'flex',gap:'.4rem',flexWrap:'wrap',marginTop:2}}>
                             {c.date_naissance && <span>{Math.floor((Date.now()-new Date(c.date_naissance))/(365.25*86400000))} ans</span>}
-                            {c.besoins_specifiques && <span style={{background:'#e3f2fd',color:'#1565c0',padding:'1px 7px',borderRadius:50,fontWeight:700}}>🌿 {c.type_besoin||'BS'}</span>}
-                            {!c.dossier_complete && <span style={{background:'#fff8e1',color:'#f57f17',padding:'1px 7px',borderRadius:50,fontWeight:700}}>⚠️ Dossier incomplet</span>}
-                            {c.dossier_complete && <span style={{background:'#e8f5e9',color:'#2e7d32',padding:'1px 7px',borderRadius:50,fontWeight:700}}>✅ Dossier complet</span>}
+                            {c.besoins_specifiques && <span style={{background:'#e3f2fd',color:'#1565c0',padding:'1px 7px',borderRadius:50,fontWeight:700}}>{c.type_besoin||'BS'}</span>}
+                            {!c.dossier_complete && <span style={{background:'#fff8e1',color:'#f57f17',padding:'1px 7px',borderRadius:50,fontWeight:700}}>Dossier incomplet</span>}
+                            {c.dossier_complete && <span style={{background:'#e8f5e9',color:'#2e7d32',padding:'1px 7px',borderRadius:50,fontWeight:700}}>Dossier complet</span>}
                           </div>
                         </div>
                       </div>
@@ -88,11 +88,11 @@ export default function AdminUsers() {
 
               {/* Réservations */}
               <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.5rem',boxShadow:'var(--shadow-sm)'}}>
-                <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>📋 Réservations ({bookingsOf(selected.id).length})</h3>
+                <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Réservations ({bookingsOf(selected.id).length})</h3>
                 {bookingsOf(selected.id).length === 0 ? <p style={{color:'var(--text-muted)',fontSize:'.85rem'}}>Aucune réservation</p> : (
                   <div style={{display:'flex',flexDirection:'column',gap:'.5rem'}}>
                     {bookingsOf(selected.id).slice(0,5).map(b => {
-                      const st = {pending:{bg:'#fff8e1',c:'#f57f17',l:'⏳ En attente'},confirmed:{bg:'#e8f5e9',c:'#2e7d32',l:'✅ Confirmée'},cancelled:{bg:'#fee2e2',c:'#991b1b',l:'❌ Annulée'}}[b.status]||{}
+                      const st = {pending:{bg:'#fff8e1',c:'#f57f17',l:'En attente'},confirmed:{bg:'#e8f5e9',c:'#2e7d32',l:'Confirmée'},cancelled:{bg:'#fee2e2',c:'#991b1b',l:'Annulée'}}[b.status]||{}
                       return (
                         <div key={b.id} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'.5rem .75rem',background:'var(--sable-light)',borderRadius:8}}>
                           <div style={{fontSize:'.83rem',color:'var(--text-dark)'}}>

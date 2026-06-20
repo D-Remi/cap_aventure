@@ -7,12 +7,12 @@ import '../../components/ui/ActivityForm.css'
 import '../../components/ui/ImageUploader.css'
 
 const SCHEDULE_LABELS = {
-  ponctuelle:  '📅 Ponctuelle',
-  multi_dates: '📆 Multi-dates',
-  recurrente:  '🔄 Récurrente',
-  saisonniere: '🌨️ Saisonnière',
+  ponctuelle:  'Ponctuelle',
+  multi_dates: 'Multi-dates',
+  recurrente:  'Récurrente',
+  saisonniere: 'Saisonnière',
 }
-const PAYMENT_ICONS = { especes:'💵', virement:'🏦', cesu:'🎫' }
+const PAYMENT_ICONS = { especes:'', virement:'', cesu:'' }
 
 // Formate la date / planning pour affichage
 function formatSchedule(a) {
@@ -102,14 +102,14 @@ export default function AdminActivities() {
         <div className="admin-table-wrap">
           <div className="admin-table-wrap__header">
             <h2>{filtered.length} activité{filtered.length > 1 ? 's' : ''}</h2>
-            <input className="admin-search" placeholder="🔍 Rechercher..." value={search} onChange={e => setSearch(e.target.value)} />
+            <input className="admin-search" placeholder="Rechercher..." value={search} onChange={e => setSearch(e.target.value)} />
           </div>
 
           {loading ? (
             <div className="admin-loading">Chargement...</div>
           ) : filtered.length === 0 ? (
             <div className="admin-empty">
-              <span>🎿</span>
+              <span></span>
               <button onClick={openCreate} style={{ color:'var(--vert-clair)', fontWeight:700, background:'none', border:'none', cursor:'pointer' }}>
                 Créer la première activité →
               </button>
@@ -134,13 +134,13 @@ export default function AdminActivities() {
                   <tr key={a.id}>
                     <td>
                       <strong>{a.titre}</strong>
-                      {a.lieu && <div style={{ fontSize:'0.75rem', color:'var(--text-muted)' }}>📍 {a.lieu}</div>}
+                      {a.lieu && <div style={{ fontSize:'0.75rem', color:'var(--text-muted)' }}>{a.lieu}</div>}
                     </td>
                     <td style={{ textTransform:'capitalize' }}>{a.type}</td>
                     <td>
                       <div style={{ fontSize:'0.78rem' }}>
                         <span className="badge badge--actif" style={{ fontSize:'0.68rem', marginBottom:'2px', display:'inline-block' }}>
-                          {SCHEDULE_LABELS[a.schedule_type] || '📅'}
+                          {SCHEDULE_LABELS[a.schedule_type] || ''}
                         </span>
                         <div style={{ color:'var(--text-muted)', marginTop:'2px' }}>{formatSchedule(a)}</div>
                       </div>
@@ -150,7 +150,7 @@ export default function AdminActivities() {
                         <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
                           {a.tarifs.map((t, i) => (
                             <div key={i} style={{ fontSize:'0.78rem', display:'flex', gap:'4px', alignItems:'center' }}>
-                              {t.popular && <span title="Populaire">⭐</span>}
+                              {t.popular && <span title="Populaire"></span>}
                               <span style={{ color:'var(--bleu-nuit)', fontWeight: t.popular ? 700 : 400 }}>
                                 {t.label}
                               </span>
@@ -184,8 +184,8 @@ export default function AdminActivities() {
                     </td>
                     <td>
                       <div className="admin-actions">
-                        <button className="btn-icon btn-icon--edit" onClick={() => openEdit(a)} title="Modifier">✏️</button>
-                        <button className="btn-icon btn-icon--delete" onClick={() => handleDelete(a.id)} title="Supprimer">🗑️</button>
+                        <button className="btn-icon btn-icon--edit" onClick={() => openEdit(a)} title="Modifier"></button>
+                        <button className="btn-icon btn-icon--delete" onClick={() => handleDelete(a.id)} title="Supprimer"></button>
                       </div>
                     </td>
                   </tr>
@@ -200,7 +200,7 @@ export default function AdminActivities() {
       {modal && (
         <div className="admin-modal-overlay" onClick={() => !saving && setModal(null)}>
           <div className="admin-modal" style={{ maxWidth:640 }} onClick={e => e.stopPropagation()}>
-            <h2>{modal === 'create' ? '➕ Nouvelle activité' : '✏️ Modifier l\'activité'}</h2>
+            <h2>{modal === 'create' ? 'Nouvelle activité' : 'Modifier l\'activité'}</h2>
             <ActivityForm
               key={JSON.stringify(modal)}
               initial={editInitial}
@@ -240,12 +240,12 @@ function RegisteredModal({ activity, onClose }) {
   return (
     <div className="admin-modal-overlay" onClick={onClose}>
       <div className="admin-modal" style={{ maxWidth:640 }} onClick={e => e.stopPropagation()}>
-        <h2>📋 Inscrits — {activity.titre}</h2>
+        <h2>Inscrits — {activity.titre}</h2>
         <p style={{ color:'var(--text-muted)', fontSize:'0.88rem', marginBottom:'1.25rem' }}>
           {formatSchedule(activity)} · {activity.places_max} places max
         </p>
         {loading ? <div className="admin-loading">Chargement...</div> :
-          regs.length === 0 ? <div className="admin-empty"><span>📋</span>Aucun inscrit</div> : (
+          regs.length === 0 ? <div className="admin-empty"><span></span>Aucun inscrit</div> : (
           <table className="admin-table">
             <thead><tr><th>Enfant</th><th>Parent</th><th>Inscrit le</th><th>Statut</th></tr></thead>
             <tbody>
@@ -266,7 +266,7 @@ function RegisteredModal({ activity, onClose }) {
           </table>
         )}
         <div style={{ marginTop:'1.5rem', display:'flex', gap:'0.75rem' }}>
-          <button className="btn-primary" onClick={() => exportRegistrationsPDF(activity, regs)}>📄 PDF</button>
+          <button className="btn-primary" onClick={() => exportRegistrationsPDF(activity, regs)}>PDF</button>
           <button className="btn-secondary" onClick={onClose}>Fermer</button>
         </div>
       </div>

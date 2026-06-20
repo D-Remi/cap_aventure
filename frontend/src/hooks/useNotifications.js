@@ -44,12 +44,12 @@ export function useNotifications(user) {
 
 function showToast(notif) {
   const icons = {
-    registration_status: notif.data?.status === 'confirmed' ? '✅' : '❌',
-    new_registration:    '📋',
-    new_interest:        '📩',
-    activity_created:    '🎿',
+    registration_status: notif.data?.status === 'confirmed' ? '' : '',
+    new_registration:    '',
+    new_interest:        '',
+    activity_created:    '',
   }
-  const icon = icons[notif.type] || '🔔'
+  const icon = icons[notif.type] || ''
   const message = `${icon} ${notif.title}\n${notif.message}`
 
   toast(message, {

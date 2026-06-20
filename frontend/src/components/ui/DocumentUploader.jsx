@@ -3,17 +3,17 @@ import axios from 'axios'
 import './DocumentUploader.css'
 
 const DOC_TYPES = [
-  { value: 'fiche_sanitaire', label: '🏥 Fiche sanitaire' },
-  { value: 'autorisation',    label: '✍️ Autorisation parentale' },
-  { value: 'assurance',       label: '🛡️ Attestation assurance' },
-  { value: 'autre',           label: '📄 Autre document' },
+  { value: 'fiche_sanitaire', label: 'Fiche sanitaire' },
+  { value: 'autorisation',    label: 'Autorisation parentale' },
+  { value: 'assurance',       label: 'Attestation assurance' },
+  { value: 'autre',           label: 'Autre document' },
 ]
 
 const TYPE_ICONS = {
-  fiche_sanitaire: '🏥',
-  autorisation:    '✍️',
-  assurance:       '🛡️',
-  autre:           '📄',
+  fiche_sanitaire: '',
+  autorisation:    '',
+  assurance:       '',
+  autre:           '',
 }
 
 export default function DocumentsTab({ children }) {
@@ -75,13 +75,13 @@ export default function DocumentsTab({ children }) {
           <p className="dash-section__sub">Fiches sanitaires, autorisations, assurances de vos enfants</p>
         </div>
         <button className="btn-primary" onClick={() => setShowForm(!showForm)}>
-          {showForm ? '✕ Annuler' : '+ Ajouter un document'}
+          {showForm ? 'Annuler' : '+ Ajouter un document'}
         </button>
       </div>
 
       {showForm && (
         <div className="dash-form-card" style={{ marginBottom: '1.5rem' }}>
-          <h3>📎 Nouveau document</h3>
+          <h3>Nouveau document</h3>
           <div className="form-row">
             <div className="form-group">
               <label>Type de document *</label>
@@ -115,7 +115,7 @@ export default function DocumentsTab({ children }) {
               </div>
             ) : (
               <>
-                <span style={{ fontSize: '2rem' }}>📎</span>
+                <span style={{ fontSize: '2rem' }}></span>
                 <p><strong>Cliquez pour choisir un fichier</strong></p>
                 <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>PDF, JPG, PNG — max 10 Mo</span>
               </>
@@ -149,13 +149,13 @@ export default function DocumentsTab({ children }) {
                 <div className="docs-group__items">
                   {typeDocs.map(doc => (
                     <div key={doc.id} className="doc-card">
-                      <div className="doc-card__icon">{TYPE_ICONS[doc.type] || '📄'}</div>
+                      <div className="doc-card__icon">{TYPE_ICONS[doc.type] || ''}</div>
                       <div className="doc-card__info">
                         <strong>{doc.original_name}</strong>
                         <div className="doc-card__meta">
-                          {doc.child && <span>👧 {doc.child.prenom} {doc.child.nom}</span>}
-                          <span>📦 {formatSize(doc.size)}</span>
-                          <span>📅 {new Date(doc.created_at).toLocaleDateString('fr-FR')}</span>
+                          {doc.child && <span>{doc.child.prenom} {doc.child.nom}</span>}
+                          <span>{formatSize(doc.size)}</span>
+                          <span>{new Date(doc.created_at).toLocaleDateString('fr-FR')}</span>
                         </div>
                       </div>
                       <div className="doc-card__actions">
@@ -166,15 +166,13 @@ export default function DocumentsTab({ children }) {
                           className="btn-icon btn-icon--view"
                           title="Voir le document"
                         >
-                          👁
-                        </a>
+                                                  </a>
                         <button
                           className="btn-icon btn-icon--delete"
                           onClick={() => handleDelete(doc.id)}
                           title="Supprimer"
                         >
-                          🗑
-                        </button>
+                                                  </button>
                       </div>
                     </div>
                   ))}

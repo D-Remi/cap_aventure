@@ -9,7 +9,7 @@ export default function PWAInstallBanner() {
       {/* Bannière hors ligne */}
       {!isOnline && (
         <div className="offline-banner">
-          <span>📡</span>
+          <span></span>
           <span>Vous êtes hors ligne — certaines fonctionnalités peuvent être indisponibles</span>
         </div>
       )}
@@ -32,8 +32,7 @@ export default function PWAInstallBanner() {
               className="pwa-install-banner__btn pwa-install-banner__btn--dismiss"
               onClick={() => window.localStorage.setItem('pwa-dismissed', '1')}
             >
-              ✕
-            </button>
+                          </button>
           </div>
         </div>
       )}

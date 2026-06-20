@@ -54,11 +54,11 @@ export default function AdminStats() {
   return (
     <AdminLayout>
       <div className="admin-page">
-        <div className="admin-page__header"><div><h1>📈 Statistiques</h1></div></div>
+        <div className="admin-page__header"><div><h1>Statistiques</h1></div></div>
 
         {/* Revenus */}
         <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)',marginBottom:'1.5rem'}}>
-          <h2 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.1rem',marginBottom:'1.25rem'}}>💶 Revenus confirmés</h2>
+          <h2 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.1rem',marginBottom:'1.25rem'}}>Revenus confirmés</h2>
           <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'1rem',marginBottom:'1.5rem'}}>
             {[
               {n:data.revenue.toFixed(0)+' €',l:'Total confirmé'},
@@ -95,7 +95,7 @@ export default function AdminStats() {
         {/* Enfants */}
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1.5rem',marginBottom:'1.5rem'}}>
           <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)'}}>
-            <h2 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.1rem',marginBottom:'1.25rem'}}>👶 Enfants</h2>
+            <h2 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.1rem',marginBottom:'1.25rem'}}>Enfants</h2>
             <div style={{display:'flex',flexDirection:'column',gap:'.65rem'}}>
               {[
                 {n:data.children,           l:'Enfants enregistrés',        c:'var(--nuit)'},
@@ -112,7 +112,7 @@ export default function AdminStats() {
           </div>
 
           <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)'}}>
-            <h2 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.1rem',marginBottom:'1.25rem'}}>📅 Créneaux</h2>
+            <h2 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.1rem',marginBottom:'1.25rem'}}>Créneaux</h2>
             <div style={{display:'flex',flexDirection:'column',gap:'.65rem'}}>
               {[
                 {n:data.slotsOuverts,                     l:'Créneaux ouverts',  c:'#2e7d32'},

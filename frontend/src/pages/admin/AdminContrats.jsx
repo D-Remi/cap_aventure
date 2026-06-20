@@ -6,13 +6,13 @@ import { genererFacturePDF } from '../../utils/pdfGenerator'
 import SignatureCanvas from '../../components/ui/SignatureCanvas'
 
 const STATUT = {
-  brouillon:    { bg:'#f3f4f6', c:'#6b7280', l:'📝 Brouillon' },
-  envoye:       { bg:'#fff8e1', c:'#f57f17', l:'📤 Envoyé' },
-  signe_parent: { bg:'#e3f2fd', c:'#1565c0', l:'✍️ Signé parent' },
-  signe_admin:  { bg:'#e8f5e9', c:'#2e7d32', l:'✍️ Signé admin' },
-  actif:        { bg:'#e8f5e9', c:'#1b5e20', l:'✅ Actif' },
-  termine:      { bg:'#f5f5f5', c:'#9e9e9e', l:'🏁 Terminé' },
-  annule:       { bg:'#fee2e2', c:'#991b1b', l:'❌ Annulé' },
+  brouillon:    { bg:'#f3f4f6', c:'#6b7280', l:'Brouillon' },
+  envoye:       { bg:'#fff8e1', c:'#f57f17', l:'Envoyé' },
+  signe_parent: { bg:'#e3f2fd', c:'#1565c0', l:'Signé parent' },
+  signe_admin:  { bg:'#e8f5e9', c:'#2e7d32', l:'Signé admin' },
+  actif:        { bg:'#e8f5e9', c:'#1b5e20', l:'Actif' },
+  termine:      { bg:'#f5f5f5', c:'#9e9e9e', l:'Terminé' },
+  annule:       { bg:'#fee2e2', c:'#991b1b', l:'Annulé' },
 }
 const JOURS_L = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim']
 const EMPTY_CONTRAT = { user_id:'',child_id:'',date_debut:'',date_fin:'',jours_semaine:'',tarif_horaire:'15',heures_semaine:'3',tarif_km:'0.40',km_inclus:'0',objectifs:'',besoins_specifiques:'',modalites:'',clauses:'' }
@@ -85,7 +85,7 @@ export default function AdminContrats() {
   const signerAdmin = async (sig) => {
     const {data} = await axios.patch(`/api/contrats/${selected.id}/signer-admin`, { signature:sig })
     setSelected(data); setContrats(c=>c.map(x=>x.id===data.id?data:x))
-    setSigning(false); toast.success('Contrat signé — maintenant actif ✅')
+    setSigning(false); toast.success('Contrat signé — maintenant actif ')
   }
 
   const addSeance = async () => {
@@ -156,14 +156,14 @@ export default function AdminContrats() {
     <AdminLayout>
       <div className="admin-page">
         <div className="admin-page__header">
-          <div><h1>📄 Contrats Répit</h1>
+          <div><h1>Contrats Répit</h1>
             <p className="admin-page__subtitle">{contrats.filter(c=>c.statut==='actif').length} contrat{contrats.filter(c=>c.statut==='actif').length>1?'s':''} actif{contrats.filter(c=>c.statut==='actif').length>1?'s':''}</p>
           </div>
           <button className="btn-primary" onClick={()=>{setForm(EMPTY_CONTRAT);setModal('create')}}>+ Nouveau contrat</button>
         </div>
 
         <div style={{display:'flex',gap:'.6rem',marginBottom:'1.5rem',flexWrap:'wrap'}}>
-          {[{v:'tous',l:'Tous'},{v:'brouillon',l:'📝 Brouillons'},{v:'envoye',l:'📤 Envoyés'},{v:'signe_parent',l:'✍️ Signé parent'},{v:'actif',l:'✅ Actifs'},{v:'termine',l:'🏁 Terminés'}].map(({v,l})=>(
+          {[{v:'tous',l:'Tous'},{v:'brouillon',l:'Brouillons'},{v:'envoye',l:'Envoyés'},{v:'signe_parent',l:'Signé parent'},{v:'actif',l:'Actifs'},{v:'termine',l:'Terminés'}].map(({v,l})=>(
             <button key={v} className={`cal-filter-btn ${filterSt===v?'active':''}`} onClick={()=>setFilterSt(v)}>{l}</button>
           ))}
         </div>
@@ -194,18 +194,18 @@ export default function AdminContrats() {
               <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.25rem 1.5rem',boxShadow:'var(--shadow-sm)',display:'flex',gap:'.65rem',flexWrap:'wrap',alignItems:'center'}}>
                 {badge(selected.statut)}
                 <div style={{flex:1}}/>
-                <button className="btn-secondary" style={{fontSize:'.82rem'}} onClick={()=>{setForm({...selected,jours_semaine:selected.jours_semaine||''});setModal('edit')}}>✏️ Modifier</button>
+                <button className="btn-secondary" style={{fontSize:'.82rem'}} onClick={()=>{setForm({...selected,jours_semaine:selected.jours_semaine||''});setModal('edit')}}>Modifier</button>
                 {['brouillon','signe_parent'].includes(selected.statut) && (
-                  <button className="btn-primary" style={{fontSize:'.82rem'}} onClick={envoyer}>📤 Envoyer au parent</button>
+                  <button className="btn-primary" style={{fontSize:'.82rem'}} onClick={envoyer}>Envoyer au parent</button>
                 )}
                 {selected.statut==='signe_parent' && !selected.signature_admin && (
-                  <button className="btn-primary" style={{fontSize:'.82rem',background:'#2e7d32'}} onClick={()=>setSigning(true)}>✍️ Signer</button>
+                  <button className="btn-primary" style={{fontSize:'.82rem',background:'#2e7d32'}} onClick={()=>setSigning(true)}>Signer</button>
                 )}
               </div>
 
               {/* Onglets */}
               <div style={{display:'flex',gap:'.4rem',borderBottom:'2px solid var(--sable-light)',paddingBottom:'0'}}>
-                {[{id:'detail',l:'📋 Détail'},{id:'seances',l:`🕐 Séances (${seances.length})`},{id:'factures',l:`💶 Factures (${factures.length})`},{id:'signatures',l:'✍️ Signatures'}].map(t=>(
+                {[{id:'detail',l:'Détail'},{id:'seances',l:`Séances (${seances.length})`},{id:'factures',l:`Factures (${factures.length})`},{id:'signatures',l:'Signatures'}].map(t=>(
                   <button key={t.id} onClick={()=>setTab(t.id)}
                     style={{padding:'.5rem 1rem',border:'none',background:'none',cursor:'pointer',fontWeight:tab===t.id?700:400,color:tab===t.id?'var(--nuit)':'var(--text-muted)',borderBottom:tab===t.id?'2px solid var(--nuit)':'2px solid transparent',marginBottom:-2,fontFamily:'inherit',fontSize:'.88rem'}}>
                     {t.l}
@@ -276,8 +276,8 @@ export default function AdminContrats() {
                                 <td style={{padding:'6px 8px',textAlign:'center',color:'var(--text-muted)'}}>{calcHeures(s.heure_debut,s.heure_fin).toFixed(1)} h</td>
                                 <td style={{padding:'6px 8px',textAlign:'center',color:'var(--text-muted)'}}>{(Number(s.km_aller||0)+Number(s.km_retour||0)).toFixed(0)} km</td>
                                 <td style={{padding:'6px 8px',textAlign:'right',fontWeight:700,color:'var(--sauge)'}}>{parseFloat(s.montant_total||0).toFixed(2)} €</td>
-                                <td style={{padding:'6px 8px',textAlign:'center'}}>{s.facture_id ? <span style={{fontSize:'.7rem',background:'#e8f5e9',color:'#2e7d32',padding:'1px 6px',borderRadius:50}}>✅</span> : <span style={{fontSize:'.7rem',color:'var(--text-muted)'}}>—</span>}</td>
-                                <td style={{padding:'6px 8px'}}><button onClick={()=>delSeance(s.id)} style={{background:'#fee2e2',color:'#991b1b',border:'none',borderRadius:6,padding:'2px 7px',cursor:'pointer',fontSize:'.8rem',fontFamily:'inherit'}}>🗑️</button></td>
+                                <td style={{padding:'6px 8px',textAlign:'center'}}>{s.facture_id ? <span style={{fontSize:'.7rem',background:'#e8f5e9',color:'#2e7d32',padding:'1px 6px',borderRadius:50}}></span> : <span style={{fontSize:'.7rem',color:'var(--text-muted)'}}>—</span>}</td>
+                                <td style={{padding:'6px 8px'}}><button onClick={()=>delSeance(s.id)} style={{background:'#fee2e2',color:'#991b1b',border:'none',borderRadius:6,padding:'2px 7px',cursor:'pointer',fontSize:'.8rem',fontFamily:'inherit'}}></button></td>
                               </tr>
                             ))}
                           </tbody>
@@ -293,7 +293,7 @@ export default function AdminContrats() {
 
                       {seances.filter(s=>!s.facture_id).length > 0 && (
                         <button className="btn-primary" style={{marginTop:'1rem',fontSize:'.85rem'}} onClick={()=>{setFF({periode_debut:'',periode_fin:'',notes:''});setModal('facture')}}>
-                          💶 Générer une facture
+                          Générer une facture
                         </button>
                       )}
                     </>
@@ -320,10 +320,10 @@ export default function AdminContrats() {
                             <span style={{fontFamily:"'Baloo 2',cursive",fontSize:'1.3rem',fontWeight:800,color:'var(--sauge)'}}>{parseFloat(f.montant_total).toFixed(2)} €
                       <button onClick={(e)=>{e.stopPropagation();genererFacturePDF(f, selected, selected.user, [])}}
                         style={{marginLeft:'.5rem',background:'#e0f2fe',color:'#0369a1',border:'none',borderRadius:6,padding:'2px 8px',cursor:'pointer',fontSize:'.72rem',fontWeight:700,fontFamily:'inherit'}}>
-                        ⬇️ PDF
+                        ⬇PDF
                       </button></span>
                             <span style={{background:f.statut==='payee'?'#e8f5e9':f.statut==='envoyee'?'#fff8e1':'#f3f4f6',color:f.statut==='payee'?'#2e7d32':f.statut==='envoyee'?'#f57f17':'#6b7280',fontSize:'.72rem',fontWeight:700,padding:'2px 8px',borderRadius:50}}>
-                              {f.statut==='payee'?'💰 Payée':f.statut==='envoyee'?'📤 Envoyée':'📝 Brouillon'}
+                              {f.statut==='payee'?'Payée':f.statut==='envoyee'?'Envoyée':'Brouillon'}
                             </span>
                             {f.statut!=='payee' && <button onClick={()=>axios.patch(`/api/contrats/factures/${f.id}/payee`).then(()=>{setFactures(fa=>fa.map(x=>x.id===f.id?{...x,statut:'payee'}:x));toast.success('Facture marquée payée')})} style={{background:'#e8f5e9',color:'#2e7d32',border:'none',borderRadius:8,padding:'.35rem .75rem',cursor:'pointer',fontFamily:'inherit',fontWeight:700,fontSize:'.78rem'}}>Marquer payée</button>}
                           </div>
@@ -338,7 +338,7 @@ export default function AdminContrats() {
               {tab==='signatures' && (
                 <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)',display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1.5rem'}}>
                   <div>
-                    <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>✍️ Signature parent</h3>
+                    <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Signature parent</h3>
                     {selected.signature_parent ? (
                       <>
                         <img src={selected.signature_parent} alt="Signature parent" style={{width:'100%',border:'1px solid var(--sable-dark)',borderRadius:8,background:'white'}}/>
@@ -347,7 +347,7 @@ export default function AdminContrats() {
                     ) : <p style={{color:'var(--text-muted)',fontSize:'.85rem'}}>Non signé</p>}
                   </div>
                   <div>
-                    <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>✍️ Signature animateur</h3>
+                    <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Signature animateur</h3>
                     {selected.signature_admin ? (
                       <>
                         <img src={selected.signature_admin} alt="Signature admin" style={{width:'100%',border:'1px solid var(--sable-dark)',borderRadius:8,background:'white'}}/>
@@ -355,7 +355,7 @@ export default function AdminContrats() {
                       </>
                     ) : (
                       selected.signature_parent ? (
-                        <button className="btn-primary" onClick={()=>setSigning(true)}>✍️ Signer maintenant</button>
+                        <button className="btn-primary" onClick={()=>setSigning(true)}>Signer maintenant</button>
                       ) : <p style={{color:'var(--text-muted)',fontSize:'.85rem'}}>En attente de la signature parent</p>
                     )}
                   </div>
@@ -366,7 +366,7 @@ export default function AdminContrats() {
               {signing && (
                 <div className="admin-modal-overlay" onClick={()=>setSigning(false)}>
                   <div className="admin-modal" onClick={e=>e.stopPropagation()}>
-                    <h2>✍️ Votre signature</h2>
+                    <h2>Votre signature</h2>
                     <SignatureCanvas label="Signez pour valider le contrat" onSave={signerAdmin} onCancel={()=>setSigning(false)}/>
                   </div>
                 </div>
@@ -384,7 +384,7 @@ export default function AdminContrats() {
       {(modal==='create'||modal==='edit') && (
         <div className="admin-modal-overlay" onClick={()=>!saving&&setModal(null)}>
           <div className="admin-modal" style={{maxWidth:640,maxHeight:'85vh',overflowY:'auto'}} onClick={e=>e.stopPropagation()}>
-            <h2>{modal==='create'?'➕ Nouveau contrat répit':'✏️ Modifier le contrat'}</h2>
+            <h2>{modal==='create'?'Nouveau contrat répit':'Modifier le contrat'}</h2>
 
             {modal==='create' && (
               <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'.75rem',marginBottom:'.75rem'}}>
@@ -446,7 +446,7 @@ export default function AdminContrats() {
       {modal==='seance' && (
         <div className="admin-modal-overlay" onClick={()=>setModal(null)}>
           <div className="admin-modal" style={{maxWidth:460}} onClick={e=>e.stopPropagation()}>
-            <h2>🕐 Ajouter une séance</h2>
+            <h2>Ajouter une séance</h2>
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'.75rem'}}>
               {sInput('Date *', seanceForm.date, setSF2('date'), 'date')}
               {sInput('Début', seanceForm.heure_debut, setSF2('heure_debut'), 'time')}
@@ -476,7 +476,7 @@ export default function AdminContrats() {
       {modal==='facture' && (
         <div className="admin-modal-overlay" onClick={()=>setModal(null)}>
           <div className="admin-modal" style={{maxWidth:420}} onClick={e=>e.stopPropagation()}>
-            <h2>💶 Générer une facture</h2>
+            <h2>Générer une facture</h2>
             <p style={{fontSize:'.85rem',color:'var(--text-muted)',marginBottom:'1rem'}}>Toutes les séances non facturées dans la période seront incluses.</p>
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'.75rem'}}>
               {sInput('Période début *', factForm.periode_debut, setFF2('periode_debut'), 'date')}

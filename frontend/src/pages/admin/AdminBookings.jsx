@@ -5,10 +5,10 @@ import AdminLayout from '../../components/layout/AdminLayout'
 import { useState as _useState } from 'react'
 
 const ST = {
-  pending:   { bg:'#fff8e1', c:'#f57f17', l:'⏳ En attente' },
-  confirmed: { bg:'#e8f5e9', c:'#2e7d32', l:'✅ Confirmé' },
-  cancelled: { bg:'#fee2e2', c:'#991b1b', l:'❌ Annulé' },
-  no_show:   { bg:'#f3f4f6', c:'#6b7280', l:'👻 Absent' },
+  pending:   { bg:'#fff8e1', c:'#f57f17', l:'En attente' },
+  confirmed: { bg:'#e8f5e9', c:'#2e7d32', l:'Confirmé' },
+  cancelled: { bg:'#fee2e2', c:'#991b1b', l:'Annulé' },
+  no_show:   { bg:'#f3f4f6', c:'#6b7280', l:'Absent' },
 }
 
 export default function AdminBookings() {
@@ -47,13 +47,13 @@ export default function AdminBookings() {
       <div className="admin-page">
         <div className="admin-page__header">
           <div>
-            <h1>📋 Réservations</h1>
+            <h1>Réservations</h1>
             <p className="admin-page__subtitle">{bookings.filter(b=>b.status==='pending').length} en attente de confirmation</p>
           </div>
         </div>
 
         <div style={{display:'flex',gap:'.6rem',marginBottom:'1.5rem',flexWrap:'wrap'}}>
-          {[{v:'pending',l:'⏳ En attente'},{v:'confirmed',l:'✅ Confirmées'},{v:'cancelled',l:'❌ Annulées'},{v:'tous',l:'Toutes'}].map(({v,l})=>(
+          {[{v:'pending',l:'En attente'},{v:'confirmed',l:'Confirmées'},{v:'cancelled',l:'Annulées'},{v:'tous',l:'Toutes'}].map(({v,l})=>(
             <button key={v} className={`cal-filter-btn ${filter===v?'active':''}`} onClick={()=>setFilter(v)}>{l}</button>
           ))}
         </div>
@@ -70,7 +70,7 @@ export default function AdminBookings() {
                     <span style={{background:st.bg,color:st.c,fontSize:'.72rem',fontWeight:700,padding:'2px 8px',borderRadius:50}}>{st.l}</span>
                   </div>
                   <div style={{fontSize:'.8rem',color:'var(--text-muted)'}}>
-                    📅 {b.slot?.date ? new Date(b.slot.date).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'}) : '—'}
+                    {b.slot?.date ? new Date(b.slot.date).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'}) : '—'}
                     &nbsp;·&nbsp;{b.user?.prenom} {b.user?.nom}
                   </div>
                 </div>
@@ -83,22 +83,22 @@ export default function AdminBookings() {
             <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)',display:'flex',flexDirection:'column',gap:'1rem'}}>
               <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)'}}>{selected.child?.prenom} {selected.child?.nom}</h3>
               <div style={{fontSize:'.85rem',color:'var(--text-muted)',display:'flex',flexDirection:'column',gap:'.4rem'}}>
-                <span>📅 {selected.slot?.date ? new Date(selected.slot.date).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) : '—'}</span>
-                <span>👤 {selected.user?.prenom} {selected.user?.nom} · {selected.user?.email}</span>
-                <span>💶 {parseFloat(selected.tarif_applique||0).toFixed(0)}€ · {selected.formule} · {selected.paiement||'—'}</span>
-                {selected.notes_parent && <span>📝 Parent : {selected.notes_parent}</span>}
+                <span>{selected.slot?.date ? new Date(selected.slot.date).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) : '—'}</span>
+                <span>{selected.user?.prenom} {selected.user?.nom} · {selected.user?.email}</span>
+                <span>{parseFloat(selected.tarif_applique||0).toFixed(0)}€ · {selected.formule} · {selected.paiement||'—'}</span>
+                {selected.notes_parent && <span>Parent : {selected.notes_parent}</span>}
               </div>
 
               {selected.status==='pending' && (
                 <div style={{display:'flex',gap:'.5rem'}}>
-                  <button className="btn-primary" onClick={()=>confirm(selected.id)}>✅ Confirmer</button>
-                  <button className="btn-secondary" onClick={()=>cancel(selected.id)}>❌ Refuser</button>
+                  <button className="btn-primary" onClick={()=>confirm(selected.id)}>Confirmer</button>
+                  <button className="btn-secondary" onClick={()=>cancel(selected.id)}>Refuser</button>
                 </div>
               )}
 
               <div>
                 <label style={{fontSize:'.8rem',fontWeight:700,color:'var(--nuit)',display:'block',marginBottom:'.4rem'}}>
-                  📝 Compte-rendu <span style={{fontWeight:400,color:'var(--text-muted)'}}>(optionnel — visible par le parent)</span>
+                  Compte-rendu <span style={{fontWeight:400,color:'var(--text-muted)'}}>(optionnel — visible par le parent)</span>
                 </label>
                 <textarea value={cr} onChange={e=>setCr(e.target.value)} rows={4}
                   placeholder="Résumé de la journée, observations, points positifs…"

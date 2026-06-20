@@ -10,19 +10,19 @@ const JOURS       = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim']
 const HOURS       = Array.from({length:12}, (_,i) => i + 7)
 
 const TYPE_STYLE = {
-  contrat:   { bg:'rgba(83,74,183,0.1)', border:'#534AB7', text:'#3C3489', label:'📋 Contrat actif' },
-  standard:  { bg:'#e8f5e9', border:'#4caf50', text:'#1b5e20', label:'🏠 Garde'     },
-  adapte:    { bg:'#e3f2fd', border:'#1976d2', text:'#0d47a1', label:'🌿 Répit'     },
-  evenement: { bg:'#fff3e0', border:'#f57c00', text:'#e65100', label:'🎉 Événement' },
+  contrat:   { bg:'rgba(83,74,183,0.1)', border:'#534AB7', text:'#3C3489', label:'Contrat actif' },
+  standard:  { bg:'#e8f5e9', border:'#4caf50', text:'#1b5e20', label:'Garde'     },
+  adapte:    { bg:'#e3f2fd', border:'#1976d2', text:'#0d47a1', label:'Répit'     },
+  evenement: { bg:'#fff3e0', border:'#f57c00', text:'#e65100', label:'Événement' },
   libre:     { bg:'white',   border:'#e0e0e0', text:'#bdbdbd', label:'○ Libre'       },
-  complet:   { bg:'#ffebee', border:'#ef9a9a', text:'#b71c1c', label:'🔴 Complet'    },
-  annule:    { bg:'#f5f5f5', border:'#bdbdbd', text:'#9e9e9e', label:'❌ Annulé'     },
+  complet:   { bg:'#ffebee', border:'#ef9a9a', text:'#b71c1c', label:'Complet'    },
+  annule:    { bg:'#f5f5f5', border:'#bdbdbd', text:'#9e9e9e', label:'Annulé'     },
 }
 
 const ACCUEIL_LABEL = {
-  standard:  '🏠 Garde standard',
-  adapte:    '🌿 Accueil adapté TSA/TDAH',
-  evenement: '🎉 Animation événement',
+  standard:  'Garde standard',
+  adapte:    'Accueil adapté TSA/TDAH',
+  evenement: 'Animation événement',
 }
 
 function getWeekDates(ref) {
@@ -76,15 +76,15 @@ function SlotModal({ slot, children, onClose, onBooked, isLoggedIn }) {
             <h3>{slot.titre || 'Créneau disponible'}</h3>
             <span className="slot-modal__type">{ACCUEIL_LABEL[slot.type_accueil] || slot.type_accueil}</span>
           </div>
-          <button className="slot-modal__close" onClick={onClose}>✕</button>
+          <button className="slot-modal__close" onClick={onClose}></button>
         </div>
         <div className="slot-modal__info">
-          <div className="slot-modal__info-row"><span>📅</span><span>{dateLabel}</span></div>
-          <div className="slot-modal__info-row"><span>🕐</span><span>{slot.heure_debut?.slice(0,5)} → {slot.heure_fin?.slice(0,5)}</span></div>
-          <div className="slot-modal__info-row"><span>👥</span><span>{slot.places_max - slot.places_prises} place{slot.places_max - slot.places_prises > 1 ? 's' : ''} disponible{slot.places_max - slot.places_prises > 1 ? 's' : ''} / {slot.places_max}</span></div>
-          {slot.lieu && <div className="slot-modal__info-row"><span>📍</span><span>{slot.lieu}</span></div>}
-          {slot.description && <div className="slot-modal__info-row"><span>📝</span><span>{slot.description}</span></div>}
-          <div className="slot-modal__info-row"><span>💶</span><span><strong>{parseFloat(slot.tarif).toFixed(0)}€</strong></span></div>
+          <div className="slot-modal__info-row"><span></span><span>{dateLabel}</span></div>
+          <div className="slot-modal__info-row"><span></span><span>{slot.heure_debut?.slice(0,5)} → {slot.heure_fin?.slice(0,5)}</span></div>
+          <div className="slot-modal__info-row"><span></span><span>{slot.places_max - slot.places_prises} place{slot.places_max - slot.places_prises > 1 ? 's' : ''} disponible{slot.places_max - slot.places_prises > 1 ? 's' : ''} / {slot.places_max}</span></div>
+          {slot.lieu && <div className="slot-modal__info-row"><span></span><span>{slot.lieu}</span></div>}
+          {slot.description && <div className="slot-modal__info-row"><span></span><span>{slot.description}</span></div>}
+          <div className="slot-modal__info-row"><span></span><span><strong>{parseFloat(slot.tarif).toFixed(0)}€</strong></span></div>
         </div>
 
         {isLoggedIn ? (
@@ -189,7 +189,7 @@ export default function WeekCalendar({ slots=[], children=[], onBooked, showEmpt
             <button onClick={() => setMultiModal(true)}
               style={{background:'rgba(255,255,255,.15)',border:'none',color:'white',fontFamily:'inherit',
                 fontSize:'.78rem',fontWeight:700,padding:'.3rem .85rem',borderRadius:50,cursor:'pointer',whiteSpace:'nowrap'}}>
-              📅 Plusieurs dates
+              Plusieurs dates
             </button>
           )}
         </div>
@@ -197,7 +197,7 @@ export default function WeekCalendar({ slots=[], children=[], onBooked, showEmpt
       </div>
 
       <div className="wk-legend">
-        <span className="wk-legend-item" style={{background:'#fee2e2',borderColor:'#ef4444',color:'#991b1b'}}>🚫 Indisponible</span>
+        <span className="wk-legend-item" style={{background:'#fee2e2',borderColor:'#ef4444',color:'#991b1b'}}>Indisponible</span>
         {Object.entries(TYPE_STYLE).map(([k,v]) => (
           <span key={k} className="wk-legend-item" style={{background:v.bg,borderColor:v.border,color:v.text}}>{v.label}</span>
         ))}
@@ -236,7 +236,7 @@ export default function WeekCalendar({ slots=[], children=[], onBooked, showEmpt
                       display:'flex', alignItems:'center', justifyContent:'center',
                     }}>
                       <span style={{fontSize:'.65rem',color:'#991b1b',fontWeight:700,background:'#fee2e2',padding:'1px 6px',borderRadius:4}}>
-                        🚫 {ind.motif || 'Indisponible'}
+                        {ind.motif || 'Indisponible'}
                       </span>
                     </div>
                   )
@@ -269,7 +269,7 @@ export default function WeekCalendar({ slots=[], children=[], onBooked, showEmpt
                           {s.places_max-s.places_prises}/{s.places_max} pl.
                         </span>
                       )}
-                      {s.statut==='complet' && <span className="wk-slot__places" style={{color:'#991b1b'}}>🔴 Complet</span>}
+                      {s.statut==='complet' && <span className="wk-slot__places" style={{color:'#991b1b'}}>Complet</span>}
                     </div>
                   )
                 })}

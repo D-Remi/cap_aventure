@@ -48,10 +48,10 @@ export default function ImageUploader({ value, onChange }) {
           <img src={value} alt="Aperçu" />
           <div className="img-uploader__preview-actions">
             <button type="button" onClick={() => inputRef.current.click()} className="img-uploader__change">
-              🔄 Changer
+              Changer
             </button>
             <button type="button" onClick={() => onChange('')} className="img-uploader__remove">
-              🗑 Supprimer
+              Supprimer
             </button>
           </div>
         </div>
@@ -71,7 +71,7 @@ export default function ImageUploader({ value, onChange }) {
             </div>
           ) : (
             <>
-              <span className="img-uploader__icon">📷</span>
+              <span className="img-uploader__icon"></span>
               <p><strong>Glissez une photo</strong> ou cliquez pour en choisir une</p>
               <span className="img-uploader__hint">JPG, PNG, WebP — max 5 Mo</span>
             </>

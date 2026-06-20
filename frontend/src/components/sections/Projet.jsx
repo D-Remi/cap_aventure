@@ -1,9 +1,9 @@
 import './Projet.css'
 const ATOUTS=[
-  {i:'🎓',t:'Diplôme BAFA',d:"Formation reconnue par l'État pour l'encadrement de mineurs"},
-  {i:'👥',t:'Maximum 3 enfants',d:'Suivi individualisé — jamais plus de 3 enfants simultanément'},
-  {i:'❤️',t:'Spécialisation TSA/TDAH',d:"Assistant d'éducation — expérience en accueil d'enfants à besoins spécifiques"},
-  {i:'💶',t:'CESU & aides CAF',d:"Service éligible au CESU — réduction selon votre situation"},
+  {i:'',t:'Diplôme BAFA',d:"Formation reconnue par l'État pour l'encadrement de mineurs"},
+  {i:'',t:'Maximum 3 enfants',d:'Suivi individualisé — jamais plus de 3 enfants simultanément'},
+  {i:'',t:'Spécialisation TSA/TDAH',d:"Assistant d'éducation — expérience en accueil d'enfants à besoins spécifiques"},
+  {i:'',t:'CESU & aides CAF',d:"Service éligible au CESU — réduction selon votre situation"},
 ]
 export default function Projet(){
   return(
@@ -12,7 +12,7 @@ export default function Projet(){
         <div className="projet__imgs reveal">
           <div className="projet__img-main">
             <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=900&q=80" alt="Animateur avec enfants"/>
-            <div className="projet__badge">🎓 Animateur diplômé BAFA</div>
+            <div className="projet__badge">Animateur diplômé BAFA</div>
           </div>
           <div className="projet__img-s"><img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=400&q=75" alt="Forêt Landes" loading="lazy"/></div>
           <div className="projet__img-s"><img src="https://images.unsplash.com/photo-1472162072942-cd5147eb3902?w=400&q=75" alt="Enfants nature" loading="lazy"/></div>

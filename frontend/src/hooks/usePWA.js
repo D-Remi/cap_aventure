@@ -17,7 +17,7 @@ export function usePWA() {
         .register('/sw.js')
         .then((reg) => {
           setSwReady(true)
-          console.log('✅ Service Worker enregistré', reg.scope)
+          console.log('Service Worker enregistré', reg.scope)
         })
         .catch((err) => console.warn('Service Worker non disponible', err))
     }

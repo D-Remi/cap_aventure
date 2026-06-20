@@ -1,9 +1,9 @@
 import './Valeurs.css'
 const STEPS=[
-  {n:'1',i:'📞',t:'Premier contact',d:"Vous m'écrivez pour présenter votre enfant et vos besoins."},
-  {n:'2',i:'☕',t:'Rencontre',d:"On se retrouve avec l'enfant pour faire connaissance et définir le cadre."},
-  {n:'3',i:'📋',t:'Organisation',d:'On convient des dates, horaires et modalités. Vous remplissez le dossier enfant.'},
-  {n:'4',i:'🌲',t:"C'est parti !",d:"L'aventure commence. Je vous tiens informé(e) à chaque séance."},
+  {n:'1',i:'',t:'Premier contact',d:"Vous m'écrivez pour présenter votre enfant et vos besoins."},
+  {n:'2',i:'',t:'Rencontre',d:"On se retrouve avec l'enfant pour faire connaissance et définir le cadre."},
+  {n:'3',i:'',t:'Organisation',d:'On convient des dates, horaires et modalités. Vous remplissez le dossier enfant.'},
+  {n:'4',i:'',t:"C'est parti !",d:"L'aventure commence. Je vous tiens informé(e) à chaque séance."},
 ]
 export default function Valeurs(){
   return(

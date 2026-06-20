@@ -26,7 +26,7 @@ export default function Temoignages() {
           <span className="section-tag">Ils me font confiance</span>
           <h2>Ce que disent <em>les parents</em></h2>
           <div className="temoignages__moyenne">
-            <span className="temoignages__stars">{'★'.repeat(Math.round(moyenne))}{'☆'.repeat(5-Math.round(moyenne))}</span>
+            <span className="temoignages__stars">{''.repeat(Math.round(moyenne))}{''.repeat(5-Math.round(moyenne))}</span>
             <strong>{moyenne}/5</strong>
             <span className="temoignages__count">· {avis.length} avis</span>
           </div>
@@ -34,7 +34,7 @@ export default function Temoignages() {
         <div className="temoignages__grid">
           {avis.map(a => (
             <div key={a.id} className="temoignage-card">
-              <div className="temoignage-card__stars">{'★'.repeat(a.note)}{'☆'.repeat(5-a.note)}</div>
+              <div className="temoignage-card__stars">{''.repeat(a.note)}{''.repeat(5-a.note)}</div>
               <p className="temoignage-card__text">"{a.contenu}"</p>
               <div className="temoignage-card__author">
                 <div className="temoignage-card__avatar">{a.prenom.charAt(0).toUpperCase()}</div>

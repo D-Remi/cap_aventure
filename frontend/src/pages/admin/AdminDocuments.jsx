@@ -4,8 +4,8 @@ import toast from 'react-hot-toast'
 import AdminLayout from '../../components/layout/AdminLayout'
 
 const TYPE_LABEL = {
-  ordonnance:'💊 Ordonnance', pap:'📋 PAP/PPS', mdph:'🏛️ MDPH',
-  autorisation_sortie:'✅ Autorisation sortie', autorisation_photo:'📷 Autorisation photo', autre:'📄 Autre',
+  ordonnance:'Ordonnance', pap:'PAP/PPS', mdph:'MDPH',
+  autorisation_sortie:'Autorisation sortie', autorisation_photo:'Autorisation photo', autre:'Autre',
 }
 
 export default function AdminDocuments() {
@@ -21,7 +21,7 @@ export default function AdminDocuments() {
     await axios.patch(`/api/documents/${id}/validate`, { valide, note })
     setDocs(d => d.map(x => x.id===id ? {...x,valide,note_admin:note} : x))
     if (selected?.id === id) setSelected(s => ({...s,valide,note_admin:note}))
-    toast.success(valide ? 'Document validé ✅' : 'Document refusé ❌')
+    toast.success(valide ? 'Document validé ' : 'Document refusé ')
   }
 
   const del = async (id) => {
@@ -40,9 +40,9 @@ export default function AdminDocuments() {
   })
 
   const badge = (d) => {
-    if (d.valide === true)  return <span style={{background:'#e8f5e9',color:'#2e7d32',fontSize:'.72rem',fontWeight:700,padding:'2px 8px',borderRadius:50}}>✅ Validé</span>
-    if (d.valide === false) return <span style={{background:'#fee2e2',color:'#991b1b',fontSize:'.72rem',fontWeight:700,padding:'2px 8px',borderRadius:50}}>❌ Refusé</span>
-    return <span style={{background:'#fff8e1',color:'#f57f17',fontSize:'.72rem',fontWeight:700,padding:'2px 8px',borderRadius:50}}>⏳ En attente</span>
+    if (d.valide === true)  return <span style={{background:'#e8f5e9',color:'#2e7d32',fontSize:'.72rem',fontWeight:700,padding:'2px 8px',borderRadius:50}}>Validé</span>
+    if (d.valide === false) return <span style={{background:'#fee2e2',color:'#991b1b',fontSize:'.72rem',fontWeight:700,padding:'2px 8px',borderRadius:50}}>Refusé</span>
+    return <span style={{background:'#fff8e1',color:'#f57f17',fontSize:'.72rem',fontWeight:700,padding:'2px 8px',borderRadius:50}}>En attente</span>
   }
 
   return (
@@ -50,13 +50,13 @@ export default function AdminDocuments() {
     <AdminLayout>
       <div className="admin-page">
         <div className="admin-page__header">
-          <div><h1>📁 Documents</h1>
+          <div><h1>Documents</h1>
             <p className="admin-page__subtitle">{docs.filter(d=>d.valide===null||d.valide===undefined).length} en attente de vérification</p>
           </div>
         </div>
 
         <div style={{display:'flex',gap:'.6rem',marginBottom:'1.5rem',flexWrap:'wrap'}}>
-          {[{v:'tous',l:'Tous'},{v:'en_attente',l:'⏳ En attente'},{v:'valide',l:'✅ Validés'},{v:'refuse',l:'❌ Refusés'}].map(({v,l})=>(
+          {[{v:'tous',l:'Tous'},{v:'en_attente',l:'En attente'},{v:'valide',l:'Validés'},{v:'refuse',l:'Refusés'}].map(({v,l})=>(
             <button key={v} className={`cal-filter-btn ${filter===v?'active':''}`} onClick={()=>setFilter(v)}>{l}</button>
           ))}
         </div>
@@ -69,7 +69,7 @@ export default function AdminDocuments() {
               <div key={d.id} onClick={()=>{setSelected(d);setNote(d.note_admin||'')}}
                 style={{padding:'1rem 1.25rem',background:selected?.id===d.id?'var(--sable-light)':'white',border:`2px solid ${selected?.id===d.id?'var(--sauge)':'#eef2ee'}`,borderRadius:'var(--radius-lg)',cursor:'pointer',transition:'all .18s'}}>
                 <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'.35rem'}}>
-                  <div style={{fontWeight:700,color:'var(--nuit)',fontSize:'.88rem'}}>{TYPE_LABEL[d.type]||'📄'} {d.nom}</div>
+                  <div style={{fontWeight:700,color:'var(--nuit)',fontSize:'.88rem'}}>{TYPE_LABEL[d.type]||''} {d.nom}</div>
                   {badge(d)}
                 </div>
                 <div style={{fontSize:'.75rem',color:'var(--text-muted)'}}>
@@ -84,20 +84,20 @@ export default function AdminDocuments() {
           {selected ? (
             <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)'}}>
               <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'1.25rem'}}>
-                <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',margin:0}}>{TYPE_LABEL[selected.type]||'📄'} {selected.nom}</h3>
+                <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',margin:0}}>{TYPE_LABEL[selected.type]||''} {selected.nom}</h3>
                 {badge(selected)}
               </div>
               <div style={{display:'flex',flexDirection:'column',gap:'.5rem',fontSize:'.85rem',color:'var(--text-dark)',marginBottom:'1.25rem'}}>
-                <span>👤 {selected.user?.prenom} {selected.user?.nom} · {selected.user?.email}</span>
-                {selected.child && <span>🧒 Pour {selected.child.prenom} {selected.child.nom}</span>}
-                <span>📅 {new Date(selected.created_at).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</span>
-                {selected.taille && <span>💾 {Math.round(selected.taille/1024)} Ko</span>}
+                <span>{selected.user?.prenom} {selected.user?.nom} · {selected.user?.email}</span>
+                {selected.child && <span>Pour {selected.child.prenom} {selected.child.nom}</span>}
+                <span>{new Date(selected.created_at).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</span>
+                {selected.taille && <span>{Math.round(selected.taille/1024)} Ko</span>}
               </div>
 
               {/* Voir le fichier */}
               <button onClick={async()=>{const {data}=await axios.get(`/api/documents/${selected.id}/data`);setViewing(data)}}
                 style={{display:'inline-flex',alignItems:'center',gap:'.5rem',marginBottom:'1.25rem',background:'none',border:'1.5px solid var(--sauge)',borderRadius:8,padding:'.4rem 1rem',fontSize:'.85rem',color:'var(--sauge)',fontWeight:700,cursor:'pointer',fontFamily:'inherit'}}>
-                👁️ Voir le document
+                Voir le document
               </button>
 
               {/* Note admin */}
@@ -111,9 +111,9 @@ export default function AdminDocuments() {
               </div>
 
               <div style={{display:'flex',gap:'.65rem',flexWrap:'wrap'}}>
-                <button className="btn-primary" onClick={()=>validate(selected.id,true)} style={{background:'#4caf50'}}>✅ Valider</button>
-                <button className="btn-primary" onClick={()=>validate(selected.id,false)} style={{background:'#ef4444'}}>❌ Refuser</button>
-                <button onClick={()=>del(selected.id)} style={{background:'#fee2e2',color:'#991b1b',border:'none',borderRadius:8,padding:'.5rem 1rem',fontWeight:700,fontSize:'.85rem',cursor:'pointer',fontFamily:'inherit'}}>🗑️ Supprimer</button>
+                <button className="btn-primary" onClick={()=>validate(selected.id,true)} style={{background:'#4caf50'}}>Valider</button>
+                <button className="btn-primary" onClick={()=>validate(selected.id,false)} style={{background:'#ef4444'}}>Refuser</button>
+                <button onClick={()=>del(selected.id)} style={{background:'#fee2e2',color:'#991b1b',border:'none',borderRadius:8,padding:'.5rem 1rem',fontWeight:700,fontSize:'.85rem',cursor:'pointer',fontFamily:'inherit'}}>Supprimer</button>
               </div>
             </div>
           ) : (
@@ -130,8 +130,8 @@ export default function AdminDocuments() {
             <div style={{padding:'1rem 1.5rem',background:'var(--nuit)',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
               <span style={{color:'white',fontWeight:700}}>{viewing.nom}</span>
               <div style={{display:'flex',gap:'.5rem'}}>
-                <a href={viewing.data} download={viewing.filename} style={{background:'rgba(255,255,255,.15)',color:'white',padding:'.3rem .85rem',borderRadius:8,fontSize:'.82rem',fontWeight:700,textDecoration:'none'}}>⬇️ Télécharger</a>
-                <button onClick={()=>setViewing(null)} style={{background:'rgba(255,255,255,.15)',border:'none',color:'white',width:30,height:30,borderRadius:'50%',cursor:'pointer',fontSize:'1rem',fontFamily:'inherit'}}>✕</button>
+                <a href={viewing.data} download={viewing.filename} style={{background:'rgba(255,255,255,.15)',color:'white',padding:'.3rem .85rem',borderRadius:8,fontSize:'.82rem',fontWeight:700,textDecoration:'none'}}>⬇Télécharger</a>
+                <button onClick={()=>setViewing(null)} style={{background:'rgba(255,255,255,.15)',border:'none',color:'white',width:30,height:30,borderRadius:'50%',cursor:'pointer',fontSize:'1rem',fontFamily:'inherit'}}></button>
               </div>
             </div>
             <div style={{flex:1,overflow:'auto',padding:'1rem',textAlign:'center',background:'#f5f5f5'}}>
@@ -140,7 +140,7 @@ export default function AdminDocuments() {
               ) : viewing.mimetype?.includes('pdf') ? (
                 <iframe src={viewing.data} title={viewing.nom} style={{width:'100%',height:'70vh',border:'none'}}/>
               ) : (
-                <div style={{padding:'3rem',color:'var(--text-muted)'}}><div style={{fontSize:'3rem',marginBottom:'1rem'}}>📄</div><p>Prévisualisation non disponible.</p><a href={viewing.data} download={viewing.filename} className="btn-primary" style={{textDecoration:'none',marginTop:'1rem',display:'inline-flex'}}>⬇️ Télécharger</a></div>
+                <div style={{padding:'3rem',color:'var(--text-muted)'}}><div style={{fontSize:'3rem',marginBottom:'1rem'}}></div><p>Prévisualisation non disponible.</p><a href={viewing.data} download={viewing.filename} className="btn-primary" style={{textDecoration:'none',marginTop:'1rem',display:'inline-flex'}}>⬇Télécharger</a></div>
               )}
             </div>
           </div>

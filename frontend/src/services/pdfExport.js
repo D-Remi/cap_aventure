@@ -88,17 +88,17 @@ export function exportRegistrationsPDF(activity, registrations) {
   <div class="activity-info">
     <h1>${activity.titre}</h1>
     <div class="activity-info__row">
-      <div><span>📅</span>${date}</div>
-      <div><span>💶</span>${parseFloat(activity.prix || 0).toFixed(2)}€ / enfant</div>
-      <div><span>👥</span>${activity.places_max} places maximum</div>
-      <div><span>🏷️</span>${activity.type}</div>
+      <div><span></span>${date}</div>
+      <div><span></span>${parseFloat(activity.prix || 0).toFixed(2)}€ / enfant</div>
+      <div><span></span>${activity.places_max} places maximum</div>
+      <div><span></span>${activity.type}</div>
     </div>
   </div>
 
   <div class="stats">
     <div class="stat-pill">${registrations.filter(r=>r.status!=='cancelled').length} inscrit(s) total</div>
-    <div class="stat-pill stat-pill--green">✅ ${confirmed} confirmé(s)</div>
-    <div class="stat-pill stat-pill--yellow">⏳ ${pending} en attente</div>
+    <div class="stat-pill stat-pill--green">${confirmed} confirmé(s)</div>
+    <div class="stat-pill stat-pill--yellow">${pending} en attente</div>
   </div>
 
   <table>

@@ -35,12 +35,12 @@ export default function PhotosTab() {
 
   return (
     <div className="dash-tab">
-      <h2>📸 Photos des séances</h2>
+      <h2>Photos des séances</h2>
       <p className="dash-subtitle">Les souvenirs partagés par votre animateur après chaque séance.</p>
 
       {photos.length === 0 ? (
         <div className="dash-empty">
-          <div style={{fontSize:'3rem',marginBottom:'.75rem'}}>📷</div>
+          <div style={{fontSize:'3rem',marginBottom:'.75rem'}}></div>
           <p>Aucune photo partagée pour le moment.</p>
           <p style={{fontSize:'.85rem',color:'var(--text-muted)',marginTop:'.4rem'}}>Les photos apparaîtront ici après les séances, si vous avez donné l'autorisation photo dans le dossier de votre enfant.</p>
         </div>
@@ -72,13 +72,13 @@ export default function PhotosTab() {
                   >
                     {/* Placeholder — la vraie image se charge à l'ouverture */}
                     <div style={{width:'100%',height:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:'.5rem',padding:'1rem'}}>
-                      <div style={{fontSize:'2.5rem'}}>🖼️</div>
+                      <div style={{fontSize:'2.5rem'}}></div>
                       {p.titre && <div style={{fontSize:'.78rem',fontWeight:700,color:'var(--nuit)',textAlign:'center',lineHeight:1.3}}>{p.titre}</div>}
                       {p.child && <div style={{fontSize:'.72rem',color:'var(--text-muted)'}}>{p.child.prenom}</div>}
                     </div>
                     <div style={{position:'absolute',bottom:0,left:0,right:0,background:'rgba(45,58,107,.7)',padding:'.5rem .7rem'}}>
                       <div style={{fontSize:'.72rem',color:'white',fontWeight:600,display:'flex',alignItems:'center',gap:.3+'rem'}}>
-                        👁️ Voir
+                        Voir
                       </div>
                     </div>
                   </div>
@@ -103,12 +103,11 @@ export default function PhotosTab() {
               <div style={{display:'flex',gap:'.6rem',alignItems:'center'}}>
                 <a href={viewing.data} download={`CapAventure_${viewing.date_seance||'photo'}.jpg`}
                   style={{background:'rgba(255,255,255,.15)',color:'white',padding:'.3rem .85rem',borderRadius:8,fontSize:'.82rem',fontWeight:700,textDecoration:'none',display:'flex',alignItems:'center',gap:'.35rem'}}>
-                  ⬇️ Télécharger
+                  ⬇Télécharger
                 </a>
                 <button onClick={() => setViewing(null)}
                   style={{background:'rgba(255,255,255,.15)',border:'none',color:'white',width:30,height:30,borderRadius:'50%',cursor:'pointer',fontFamily:'inherit',fontSize:'1.1rem',display:'flex',alignItems:'center',justifyContent:'center'}}>
-                  ✕
-                </button>
+                                  </button>
               </div>
             </div>
             <div style={{flex:1,overflow:'auto',background:'#111',display:'flex',alignItems:'center',justifyContent:'center',minHeight:300}}>
@@ -116,9 +115,9 @@ export default function PhotosTab() {
                 <img src={viewing.data} alt={viewing.titre||'Photo'} style={{maxWidth:'100%',maxHeight:'75vh',objectFit:'contain'}}/>
               ) : (
                 <div style={{padding:'3rem',textAlign:'center',color:'#999'}}>
-                  <div style={{fontSize:'3rem',marginBottom:'1rem'}}>📄</div>
+                  <div style={{fontSize:'3rem',marginBottom:'1rem'}}></div>
                   <p>Prévisualisation non disponible.</p>
-                  <a href={viewing.data} download style={{color:'var(--sauge)',display:'inline-block',marginTop:'1rem'}}>⬇️ Télécharger</a>
+                  <a href={viewing.data} download style={{color:'var(--sauge)',display:'inline-block',marginTop:'1rem'}}>⬇Télécharger</a>
                 </div>
               )}
             </div>

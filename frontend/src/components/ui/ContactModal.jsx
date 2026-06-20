@@ -43,10 +43,10 @@ export default function ContactModal({ onClose, prefillDate = null }) {
       <div className="cmodal" onClick={e => e.stopPropagation()}>
         <div className="cmodal__head">
           <div>
-            <h3>📩 Nous contacter</h3>
+            <h3>Me contacter</h3>
             <span>{user ? `Connecté en tant que ${user.prenom}` : 'Entrez vos coordonnées'}</span>
           </div>
-          <button className="cmodal__close" onClick={onClose}>✕</button>
+          <button className="cmodal__close" onClick={onClose}></button>
         </div>
 
         <form className="cmodal__body" onSubmit={submit}>
@@ -101,7 +101,7 @@ export default function ContactModal({ onClose, prefillDate = null }) {
           </div>
 
           <button type="submit" className="btn-primary" disabled={sending} style={{width:'100%',justifyContent:'center'}}>
-            {sending ? 'Envoi…' : 'Envoyer le message 🌲'}
+            {sending ? 'Envoi…' : 'Envoyer le message '}
           </button>
         </form>
       </div>
