@@ -55,7 +55,7 @@ export default function ContratTab() {
   if (contrats.length === 0) return (
     <div style={{textAlign:'center',padding:'3rem'}}>
       <div style={{fontSize:'2rem',marginBottom:'.75rem'}}></div>
-      <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',marginBottom:'.5rem'}}>Aucun contrat répit</h3>
+      <h3 style={{color:'var(--nuit)',marginBottom:'.5rem'}}>Aucun contrat répit</h3>
       <p style={{color:'var(--text-muted)',fontSize:'.88rem'}}>Contactez l'animateur pour établir un contrat de répit personnalisé.</p>
     </div>
   )
@@ -71,7 +71,7 @@ export default function ContratTab() {
               onMouseLeave={e=>e.currentTarget.style.borderColor='transparent'}>
               <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'.5rem'}}>
                 <div>
-                  <div style={{fontFamily:"'Baloo 2',cursive",fontWeight:700,color:'var(--nuit)',fontSize:'1.05rem'}}>{c.child?.prenom} {c.child?.nom}</div>
+                  <div style={{fontWeight:700,color:'var(--nuit)',fontSize:'1.05rem'}}>{c.child?.prenom} {c.child?.nom}</div>
                   <div style={{fontSize:'.82rem',color:'var(--text-muted)',marginTop:2}}>
                     {c.date_debut ? new Date(c.date_debut+'T00:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}) : '—'} →
                     {c.date_fin   ? new Date(c.date_fin+'T00:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})   : '—'}
@@ -101,7 +101,7 @@ export default function ContratTab() {
           {/* Contrat complet */}
           <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)',marginBottom:'1rem'}}>
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'1.25rem',flexWrap:'wrap',gap:'.5rem'}}>
-              <h2 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.3rem',margin:0}}>
+              <h2 style={{color:'var(--nuit)',fontSize:'1.3rem',margin:0}}>
                 Contrat répit — {selected.child?.prenom} {selected.child?.nom}
               </h2>
               {badge(selected.statut)}
@@ -161,7 +161,7 @@ export default function ContratTab() {
           {/* Séances */}
           {seances.length > 0 && (
             <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.5rem',boxShadow:'var(--shadow-sm)',marginBottom:'1rem'}}>
-              <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Séances ({seances.length})</h3>
+              <h3 style={{color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Séances ({seances.length})</h3>
               <div style={{display:'flex',flexDirection:'column',gap:'.5rem'}}>
                 {seances.map(s => (
                   <div key={s.id} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'.6rem .85rem',background:'var(--sable-light)',borderRadius:8,fontSize:'.85rem'}}>
@@ -179,7 +179,7 @@ export default function ContratTab() {
           {/* Factures */}
           {factures.length > 0 && (
             <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.5rem',boxShadow:'var(--shadow-sm)'}}>
-              <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Factures ({factures.length})</h3>
+              <h3 style={{color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Factures ({factures.length})</h3>
               {factures.map(f => (
                 <div key={f.id} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'.85rem',background:'var(--sable-light)',borderRadius:10,marginBottom:'.5rem',flexWrap:'wrap',gap:'.5rem'}}>
                   <div>
@@ -190,7 +190,7 @@ export default function ContratTab() {
                     </div>
                   </div>
                   <div style={{display:'flex',alignItems:'center',gap:'.75rem'}}>
-                    <span style={{fontFamily:"'Baloo 2',cursive",fontSize:'1.2rem',fontWeight:800,color:'var(--sauge)'}}>{parseFloat(f.montant_total).toFixed(2)} €
+                    <span style={{fontSize:'1.2rem',fontWeight:800,color:'var(--sauge)'}}>{parseFloat(f.montant_total).toFixed(2)} €
                   <button onClick={()=>genererFacturePDF(f, selected, user, [])}
                     style={{marginLeft:'.5rem',background:'var(--sauge)',color:'white',border:'none',borderRadius:6,padding:'3px 10px',cursor:'pointer',fontSize:'.75rem',fontWeight:700,fontFamily:'inherit'}}>
                     ⬇Télécharger

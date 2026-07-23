@@ -217,13 +217,13 @@ export default function AdminContrats() {
               {tab==='detail' && (
                 <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)',display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1.5rem'}}>
                   <div>
-                    <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Parties</h3>
+                    <h3 style={{color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Parties</h3>
                     <div style={{display:'flex',flexDirection:'column',gap:'.5rem',fontSize:'.88rem',color:'var(--text-dark)'}}>
                       <div><strong>Enfant :</strong> {selected.child?.prenom} {selected.child?.nom}</div>
                       <div><strong>Parent :</strong> {selected.user?.prenom} {selected.user?.nom}</div>
                       <div><strong>Email :</strong> {selected.user?.email}</div>
                     </div>
-                    <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginTop:'1.25rem',marginBottom:'1rem'}}>Période</h3>
+                    <h3 style={{color:'var(--nuit)',fontSize:'1rem',marginTop:'1.25rem',marginBottom:'1rem'}}>Période</h3>
                     <div style={{display:'flex',flexDirection:'column',gap:'.4rem',fontSize:'.88rem',color:'var(--text-dark)'}}>
                       <div><strong>Du :</strong> {selected.date_debut ? new Date(selected.date_debut+'T00:00:00').toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) : '—'}</div>
                       <div><strong>Au :</strong> {selected.date_fin ? new Date(selected.date_fin+'T00:00:00').toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) : '—'}</div>
@@ -231,7 +231,7 @@ export default function AdminContrats() {
                     </div>
                   </div>
                   <div>
-                    <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Tarification</h3>
+                    <h3 style={{color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Tarification</h3>
                     <div style={{display:'flex',flexDirection:'column',gap:'.4rem',fontSize:'.88rem',color:'var(--text-dark)'}}>
                       <div><strong>Tarif horaire :</strong> {selected.tarif_horaire} €/h</div>
                       <div><strong>Heures / semaine :</strong> {selected.heures_semaine} h</div>
@@ -240,10 +240,10 @@ export default function AdminContrats() {
                       {selected.montant_estime && <div style={{marginTop:'.5rem',fontWeight:700,color:'var(--sauge)'}}>Montant estimé : ~{parseFloat(selected.montant_estime).toFixed(0)} €</div>}
                     </div>
                   </div>
-                  {selected.objectifs && <div style={{gridColumn:'1/-1'}}><h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'.75rem'}}>Objectifs</h3><p style={{fontSize:'.88rem',color:'var(--text-dark)',lineHeight:1.7,whiteSpace:'pre-wrap'}}>{selected.objectifs}</p></div>}
-                  {selected.besoins_specifiques && <div style={{gridColumn:'1/-1'}}><h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'.75rem'}}>Besoins spécifiques</h3><p style={{fontSize:'.88rem',color:'var(--text-dark)',lineHeight:1.7,whiteSpace:'pre-wrap'}}>{selected.besoins_specifiques}</p></div>}
-                  {selected.modalites && <div style={{gridColumn:'1/-1'}}><h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'.75rem'}}>Modalités pratiques</h3><p style={{fontSize:'.88rem',color:'var(--text-dark)',lineHeight:1.7,whiteSpace:'pre-wrap'}}>{selected.modalites}</p></div>}
-                  {selected.clauses && <div style={{gridColumn:'1/-1'}}><h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'.75rem'}}>Clauses particulières</h3><p style={{fontSize:'.88rem',color:'var(--text-dark)',lineHeight:1.7,whiteSpace:'pre-wrap'}}>{selected.clauses}</p></div>}
+                  {selected.objectifs && <div style={{gridColumn:'1/-1'}}><h3 style={{color:'var(--nuit)',fontSize:'1rem',marginBottom:'.75rem'}}>Objectifs</h3><p style={{fontSize:'.88rem',color:'var(--text-dark)',lineHeight:1.7,whiteSpace:'pre-wrap'}}>{selected.objectifs}</p></div>}
+                  {selected.besoins_specifiques && <div style={{gridColumn:'1/-1'}}><h3 style={{color:'var(--nuit)',fontSize:'1rem',marginBottom:'.75rem'}}>Besoins spécifiques</h3><p style={{fontSize:'.88rem',color:'var(--text-dark)',lineHeight:1.7,whiteSpace:'pre-wrap'}}>{selected.besoins_specifiques}</p></div>}
+                  {selected.modalites && <div style={{gridColumn:'1/-1'}}><h3 style={{color:'var(--nuit)',fontSize:'1rem',marginBottom:'.75rem'}}>Modalités pratiques</h3><p style={{fontSize:'.88rem',color:'var(--text-dark)',lineHeight:1.7,whiteSpace:'pre-wrap'}}>{selected.modalites}</p></div>}
+                  {selected.clauses && <div style={{gridColumn:'1/-1'}}><h3 style={{color:'var(--nuit)',fontSize:'1rem',marginBottom:'.75rem'}}>Clauses particulières</h3><p style={{fontSize:'.88rem',color:'var(--text-dark)',lineHeight:1.7,whiteSpace:'pre-wrap'}}>{selected.clauses}</p></div>}
                 </div>
               )}
 
@@ -251,7 +251,7 @@ export default function AdminContrats() {
               {tab==='seances' && (
                 <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)'}}>
                   <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'1.25rem'}}>
-                    <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',margin:0}}>Séances réalisées</h3>
+                    <h3 style={{color:'var(--nuit)',fontSize:'1rem',margin:0}}>Séances réalisées</h3>
                     <button className="btn-primary" style={{fontSize:'.82rem'}} onClick={()=>setModal('seance')}>+ Ajouter une séance</button>
                   </div>
 
@@ -304,7 +304,7 @@ export default function AdminContrats() {
               {/* Tab Factures */}
               {tab==='factures' && (
                 <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)'}}>
-                  <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1.25rem'}}>Factures émises</h3>
+                  <h3 style={{color:'var(--nuit)',fontSize:'1rem',marginBottom:'1.25rem'}}>Factures émises</h3>
                   {factures.length===0 ? <p style={{color:'var(--text-muted)',fontSize:'.85rem'}}>Aucune facture générée</p> : (
                     <div style={{display:'flex',flexDirection:'column',gap:'.75rem'}}>
                       {factures.map(f=>(
@@ -317,7 +317,7 @@ export default function AdminContrats() {
                             </div>
                           </div>
                           <div style={{display:'flex',alignItems:'center',gap:'.75rem'}}>
-                            <span style={{fontFamily:"'Baloo 2',cursive",fontSize:'1.3rem',fontWeight:800,color:'var(--sauge)'}}>{parseFloat(f.montant_total).toFixed(2)} €
+                            <span style={{fontSize:'1.3rem',fontWeight:800,color:'var(--sauge)'}}>{parseFloat(f.montant_total).toFixed(2)} €
                       <button onClick={(e)=>{e.stopPropagation();genererFacturePDF(f, selected, selected.user, [])}}
                         style={{marginLeft:'.5rem',background:'#e0f2fe',color:'#0369a1',border:'none',borderRadius:6,padding:'2px 8px',cursor:'pointer',fontSize:'.72rem',fontWeight:700,fontFamily:'inherit'}}>
                         ⬇PDF
@@ -338,7 +338,7 @@ export default function AdminContrats() {
               {tab==='signatures' && (
                 <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)',display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1.5rem'}}>
                   <div>
-                    <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Signature parent</h3>
+                    <h3 style={{color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Signature parent</h3>
                     {selected.signature_parent ? (
                       <>
                         <img src={selected.signature_parent} alt="Signature parent" style={{width:'100%',border:'1px solid var(--sable-dark)',borderRadius:8,background:'white'}}/>
@@ -347,7 +347,7 @@ export default function AdminContrats() {
                     ) : <p style={{color:'var(--text-muted)',fontSize:'.85rem'}}>Non signé</p>}
                   </div>
                   <div>
-                    <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Signature animateur</h3>
+                    <h3 style={{color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Signature animateur</h3>
                     {selected.signature_admin ? (
                       <>
                         <img src={selected.signature_admin} alt="Signature admin" style={{width:'100%',border:'1px solid var(--sable-dark)',borderRadius:8,background:'white'}}/>

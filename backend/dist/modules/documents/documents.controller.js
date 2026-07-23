@@ -84,4 +84,3 @@ exports.DocumentsController = DocumentsController = __decorate([
     (0, common_1.UseGuards)(auth_guard_1.JwtAuthGuard),
     __metadata("design:paramtypes", [documents_service_1.DocumentsService])
 ], DocumentsController);
-//# sourceMappingURL=documents.controller.js.map

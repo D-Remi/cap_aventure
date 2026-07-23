@@ -167,4 +167,3 @@ __decorate([
 exports.Child = Child = __decorate([
     (0, typeorm_1.Entity)('children')
 ], Child);
-//# sourceMappingURL=child.entity.js.map

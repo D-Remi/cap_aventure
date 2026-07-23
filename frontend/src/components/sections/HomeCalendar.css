@@ -1,6 +1,0 @@
-.home-cal { background: var(--blanc); }
-.home-cal__cta { margin-top: 1.25rem; background: var(--sable-light); border-radius: var(--radius-xl); padding: 1.25rem 1.75rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; border-left: 4px solid var(--sauge); }
-.home-cal__cta-info { display: flex; flex-direction: column; gap: .25rem; }
-.home-cal__cta-info strong { font-family: 'Baloo 2', cursive; color: var(--nuit); font-size: 1rem; }
-.home-cal__cta-info span { font-size: .85rem; color: var(--text-muted); }
-.home-cal__foot { text-align: center; margin-top: 1.25rem; }

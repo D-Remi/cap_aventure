@@ -2,20 +2,18 @@ import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import './AdminLayout.css'
 const NAV = [
-  {path:'/admin',                label:'Tableau de bord'},
-  {path:'/admin/slots',          label:'Créneaux'},
-  {path:'/admin/bookings',       label:'Réservations'},
-  {path:'/admin/contrats',       label:'Contrats répit'},
-  {path:'/admin/children',       label:'Dossiers enfants'},
-  {path:'/admin/planning',       label:'Planning'},
-  {path:'/admin/users',          label:'Familles'},
-  {path:'/admin/contacts',       label:'Contacts'},
-  {path:'/admin/messages',       label:'Messages'},
-  {path:'/admin/photos',         label:'Photos séances'},
-  {path:'/admin/documents',      label:'Documents'},
-  {path:'/admin/temoignages',    label:'Témoignages'},
-  {path:'/admin/compta',         label:'Comptabilité'},
-  {path:'/admin/stats',          label:'Statistiques'},
+  { path:'/admin',              label:'Tableau de bord' },
+  { path:'/admin/seances',      label:'Suivi & séances' },
+  { path:'/admin/children',     label:'Dossiers enfants' },
+  { path:'/admin/users',        label:'Familles' },
+  { path:'/admin/contacts',     label:'Demandes' },
+  { path:'/admin/messages',     label:'Messages' },
+  { path:'/admin/documents',    label:'Documents' },
+  { path:'/admin/photos',       label:'Photos' },
+  { path:'/admin/contrats',     label:'Contrats' },
+  { path:'/admin/compta',       label:'Comptabilité' },
+  { path:'/admin/temoignages',  label:'Témoignages' },
+  { path:'/admin/stats',        label:'Statistiques' },
 ]
 export default function AdminLayout({ children }) {
   const { user, logout } = useAuth()

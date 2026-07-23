@@ -32,4 +32,3 @@ function jwtConfig() {
         expiresIn: process.env.JWT_EXPIRES || '7d',
     };
 }
-//# sourceMappingURL=database.config.js.map

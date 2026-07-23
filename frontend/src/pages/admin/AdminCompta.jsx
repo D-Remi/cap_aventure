@@ -140,7 +140,7 @@ export default function AdminCompta() {
             ].map(({ label, val, color, bg }) => (
               <div key={label} style={{background:bg,borderRadius:'var(--radius-lg)',padding:'1.25rem'}}>
                 <div style={{fontSize:'.78rem',color,fontWeight:700,textTransform:'uppercase',letterSpacing:'.04em',marginBottom:'.4rem'}}>{label}</div>
-                <div style={{fontFamily:"'Baloo 2',cursive",fontSize:'1.8rem',fontWeight:800,color,lineHeight:1}}>
+                <div style={{fontSize:'1.8rem',fontWeight:800,color,lineHeight:1}}>
                   {parseFloat(val).toFixed(2)} €
                 </div>
               </div>
@@ -152,7 +152,7 @@ export default function AdminCompta() {
         {stats && (
           <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.5rem',marginBottom:'1.5rem',boxShadow:'var(--shadow-sm)'}}>
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'1.25rem'}}>
-              <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem'}}>Revenus par mois</h3>
+              <h3 style={{color:'var(--nuit)',fontSize:'1rem'}}>Revenus par mois</h3>
               <div style={{display:'flex',gap:'1rem',fontSize:'.78rem'}}>
                 <span style={{display:'flex',alignItems:'center',gap:'.35rem'}}><span style={{width:10,height:10,borderRadius:2,background:'#4a7a6d',display:'block'}}/> Recettes</span>
                 <span style={{display:'flex',alignItems:'center',gap:'.35rem'}}><span style={{width:10,height:10,borderRadius:2,background:'#ef4444',display:'block'}}/> Dépenses</span>
@@ -191,7 +191,7 @@ export default function AdminCompta() {
         {/* ══ Détail du mois sélectionné ══ */}
         <div style={{background:'white',borderRadius:'var(--radius-xl)',overflow:'hidden',boxShadow:'var(--shadow-sm)'}}>
           <div style={{padding:'1.25rem 1.5rem',borderBottom:'1px solid var(--sable-light)',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:'1rem'}}>
-            <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.05rem'}}>
+            <h3 style={{color:'var(--nuit)',fontSize:'1.05rem'}}>
               {MOIS_FULL[moisSel-1]} {annee}
             </h3>
             <div style={{display:'flex',gap:'1.5rem',fontSize:'.88rem'}}>
@@ -232,7 +232,7 @@ export default function AdminCompta() {
                       </span>
                     </td>
                     <td style={{padding:'.75rem 1rem'}}>{MODES[e.mode]||e.mode}</td>
-                    <td style={{padding:'.75rem 1rem',fontFamily:"'Baloo 2',cursive",fontWeight:800,fontSize:'1rem',color: e.type==='recette'?'#2e7d32':'#c62828'}}>
+                    <td style={{padding:'.75rem 1rem',fontWeight:800,fontSize:'1rem',color: e.type==='recette'?'#2e7d32':'#c62828'}}>
                       {e.type==='recette' ? '+' : '-'}{parseFloat(e.montant).toFixed(2)} €
                     </td>
                     <td style={{padding:'.75rem 1rem',color:'var(--text-muted)'}}>{e.famille||'—'}</td>
@@ -274,7 +274,7 @@ export default function AdminCompta() {
             <div style={{background:'white',borderRadius:'var(--radius-xl)',width:'100%',maxWidth:520,overflow:'hidden',boxShadow:'0 24px 64px rgba(0,0,0,.2)'}}
               onClick={e => e.stopPropagation()}>
               <div style={{background:'var(--nuit)',padding:'1.25rem 1.5rem',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-                <h3 style={{fontFamily:"'Baloo 2',cursive",color:'white',fontSize:'1.1rem',margin:0}}>
+                <h3 style={{color:'white',fontSize:'1.1rem',margin:0}}>
                   {editing ? 'Modifier' : 'Nouvelle entrée'}
                 </h3>
                 <button onClick={() => setModal(false)} style={{background:'rgba(255,255,255,.15)',border:'none',color:'white',width:30,height:30,borderRadius:'50%',cursor:'pointer',fontFamily:'inherit',fontSize:'1rem'}}></button>

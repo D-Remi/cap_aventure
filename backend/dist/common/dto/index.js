@@ -387,4 +387,3 @@ __decorate([
     (0, class_validator_1.IsEnum)(['fiche_sanitaire', 'autorisation', 'assurance', 'autre']),
     __metadata("design:type", String)
 ], CreateDocumentDto.prototype, "type", void 0);
-//# sourceMappingURL=index.js.map

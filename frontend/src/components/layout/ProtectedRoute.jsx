@@ -5,7 +5,7 @@ export default function ProtectedRoute({ children, adminOnly = false }) {
   const { user, loading } = useAuth()
 
   if (loading) return (
-    <div style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', color:'var(--text-muted)', fontFamily:"'Nunito',sans-serif" }}>
+    <div style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', color:'var(--text-muted)', fontFamily:"inherit" }}>
       Chargement...
     </div>
   )

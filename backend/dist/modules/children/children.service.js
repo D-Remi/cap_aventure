@@ -66,4 +66,3 @@ exports.ChildrenService = ChildrenService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(child_entity_1.Child)),
     __metadata("design:paramtypes", [typeorm_2.Repository])
 ], ChildrenService);
-//# sourceMappingURL=children.service.js.map

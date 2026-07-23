@@ -1,7 +1,7 @@
 .msg-wrap { display:flex; flex-direction:column; height:520px; background:white; border-radius:var(--radius-xl); overflow:hidden; box-shadow:var(--shadow-md); }
 
 .msg-header { display:flex; align-items:center; gap:.85rem; padding:1rem 1.5rem; background:var(--nuit); }
-.msg-header__avatar { width:40px; height:40px; background:var(--sauge); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Baloo 2',cursive; font-weight:800; font-size:.9rem; flex-shrink:0; }
+.msg-header__avatar { width:40px; height:40px; background:var(--sauge); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center;  font-weight:800; font-size:.9rem; flex-shrink:0; }
 .msg-header__name { color:white; font-weight:700; font-size:.95rem; }
 .msg-header__sub  { color:rgba(210,225,255,.65); font-size:.75rem; }
 

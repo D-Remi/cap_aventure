@@ -45,4 +45,3 @@ exports.RolesGuard = RolesGuard = __decorate([
 ], RolesGuard);
 const common_2 = require("@nestjs/common");
 exports.CurrentUser = (0, common_2.createParamDecorator)((_data, ctx) => ctx.switchToHttp().getRequest().user);
-//# sourceMappingURL=auth.guard.js.map

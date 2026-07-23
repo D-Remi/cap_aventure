@@ -1,7 +1,7 @@
 .dossier{background:white;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(45,58,107,.12)}
 .dossier__head{background:var(--nuit);padding:1.5rem 2rem;display:flex;align-items:center;gap:1.25rem}
-.dossier__avatar{width:52px;height:52px;background:var(--sauge);color:white;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.3rem;flex-shrink:0}
-.dossier__identity h2{color:white;font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;margin-bottom:.25rem}
+.dossier__avatar{width:52px;height:52px;background:var(--sauge);color:white;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.3rem;flex-shrink:0}
+.dossier__identity h2{color:white;font-size:1.3rem;font-weight:800;margin-bottom:.25rem}
 .dossier__meta{display:flex;gap:1rem;flex-wrap:wrap}
 .dossier__meta span{color:rgba(210,225,255,.7);font-size:.82rem}
 .dossier__badge{margin-left:auto;background:var(--saumon);color:white;font-size:.78rem;font-weight:700;padding:.35rem 1rem;border-radius:50px;white-space:nowrap}

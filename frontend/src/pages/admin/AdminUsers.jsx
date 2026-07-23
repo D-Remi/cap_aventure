@@ -5,20 +5,20 @@ import AdminLayout from '../../components/layout/AdminLayout'
 export default function AdminUsers() {
   const [users,    setUsers]    = useState([])
   const [children, setChildren] = useState([])
-  const [bookings, setBookings] = useState([])
+  const [seances, setSeances] = useState([])
   const [selected, setSelected] = useState(null)
 
   useEffect(() => {
     Promise.all([
       axios.get('/api/users'),
       axios.get('/api/children'),
-      axios.get('/api/bookings'),
-    ]).then(([u,c,b]) => { setUsers(u.data.filter(x=>x.role==='parent')); setChildren(c.data); setBookings(b.data) })
+      axios.get('/api/seances'),
+    ]).then(([u,c,b]) => { setUsers(u.data.filter(x=>x.role==='parent')); setChildren(c.data); setSeances(b.data) })
     .catch(()=>{})
   }, [])
 
   const childrenOf = (uid) => children.filter(c => c.user_id===uid || c.user?.id===uid)
-  const bookingsOf = (uid) => bookings.filter(b => b.user_id===uid || b.user?.id===uid)
+  const seancesOf = (uid) => seances.filter(b => b.user_id===uid || b.user?.id===uid)
 
   const ini = (u) => ((u?.prenom?.[0]||'')+(u?.nom?.[0]||'')).toUpperCase()
 
@@ -39,7 +39,7 @@ export default function AdminUsers() {
                 <div style={{width:38,height:38,background:'var(--sauge)',color:'white',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:800,fontSize:'.88rem',flexShrink:0}}>{ini(u)}</div>
                 <div>
                   <div style={{fontWeight:700,color:'var(--nuit)',fontSize:'.9rem'}}>{u.prenom} {u.nom}</div>
-                  <div style={{fontSize:'.74rem',color:'var(--text-muted)'}}>{childrenOf(u.id).length} enfant{childrenOf(u.id).length>1?'s':''} · {bookingsOf(u.id).length} réservation{bookingsOf(u.id).length>1?'s':''}</div>
+                  <div style={{fontSize:'.74rem',color:'var(--text-muted)'}}>{childrenOf(u.id).length} enfant{childrenOf(u.id).length>1?'s':''} · {seancesOf(u.id).length} séance{seancesOf(u.id).length>1?'s':''}</div>
                 </div>
               </div>
             ))}
@@ -51,9 +51,9 @@ export default function AdminUsers() {
               {/* Infos famille */}
               <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)'}}>
                 <div style={{display:'flex',alignItems:'center',gap:'1rem',marginBottom:'1.25rem'}}>
-                  <div style={{width:52,height:52,background:'var(--sauge)',color:'white',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Baloo 2',cursive",fontWeight:800,fontSize:'1.2rem'}}>{ini(selected)}</div>
+                  <div style={{width:52,height:52,background:'var(--sauge)',color:'white',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:800,fontSize:'1.2rem'}}>{ini(selected)}</div>
                   <div>
-                    <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',margin:0}}>{selected.prenom} {selected.nom}</h3>
+                    <h3 style={{color:'var(--nuit)',margin:0}}>{selected.prenom} {selected.nom}</h3>
                     <a href={`mailto:${selected.email}`} style={{fontSize:'.85rem',color:'var(--sauge)',textDecoration:'none'}}>{selected.email}</a>
                   </div>
                 </div>
@@ -65,7 +65,7 @@ export default function AdminUsers() {
 
               {/* Enfants */}
               <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.5rem',boxShadow:'var(--shadow-sm)'}}>
-                <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Enfants ({childrenOf(selected.id).length})</h3>
+                <h3 style={{color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Enfants ({childrenOf(selected.id).length})</h3>
                 {childrenOf(selected.id).length === 0 ? <p style={{color:'var(--text-muted)',fontSize:'.85rem'}}>Aucun enfant enregistré</p> : (
                   <div style={{display:'flex',flexDirection:'column',gap:'.65rem'}}>
                     {childrenOf(selected.id).map(c => (
@@ -88,10 +88,10 @@ export default function AdminUsers() {
 
               {/* Réservations */}
               <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.5rem',boxShadow:'var(--shadow-sm)'}}>
-                <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Réservations ({bookingsOf(selected.id).length})</h3>
-                {bookingsOf(selected.id).length === 0 ? <p style={{color:'var(--text-muted)',fontSize:'.85rem'}}>Aucune réservation</p> : (
+                <h3 style={{color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Séances ({seancesOf(selected.id).length})</h3>
+                {seancesOf(selected.id).length === 0 ? <p style={{color:'var(--text-muted)',fontSize:'.85rem'}}>Aucune séance</p> : (
                   <div style={{display:'flex',flexDirection:'column',gap:'.5rem'}}>
-                    {bookingsOf(selected.id).slice(0,5).map(b => {
+                    {seancesOf(selected.id).slice(0,5).map(b => {
                       const st = {pending:{bg:'#fff8e1',c:'#f57f17',l:'En attente'},confirmed:{bg:'#e8f5e9',c:'#2e7d32',l:'Confirmée'},cancelled:{bg:'#fee2e2',c:'#991b1b',l:'Annulée'}}[b.status]||{}
                       return (
                         <div key={b.id} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'.5rem .75rem',background:'var(--sable-light)',borderRadius:8}}>

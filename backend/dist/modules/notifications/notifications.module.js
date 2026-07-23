@@ -33,4 +33,3 @@ exports.NotificationsModule = NotificationsModule = __decorate([
         exports: [notifications_service_1.NotificationsService],
     })
 ], NotificationsModule);
-//# sourceMappingURL=notifications.module.js.map

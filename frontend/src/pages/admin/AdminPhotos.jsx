@@ -85,7 +85,7 @@ export default function AdminPhotos() {
 
         {/* Upload */}
         <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.5rem',marginBottom:'1.5rem',boxShadow:'var(--shadow-sm)'}}>
-          <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Ajouter des photos</h3>
+          <h3 style={{color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Ajouter des photos</h3>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'1rem',marginBottom:'1rem'}}>
             <div>
               <label style={{fontSize:'.78rem',fontWeight:700,color:'var(--nuit)',display:'block',marginBottom:4,textTransform:'uppercase'}}>Enfant</label>

@@ -59,7 +59,7 @@ export default function AdminMessages() {
         {/* Liste conversations */}
         <div style={{width:280,flexShrink:0,borderRight:'1px solid var(--sable-light)',display:'flex',flexDirection:'column',background:'white'}}>
           <div style={{padding:'1rem 1.25rem',borderBottom:'1px solid var(--sable-light)'}}>
-            <h2 style={{fontFamily:"'Baloo 2',cursive",fontSize:'1.1rem',color:'var(--nuit)',margin:0}}>Messages</h2>
+            <h2 style={{fontSize:'1.1rem',color:'var(--nuit)',margin:0}}>Messages</h2>
             <p style={{fontSize:'.78rem',color:'var(--text-muted)',margin:'4px 0 0'}}>{convs.length} conversation{convs.length>1?'s':''}</p>
           </div>
           <div style={{flex:1,overflowY:'auto'}}>

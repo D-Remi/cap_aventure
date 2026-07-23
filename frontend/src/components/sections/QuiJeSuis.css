@@ -1,0 +1,47 @@
+.qui { padding: 1rem 0 4rem; }
+.qui__box {
+  background: var(--gray);
+  border-radius: 26px;
+  padding: 3.4rem;
+  display: grid; grid-template-columns: .85fr 1.15fr;
+  gap: 3.4rem; align-items: center;
+}
+.qui__side { display: flex; flex-direction: column; gap: 1.1rem; }
+.qui__quote {
+  background: var(--s2); color: #fff;
+  border-radius: 16px; padding: 1.8rem;
+  font-size: 1.05rem; font-weight: 300;
+  line-height: 1.55; font-style: italic;
+  margin: 0;
+}
+.qui__facts { background: #fff; border-radius: 16px; padding: 1.5rem; }
+.qui__fact { padding: .85rem 0; border-bottom: 1px solid var(--line); }
+.qui__fact:first-child { padding-top: 0; }
+.qui__fact:last-child { border: none; padding-bottom: 0; }
+.qui__fact b { display: block; font-size: .95rem; font-weight: 600; margin-bottom: .1rem; }
+.qui__fact span { font-size: .85rem; color: var(--soft); font-weight: 300; }
+
+.qui__text h2 {
+  font-size: 2rem; font-weight: 700;
+  letter-spacing: -.035em; margin-bottom: 1.1rem; line-height: 1.12;
+}
+.qui__text p {
+  color: var(--soft); font-weight: 300;
+  margin-bottom: .95rem; font-size: 1.02rem;
+}
+.qui__text p strong { color: var(--ink); font-weight: 600; }
+
+.qui__creds {
+  display: flex; gap: 1.8rem; flex-wrap: wrap;
+  margin-top: 1.6rem; padding-top: 1.6rem;
+  border-top: 1px solid var(--line);
+}
+.qui__cred b {
+  display: block; font-size: 1.3rem; font-weight: 700;
+  color: var(--s2); letter-spacing: -.02em;
+}
+.qui__cred span { font-size: .83rem; color: var(--soft); font-weight: 300; }
+
+@media (max-width: 960px) {
+  .qui__box { grid-template-columns: 1fr; gap: 2.2rem; padding: 2.3rem 1.6rem; }
+}

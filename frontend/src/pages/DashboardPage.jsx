@@ -1,258 +1,152 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
 import MessagingTab from '../components/ui/MessagingTab'
 import ContratTab   from '../components/ui/ContratTab'
-import PlanningTab       from '../components/ui/PlanningTab'
-import PaiementTab      from '../components/ui/PaiementTab'
-import LaisserAvis      from '../components/ui/LaisserAvis'
-import PhotosTab        from '../components/ui/PhotosTab'
-import MultiDateBooking from '../components/ui/MultiDateBooking'
+import SuiviTab     from '../components/ui/SuiviTab'
+import PhotosTab    from '../components/ui/PhotosTab'
+import LaisserAvis  from '../components/ui/LaisserAvis'
 import './DashboardPage.css'
 
+const TABS = [
+  { id: 'accueil',   label: 'Accueil' },
+  { id: 'suivi',     label: 'Mon suivi' },
+  { id: 'enfants',   label: 'Mes enfants' },
+  { id: 'documents', label: 'Documents' },
+  { id: 'photos',    label: 'Photos' },
+  { id: 'contrats',  label: 'Contrats' },
+  { id: 'messages',  label: 'Messages' },
+]
+
 export default function DashboardPage() {
-  const { user } = useAuth()
+  const { user, logout } = useAuth()
   const [tab, setTab]           = useState('accueil')
   const [children, setChildren] = useState([])
-  const [bookings, setBookings] = useState([])
-  const [slots, setSlots]       = useState([])
+  const [stats, setStats]       = useState(null)
   const [loading, setLoading]   = useState(true)
 
   useEffect(() => {
     Promise.all([
       axios.get('/api/children'),
-      axios.get('/api/bookings/mine'),
-      axios.get('/api/slots'),
-    ]).then(([c, b, s]) => {
+      axios.get('/api/seances/mine/stats').catch(() => ({ data: null })),
+    ]).then(([c, s]) => {
       setChildren(c.data)
-      setBookings(b.data)
-      setSlots(s.data)
+      setStats(s.data)
     }).catch(() => {}).finally(() => setLoading(false))
   }, [])
 
-  const TABS = [
-    { id:'accueil',       label:'Accueil' },
-    { id:'creneaux',      label:'Réserver' },
-    { id:'reservations',  label:'Mes réservations' },
-    { id:'enfants',       label:'Mes enfants' },
-    { id:'planning',      label:'Planning' },
-    { id:'photos',        label:'Photos' },
-    { id:'paiements',     label:'Paiements' },
-    { id:'contrats',      label:'Contrats' },
-    { id:'documents',     label:'Documents' },
-    { id:'messages',      label:'Messages' },
-  ]
-
   return (
-    <div className="dashboard">
-      <div className="dashboard__sidebar">
-        <div className="dashboard__user">
-          <div className="dashboard__avatar">{user?.prenom?.[0]?.toUpperCase()}</div>
+    <div className="dash">
+      {/* Sidebar */}
+      <aside className="dash__side">
+        <div className="dash__user">
+          <div className="dash__avatar">{user?.prenom?.charAt(0).toUpperCase()}</div>
           <div>
-            <div className="dashboard__name">{user?.prenom} {user?.nom}</div>
-            <div className="dashboard__role">Espace parent</div>
+            <strong>{user?.prenom} {user?.nom}</strong>
+            <span>Espace famille</span>
           </div>
         </div>
-        <nav className="dashboard__nav">
+
+        <nav className="dash__nav">
           {TABS.map(t => (
-            <button key={t.id} className={`dashboard__nav-btn ${tab===t.id?'active':''}`} onClick={() => setTab(t.id)}>{t.label}</button>
+            <button
+              key={t.id}
+              className={tab === t.id ? 'active' : ''}
+              onClick={() => setTab(t.id)}
+            >
+              {t.label}
+            </button>
           ))}
-          <Link to="/" className="dashboard__nav-btn">← Retour au site</Link>
         </nav>
-      </div>
 
-      <div className="dashboard__content">
+        <div className="dash__side-foot">
+          <Link to="/profil">Mon profil</Link>
+          <Link to="/">Retour au site</Link>
+          <button onClick={logout}>Déconnexion</button>
+        </div>
+      </aside>
 
-        {/* ACCUEIL */}
+      {/* Contenu */}
+      <main className="dash__main">
         {tab === 'accueil' && (
           <div className="dash-tab">
-            <h2>Bonjour {user?.prenom} </h2>
-            <p className="dash-subtitle">Bienvenue dans votre espace CapAventure</p>
+            <h2>Bonjour {user?.prenom}</h2>
+            <p className="dash-subtitle">Voici un aperçu de votre accompagnement.</p>
+
+            {stats && stats.nb_seances > 0 && (
+              <div className="dash-stats">
+                <div className="dash-stat">
+                  <b>{stats.nb_seances}</b>
+                  <span>séance{stats.nb_seances > 1 ? 's' : ''} réalisée{stats.nb_seances > 1 ? 's' : ''}</span>
+                </div>
+                <div className="dash-stat">
+                  <b>{stats.total_heures} h</b>
+                  <span>d'accompagnement</span>
+                </div>
+                <div className="dash-stat">
+                  <b>{children.length}</b>
+                  <span>enfant{children.length > 1 ? 's' : ''} suivi{children.length > 1 ? 's' : ''}</span>
+                </div>
+              </div>
+            )}
+
             <div className="dash-cards">
-              <div className="dash-card" onClick={() => setTab('creneaux')}>
-                <span></span>
-                <strong>Créneaux disponibles</strong>
-                <p>{slots.filter(s => s.statut === 'ouvert').length} créneau{slots.filter(s => s.statut === 'ouvert').length > 1 ? 'x' : ''} disponible{slots.filter(s => s.statut === 'ouvert').length > 1 ? 's' : ''}</p>
-              </div>
-              <div className="dash-card" onClick={() => setTab('reservations')}>
-                <span></span>
-                <strong>Mes réservations</strong>
-                <p>{bookings.filter(b => b.status === 'confirmed').length} confirmée{bookings.filter(b => b.status === 'confirmed').length > 1 ? 's' : ''}</p>
-              </div>
-              <div className="dash-card" onClick={() => setTab('enfants')}>
-                <span></span>
+              <button className="dash-card" onClick={() => setTab('suivi')}>
+                <strong>Mon suivi</strong>
+                <p>Séances, comptes-rendus et objectifs</p>
+              </button>
+              <button className="dash-card" onClick={() => setTab('enfants')}>
                 <strong>Mes enfants</strong>
-                <p>{children.length} fiche{children.length > 1 ? 's' : ''} enregistrée{children.length > 1 ? 's' : ''}</p>
-              </div>
-              <div className="dash-card" onClick={() => setTab('photos')}>
-                <span></span>
-                <strong>Photos</strong>
-                <p>Albums des séances</p>
-              </div>
-              <div className="dash-card" onClick={() => setTab('paiements')}>
-                <span></span>
-                <strong>Paiements</strong>
-                <p>CESU, virement, suivi</p>
-              </div>
-              <div className="dash-card" onClick={() => setTab('contrats')}>
-                <span></span>
-                <strong>Contrats répit</strong>
-                <p>Lire et signer vos contrats</p>
-              </div>
-              <div className="dash-card" onClick={() => setTab('documents')}>
-                <span></span>
+                <p>Dossiers et informations</p>
+              </button>
+              <button className="dash-card" onClick={() => setTab('documents')}>
                 <strong>Documents</strong>
-                <p>Ordonnances, PAP, autorisations</p>
-              </div>
-              <div className="dash-card" onClick={() => setTab('messages')}>
-                <span></span>
+                <p>Partagez vos documents</p>
+              </button>
+              <button className="dash-card" onClick={() => setTab('messages')}>
                 <strong>Messages</strong>
-                <p>Contacter l'animateur</p>
+                <p>Échangez avec votre éducateur</p>
+              </button>
+            </div>
+
+            {children.length === 0 && !loading && (
+              <div className="dash-empty" style={{ marginTop: '1.5rem' }}>
+                <p>Vous n'avez pas encore renseigné de dossier enfant.</p>
+                <button className="btn-primary" onClick={() => setTab('enfants')} style={{ marginTop: '1rem' }}>
+                  Créer un dossier
+                </button>
               </div>
+            )}
+
+            <div style={{ marginTop: '2rem' }}>
+              <LaisserAvis prenom={user?.prenom} />
             </div>
           </div>
         )}
 
-        {/* CRÉNEAUX */}
-        {tab === 'creneaux' && children.length > 0 && <MultiDateBooking children={children} isLoggedIn={true} onClose={() => setTab('accueil')} />}
-        {tab === 'creneaux' && children.length === 0 && (
-          <div className="dash-tab">
-            <h2>Créneaux disponibles</h2>
-            <p className="dash-subtitle">Réservez une journée pour votre enfant</p>
-            {loading ? <div className="dash-loading">Chargement...</div>
-            : slots.length === 0 ? (
-              <div className="dash-empty">
-                <div></div>
-                <p>Aucun créneau disponible pour le moment.<br/>Revenez prochainement ou <a href="/#contact">contactez-moi</a>.</p>
-              </div>
-            ) : (
-              <div className="slots-list">
-                {slots.map(s => (
-                  <div key={s.id} className={`slot-card ${s.statut === 'complet' ? 'slot-card--full' : ''}`}>
-                    <div className="slot-card__date">
-                      <strong>{new Date(s.date+'T00:00:00').toLocaleDateString('fr-FR', { weekday:'short', day:'numeric', month:'short' })}</strong>
-                      <span>{s.periode === 'matin' ? 'Matin' : s.periode === 'apres_midi' ? 'Après-midi' : 'Journée'}</span>
-                    </div>
-                    <div className="slot-card__info">
-                      <div className="slot-card__title">{s.titre || "Créneau d'accueil"}</div>
-                      {s.description && <div className="slot-card__desc">{s.description}</div>}
-                      <div className="slot-card__meta">
-                        <span>{s.heure_debut?.slice(0,5)}–{s.heure_fin?.slice(0,5)}</span>
-                        <span>{s.places_prises}/{s.places_max} places</span>
-                        {s.lieu && <span>{s.lieu}</span>}
-                        <span className={`slot-tag ${s.type_accueil === 'adapte' ? 'slot-tag--adapte' : ''}`}>
-                          {s.type_accueil === 'adapte' ? 'Accueil adapté' : s.type_accueil === 'mixte' ? 'Mixte' : 'Standard'}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="slot-card__right">
-                      <div className="slot-card__price">{parseFloat(s.tarif).toFixed(0)}€</div>
-                      {s.statut === 'ouvert' ? (
-                        <ReserverBtn slot={s} children={children} onDone={() => axios.get('/api/bookings/mine').then(r => setBookings(r.data))} />
-                      ) : (
-                        <span className="slot-card__full">Complet</span>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* RÉSERVATIONS */}
-        {tab === 'reservations' && (
-          <div className="dash-tab">
-            <h2>Mes réservations</h2>
-            {bookings.length === 0 ? (
-              <div className="dash-empty">
-                <div></div>
-                <p>Aucune réservation.<br/><button className="btn-primary" onClick={() => setTab('creneaux')}>Voir les créneaux</button></p>
-              </div>
-            ) : (
-              <div className="slots-list">
-                {bookings.map(b => (
-                  <div key={b.id} className="slot-card">
-                    <div className="slot-card__date">
-                      <strong>{b.slot?.date ? new Date(b.slot.date+'T00:00:00').toLocaleDateString('fr-FR', { weekday:'short', day:'numeric', month:'short' }) : '—'}</strong>
-                      <span className={`booking-status booking-status--${b.status}`}>
-                        {b.status === 'confirmed' ? 'Confirmé' : b.status === 'pending' ? 'En attente' : 'Annulé'}
-                      </span>
-                    </div>
-                    <div className="slot-card__info">
-                      <div className="slot-card__title">{b.slot?.titre || "Créneau d'accueil"}</div>
-                      <div className="slot-card__meta">
-                        <span>{b.child?.prenom}</span>
-                        <span>{parseFloat(b.tarif_applique || 0).toFixed(0)}€</span>
-                        <span>{b.formule}</span>
-                      </div>
-                      {b.compte_rendu && (
-                        <div className="booking-cr">
-                          <span>Compte-rendu :</span> {b.compte_rendu}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* ENFANTS */}
-        {tab === 'enfants' && <EnfantsTab children={children} setChildren={setChildren} />}
-
-        {/* PLANNING */}
-        {tab === 'contrats'  && <div className="dash-tab"><h2>Contrats répit</h2><p className="dash-subtitle">Consultez et signez vos contrats de répit.</p><ContratTab /></div>}
+        {tab === 'suivi'     && <SuiviTab />}
+        {tab === 'enfants'   && <EnfantsTab children={children} setChildren={setChildren} />}
         {tab === 'documents' && <DocumentsTab />}
-        {tab === 'planning' && <div className="dash-tab"><h2>Planning</h2><PlanningTab /></div>}
-
-        {/* MESSAGES */}
-        {tab === 'messages'  && <div className="dash-tab"><h2>Messages</h2><MessagingTab /></div>}
-        {tab === 'photos'    && <div className="dash-tab"><PhotosTab /></div>}
-        {tab === 'paiements' && <div className="dash-tab"><PaiementTab /></div>}
-
-      </div>
+        {tab === 'photos'    && <PhotosTab />}
+        {tab === 'contrats'  && (
+          <div className="dash-tab">
+            <h2>Contrats</h2>
+            <p className="dash-subtitle">Consultez et signez vos contrats d'accompagnement.</p>
+            <ContratTab />
+          </div>
+        )}
+        {tab === 'messages'  && (
+          <div className="dash-tab">
+            <h2>Messages</h2>
+            <MessagingTab />
+          </div>
+        )}
+      </main>
     </div>
   )
 }
-
-function ReserverBtn({ slot, children, onDone }) {
-  const [open, setOpen]     = useState(false)
-  const [childId, setChild] = useState('')
-  const [sending, setSend]  = useState(false)
-
-  const submit = async () => {
-    if (!childId) return
-    setSend(true)
-    try {
-      await axios.post('/api/bookings', { slot_id: slot.id, child_id: +childId, formule: slot.periode === 'journee' ? 'journee' : 'demi_journee', tarif_applique: slot.tarif })
-      setOpen(false); onDone()
-    } catch (e) {
-      alert(e.response?.data?.message || 'Erreur lors de la réservation')
-    } finally { setSend(false) }
-  }
-
-  if (!open) return <button className="btn-primary" onClick={() => setOpen(true)}>Réserver</button>
-
-  return (
-    <div style={{ display:'flex', flexDirection:'column', gap:'.5rem' }}>
-      <select value={childId} onChange={e => setChild(e.target.value)}
-        style={{ padding:'.4rem', borderRadius:8, border:'1.5px solid var(--sable-dark)', fontFamily:'inherit', fontSize:'.85rem' }}>
-        <option value="">Choisir un enfant</option>
-        {children.map(c => <option key={c.id} value={c.id}>{c.prenom}</option>)}
-      </select>
-      <div style={{ display:'flex', gap:'.4rem' }}>
-        <button className="btn-primary" onClick={submit} disabled={!childId || sending} style={{ fontSize:'.82rem', padding:'.4rem .9rem' }}>
-          {sending ? '...' : 'Confirmer'}
-        </button>
-        <button onClick={() => setOpen(false)} style={{ background:'none', border:'none', cursor:'pointer', fontSize:'.82rem', color:'var(--text-muted)' }}>Annuler</button>
-      </div>
-    </div>
-  )
-}
-
 
 function EnfantsTab({ children, setChildren }) {
   const [adding,       setAdding]       = useState(false)

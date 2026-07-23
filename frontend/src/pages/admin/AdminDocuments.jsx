@@ -84,7 +84,7 @@ export default function AdminDocuments() {
           {selected ? (
             <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)'}}>
               <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'1.25rem'}}>
-                <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',margin:0}}>{TYPE_LABEL[selected.type]||''} {selected.nom}</h3>
+                <h3 style={{color:'var(--nuit)',fontSize:'1rem',margin:0}}>{TYPE_LABEL[selected.type]||''} {selected.nom}</h3>
                 {badge(selected)}
               </div>
               <div style={{display:'flex',flexDirection:'column',gap:'.5rem',fontSize:'.85rem',color:'var(--text-dark)',marginBottom:'1.25rem'}}>

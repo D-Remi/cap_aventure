@@ -23,4 +23,3 @@ exports.ChildrenModule = ChildrenModule = __decorate([
         exports: [children_service_1.ChildrenService],
     })
 ], ChildrenModule);
-//# sourceMappingURL=children.module.js.map

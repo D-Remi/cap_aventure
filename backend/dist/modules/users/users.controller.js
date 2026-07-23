@@ -82,4 +82,3 @@ exports.UsersController = UsersController = __decorate([
     (0, common_1.UseGuards)(auth_guard_1.JwtAuthGuard, auth_guard_1.RolesGuard),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], UsersController);
-//# sourceMappingURL=users.controller.js.map

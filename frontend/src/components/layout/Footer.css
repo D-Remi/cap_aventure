@@ -1,12 +1,28 @@
-.footer-wave{overflow:hidden;line-height:0;background:var(--sable-light)}
-.footer-wave svg{display:block;width:100%}
-.footer{background:var(--nuit);color:rgba(210,225,255,.7);padding:3rem 0 1.5rem}
-.footer__grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2rem}
-.footer__logo{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.45rem;color:white;margin-bottom:.75rem}
-.footer__logo span{color:var(--sable)}
-.footer p{font-size:.85rem;line-height:1.65;max-width:280px}
-.footer__col h4{color:white;font-weight:700;font-size:.88rem;margin-bottom:.85rem}
-.footer__col a{display:block;color:rgba(210,225,255,.6);font-size:.83rem;margin-bottom:.4rem;transition:color .18s}
-.footer__col a:hover{color:var(--sable)}
-.footer__bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:1.25rem;text-align:center;font-size:.78rem}
-@media(max-width:768px){.footer__grid{grid-template-columns:1fr;gap:2rem}}
+.footer { padding: 3.2rem 0 2rem; border-top: 1px solid var(--line); margin-top: 2rem }
+.footer__grid {
+  display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 3rem; margin-bottom: 2.4rem;
+}
+.footer__logo { font-size: 1.2rem; font-weight: 700; letter-spacing: -.03em; margin-bottom: .7rem }
+.footer__logo span { color: var(--s2) }
+.footer__brand p { font-size: .9rem; color: var(--soft); font-weight: 300; max-width: 20rem }
+
+.footer__col h5 { font-size: .88rem; font-weight: 600; margin-bottom: .9rem; color: var(--ink) }
+.footer__col a,
+.footer__col button {
+  display: block; font-size: .88rem; color: var(--soft);
+  margin-bottom: .5rem; font-weight: 300;
+  background: none; border: none; padding: 0;
+  cursor: pointer; font-family: inherit; text-align: left;
+  transition: color .2s;
+}
+.footer__col a:hover, .footer__col button:hover { color: var(--ink) }
+
+.footer__bottom {
+  border-top: 1px solid var(--line); padding-top: 1.5rem;
+  font-size: .83rem; color: var(--soft2);
+  display: flex; justify-content: space-between;
+  flex-wrap: wrap; gap: .5rem; font-weight: 300;
+}
+@media (max-width: 960px) { .footer__grid { grid-template-columns: 1fr 1fr } }
+@media (max-width: 560px) { .footer__grid { grid-template-columns: 1fr; gap: 2rem } }

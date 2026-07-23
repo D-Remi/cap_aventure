@@ -1,21 +1,78 @@
-.hero{min-height:100vh;background:linear-gradient(170deg,rgba(45,58,107,.82) 0%,rgba(74,122,109,.68) 45%,rgba(30,40,20,.55) 100%),url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=1800&q=85') center/cover no-repeat;display:flex;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 6rem;position:relative;overflow:hidden}
-.hero__content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
-.hero__badge{background:rgba(255,255,255,.13);border:1.5px solid rgba(255,255,255,.3);color:white;font-weight:700;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;padding:.45rem 1.3rem;border-radius:50px;margin-bottom:1.5rem;backdrop-filter:blur(4px);animation:fadeUp .5s ease both}
-.hero__title{font-family:'Baloo 2',cursive;font-weight:800;font-size:clamp(3.5rem,10vw,7.5rem);color:white;line-height:.92;letter-spacing:-3px;margin-bottom:1rem;animation:fadeUp .6s .1s ease both}
-.hero__title span{color:var(--sable)}
-.hero__tagline{font-size:clamp(1.1rem,2.5vw,1.35rem);color:rgba(240,248,232,.95);font-weight:700;margin-bottom:.6rem;animation:fadeUp .6s .15s ease both}
-.hero__sub{font-size:clamp(.9rem,2vw,1.05rem);color:rgba(225,240,215,.78);font-weight:600;line-height:1.65;margin-bottom:2.5rem;animation:fadeUp .6s .2s ease both}
-.hero__cta{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-bottom:2rem;animation:fadeUp .6s .3s ease both}
-.hero__pills{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;animation:fadeUp .6s .4s ease both}
-.hero__pill{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);color:white;font-size:.82rem;font-weight:700;padding:.4rem 1rem;border-radius:50px;backdrop-filter:blur(4px)}
-.hero__wave{position:absolute;bottom:-2px;left:0;right:0;height:80px;background:var(--blanc);clip-path:ellipse(55% 100% at 50% 100%)}
-@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.hero {
+  padding: 4.5rem 0 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -14rem; left: 50%;
+  transform: translateX(-50%);
+  width: 52rem; height: 34rem;
+  background: radial-gradient(ellipse, rgba(19,111,91,.07), transparent 68%);
+  pointer-events: none;
+}
+.hero__pill {
+  display: inline-flex; align-items: center; gap: .55rem;
+  background: var(--gray);
+  padding: .45rem 1.05rem;
+  border-radius: 100px;
+  font-size: .86rem; font-weight: 500;
+  color: var(--soft);
+  margin-bottom: 1.7rem;
+  position: relative;
+}
+.hero__pill b { color: var(--s2); font-weight: 700; }
+.hero__dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--s2-bright); display: block;
+  animation: heroPulse 2.2s ease-in-out infinite;
+}
+@keyframes heroPulse { 0%,100% { opacity: 1 } 50% { opacity: .35 } }
 
-@media (max-width: 768px) {
-  .hero { padding-top: 5rem; min-height: auto; }
-  .hero h1 { font-size: 2rem !important; }
-  .hero p { font-size: .95rem; }
-  .hero__cta { flex-direction: column; width: 100%; }
-  .hero__cta a, .hero__cta button { width: 100%; justify-content: center; }
-  .hero__badges { flex-wrap: wrap; justify-content: center; gap: .5rem; }
+.hero__title {
+  font-size: clamp(2.5rem, 5.4vw, 4.1rem);
+  font-weight: 700;
+  line-height: 1.03;
+  letter-spacing: -.042em;
+  max-width: 19ch;
+  margin: 0 auto 1.35rem;
+  position: relative;
+}
+.hero__title span { color: var(--s2); }
+
+.hero__lead {
+  font-size: 1.17rem;
+  color: var(--soft);
+  max-width: 38rem;
+  margin: 0 auto 2.2rem;
+  font-weight: 300;
+  position: relative;
+}
+.hero__btns {
+  display: flex; gap: .8rem;
+  justify-content: center; flex-wrap: wrap;
+  margin-bottom: 3.4rem;
+  position: relative;
+}
+.hero__stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1rem; max-width: 58rem; margin: 0 auto;
+  padding: 2.1rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+.hero__stat b {
+  display: block; font-size: 2.05rem; font-weight: 700;
+  letter-spacing: -.035em; color: var(--s2); line-height: 1.1;
+}
+.hero__stat span { font-size: .85rem; color: var(--soft); font-weight: 300; }
+
+@media (max-width: 960px) {
+  .hero__stats { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+}
+@media (max-width: 560px) {
+  .hero__title { font-size: 2.2rem; }
 }

@@ -5,24 +5,30 @@ import './DocumentationPage.css'
 
 const DOCS = [
   { cat:'Pour commencer', items:[
-    { title:"Comment fonctionne CapAventure ?", content:"CapAventure propose un service de garde accompagnée et de répit pour les enfants (4-14 ans) sur le Bassin d'Arcachon. Maximum 3 enfants simultanément. Animateur diplômé BAFA, spécialisé TSA/TDAH." },
-    { title:"Comment réserver un créneau ?", content:"1. Créez votre compte parent\n2. Ajoutez le profil de votre enfant\n3. Consultez le calendrier et cliquez sur un créneau disponible\n4. Envoyez votre demande — confirmation par email sous 24h" },
-    { title:"Quels documents dois-je fournir ?", content:"Pour tous les enfants : vaccinations à jour.\nPour les enfants à besoins spécifiques : PAP/PPS, ordonnances médicaments, documents MDPH si disponibles.\nTous les documents s'uploadent depuis votre espace 'Documents'." },
+    { title:"Que propose CapAventure ?", content:"Deux services distincts, assurés par un éducateur en lieu de vie :\n\n1. Du répit pour les parents d'enfants en situation de handicap — je prends le relais quelques heures.\n\n2. Un accompagnement éducatif pour les familles en difficulté — guidance parentale et travail avec l'enfant pour reposer un cadre." },
+    { title:"Comment se passe le premier contact ?", content:"Vous remplissez le formulaire de contact ou vous m'écrivez sur WhatsApp. Je vous réponds sous 24h et nous convenons d'un premier échange téléphonique de 30 minutes, gratuit et sans engagement." },
+    { title:"Quels documents fournir ?", content:"Rien d'obligatoire au départ.\n\nPour le répit handicap, si vous les avez : notification MDPH, PAP ou PPS, ordonnances en cours, compte-rendu de suivi.\n\nTous les documents s'ajoutent depuis votre espace famille, onglet Documents." },
   ]},
-  { cat:'Tarifs & Aides', items:[
-    { title:"Quels sont les tarifs ?", content:"Garde ponctuelle : à partir de 12-15 €/h\nForfait régulier : à partir de 12 €/h\nRépit spécialisé : sur devis\nContrat répit annuel : tarif horaire fixe négocié dans le contrat" },
-    { title:"Le CESU est-il accepté ?", content:"Oui, les paiements en CESU sont acceptés. Selon votre employeur ou situation, vous pouvez recevoir des CESU préfinancés qui couvrent tout ou partie des frais." },
-    { title:"Quelles aides financières existent ?", content:"Crédit d'impôt garde d'enfants (50% des dépenses)\nCMG (Complément Mode de Garde) CAF pour les enfants < 6 ans\nAEEH pour les enfants en situation de handicap\nPCH via la MDPH Gironde\nFonds de répit des associations locales\nContactez votre CAF ou MDPH Gironde pour connaître vos droits." },
+  { cat:'Le répit handicap', items:[
+    { title:"En quoi consiste le répit ?", content:"C'est un temps où je prends le relais auprès de votre enfant, pour que vous puissiez souffler, vous occuper de vos autres enfants, ou simplement vous reposer.\n\nCe n'est pas de la garde classique : c'est un accompagnement par un professionnel habitué aux besoins spécifiques." },
+    { title:"Quels profils d'enfants ?", content:"Troubles du spectre de l'autisme (TSA)\nTDAH\nTroubles du comportement\nTroubles DYS\nAnxiété, phobie scolaire\nHandicap moteur léger\n\nUn échange préalable permet toujours d'évaluer si je suis la bonne personne pour votre enfant." },
+    { title:"Comment se déroule la mise en place ?", content:"1. Un échange approfondi sur votre enfant : ses repères, ses déclencheurs, ce qui l'apaise.\n\n2. Une première rencontre en votre présence, pour que votre enfant m'identifie sans stress.\n\n3. Le répit commence, à un rythme défini ensemble." },
   ]},
-  { cat:'Répit & Besoins Spécifiques', items:[
-    { title:"Qu'est-ce que le répit familial ?", content:"Le répit est un temps de pause pour les parents aidants d'un enfant à besoins spécifiques. Votre enfant est accueilli dans un environnement adapté, bienveillant et sécurisé." },
-    { title:"Quels enfants peuvent être accueillis ?", content:"Enfants TSA (Troubles du Spectre de l'Autisme)\nEnfants TDAH\nTroubles du comportement\nTroubles DYS\nHandicap moteur léger\nAnxiété, phobie scolaire\nUn échange préalable permet d'évaluer les besoins." },
-    { title:"Qu'est-ce qu'un contrat de répit ?", content:"Le contrat de répit est un accord formalisé signé par les deux parties. Il définit la période, les jours, le tarif horaire, le kilométrage, les objectifs et les besoins spécifiques de l'enfant." },
+  { cat:"L'accompagnement éducatif", items:[
+    { title:"À qui s'adresse ce service ?", content:"Aux parents qui ont le sentiment de ne plus se faire respecter, dont chaque demande devient un conflit, qui ont tout essayé sans résultat durable, et qui sont épuisés.\n\nCe n'est pas un manque d'amour ni de compétence. C'est un cadre à reconstruire." },
+    { title:"Comment ça se passe concrètement ?", content:"1. Un premier échange de 30 minutes, gratuit, où vous racontez votre situation.\n\n2. Une séance d'observation à domicile ou en visio.\n\n3. Deux ou trois ajustements précis et tenables, pas dix conseils impossibles.\n\n4. Un suivi régulier pour ajuster et tenir dans la durée." },
+    { title:"Sur quels principes vous appuyez-vous ?", content:"Un cadre clair, énoncé calmement et tenu jusqu'au bout.\nLa réparation plutôt que la punition.\nLe respect s'apprend en étant respecté.\nNi cri, ni humiliation, jamais.\nLa constance vaut mieux que la sévérité.\n\nRien de révolutionnaire : ce qui fonctionne réellement en institution, adapté à votre foyer." },
   ]},
-  { cat:'Pratique', items:[
-    { title:"Comment annuler une réservation ?", content:"Une réservation peut être annulée depuis votre espace 'Mes réservations' jusqu'à 48h avant la date. En dessous de 48h, contactez directement l'animateur." },
-    { title:"Les photos de mon enfant sont-elles publiées ?", content:"Non. Les photos ne sont prises qu'avec votre autorisation explicite indiquée dans le dossier de votre enfant. Elles ne sont jamais publiées sans accord écrit." },
-    { title:"Comment contacter l'animateur en urgence ?", content:"Depuis votre espace parent, utilisez la messagerie. Pour une urgence pendant une séance, utilisez le numéro de téléphone communiqué lors de la signature du contrat." },
+  { cat:'Tarifs et aides', items:[
+    { title:"Quels sont les tarifs ?", content:"Les tarifs sont établis sur devis, selon le service, la fréquence et votre situation.\n\nLe premier échange est toujours gratuit et sans engagement." },
+    { title:"Quelles aides financières existent ?", content:"Selon votre situation :\n\nPCH (Prestation de Compensation du Handicap) via la MDPH\nAEEH et ses compléments\nFonds de répit départementaux\nCrédit d'impôt services à la personne\nAides de certaines mutuelles et caisses de retraite\n\nJe peux vous orienter dans les démarches." },
+    { title:"Le CESU est-il accepté ?", content:"Oui, les paiements en CESU et par virement bancaire sont acceptés." },
+  ]},
+  { cat:'Votre espace famille', items:[
+    { title:"Que puis-je voir dans mon espace ?", content:"Le suivi des séances réalisées avec les comptes-rendus que je choisis de partager, les objectifs travaillés et leur progression, les dossiers de vos enfants, vos documents, les photos partagées et la messagerie." },
+    { title:"Qui a accès aux informations de mon enfant ?", content:"Uniquement vous et moi. Les dossiers ne sont jamais partagés avec des tiers.\n\nMes notes de travail personnelles restent privées et ne vous sont pas transmises automatiquement — mais vous pouvez toujours me demander où en est l'accompagnement." },
+    { title:"Les photos de mon enfant sont-elles publiées ?", content:"Jamais. Les photos ne sont prises qu'avec votre autorisation explicite, indiquée dans le dossier de votre enfant. Elles restent visibles uniquement dans votre espace privé." },
+    { title:"Comment me contacter entre deux séances ?", content:"Par la messagerie de votre espace famille, ou directement sur WhatsApp pour les situations qui ne peuvent pas attendre." },
   ]},
 ]
 
@@ -35,7 +41,7 @@ export default function DocumentationPage() {
           <div className="doc-page__header">
             <span className="section-tag">Centre d'aide</span>
             <h1>Espace Documentation</h1>
-            <p>Tout ce que vous devez savoir sur CapAventure — réservations, tarifs, répit, aides financières.</p>
+            <p>Tout ce que vous devez savoir sur les deux services, les aides financières et votre espace famille.</p>
           </div>
           <div className="doc-quick">
             {DOCS.map(c => (

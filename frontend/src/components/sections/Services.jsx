@@ -1,33 +1,124 @@
 import { Link } from 'react-router-dom'
 import './Services.css'
-const SVCS=[
-  {img:'https://images.unsplash.com/photo-1566728060299-ad216d6fa3c1?w=600&q=80',badge:{bg:'#e8f5e9',c:'#2e7d32',t:'Service phare'},title:'Garde & Sorties',desc:"Je prends en charge votre enfant (max 3) et l'accompagne vers des activités adaptées — vélo, nature, jeux — sur le Bassin d'Arcachon.",details:['4 à 14 ans','Maximum 3 enfants','Demi-journée ou journée',"Biganos & Bassin d'Arcachon"],cta:'En savoir plus'},
-  {img:'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=600&q=80',badge:{bg:'#e3f2fd',c:'#1565c0',t:'TSA · TDAH'},title:'Répit enfants à besoins spécifiques',desc:"Un temps de répit pour les parents. Accompagnement adapté, bienveillant et patient pour les enfants TSA, TDAH ou troubles du comportement.",details:['TSA · TDAH · Troubles comportement','Accueil individualisé','Activités nature apaisantes','Échange préalable avec les parents'],cta:"M'en parler"},
-  {img:'https://images.unsplash.com/photo-1587135374648-7518dc14b7ad?w=600&q=80',badge:{bg:'#fff8e1',c:'#f57f17',t:'Sur demande'},title:'Animation événements',desc:"Anniversaires, kermesses, sorties asso… J'interviens pour animer et encadrer votre groupe d'enfants en toute sécurité.",details:["Anniversaires & fêtes","Associations & écoles","Petits et grands groupes","Bassin d'Arcachon & alentours"],cta:'Demander un devis'},
+
+const REPIT_POUR = [
+  "Votre enfant est porteur d'un handicap, d'un TSA, d'un TDAH ou de troubles du comportement",
+  "Vous n'avez jamais de temps pour vous, ni pour vos autres enfants",
+  "Vous ne trouvez personne de suffisamment formé pour le garder sereinement",
+  "Vous avez besoin de souffler sans culpabiliser",
 ]
-export default function Services(){
-  const s=()=>document.getElementById('contact')?.scrollIntoView({behavior:'smooth'})
-  return(
-    <section className="services section" id="services">
+
+const REPIT_ETAPES = [
+  { n: 1, t: 'On fait connaissance', d: "Un temps d'échange approfondi sur votre enfant : ses repères, ses déclencheurs, ce qui l'apaise." },
+  { n: 2, t: 'Première rencontre',   d: "Une séance en votre présence pour que votre enfant m'identifie sans stress." },
+  { n: 3, t: 'Le répit commence',    d: "Quelques heures régulières ou ponctuelles, chez vous ou en sortie, selon ce qui convient." },
+]
+
+const ACC_POUR = [
+  "Vous avez le sentiment de ne plus vous faire respecter",
+  "Chaque demande se transforme en conflit ou en négociation sans fin",
+  "Vous avez tout essayé : punitions, récompenses, discussions, cris",
+  "Vous êtes épuisé et vous culpabilisez de l'être",
+]
+
+const ACC_ETAPES = [
+  { n: 1, t: 'Un premier échange',    d: "30 minutes gratuites où vous me racontez. J'écoute, je pose des questions, sans jugement." },
+  { n: 2, t: 'J\'observe le quotidien', d: "Une séance chez vous ou en visio pour voir concrètement comment les choses se passent." },
+  { n: 3, t: 'On ajuste ensemble',    d: "Deux ou trois changements précis et tenables. Pas dix conseils impossibles à appliquer." },
+  { n: 4, t: 'Un suivi dans la durée', d: "Des points réguliers pour ajuster et tenir. C'est là que les choses changent vraiment." },
+]
+
+export default function Services() {
+  return (
+    <section className="services" id="services">
       <div className="container">
-        <div className="section-header">
-          <span className="section-tag">Mes services</span>
-          <h2>Un accompagnement <em>sur mesure</em></h2>
-          <p>Chaque famille est différente. Je m'adapte à vos besoins et à votre enfant.</p>
+
+        <div className="section-head">
+          <span className="section-head__kicker">Deux besoins, deux réponses</span>
+          <h2>Ce que je propose</h2>
+          <p>
+            Chaque situation familiale est différente. Voici les deux formes
+            d'accompagnement que je propose, avec une approche adaptée à chacune.
+          </p>
         </div>
-        <div className="svc-grid">
-          {SVCS.map(v=>(
-            <div key={v.title} className="svc-card">
-              <div className="svc-card__img"><img src={v.img} alt={v.title} loading="lazy"/><div className="svc-card__overlay"/><span className="svc-card__badge" style={{background:v.badge.bg,color:v.badge.c}}>{v.badge.t}</span></div>
-              <div className="svc-card__body">
-                <h3>{v.title}</h3><p>{v.desc}</p>
-                <div className="svc-card__details">{v.details.map(d=><div key={d}>{d}</div>)}</div>
-                <Link to={v.title.includes('Garde') ? '/garde' : v.title.includes('pit') ? '/repit' : '/evenements'}
-              className="btn-primary" style={{textDecoration:'none'}}>{v.cta}</Link>
+
+        {/* SERVICE 1 — RÉPIT */}
+        <article className="svc-block svc-block--repit" id="repit">
+          <div className="svc-block__inner">
+            <div>
+              <span className="svc-block__tag">Service 01 · Répit</span>
+              <h3>Du répit pour les parents aidants</h3>
+              <p className="svc-block__desc">
+                Accompagner un enfant en situation de handicap au quotidien, c'est une charge
+                qui ne s'arrête jamais. Je prends le relais quelques heures, avec la compétence
+                d'un professionnel qui travaille tous les jours avec des enfants aux besoins spécifiques.
+              </p>
+
+              <div className="svc-block__for">
+                <span className="svc-block__lbl">Ce service s'adresse à vous si</span>
+                <ul>
+                  {REPIT_POUR.map((txt) => <li key={txt}>{txt}</li>)}
+                </ul>
               </div>
+
+              <Link to="/contact?service=repit" className="svc-block__cta">
+                Demander du répit →
+              </Link>
             </div>
-          ))}
-        </div>
+
+            <aside className="svc-block__side">
+              <h4>Comment ça se passe</h4>
+              {REPIT_ETAPES.map(({ n, t, d }) => (
+                <div className="svc-block__row" key={n}>
+                  <div className="svc-block__num">{n}</div>
+                  <div><b>{t}</b><span>{d}</span></div>
+                </div>
+              ))}
+              <div className="svc-block__note">
+                <b>Aides possibles :</b> PCH, AEEH, fonds de répit MDPH.
+                Je peux vous orienter dans les démarches.
+              </div>
+            </aside>
+          </div>
+        </article>
+
+        {/* SERVICE 2 — ACCOMPAGNEMENT */}
+        <article className="svc-block svc-block--acc" id="accompagnement">
+          <div className="svc-block__inner">
+            <div>
+              <span className="svc-block__tag">Service 02 · Accompagnement</span>
+              <h3>Retrouver un cadre qui tient</h3>
+              <p className="svc-block__desc">
+                Vous avez l'impression de ne plus rien maîtriser. Les crises s'enchaînent,
+                votre enfant ne vous écoute plus, et vous vous sentez seul face à ça.
+                Ce n'est pas un manque d'amour ni de compétence : c'est un cadre à reconstruire.
+                Et ça se travaille.
+              </p>
+
+              <div className="svc-block__for">
+                <span className="svc-block__lbl">Ce service s'adresse à vous si</span>
+                <ul>
+                  {ACC_POUR.map((txt) => <li key={txt}>{txt}</li>)}
+                </ul>
+              </div>
+
+              <Link to="/contact?service=accompagnement" className="svc-block__cta">
+                En parler avec moi →
+              </Link>
+            </div>
+
+            <aside className="svc-block__side">
+              <h4>Comment ça se passe</h4>
+              {ACC_ETAPES.map(({ n, t, d }) => (
+                <div className="svc-block__row" key={n}>
+                  <div className="svc-block__num">{n}</div>
+                  <div><b>{t}</b><span>{d}</span></div>
+                </div>
+              ))}
+            </aside>
+          </div>
+        </article>
+
       </div>
     </section>
   )

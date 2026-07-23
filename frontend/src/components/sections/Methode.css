@@ -1,0 +1,46 @@
+.methode { padding: 1rem 0 4rem; }
+.methode__box {
+  background: var(--ink);
+  color: #fff;
+  border-radius: 26px;
+  padding: 3.6rem;
+}
+.methode__head { max-width: 38rem; margin-bottom: 2.6rem; }
+.methode__kicker {
+  display: inline-block;
+  background: rgba(200,241,105,.16);
+  color: var(--lime);
+  font-size: .74rem; font-weight: 700;
+  padding: .3rem .8rem; border-radius: 5px;
+  letter-spacing: .05em; text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.methode__head h2 {
+  font-size: 2.25rem; font-weight: 700;
+  letter-spacing: -.035em; margin-bottom: .85rem; line-height: 1.1;
+  color: #fff;
+}
+.methode__head h2 span { color: var(--lime); }
+.methode__head p { color: rgba(255,255,255,.6); font-weight: 300; font-size: 1.03rem; }
+
+.methode__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; }
+.methode__item {
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px; padding: 1.5rem;
+  transition: background .25s;
+}
+.methode__item:hover { background: rgba(255,255,255,.08); }
+.methode__item b {
+  display: block; font-size: 1.02rem; font-weight: 600;
+  margin-bottom: .4rem; color: #fff;
+}
+.methode__item span {
+  font-size: .9rem; color: rgba(255,255,255,.58);
+  font-weight: 300; line-height: 1.6;
+}
+
+@media (max-width: 960px) {
+  .methode__box { padding: 2.3rem 1.6rem; }
+  .methode__grid { grid-template-columns: 1fr; }
+}

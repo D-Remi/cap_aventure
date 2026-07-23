@@ -2,133 +2,129 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import AdminLayout from '../../components/layout/AdminLayout'
 
+const MOIS = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc']
+const TYPES = {
+  repit:          { label: 'Répit',          color: '#0e6b6b' },
+  accompagnement: { label: 'Accompagnement', color: '#136f5b' },
+  guidance:       { label: 'Guidance',       color: '#5b4b8a' },
+}
+
 export default function AdminStats() {
-  const [data, setData] = useState(null)
+  const [seances, setSeances] = useState([])
+  const [familles, setFamilles] = useState([])
+  const [annee, setAnnee] = useState(new Date().getFullYear())
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     Promise.all([
-      axios.get('/api/bookings'),
-      axios.get('/api/children'),
-      axios.get('/api/slots?all=true'),
-      axios.get('/api/contact'),
-    ]).then(([bk, ch, sl, co]) => {
-      const bookings  = bk.data
-      const children  = ch.data
-      const slots     = sl.data
-      const contacts  = co.data
-
-      const confirmed = bookings.filter(b => b.status==='confirmed')
-      const pending   = bookings.filter(b => b.status==='pending')
-      const cancelled = bookings.filter(b => b.status==='cancelled')
-      const revenue   = confirmed.reduce((s,b) => s + parseFloat(b.tarif_applique||0), 0)
-
-      const byMonth = {}
-      confirmed.forEach(b => {
-        if (!b.slot?.date) return
-        const m = b.slot.date.slice(0,7)
-        byMonth[m] = (byMonth[m]||0) + parseFloat(b.tarif_applique||0)
-      })
-
-      const childrenWithDossier = children.filter(c => c.dossier_complete).length
-      const childrenSpecifiques = children.filter(c => c.besoins_specifiques).length
-      const slotsOuverts  = slots.filter(s => s.statut==='ouvert').length
-      const slotsComplets = slots.filter(s => s.statut==='complet').length
-
-      const typeAccueil = { standard:0, adapte:0, mixte:0 }
-      slots.forEach(s => { if (typeAccueil[s.type_accueil]!==undefined) typeAccueil[s.type_accueil]++ })
-
-      setData({ bookings:bookings.length, confirmed:confirmed.length, pending:pending.length,
-        cancelled:cancelled.length, revenue, byMonth, children:children.length,
-        childrenWithDossier, childrenSpecifiques, slotsOuverts, slotsComplets,
-        typeAccueil, contacts:contacts.length, contactsTraites:contacts.filter(c=>c.traite).length })
-    }).catch(() => {})
+      axios.get('/api/seances').catch(() => ({ data: [] })),
+      axios.get('/api/users').catch(() => ({ data: [] })),
+    ]).then(([s, u]) => {
+      setSeances(s.data)
+      setFamilles(u.data.filter(x => x.role !== 'admin'))
+    }).finally(() => setLoading(false))
   }, [])
 
-  if (!data) return <AdminLayout><div className="admin-loading">Chargement…</div></AdminLayout>
+  const realisees = seances.filter(s => s.statut === 'realisee' && s.date?.startsWith(String(annee)))
 
-  const MOIS_LABELS = {'01':'Jan','02':'Fév','03':'Mar','04':'Avr','05':'Mai','06':'Jun','07':'Jul','08':'Aoû','09':'Sep','10':'Oct','11':'Nov','12':'Déc'}
+  // Par mois
+  const parMois = Array.from({ length: 12 }, (_, i) => {
+    const m = String(i + 1).padStart(2, '0')
+    const list = realisees.filter(s => s.date?.slice(5, 7) === m)
+    return {
+      mois: MOIS[i],
+      nb: list.length,
+      heures: +list.reduce((sum, s) => sum + parseFloat(s.duree_heures || 0), 0).toFixed(1),
+      ca: +list.reduce((sum, s) => sum + parseFloat(s.montant || 0), 0).toFixed(2),
+    }
+  })
+  const maxH = Math.max(...parMois.map(m => m.heures), 1)
 
-  const sortedMonths = Object.entries(data.byMonth).sort(([a],[b]) => a.localeCompare(b))
-  const maxRev = Math.max(...sortedMonths.map(([,v])=>v), 1)
+  // Par type
+  const parType = Object.keys(TYPES).map(t => {
+    const list = realisees.filter(s => s.type === t)
+    return {
+      type: t,
+      nb: list.length,
+      heures: +list.reduce((sum, s) => sum + parseFloat(s.duree_heures || 0), 0).toFixed(1),
+    }
+  })
+
+  const totalHeures = +realisees.reduce((s, x) => s + parseFloat(x.duree_heures || 0), 0).toFixed(1)
+  const totalCA     = +realisees.reduce((s, x) => s + parseFloat(x.montant || 0), 0).toFixed(2)
 
   return (
     <AdminLayout>
       <div className="admin-page">
-        <div className="admin-page__header"><div><h1>Statistiques</h1></div></div>
-
-        {/* Revenus */}
-        <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)',marginBottom:'1.5rem'}}>
-          <h2 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.1rem',marginBottom:'1.25rem'}}>Revenus confirmés</h2>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'1rem',marginBottom:'1.5rem'}}>
-            {[
-              {n:data.revenue.toFixed(0)+' €',l:'Total confirmé'},
-              {n:data.confirmed,l:'Réservations confirmées'},
-              {n:data.pending,l:'En attente'},
-              {n:data.cancelled,l:'Annulées'},
-            ].map(({n,l}) => (
-              <div key={l} style={{background:'var(--sable-light)',borderRadius:'var(--radius-md)',padding:'1rem',textAlign:'center'}}>
-                <div style={{fontFamily:"'Baloo 2',cursive",fontSize:'1.6rem',fontWeight:700,color:'var(--nuit)'}}>{n}</div>
-                <div style={{fontSize:'.78rem',color:'var(--text-muted)',marginTop:4}}>{l}</div>
-              </div>
-            ))}
+        <div className="admin-page__header">
+          <div>
+            <h1>Statistiques</h1>
+            <p className="admin-page__subtitle">Activité de l'année {annee}</p>
           </div>
-          {sortedMonths.length > 0 ? (
-            <div>
-              <p style={{fontSize:'.82rem',color:'var(--text-muted)',marginBottom:'.75rem'}}>Revenus par mois</p>
-              <div style={{display:'flex',alignItems:'flex-end',gap:6,height:120}}>
-                {sortedMonths.map(([m, v]) => {
-                  const pct = Math.round((v/maxRev)*100)
-                  const [y, mo] = m.split('-')
-                  return (
-                    <div key={m} style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',gap:4}}>
-                      <span style={{fontSize:'.65rem',color:'var(--text-muted)',fontWeight:600}}>{Math.round(v)}€</span>
-                      <div style={{width:'100%',background:'var(--sauge)',borderRadius:'4px 4px 0 0',height:pct+'%',minHeight:4}}/>
-                      <span style={{fontSize:'.65rem',color:'var(--text-muted)'}}>{MOIS_LABELS[mo]||mo}</span>
+          <select value={annee} onChange={e => setAnnee(+e.target.value)}
+            style={{ padding: '.5rem .9rem', border: '1.5px solid var(--line)', borderRadius: 8, fontFamily: 'inherit', fontWeight: 600 }}>
+            {[2024, 2025, 2026, 2027].map(y => <option key={y} value={y}>{y}</option>)}
+          </select>
+        </div>
+
+        {loading ? <div className="admin-loading">Chargement…</div> : (
+          <>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
+              {[
+                { l: 'Séances réalisées', v: realisees.length },
+                { l: 'Heures totales',    v: `${totalHeures} h` },
+                { l: 'Familles suivies',  v: familles.length },
+                { l: "Chiffre d'affaires", v: `${totalCA.toFixed(2)} €` },
+              ].map(({ l, v }) => (
+                <div key={l} style={{ background: '#fff', border: '1.5px solid var(--line)', borderRadius: 14, padding: '1.3rem 1.5rem' }}>
+                  <div style={{ fontSize: '.75rem', color: 'var(--soft)', textTransform: 'uppercase', letterSpacing: '.05em', fontWeight: 600, marginBottom: '.4rem' }}>{l}</div>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 700, color: 'var(--s2)', letterSpacing: '-.03em', lineHeight: 1 }}>{v}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Graphique heures par mois */}
+            <div style={{ background: '#fff', border: '1.5px solid var(--line)', borderRadius: 16, padding: '1.6rem', marginBottom: '1.5rem' }}>
+              <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1.3rem' }}>Heures d'accompagnement par mois</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12,1fr)', gap: '.5rem', alignItems: 'end', height: 150 }}>
+                {parMois.map((m, i) => (
+                  <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                    <span style={{ fontSize: '.7rem', color: 'var(--soft)', fontWeight: 600 }}>
+                      {m.heures > 0 ? m.heures : ''}
+                    </span>
+                    <div style={{
+                      width: '100%', maxWidth: 28,
+                      height: `${(m.heures / maxH) * 110}px`,
+                      minHeight: m.heures > 0 ? 4 : 0,
+                      background: 'var(--s2)', borderRadius: '4px 4px 0 0',
+                      transition: 'height .4s',
+                    }} />
+                    <span style={{ fontSize: '.7rem', color: 'var(--soft)' }}>{m.mois}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Répartition par type */}
+            <div style={{ background: '#fff', border: '1.5px solid var(--line)', borderRadius: 16, padding: '1.6rem' }}>
+              <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1.3rem' }}>Répartition par type de prestation</h3>
+              {parType.map(({ type, nb, heures }) => {
+                const pct = realisees.length ? (nb / realisees.length) * 100 : 0
+                return (
+                  <div key={type} style={{ marginBottom: '1rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '.35rem', fontSize: '.9rem' }}>
+                      <span style={{ fontWeight: 600 }}>{TYPES[type].label}</span>
+                      <span style={{ color: 'var(--soft)' }}>{nb} séance{nb > 1 ? 's' : ''} · {heures} h</span>
                     </div>
-                  )
-                })}
-              </div>
+                    <div style={{ height: 8, background: 'var(--gray2)', borderRadius: 4, overflow: 'hidden' }}>
+                      <div style={{ width: `${pct}%`, height: '100%', background: TYPES[type].color, borderRadius: 4, transition: 'width .5s' }} />
+                    </div>
+                  </div>
+                )
+              })}
             </div>
-          ) : <p style={{color:'var(--text-muted)',fontSize:'.85rem'}}>Aucune réservation confirmée pour le moment.</p>}
-        </div>
-
-        {/* Enfants */}
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1.5rem',marginBottom:'1.5rem'}}>
-          <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)'}}>
-            <h2 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.1rem',marginBottom:'1.25rem'}}>Enfants</h2>
-            <div style={{display:'flex',flexDirection:'column',gap:'.65rem'}}>
-              {[
-                {n:data.children,           l:'Enfants enregistrés',        c:'var(--nuit)'},
-                {n:data.childrenSpecifiques,l:'Avec besoins spécifiques',   c:'#1565c0'},
-                {n:data.childrenWithDossier,l:'Dossier complet',            c:'#2e7d32'},
-                {n:data.children-data.childrenWithDossier,l:'Dossier incomplet',c:'#f57f17'},
-              ].map(({n,l,c}) => (
-                <div key={l} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'.5rem .75rem',background:'var(--sable-light)',borderRadius:8}}>
-                  <span style={{fontSize:'.85rem',color:'var(--text-dark)'}}>{l}</span>
-                  <span style={{fontWeight:800,color:c,fontSize:'1rem'}}>{n}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)'}}>
-            <h2 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.1rem',marginBottom:'1.25rem'}}>Créneaux</h2>
-            <div style={{display:'flex',flexDirection:'column',gap:'.65rem'}}>
-              {[
-                {n:data.slotsOuverts,                     l:'Créneaux ouverts',  c:'#2e7d32'},
-                {n:data.slotsComplets,                    l:'Créneaux complets', c:'#991b1b'},
-                {n:data.typeAccueil.standard,             l:'Garde standard',    c:'var(--nuit)'},
-                {n:data.typeAccueil.adapte,               l:'Accueil adapté',    c:'#1565c0'},
-                {n:data.contacts-data.contactsTraites,    l:'Contacts non traités',c:'#f57f17'},
-              ].map(({n,l,c}) => (
-                <div key={l} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'.5rem .75rem',background:'var(--sable-light)',borderRadius:8}}>
-                  <span style={{fontSize:'.85rem',color:'var(--text-dark)'}}>{l}</span>
-                  <span style={{fontWeight:800,color:c,fontSize:'1rem'}}>{n}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </AdminLayout>
   )

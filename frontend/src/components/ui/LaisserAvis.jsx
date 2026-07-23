@@ -31,7 +31,7 @@ export default function LaisserAvis({ prenom }) {
 
   return (
     <div style={{background:'white',border:'1.5px solid var(--sable-light)',borderRadius:12,padding:'1.5rem'}}>
-      <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Votre avis</h3>
+      <h3 style={{color:'var(--nuit)',fontSize:'1rem',marginBottom:'1rem'}}>Votre avis</h3>
       <div style={{marginBottom:'1rem'}}>
         <label style={{fontSize:'.78rem',fontWeight:700,color:'var(--nuit)',display:'block',marginBottom:'.4rem',textTransform:'uppercase'}}>Note</label>
         <div style={{display:'flex',gap:'.25rem',fontSize:'1.6rem',cursor:'pointer'}}>

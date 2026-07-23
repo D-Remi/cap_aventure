@@ -2,148 +2,141 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import AdminLayout from '../../components/layout/AdminLayout'
-import '../../components/layout/AdminLayout.css'
 
 export default function AdminDashboard() {
-  const [stats,      setStats]      = useState(null)
-  const [recentBk,   setRecentBk]   = useState([])
-  const [loading,    setLoading]     = useState(true)
+  const [data, setData] = useState({
+    familles: 0, enfants: 0, seances: 0, heures: 0,
+    demandes: 0, prochaines: [], recentes: [],
+  })
+  const [loading, setLoading] = useState(true)
 
-  useEffect(() => { fetchData() }, [])
+  useEffect(() => {
+    Promise.all([
+      axios.get('/api/users').catch(() => ({ data: [] })),
+      axios.get('/api/children').catch(() => ({ data: [] })),
+      axios.get('/api/seances').catch(() => ({ data: [] })),
+      axios.get('/api/contact').catch(() => ({ data: [] })),
+    ]).then(([u, c, s, ct]) => {
+      const familles = u.data.filter(x => x.role !== 'admin')
+      const seances  = s.data
+      const realisees = seances.filter(x => x.statut === 'realisee')
+      const heures = realisees.reduce((sum, x) => sum + parseFloat(x.duree_heures || 0), 0)
+      const today = new Date().toISOString().slice(0, 10)
 
-  const fetchData = async () => {
-    try {
-      const [users, children, slots, bookings, contacts] = await Promise.all([
-        axios.get('/api/users'),
-        axios.get('/api/children'),
-        axios.get('/api/slots?all=true'),
-        axios.get('/api/bookings'),
-        axios.get('/api/contact'),
-      ])
-      const bk = bookings.data
-      setStats({
-        familles:  users.data.length,
-        enfants:   children.data.length,
-        creneaux:  slots.data.filter(s => s.statut === 'ouvert').length,
-        bookings:  bk.length,
-        confirmed: bk.filter(r => r.status === 'confirmed').length,
-        pending:   bk.filter(r => r.status === 'pending').length,
-        contacts:  contacts.data.filter(c => !c.traite).length,
-        revenue:   bk.filter(r => r.status === 'confirmed')
-                     .reduce((s, r) => s + parseFloat(r.tarif_applique || 0), 0),
+      setData({
+        familles: familles.length,
+        enfants:  c.data.length,
+        seances:  realisees.length,
+        heures:   +heures.toFixed(1),
+        demandes: ct.data.filter(x => !x.traite).length,
+        prochaines: seances
+          .filter(x => x.statut === 'planifiee' && x.date >= today)
+          .sort((a, b) => a.date.localeCompare(b.date))
+          .slice(0, 5),
+        recentes: realisees
+          .sort((a, b) => b.date.localeCompare(a.date))
+          .slice(0, 5),
       })
-      setRecentBk(bk.slice(0, 8))
-    } finally { setLoading(false) }
-  }
+    }).finally(() => setLoading(false))
+  }, [])
 
-  const ST = {
-    pending:   { bg:'#fff8e1', c:'#f57f17', l:'En attente' },
-    confirmed: { bg:'#e8f5e9', c:'#2e7d32', l:'Confirmée' },
-    cancelled: { bg:'#fee2e2', c:'#991b1b', l:'Annulée' },
-    no_show:   { bg:'#f3f4f6', c:'#6b7280', l:'Absent' },
-  }
+  const fmt = (d) => d ? new Date(d + 'T00:00:00').toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }) : ''
+
+  const CARDS = [
+    { label: 'Familles suivies',   value: data.familles },
+    { label: 'Enfants',            value: data.enfants },
+    { label: 'Séances réalisées',  value: data.seances },
+    { label: "Heures d'accompagnement", value: `${data.heures} h` },
+  ]
+
+  const LINKS = [
+    { to: '/admin/seances',   label: 'Suivi & séances',   desc: 'Comptes-rendus et objectifs' },
+    { to: '/admin/contacts',  label: 'Demandes reçues',   desc: `${data.demandes} en attente` },
+    { to: '/admin/children',  label: 'Dossiers enfants',  desc: 'Profils et besoins' },
+    { to: '/admin/compta',    label: 'Comptabilité',      desc: 'Recettes et dépenses' },
+  ]
 
   return (
     <AdminLayout>
       <div className="admin-page">
         <div className="admin-page__header">
-          <div><h1>Tableau de bord</h1><p>Vue d'ensemble de CapAventure</p></div>
-          <span style={{fontSize:'.82rem',color:'var(--text-muted)'}}>
-            {new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
-          </span>
+          <div>
+            <h1>Tableau de bord</h1>
+            <p className="admin-page__subtitle">
+              {new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+            </p>
+          </div>
         </div>
 
         {loading ? <div className="admin-loading">Chargement…</div> : (
           <>
-            {/* Stats */}
-            <div className="admin-stats-grid">
-              {[
-                { icon:'‍‍', bg:'#dbeafe', num:stats.familles,  label:'Familles inscrites'      },
-                { icon:'',      bg:'#dcfce7', num:stats.enfants,   label:'Enfants enregistrés'     },
-                { icon:'',      bg:'#fef9c3', num:stats.creneaux,  label:'Créneaux disponibles'    },
-                { icon:'',      bg:'#ede9fe', num:stats.revenue.toFixed(0)+'€', label:'Revenus confirmés' },
-              ].map(c => (
-                <div key={c.label} className="admin-stat-card">
-                  <div className="admin-stat-card__icon" style={{background:c.bg}}>{c.icon}</div>
-                  <div className="admin-stat-card__body">
-                    <div className="admin-stat-card__num">{c.num}</div>
-                    <div className="admin-stat-card__label">{c.label}</div>
+            {/* Chiffres clés */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
+              {CARDS.map(({ label, value }) => (
+                <div key={label} style={{ background: '#fff', border: '1.5px solid var(--line)', borderRadius: 14, padding: '1.3rem 1.5rem' }}>
+                  <div style={{ fontSize: '.75rem', color: 'var(--soft)', textTransform: 'uppercase', letterSpacing: '.05em', fontWeight: 600, marginBottom: '.4rem' }}>
+                    {label}
+                  </div>
+                  <div style={{ fontSize: '1.9rem', fontWeight: 700, color: 'var(--s2)', letterSpacing: '-.03em', lineHeight: 1 }}>
+                    {value}
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* Réservations résumé */}
-            <div className="dash-registrations-summary">
-              <div className="reg-summary-card reg-summary-card--total">
-                <span className="reg-summary-card__num">{stats.bookings}</span>
-                <span className="reg-summary-card__label">Total réservations</span>
-              </div>
-              <div className="reg-summary-card reg-summary-card--confirmed">
-                <span className="reg-summary-card__num">{stats.confirmed}</span>
-                <span className="reg-summary-card__label">Confirmées</span>
-              </div>
-              <div className="reg-summary-card reg-summary-card--pending">
-                <span className="reg-summary-card__num">{stats.pending}</span>
-                <span className="reg-summary-card__label">En attente</span>
-              </div>
-              <div className="reg-summary-card reg-summary-card--interest">
-                <span className="reg-summary-card__num">{stats.contacts}</span>
-                <span className="reg-summary-card__label">Contacts non traités</span>
-              </div>
-            </div>
-
-            {/* Raccourcis */}
-            <div className="admin-quick-links">
-              {[
-                { to:'/admin/slots',    icon:'', label:'Gérer les créneaux',     color:'#fef9c3' },
-                { to:'/admin/bookings', icon:'', label:'Voir les réservations',  color:'#dcfce7' },
-                { to:'/admin/users',    icon:'‍‍', label:'Gérer les familles',    color:'#dbeafe' },
-                { to:'/admin/contacts', icon:'', label:'Demandes de contact',    color:'#ede9fe' },
-              ].map(item => (
-                <Link key={item.to} to={item.to} className="admin-quick-link">
-                  <div className="admin-quick-link__icon" style={{background:item.color}}>{item.icon}</div>
-                  <span>{item.label}</span>
-                  <span className="admin-quick-link__arrow">→</span>
+            {/* Accès rapides */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '1rem', marginBottom: '2rem' }}>
+              {LINKS.map(({ to, label, desc }) => (
+                <Link key={to} to={to} style={{
+                  background: 'var(--gray)', borderRadius: 14, padding: '1.2rem 1.4rem',
+                  border: '1.5px solid transparent', transition: 'all .2s', display: 'block',
+                }}>
+                  <div style={{ fontWeight: 600, fontSize: '.98rem', marginBottom: '.2rem' }}>{label}</div>
+                  <div style={{ fontSize: '.83rem', color: 'var(--soft)' }}>{desc}</div>
                 </Link>
               ))}
             </div>
 
-            {/* Dernières réservations */}
-            <div className="admin-table-wrap" style={{marginTop:'1.5rem'}}>
-              <div className="admin-table-wrap__header">
-                <h2>Dernières réservations</h2>
-                <Link to="/admin/bookings" style={{fontSize:'.85rem',color:'var(--sauge)',fontWeight:700}}>Voir tout →</Link>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.4rem' }}>
+              {/* Prochaines séances */}
+              <div style={{ background: '#fff', border: '1.5px solid var(--line)', borderRadius: 16, padding: '1.5rem' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1rem' }}>Prochaines séances</h3>
+                {data.prochaines.length === 0 ? (
+                  <p style={{ color: 'var(--soft)', fontSize: '.9rem' }}>Aucune séance planifiée.</p>
+                ) : data.prochaines.map(s => (
+                  <div key={s.id} style={{ padding: '.7rem 0', borderBottom: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
+                    <div>
+                      <div style={{ fontWeight: 600, fontSize: '.9rem' }}>{fmt(s.date)}</div>
+                      <div style={{ fontSize: '.8rem', color: 'var(--soft)' }}>
+                        {s.user?.prenom} {s.user?.nom}{s.child ? ` · ${s.child.prenom}` : ''}
+                      </div>
+                    </div>
+                    <span style={{ fontSize: '.8rem', color: 'var(--soft)', whiteSpace: 'nowrap' }}>
+                      {s.heure_debut?.slice(0,5)}
+                    </span>
+                  </div>
+                ))}
               </div>
-              {recentBk.length === 0 ? (
-                <div className="admin-empty"><span></span>Aucune réservation pour le moment</div>
-              ) : (
-                <table className="admin-table">
-                  <thead><tr><th>Enfant</th><th>Créneau</th><th>Date demande</th><th>Statut</th></tr></thead>
-                  <tbody>
-                    {recentBk.map(r => {
-                      const st = ST[r.status] || ST.pending
-                      return (
-                        <tr key={r.id}>
-                          <td style={{fontWeight:700}}>{r.child?.prenom} {r.child?.nom}</td>
-                          <td style={{color:'var(--text-muted)',fontSize:'.85rem'}}>
-                            {r.slot?.date ? new Date(r.slot.date+'T00:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'short'}) : '—'}
-                            {r.slot?.titre ? ` · ${r.slot.titre}` : ''}
-                          </td>
-                          <td style={{color:'var(--text-muted)',fontSize:'.85rem'}}>
-                            {new Date(r.created_at).toLocaleDateString('fr-FR')}
-                          </td>
-                          <td>
-                            <span style={{background:st.bg,color:st.c,padding:'3px 10px',borderRadius:50,fontSize:'.75rem',fontWeight:700,whiteSpace:'nowrap'}}>
-                              {st.l}
-                            </span>
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              )}
+
+              {/* Séances récentes */}
+              <div style={{ background: '#fff', border: '1.5px solid var(--line)', borderRadius: 16, padding: '1.5rem' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1rem' }}>Dernières séances réalisées</h3>
+                {data.recentes.length === 0 ? (
+                  <p style={{ color: 'var(--soft)', fontSize: '.9rem' }}>Aucune séance enregistrée.</p>
+                ) : data.recentes.map(s => (
+                  <div key={s.id} style={{ padding: '.7rem 0', borderBottom: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
+                    <div>
+                      <div style={{ fontWeight: 600, fontSize: '.9rem' }}>{fmt(s.date)}</div>
+                      <div style={{ fontSize: '.8rem', color: 'var(--soft)' }}>
+                        {s.user?.prenom} {s.user?.nom}
+                      </div>
+                    </div>
+                    <span style={{ fontSize: '.8rem', color: 'var(--s2)', fontWeight: 600, whiteSpace: 'nowrap' }}>
+                      {s.duree_heures} h
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </>
         )}

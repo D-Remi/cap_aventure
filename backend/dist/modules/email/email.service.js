@@ -1,10 +1,43 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
@@ -12,7 +45,7 @@ var EmailService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmailService = void 0;
 const common_1 = require("@nestjs/common");
-const nodemailer = require("nodemailer");
+const nodemailer = __importStar(require("nodemailer"));
 let EmailService = EmailService_1 = class EmailService {
     constructor() {
         this.logger = new common_1.Logger(EmailService_1.name);
@@ -61,49 +94,48 @@ body{margin:0;padding:0;background:#f0e6d8;font-family:'Segoe UI',Arial,sans-ser
 .footer p{margin:0;font-size:12px;color:#9ca3af}
 .footer a{color:#4a7a6d;text-decoration:none}
 </style></head><body><div class="wrap">
-<div class="header"><h1>Cap<span>Aventure</span></h1><p>Garde · Répit · Animation · Biganos (33)</p></div>
+<div class="header"><h1>Cap<span>Aventure</span></h1><p>Répit et accompagnement éducatif · Gironde (33)</p></div>
 <div class="body">${content}</div>
-<div class="footer"><p>CapAventure · Biganos · Bassin d'Arcachon (33)<br/>
+<div class="footer"><p>CapAventure · Gironde (33)<br/>
 <a href="mailto:${process.env.MAIL_USER}">Nous contacter</a> · 
 <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}">Visiter le site</a></p></div>
 </div></body></html>`;
     }
     async sendWelcome(to, prenom) {
-        await this.send(to, '👋 Bienvenue sur CapAventure !', this.tpl(`
-      <p>Bonjour <strong>${prenom}</strong> 👋</p>
+        await this.send(to, 'Bienvenue sur CapAventure !', this.tpl(`
+      <p>Bonjour <strong>${prenom}</strong> </p>
       <p>Votre compte <strong>CapAventure</strong> a bien été créé. Vous pouvez dès maintenant gérer vos enfants et réserver des créneaux.</p>
       <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/dashboard" class="btn">Accéder à mon espace →</a>
     `));
     }
     async sendResetPassword(to, prenom, token) {
         const url = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password?token=${token}`;
-        await this.send(to, '🔑 Réinitialisation de votre mot de passe', this.tpl(`
+        await this.send(to, 'Réinitialisation de votre mot de passe', this.tpl(`
       <p>Bonjour <strong>${prenom}</strong>,</p>
       <p>Cliquez sur le bouton ci-dessous pour réinitialiser votre mot de passe :</p>
       <a href="${url}" class="btn">Réinitialiser mon mot de passe →</a>
-      <div class="box"><p>⚠️ Ce lien est valable <strong>1 heure</strong> uniquement.</p></div>
+      <div class="box"><p>Ce lien est valable <strong>1 heure</strong> uniquement.</p></div>
     `));
     }
-    async sendBookingPending(to, prenom, enfant, date) {
-        await this.send(to, `⏳ Demande de réservation reçue — ${date}`, this.tpl(`
+    async sendSeancePlanifiee(to, prenom, date, heure) {
+        await this.send(to, `Séance planifiée — ${date}`, this.tpl(`
       <p>Bonjour <strong>${prenom}</strong>,</p>
-      <p>Votre demande pour <strong>${enfant}</strong> le <strong>${date}</strong> a bien été reçue.</p>
-      <div class="box"><p>⏳ Je vous confirmerai rapidement par email.</p></div>
-      <a href="${process.env.FRONTEND_URL}/dashboard" class="btn">Voir mes réservations →</a>
+      <p>Une séance est planifiée le <strong>${date}${heure ? ' à ' + heure : ''}</strong>.</p>
+      <a href="${process.env.FRONTEND_URL}/dashboard" class="btn">Voir mon suivi →</a>
     `));
     }
-    async sendBookingConfirmed(to, prenom, enfant, date, heure) {
-        await this.send(to, `✅ Réservation confirmée — ${date}`, this.tpl(`
+    async sendCompteRenduPartage(to, prenom, date) {
+        await this.send(to, `Compte-rendu de la séance du ${date}`, this.tpl(`
       <p>Bonjour <strong>${prenom}</strong>,</p>
-      <p>La réservation de <strong>${enfant}</strong> le <strong>${date}${heure ? ' à ' + heure : ''}</strong> est <strong style="color:#166534">confirmée</strong> ✅</p>
-      <a href="${process.env.FRONTEND_URL}/dashboard" class="btn">Voir mes réservations →</a>
+      <p>Le compte-rendu de la séance du <strong>${date}</strong> est disponible dans votre espace.</p>
+      <a href="${process.env.FRONTEND_URL}/dashboard" class="btn">Lire le compte-rendu →</a>
     `));
     }
-    async sendBookingCancelled(to, prenom, enfant, date) {
-        await this.send(to, `❌ Réservation annulée — ${date}`, this.tpl(`
+    async sendSeanceAnnulee(to, prenom, date) {
+        await this.send(to, `Séance annulée — ${date}`, this.tpl(`
       <p>Bonjour <strong>${prenom}</strong>,</p>
-      <p>La réservation de <strong>${enfant}</strong> le <strong>${date}</strong> a été annulée.</p>
-      <p>N'hésitez pas à en faire une nouvelle depuis votre espace.</p>
+      <p>La séance du <strong>${date}</strong> a été annulée.</p>
+      <p>Je reviens vers vous pour convenir d'une nouvelle date.</p>
       <a href="${process.env.FRONTEND_URL}/dashboard" class="btn">Mon espace →</a>
     `));
     }
@@ -111,28 +143,15 @@ body{margin:0;padding:0;background:#f0e6d8;font-family:'Segoe UI',Arial,sans-ser
         const admin = process.env.ADMIN_EMAIL;
         if (!admin)
             return;
-        await this.send(admin, `📩 Nouveau contact — ${data.prenom}`, this.tpl(`
+        await this.send(admin, `Nouveau contact — ${data.prenom}`, this.tpl(`
       <p>Nouvelle demande de contact reçue.</p>
       <div class="box">
         <p><strong>${data.prenom}</strong> · ${data.email}<br/>
         Service : ${data.service || '—'}<br/>
-        ${data.besoins_specifiques ? '🌿 Besoins spécifiques signalés' : ''}</p>
+        ${data.besoins_specifiques ? 'Besoins spécifiques signalés' : ''}</p>
       </div>
       <a href="mailto:${data.email}" class="btn">Répondre →</a>
     `));
-    }
-    async sendNewInterestNotification(adminEmail, form) {
-        return this.sendContactNotif({ prenom: form.prenom, email: form.email, service: form.activite });
-    }
-    async sendRegistrationConfirmed(to, prenom, childName, activity) {
-        const date = activity?.date ? new Date(activity.date).toLocaleDateString('fr-FR') : '—';
-        return this.sendBookingConfirmed(to, prenom, childName, date);
-    }
-    async sendRegistrationPending(to, prenom, childName, activityTitle) {
-        return this.sendBookingPending(to, prenom, childName, activityTitle);
-    }
-    async sendRegistrationCancelled(to, prenom, childName, activityTitle) {
-        return this.sendBookingCancelled(to, prenom, childName, activityTitle);
     }
 };
 exports.EmailService = EmailService;
@@ -140,4 +159,3 @@ exports.EmailService = EmailService = EmailService_1 = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [])
 ], EmailService);
-//# sourceMappingURL=email.service.js.map

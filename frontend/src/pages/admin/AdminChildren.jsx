@@ -84,7 +84,7 @@ export default function AdminChildren() {
               {/* Notes animateur éditables */}
               <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.5rem',boxShadow:'var(--shadow-sm)'}}>
                 <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'1rem'}}>
-                  <h3 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1rem'}}>Notes animateur (privées)</h3>
+                  <h3 style={{color:'var(--nuit)',fontSize:'1rem'}}>Notes animateur (privées)</h3>
                   {!editing && <button className="btn-secondary" onClick={()=>setEditing(true)} style={{fontSize:'.82rem',padding:'.35rem .9rem'}}>Modifier</button>}
                 </div>
                 {editing ? (

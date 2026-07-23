@@ -59,16 +59,16 @@ export default function ProfilePage() {
         <div className="container" style={{maxWidth:600}}>
           <div style={{display:'flex',alignItems:'center',gap:'1rem',marginBottom:'2rem'}}>
             <Link to="/dashboard" style={{color:'var(--text-muted)',fontWeight:700,fontSize:'.88rem',textDecoration:'none'}}>← Mon espace</Link>
-            <h1 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.8rem',fontWeight:800,margin:0}}>Mon profil</h1>
+            <h1 style={{color:'var(--nuit)',fontSize:'1.8rem',fontWeight:800,margin:0}}>Mon profil</h1>
           </div>
 
           {/* Avatar */}
           <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)',marginBottom:'1.25rem',display:'flex',alignItems:'center',gap:'1.25rem'}}>
-            <div style={{width:64,height:64,background:'var(--sauge)',color:'white',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Baloo 2',cursive",fontWeight:800,fontSize:'1.4rem',flexShrink:0}}>
+            <div style={{width:64,height:64,background:'var(--sauge)',color:'white',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:800,fontSize:'1.4rem',flexShrink:0}}>
               {(user?.prenom?.[0]||'').toUpperCase()}{(user?.nom?.[0]||'').toUpperCase()}
             </div>
             <div>
-              <div style={{fontFamily:"'Baloo 2',cursive",fontWeight:800,fontSize:'1.2rem',color:'var(--nuit)'}}>{user?.prenom} {user?.nom}</div>
+              <div style={{fontWeight:800,fontSize:'1.2rem',color:'var(--nuit)'}}>{user?.prenom} {user?.nom}</div>
               <div style={{fontSize:'.85rem',color:'var(--text-muted)'}}>{user?.email}</div>
               <div style={{fontSize:'.78rem',color:'var(--sauge)',fontWeight:700,marginTop:4}}>Espace parent</div>
             </div>
@@ -76,7 +76,7 @@ export default function ProfilePage() {
 
           {/* Infos perso */}
           <form onSubmit={saveProfile} style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)',marginBottom:'1.25rem'}}>
-            <h2 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.1rem',marginBottom:'1.25rem'}}>Informations personnelles</h2>
+            <h2 style={{color:'var(--nuit)',fontSize:'1.1rem',marginBottom:'1.25rem'}}>Informations personnelles</h2>
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'.75rem'}}>
               <FG label="Prénom">{inp(form.prenom, set('prenom'))}</FG>
               <FG label="Nom">{inp(form.nom, set('nom'))}</FG>
@@ -88,7 +88,7 @@ export default function ProfilePage() {
 
           {/* Mot de passe */}
           <form onSubmit={savePassword} style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)'}}>
-            <h2 style={{fontFamily:"'Baloo 2',cursive",color:'var(--nuit)',fontSize:'1.1rem',marginBottom:'1.25rem'}}>Changer le mot de passe</h2>
+            <h2 style={{color:'var(--nuit)',fontSize:'1.1rem',marginBottom:'1.25rem'}}>Changer le mot de passe</h2>
             <FG label="Mot de passe actuel">{inp(pwd.current, setP('current'), 'password')}</FG>
             <FG label="Nouveau mot de passe">{inp(pwd.next, setP('next'), 'password', 'Minimum 6 caractères')}</FG>
             <FG label="Confirmer">{inp(pwd.confirm, setP('confirm'), 'password')}</FG>

@@ -15,9 +15,9 @@ function header(doc, sousTitre) {
   doc.text('CapAventure', 14, 16)
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(9)
-  doc.text('Garde, répit et animation • Biganos — Bassin d\'Arcachon (33)', 14, 23)
+  doc.text('Répit handicap et accompagnement éducatif • Gironde (33)', 14, 23)
   doc.setFontSize(8)
-  doc.text('Animateur diplômé BAFA', 14, 28)
+  doc.text('Éducateur en lieu de vie', 14, 28)
   if (sousTitre) {
     doc.setTextColor(...SAUGE)
     doc.setFont('helvetica', 'bold')
@@ -33,7 +33,7 @@ function footer(doc) {
   doc.setTextColor(...MUTED)
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(7.5)
-  doc.text('CapAventure • Biganos (33380) • CESU et virement acceptés • SIRET : __________', 105, h - 13, { align: 'center' })
+  doc.text('CapAventure • Gironde (33) • Virement et CESU acceptés • SIRET : __________', 105, h - 13, { align: 'center' })
   doc.text('Service à la personne — crédit d\'impôt 50% (art. 199 sexdecies CGI)', 105, h - 9, { align: 'center' })
 }
 
@@ -56,7 +56,7 @@ export function genererFacturePDF(facture, contrat, user, seances = []) {
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(9)
   doc.setTextColor(60, 60, 60)
-  doc.text(['CapAventure', 'Biganos 33380', 'contact@capaventure33.fun'], 14, y + 5)
+  doc.text(['CapAventure', 'Gironde (33)', 'contact@capaventure33.fun'], 14, y + 5)
   doc.text([
     `${user?.prenom || ''} ${user?.nom || ''}`.trim(),
     user?.email || '',

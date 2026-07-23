@@ -50,7 +50,7 @@ export default function PhotosTab() {
             <div key={date} style={{marginBottom:'2.5rem'}}>
               <div style={{display:'flex',alignItems:'center',gap:.75+'rem',marginBottom:'1rem'}}>
                 <div style={{width:8,height:8,borderRadius:'50%',background:'var(--sauge)',flexShrink:0}}/>
-                <h3 style={{fontFamily:"'Baloo 2',cursive",fontSize:'1rem',color:'var(--nuit)',fontWeight:700}}>
+                <h3 style={{fontSize:'1rem',color:'var(--nuit)',fontWeight:700}}>
                   {date === 'Sans date' ? 'Photos diverses' : fmtDate(date)}
                 </h3>
                 <span style={{fontSize:'.78rem',color:'var(--text-muted)',marginLeft:'auto'}}>{list.length} photo{list.length>1?'s':''}</span>

@@ -1,33 +1,47 @@
 import { Link } from 'react-router-dom'
 import './Footer.css'
+
 export default function Footer() {
+  const go = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+
   return (
-    <>
-      <div className="footer-wave"><svg viewBox="0 0 1200 60"><path d="M0,20 C200,55 400,0 600,30 C800,58 1000,5 1200,25 L1200,60 L0,60 Z" fill="#2d3a6b"/></svg></div>
-      <footer className="footer">
-        <div className="container">
-          <div className="footer__grid">
-            <div>
-              <div className="footer__logo">Cap<span>Aventure</span></div>
-              <p>Garde, répit et animation pour enfants à Biganos et sur le Bassin d'Arcachon. Animateur diplômé BAFA, spécialisé TSA/TDAH. CESU accepté.</p>
-            </div>
-            <div className="footer__col"><h4>Services</h4>
-              <a href="#services">Garde & sorties</a>
-              <a href="#repit">Répit TSA/TDAH</a>
-              <a href="#services">Animation événements</a>
-              <a href="#tarifs">Tarifs</a>
-            </div>
-            <div className="footer__col"><h4>Espace</h4>
-              <Link to="/login">Connexion</Link>
-              <Link to="/register">Créer un compte</Link>
-              <Link to="/dashboard">Mon tableau de bord</Link>
-              <a href="#contact">Contact</a>
-              <Link to="/documentation">Aide & FAQ</Link>
-            </div>
+    <footer className="footer">
+      <div className="container">
+        <div className="footer__grid">
+          <div className="footer__brand">
+            <div className="footer__logo">Cap<span>Aventure</span></div>
+            <p>
+              Répit pour parents aidants et accompagnement éducatif familial,
+              par un éducateur en lieu de vie. Gironde (33).
+            </p>
           </div>
-          <div className="footer__bottom">© 2025 CapAventure — Biganos · Bassin d'Arcachon (33) · Animateur BAFA · CESU accepté</div>
+
+          <div className="footer__col">
+            <h5>Les services</h5>
+            <button onClick={() => go('repit')}>Répit handicap</button>
+            <button onClick={() => go('accompagnement')}>Accompagnement éducatif</button>
+            <button onClick={() => go('methode')}>Ma méthode</button>
+          </div>
+
+          <div className="footer__col">
+            <h5>Me joindre</h5>
+            <a href="https://wa.me/33752096698" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <button onClick={() => go('contact')}>Formulaire de contact</button>
+            <Link to="/documentation">Aide et questions</Link>
+          </div>
+
+          <div className="footer__col">
+            <h5>Espace famille</h5>
+            <Link to="/login">Connexion</Link>
+            <Link to="/register">Créer un compte</Link>
+          </div>
         </div>
-      </footer>
-    </>
+
+        <div className="footer__bottom">
+          <span>© {new Date().getFullYear()} CapAventure · Éducateur en lieu de vie</span>
+          <span>Gironde (33)</span>
+        </div>
+      </div>
+    </footer>
   )
 }

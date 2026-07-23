@@ -1,3 +1,0 @@
-import './TrustBand.css'
-const T=[{s:'Diplômé BAFA',t:'Animateur certifié'},{s:'Max 3 enfants',t:'Suivi individualisé'},{s:'TSA · TDAH',t:'Accueil adapté'},{s:'CESU accepté',t:'Aide CAF possible'},{s:'Biganos',t:"Bassin d'Arcachon (33)"}]
-export default function TrustBand(){return(<div className="trust-band"><div className="container trust-band__inner">{T.map(({s,t})=>(<div key={s} className="trust-item"><span><strong>{s}</strong> · {t}</span></div>))}</div></div>)}

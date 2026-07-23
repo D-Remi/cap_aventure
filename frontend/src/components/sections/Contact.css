@@ -1,63 +1,82 @@
-.contact{background:var(--sable-light)}
-.contact__grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
-.contact__item{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:1rem}
-.contact__icon{width:42px;height:42px;background:white;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;box-shadow:var(--shadow-sm)}
-.contact__item strong{display:block;color:var(--nuit);font-size:.88rem;font-weight:700}
-.contact__item span{color:var(--text-muted);font-size:.83rem}
-.contact__photo{margin-top:1.5rem;border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-md)}
-.contact__photo img{width:100%;height:180px;object-fit:cover}
-.contact__form{background:white;border-radius:var(--radius-xl);padding:2rem;box-shadow:var(--shadow-md)}
-.contact__form h3{font-family:'Baloo 2',cursive;font-size:1.2rem;color:var(--nuit);margin-bottom:1.25rem}
-.contact__row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.85rem}
-.contact__form .form-group{margin-bottom:.85rem}
-.contact__check{display:flex;align-items:center;gap:.6rem;font-size:.88rem;color:var(--nuit);font-weight:600;cursor:pointer;margin-bottom:.5rem}
-.contact__check input{width:16px;height:16px;accent-color:var(--sauge)}
-@media(max-width:768px){.contact__grid{grid-template-columns:1fr}.contact__row{grid-template-columns:1fr}}
-/* ══ WhatsApp button ══ */
-.btn-whatsapp{
-  display:flex;align-items:center;justify-content:center;gap:.85rem;
-  background:#25D366;color:white;
-  width:100%;padding:1.1rem;border-radius:var(--radius-lg);
-  font-weight:700;font-size:1.05rem;
-  box-shadow:0 6px 24px rgba(37,211,102,.35);
-  transition:all .25s;text-decoration:none;
-  margin-top:.5rem;
+.contact { padding: 1rem 0 5rem; }
+.contact__box {
+  background: var(--gray);
+  border-radius: 26px;
+  padding: 3.4rem;
+  display: grid; grid-template-columns: .85fr 1.15fr;
+  gap: 3.4rem; align-items: start;
 }
-.btn-whatsapp:hover{background:#1ebe5a;transform:translateY(-2px);box-shadow:0 10px 30px rgba(37,211,102,.45)}
-.btn-whatsapp__icon{display:flex;align-items:center;flex-shrink:0}
-
-.contact__sep{display:flex;align-items:center;gap:1rem;margin:1.25rem 0;color:var(--text-muted);font-size:.82rem}
-.contact__sep::before,.contact__sep::after{content:"";flex:1;height:1px;background:var(--sable-light)}
-
-.contact__chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.35rem}
-.chip{
-  background:var(--sable-light);color:var(--nuit);
-  border:1.5px solid transparent;
-  border-radius:50px;padding:.42rem .95rem;
-  font-size:.85rem;font-weight:500;
-  cursor:pointer;font-family:inherit;
-  transition:all .18s;
+.contact__intro h2 {
+  font-size: 2.1rem; font-weight: 700;
+  letter-spacing: -.035em; margin-bottom: 1rem; line-height: 1.1;
 }
-.chip:hover{border-color:var(--sauge);background:white}
-.chip--on{background:var(--sauge);color:white;border-color:var(--sauge)}
-
-.contact__intro{font-size:.9rem;color:var(--text-muted);margin-bottom:1.25rem}
-.contact__done{text-align:center;padding:2.5rem 1rem}
-.contact__done h3{font-family:'Baloo 2',cursive;font-size:1.5rem;color:var(--nuit);margin-bottom:.5rem}
-.contact__done p{color:var(--text-muted)}
-
-/* ══ Bouton flottant WhatsApp ══ */
-.wa-float{
-  position:fixed;bottom:1.75rem;right:1.75rem;z-index:500;
-  background:#25D366;color:white;
-  display:flex;align-items:center;gap:.6rem;
-  padding:.85rem 1.4rem;border-radius:50px;
-  font-weight:700;font-size:.92rem;
-  box-shadow:0 6px 24px rgba(37,211,102,.45);
-  transition:all .3s;text-decoration:none;
+.contact__intro p {
+  color: var(--soft); font-weight: 300;
+  font-size: 1.03rem; margin-bottom: 1.6rem;
 }
-.wa-float:hover{background:#1ebe5a;transform:translateY(-3px);box-shadow:0 12px 32px rgba(37,211,102,.5)}
-@media(max-width:640px){
-  .wa-float span{display:none}
-  .wa-float{padding:.9rem;border-radius:50%}
+.contact__wa {
+  display: inline-flex; align-items: center; gap: .55rem;
+  background: #25D366; color: #fff;
+  padding: .9rem 1.7rem; border-radius: 100px;
+  font-weight: 600; font-size: .94rem;
+  text-decoration: none; transition: .25s;
+}
+.contact__wa:hover { background: #1eb85a; transform: translateY(-2px); }
+
+.contact__form {
+  background: #fff; border-radius: 18px; padding: 2rem;
+  display: flex; flex-direction: column; gap: 1.1rem;
+}
+.contact__field { display: flex; flex-direction: column; gap: .45rem; }
+.contact__field label {
+  font-size: .78rem; font-weight: 700;
+  letter-spacing: .05em; text-transform: uppercase;
+  color: var(--soft);
+}
+.contact__field input,
+.contact__field textarea {
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: .8rem 1rem;
+  font-family: inherit; font-size: .95rem;
+  color: var(--ink); background: #fff;
+  transition: border-color .2s;
+  outline: none; resize: vertical;
+}
+.contact__field input:focus,
+.contact__field textarea:focus { border-color: var(--s2); }
+
+.contact__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.contact__chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+.contact__chip {
+  background: var(--gray); color: var(--ink);
+  border: 1.5px solid transparent;
+  border-radius: 100px; padding: .45rem 1rem;
+  font-size: .87rem; font-weight: 500;
+  cursor: pointer; font-family: inherit;
+  transition: all .18s;
+}
+.contact__chip:hover { border-color: var(--s2-bright); }
+.contact__chip.is-on { background: var(--s2); color: #fff; border-color: var(--s2); }
+
+.contact__submit { width: 100%; justify-content: center; margin-top: .3rem; }
+.contact__legal {
+  font-size: .8rem; color: var(--soft);
+  text-align: center; font-weight: 300;
+}
+
+.contact__done {
+  background: var(--gray); border-radius: 26px;
+  padding: 4rem 2rem; text-align: center;
+}
+.contact__done h2 { font-size: 2rem; font-weight: 700; letter-spacing: -.03em; margin-bottom: .8rem; }
+.contact__done p {
+  color: var(--soft); font-weight: 300;
+  max-width: 32rem; margin: 0 auto 1.8rem; font-size: 1.03rem;
+}
+
+@media (max-width: 960px) {
+  .contact__box { grid-template-columns: 1fr; gap: 2.2rem; padding: 2.3rem 1.6rem; }
+  .contact__row { grid-template-columns: 1fr; }
 }

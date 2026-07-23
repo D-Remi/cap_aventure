@@ -67,4 +67,3 @@ exports.NotificationsController = NotificationsController = __decorate([
         jwt_1.JwtService,
         typeorm_2.Repository])
 ], NotificationsController);
-//# sourceMappingURL=notifications.controller.js.map

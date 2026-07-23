@@ -93,4 +93,3 @@ exports.ChildrenController = ChildrenController = __decorate([
     (0, common_1.UseGuards)(auth_guard_1.JwtAuthGuard),
     __metadata("design:paramtypes", [children_service_1.ChildrenService])
 ], ChildrenController);
-//# sourceMappingURL=children.controller.js.map
