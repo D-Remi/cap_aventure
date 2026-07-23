@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import './Footer.css'
 
-export default function Footer() {
+export default function Footer({ onContact }) {
   const go = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
 
   return (
@@ -26,7 +26,7 @@ export default function Footer() {
           <div className="footer__col">
             <h5>Me joindre</h5>
             <a href="https://wa.me/33752096698" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-            <button onClick={() => go('contact')}>Formulaire de contact</button>
+            <button onClick={() => onContact ? onContact() : go('contact')}>Formulaire de contact</button>
             <Link to="/documentation">Aide et questions</Link>
           </div>
 

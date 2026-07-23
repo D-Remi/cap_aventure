@@ -39,7 +39,7 @@ export default function RegisterPage() {
       <div className="auth-card auth-card--wide">
         <Link to="/" className="auth-logo">Cap<span>Aventure</span></Link>
         <h1>Créer un compte</h1>
-        <p className="auth-sub">Inscrivez-vous pour gérer les activités de vos enfants</p>
+        <p className="auth-sub">Créez votre espace pour suivre l'accompagnement</p>
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-row">

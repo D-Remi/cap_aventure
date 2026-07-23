@@ -1,12 +1,5 @@
 import './QuiJeSuis.css'
 
-const FACTS = [
-  { t: 'Éducateur en lieu de vie', d: 'Poste actuel, à temps plein' },
-  { t: "Assistant d'éducation",    d: 'Expérience en collège' },
-  { t: 'BAFA',                     d: "Diplôme d'État" },
-  { t: 'Reconversion 2022',        d: 'Ancien informaticien' },
-]
-
 const CREDS = [
   { b: 'Éducateur', s: 'en lieu de vie' },
   { b: 'Ex-AED',    s: "assistant d'éducation" },
@@ -19,19 +12,12 @@ export default function QuiJeSuis() {
     <section className="qui" id="qui">
       <div className="container">
         <div className="qui__box">
-
-          <div className="qui__side">
-            <blockquote className="qui__quote">
-              « Je ne théorise pas ce que je raconte. Je l'applique tous les jours,
-              avec de vrais enfants, dans de vraies situations. »
-            </blockquote>
-            <div className="qui__facts">
-              {FACTS.map(({ t, d }) => (
-                <div className="qui__fact" key={t}>
-                  <b>{t}</b><span>{d}</span>
-                </div>
-              ))}
-            </div>
+          <div className="qui__photo">
+            <img
+              src="https://images.unsplash.com/photo-1654613698275-b0930ef9570f?q=80&w=1170&auto=format&fit=crop"
+              alt="Accompagnement au quotidien"
+              loading="lazy"
+            />
           </div>
 
           <div className="qui__text">
@@ -56,7 +42,6 @@ export default function QuiJeSuis() {
               ))}
             </div>
           </div>
-
         </div>
       </div>
     </section>

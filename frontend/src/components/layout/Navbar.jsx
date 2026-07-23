@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import './Navbar.css'
 
-export default function Navbar() {
+export default function Navbar({ onContact }) {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const [scrolled, setScrolled] = useState(false)
@@ -44,7 +44,7 @@ export default function Navbar() {
         ) : (
           <>
             <Link to="/login" className="navbar__login">Connexion</Link>
-            <button className="navbar__btn" onClick={() => go('contact')}>Prendre contact</button>
+            <button className="navbar__btn" onClick={() => onContact ? onContact() : go('contact')}>Prendre contact</button>
           </>
         )}
         <button className="navbar__burger" onClick={() => setOpen(!open)} aria-label="Menu">

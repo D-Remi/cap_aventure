@@ -1,124 +1,91 @@
 .services { padding: 1rem 0 4rem; }
 
-/* En-tête de section — réutilisable */
-.section-head { text-align: center; max-width: 40rem; margin: 0 auto 3.4rem; }
-.section-head__kicker {
-  display: inline-block;
-  background: var(--lime);
-  color: var(--ink);
-  font-size: .74rem; font-weight: 700;
-  padding: .32rem .85rem; border-radius: 5px;
-  letter-spacing: .05em; text-transform: uppercase;
-  margin-bottom: 1.05rem;
-}
-.section-head h2 {
-  font-size: clamp(2rem, 3.8vw, 2.5rem);
-  font-weight: 700; letter-spacing: -.035em;
-  margin-bottom: .85rem; line-height: 1.1;
-}
-.section-head p { color: var(--soft); font-weight: 300; font-size: 1.05rem; }
-
-/* Bloc service */
-.svc-block {
+/* ── Bloc service ── */
+.svc {
   border-radius: 26px;
-  padding: 3.2rem;
-  margin-bottom: 1.6rem;
-  position: relative;
   overflow: hidden;
+  margin-bottom: 1.6rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
-.svc-block--repit { background: var(--s1-light); }
-.svc-block--acc   { background: var(--s2-light); }
+.svc--repit { background: var(--s1-light); }
+.svc--acc   { background: var(--s2-light); }
 
-.svc-block__inner {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 3.2rem; align-items: start; position: relative;
+/* Le second bloc inverse photo et texte */
+.svc--acc { direction: rtl; }
+.svc--acc > * { direction: ltr; }
+
+.svc__photo { position: relative; min-height: 400px; overflow: hidden; }
+.svc__photo img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform 8s ease;
 }
-.svc-block__tag {
-  display: inline-flex; align-items: center; gap: .5rem;
-  padding: .4rem .95rem; border-radius: 100px;
+.svc:hover .svc__photo img { transform: scale(1.05); }
+
+.svc__body { padding: 3rem; }
+.svc__tag {
+  display: inline-flex;
+  padding: .4rem .95rem;
+  border-radius: 100px;
   font-size: .78rem; font-weight: 700;
   letter-spacing: .04em; text-transform: uppercase;
   margin-bottom: 1.15rem; color: #fff;
 }
-.svc-block--repit .svc-block__tag { background: var(--s1); }
-.svc-block--acc   .svc-block__tag { background: var(--s2); }
+.svc--repit .svc__tag { background: var(--s1); }
+.svc--acc   .svc__tag { background: var(--s2); }
 
-.svc-block h3 {
-  font-size: 2rem; font-weight: 700;
+.svc h3 {
+  font-size: 1.9rem; font-weight: 700;
   letter-spacing: -.035em; line-height: 1.1;
   margin-bottom: .9rem;
 }
-.svc-block--repit h3 { color: var(--s1); }
-.svc-block--acc   h3 { color: var(--s2); }
+.svc--repit h3 { color: var(--s1); }
+.svc--acc   h3 { color: var(--s2); }
 
-.svc-block__desc {
-  font-size: 1.05rem; color: var(--soft);
-  font-weight: 300; margin-bottom: 1.6rem;
+.svc__desc {
+  font-size: 1.02rem; color: var(--soft);
+  font-weight: 300; margin-bottom: 1.5rem;
 }
-.svc-block__for {
+.svc__for {
   background: rgba(255,255,255,.75);
-  border-radius: 14px; padding: 1.4rem 1.5rem;
-  margin-bottom: 1.5rem;
+  border-radius: 14px;
+  padding: 1.3rem 1.4rem;
+  margin-bottom: 1.4rem;
 }
-.svc-block__lbl {
+.svc__lbl {
   font-size: .74rem; font-weight: 700;
   letter-spacing: .06em; text-transform: uppercase;
-  color: var(--soft); margin-bottom: .75rem; display: block;
+  color: var(--soft); margin-bottom: .7rem; display: block;
 }
-.svc-block__for ul { list-style: none; }
-.svc-block__for li {
-  padding: .42rem 0; font-size: .95rem;
+.svc__for ul { list-style: none; }
+.svc__for li {
+  padding: .4rem 0; font-size: .93rem;
   display: flex; gap: .7rem; align-items: flex-start;
   color: var(--ink2);
 }
-.svc-block__for li::before {
+.svc__for li::before {
   content: ""; width: 6px; height: 6px;
-  border-radius: 50%; flex-shrink: 0; margin-top: .55rem;
+  border-radius: 50%; flex-shrink: 0; margin-top: .52rem;
 }
-.svc-block--repit .svc-block__for li::before { background: var(--s1-bright); }
-.svc-block--acc   .svc-block__for li::before { background: var(--s2-bright); }
+.svc--repit .svc__for li::before { background: var(--s1-bright); }
+.svc--acc   .svc__for li::before { background: var(--s2-bright); }
 
-.svc-block__cta {
+.svc__cta {
   display: inline-flex; align-items: center; gap: .55rem;
   padding: .85rem 1.7rem; border-radius: 100px;
   font-weight: 600; font-size: .94rem;
-  color: #fff; transition: .25s; text-decoration: none;
+  color: #fff; border: none; cursor: pointer;
+  font-family: inherit; transition: .25s;
 }
-.svc-block--repit .svc-block__cta { background: var(--s1); }
-.svc-block--repit .svc-block__cta:hover { background: var(--s1-bright); transform: translateY(-2px); }
-.svc-block--acc   .svc-block__cta { background: var(--s2); }
-.svc-block--acc   .svc-block__cta:hover { background: var(--s2-bright); transform: translateY(-2px); }
-
-.svc-block__side { background: #fff; border-radius: 16px; padding: 1.9rem; }
-.svc-block__side h4 {
-  font-size: .76rem; font-weight: 700;
-  letter-spacing: .06em; text-transform: uppercase;
-  color: var(--soft); margin-bottom: 1.25rem;
-}
-.svc-block__row {
-  display: flex; gap: 1rem;
-  padding: .95rem 0; border-bottom: 1px solid var(--line);
-}
-.svc-block__row:last-of-type { border: none; padding-bottom: 0; }
-.svc-block__num {
-  width: 29px; height: 29px; border-radius: 8px;
-  display: grid; place-items: center;
-  font-size: .82rem; font-weight: 700;
-  flex-shrink: 0; color: #fff;
-}
-.svc-block--repit .svc-block__num { background: var(--s1); }
-.svc-block--acc   .svc-block__num { background: var(--s2); }
-.svc-block__row b { display: block; font-size: .94rem; font-weight: 600; margin-bottom: .15rem; }
-.svc-block__row span { font-size: .87rem; color: var(--soft); line-height: 1.55; font-weight: 300; }
-
-.svc-block__note {
-  margin-top: 1.25rem; padding-top: 1.1rem;
-  border-top: 1px solid var(--line);
-  font-size: .85rem; color: var(--soft); font-weight: 300;
-}
-.svc-block__note b { color: var(--ink); font-weight: 600; }
+.svc--repit .svc__cta { background: var(--s1); }
+.svc--acc   .svc__cta { background: var(--s2); }
+.svc__cta:hover { transform: translateY(-2px); }
 
 @media (max-width: 960px) {
-  .svc-block__inner { grid-template-columns: 1fr; gap: 2.2rem; }
-  .svc-block { padding: 2.2rem 1.6rem; }
+  .svc { grid-template-columns: 1fr; }
+  .svc--acc { direction: ltr; }
+  .svc__photo { min-height: 260px; }
+  .svc__body { padding: 2rem 1.6rem; }
+  .svc h3 { font-size: 1.6rem; }
 }

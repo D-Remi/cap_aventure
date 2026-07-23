@@ -38,18 +38,18 @@ export default function Contact() {
     setSending(true)
     try {
       await axios.post('/api/contact', {
-        prenom, email, telephone: tel,
+        prenom,
+        email,
+        telephone: tel || undefined,
         service: service || 'autre',
-        message: [
-          `Service souhaité : ${SERVICES.find(s => s.val === service)?.label || 'Non précisé'}`,
-          `Échéance : ${URGENCES.find(u => u.val === urgence)?.label || 'Non précisée'}`,
-          '',
-          message || '(aucun message)',
-        ].join('\n'),
+        urgence: urgence || undefined,
+        message: message || undefined,
       })
       setDone(true)
-    } catch {
-      toast.error('Une erreur est survenue, réessayez')
+    } catch (err) {
+      const msg = err?.response?.data?.message
+      toast.error(Array.isArray(msg) ? msg[0] : (msg || 'Une erreur est survenue, réessayez'))
+      console.error('Erreur envoi contact :', err?.response?.data || err)
     } finally {
       setSending(false)
     }

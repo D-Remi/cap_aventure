@@ -1,0 +1,206 @@
+/* ═══════════════════════════════════════════
+   Modale de contact — design v50
+   ═══════════════════════════════════════════ */
+
+.cmodal__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,17,21,.6);
+  backdrop-filter: blur(4px);
+  z-index: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  animation: cmFade .2s ease;
+}
+@keyframes cmFade { from { opacity: 0 } to { opacity: 1 } }
+
+.cmodal {
+  background: #fff;
+  border-radius: 22px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 24px 70px rgba(15,17,21,.25);
+  animation: cmRise .28s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes cmRise {
+  from { opacity: 0; transform: translateY(20px) }
+  to   { opacity: 1; transform: none }
+}
+
+.cmodal__close {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: var(--gray);
+  color: var(--soft);
+  font-size: .95rem;
+  cursor: pointer;
+  font-family: inherit;
+  display: grid;
+  place-items: center;
+  transition: background .18s, color .18s;
+  z-index: 2;
+}
+.cmodal__close:hover { background: var(--gray2); color: var(--ink); }
+
+/* ── En-tête ── */
+.cmodal__head { padding: 2.2rem 2.2rem 1.4rem; }
+.cmodal__head h2 {
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -.035em;
+  color: var(--ink);
+  line-height: 1.15;
+  margin-bottom: .5rem;
+  padding-right: 2rem;
+}
+.cmodal__head p {
+  color: var(--soft);
+  font-size: .95rem;
+  font-weight: 300;
+}
+
+/* ── Corps ── */
+.cmodal__body {
+  padding: 0 2.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.05rem;
+}
+.cmodal__field { display: flex; flex-direction: column; gap: .45rem; min-width: 0; }
+.cmodal__field label {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+.cmodal__field input,
+.cmodal__field textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: .78rem 1rem;
+  font-family: inherit;
+  font-size: .95rem;
+  color: var(--ink);
+  background: #fff;
+  outline: none;
+  transition: border-color .2s;
+  resize: vertical;
+}
+.cmodal__field input:focus,
+.cmodal__field textarea:focus { border-color: var(--s2); }
+.cmodal__field input::placeholder,
+.cmodal__field textarea::placeholder { color: var(--soft2); }
+
+.cmodal__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; min-width: 0; }
+.cmodal__row > * { min-width: 0; }
+
+/* ── Chips ── */
+.cmodal__chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+.cmodal__chip {
+  background: var(--gray);
+  color: var(--ink);
+  border: 1.5px solid transparent;
+  border-radius: 100px;
+  padding: .45rem 1rem;
+  font-size: .87rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .18s;
+}
+.cmodal__chip:hover { border-color: var(--s2-bright); }
+.cmodal__chip.is-on { background: var(--s2); color: #fff; border-color: var(--s2); }
+
+/* ── Pied ── */
+.cmodal__foot { padding: 1.5rem 2.2rem 2rem; }
+.cmodal__submit { width: 100%; justify-content: center; }
+
+.cmodal__sep {
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  margin: 1rem 0;
+  color: var(--soft2);
+  font-size: .82rem;
+  font-weight: 300;
+}
+.cmodal__sep::before,
+.cmodal__sep::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.cmodal__wa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55rem;
+  background: #25D366;
+  color: #fff;
+  padding: .9rem 1.7rem;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: .94rem;
+  text-decoration: none;
+  transition: .25s;
+}
+.cmodal__wa:hover { background: #1eb85a; transform: translateY(-2px); }
+
+.cmodal__legal {
+  font-size: .8rem;
+  color: var(--soft);
+  text-align: center;
+  font-weight: 300;
+  margin-top: 1rem;
+}
+
+/* ── Confirmation ── */
+.cmodal__done { padding: 3.5rem 2.2rem 2.5rem; text-align: center; }
+.cmodal__done h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -.03em;
+  margin-bottom: .8rem;
+}
+.cmodal__done p {
+  color: var(--soft);
+  font-weight: 300;
+  font-size: 1rem;
+  max-width: 26rem;
+  margin: 0 auto 1.8rem;
+}
+.cmodal__done-btns {
+  display: flex;
+  gap: .8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 560px) {
+  .cmodal__overlay { padding: 0; align-items: flex-end; }
+  .cmodal {
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    max-width: 100%;
+  }
+  .cmodal__head { padding: 1.8rem 1.4rem 1.2rem; }
+  .cmodal__body { padding: 0 1.4rem; }
+  .cmodal__foot { padding: 1.3rem 1.4rem 1.8rem; }
+  .cmodal__row { grid-template-columns: 1fr; }
+  .cmodal__head h2 { font-size: 1.35rem; }
+}

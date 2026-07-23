@@ -3,6 +3,12 @@ import axios from 'axios'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/layout/AdminLayout'
 
+const URGENCES = {
+  info:    'Se renseigne',
+  bientot: 'Dans les prochaines semaines',
+  urgent:  'Situation urgente',
+}
+
 const SERVICES = {
   repit:          { label: 'Répit handicap',        color: '#0e6b6b', bg: '#e6f2f2' },
   accompagnement: { label: 'Accompagnement',        color: '#136f5b', bg: '#e7f2ee' },
@@ -38,7 +44,7 @@ export default function AdminContacts() {
     toast.success('Demande supprimée')
   }
 
-  const isUrgent = (c) => c.message?.toLowerCase().includes('urgent')
+  const isUrgent = (c) => c.urgence === 'urgent'
 
   const filtered = contacts.filter(c => {
     if (filter === 'non_traites') return !c.traite
@@ -170,6 +176,11 @@ export default function AdminContacts() {
                       <div style={{ fontSize: '.92rem', fontWeight: 500 }}>
                         {(SERVICES[selected.service] || SERVICES.autre).label}
                       </div>
+                      {selected.urgence && (
+                        <div style={{ fontSize: '.85rem', color: 'var(--soft)', marginTop: 4 }}>
+                          {URGENCES[selected.urgence] || selected.urgence}
+                        </div>
+                      )}
                     </div>
                   </div>
 

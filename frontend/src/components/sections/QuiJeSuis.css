@@ -2,32 +2,28 @@
 .qui__box {
   background: var(--gray);
   border-radius: 26px;
-  padding: 3.4rem;
-  display: grid; grid-template-columns: .85fr 1.15fr;
-  gap: 3.4rem; align-items: center;
+  padding: 3.2rem;
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: 3.4rem;
+  align-items: center;
 }
-.qui__side { display: flex; flex-direction: column; gap: 1.1rem; }
-.qui__quote {
-  background: var(--s2); color: #fff;
-  border-radius: 16px; padding: 1.8rem;
-  font-size: 1.05rem; font-weight: 300;
-  line-height: 1.55; font-style: italic;
-  margin: 0;
+.qui__photo {
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 4/5;
 }
-.qui__facts { background: #fff; border-radius: 16px; padding: 1.5rem; }
-.qui__fact { padding: .85rem 0; border-bottom: 1px solid var(--line); }
-.qui__fact:first-child { padding-top: 0; }
-.qui__fact:last-child { border: none; padding-bottom: 0; }
-.qui__fact b { display: block; font-size: .95rem; font-weight: 600; margin-bottom: .1rem; }
-.qui__fact span { font-size: .85rem; color: var(--soft); font-weight: 300; }
-
+.qui__photo img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
 .qui__text h2 {
-  font-size: 2rem; font-weight: 700;
+  font-size: 1.95rem; font-weight: 700;
   letter-spacing: -.035em; margin-bottom: 1.1rem; line-height: 1.12;
 }
 .qui__text p {
   color: var(--soft); font-weight: 300;
-  margin-bottom: .95rem; font-size: 1.02rem;
+  margin-bottom: .9rem; font-size: 1.01rem;
 }
 .qui__text p strong { color: var(--ink); font-weight: 600; }
 
@@ -37,11 +33,13 @@
   border-top: 1px solid var(--line);
 }
 .qui__cred b {
-  display: block; font-size: 1.3rem; font-weight: 700;
+  display: block; font-size: 1.25rem; font-weight: 700;
   color: var(--s2); letter-spacing: -.02em;
 }
-.qui__cred span { font-size: .83rem; color: var(--soft); font-weight: 300; }
+.qui__cred span { font-size: .82rem; color: var(--soft); font-weight: 300; }
 
 @media (max-width: 960px) {
-  .qui__box { grid-template-columns: 1fr; gap: 2.2rem; padding: 2.3rem 1.6rem; }
+  .qui__box { grid-template-columns: 1fr; gap: 2.2rem; padding: 2.2rem 1.6rem; }
+  .qui__photo { aspect-ratio: 16/10; }
+  .qui__text h2 { font-size: 1.6rem; }
 }

@@ -7,9 +7,9 @@ export class ContactRequest {
   @Column({ nullable:true }) nom: string
   @Column() email: string
   @Column({ nullable:true }) telephone: string
-  @Column({ type:'enum', enum:['garde','repit','evenement','autre'], nullable:true }) service: string
+  @Column({ type:'enum', enum:['repit','accompagnement','autre'], nullable:true }) service: string
   @Column({ nullable:true }) enfant_prenom: string
-  @Column({ nullable:true }) enfant_age: string
+  @Column({ type:'enum', enum:['info','bientot','urgent'], nullable:true }) urgence: string
   @Column({ default:false }) besoins_specifiques: boolean
   @Column({ type:'text', nullable:true }) message: string
   @Column({ default:false }) traite: boolean
