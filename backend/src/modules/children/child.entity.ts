@@ -32,7 +32,6 @@ export class Child {
   @Column({ type:'text', nullable:true }) consignes_communication: string
   @Column({ default:false }) traitement_medicamenteux: boolean
   @Column({ type:'text', nullable:true }) details_traitement: string
-  @Column({ nullable:true }) niveau_natation: string
   @Column({ type:'text', nullable:true }) infos_medicales: string
   @Column({ default:true }) autorisation_sortie: boolean
   @Column({ default:false }) autorisation_photo: boolean

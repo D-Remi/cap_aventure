@@ -155,7 +155,7 @@ function EnfantsTab({ children, setChildren }) {
 
   // Formulaire étape 1
   const [form, setForm] = useState({
-    prenom:'', nom:'', date_naissance:'', niveau_natation:'',
+    prenom:'', nom:'', date_naissance:'',
     infos_medicales:'', allergie:'', medecin_nom:'', medecin_telephone:'',
     contact_urgence_nom:'', contact_urgence_lien:'', contact_urgence_telephone:''
   })
@@ -185,7 +185,7 @@ function EnfantsTab({ children, setChildren }) {
       const { data } = await axios.post('/api/children', form)
       setChildren(c => [...c, data])
       setAdding(false)
-      setForm({ prenom:'', nom:'', date_naissance:'', niveau_natation:'', infos_medicales:'', allergie:'', medecin_nom:'', medecin_telephone:'', contact_urgence_nom:'', contact_urgence_lien:'', contact_urgence_telephone:'' })
+      setForm({ prenom:'', nom:'', date_naissance:'', infos_medicales:'', allergie:'', medecin_nom:'', medecin_telephone:'', contact_urgence_nom:'', contact_urgence_lien:'', contact_urgence_telephone:'' })
     } catch { alert('Erreur') } finally { setSaving(false) }
   }
 
@@ -367,17 +367,7 @@ function EnfantsTab({ children, setChildren }) {
               <div className="form-group"><label>Prénom *</label><input value={form.prenom} onChange={setF('prenom')} placeholder="Prénom"/></div>
               <div className="form-group"><label>Nom *</label><input value={form.nom} onChange={setF('nom')} placeholder="Nom"/></div>
             </div>
-            <div className="child-form__row">
-              <div className="form-group"><label>Date de naissance *</label><input type="date" value={form.date_naissance} onChange={setF('date_naissance')}/></div>
-              <div className="form-group"><label>Niveau natation</label>
-                <select value={form.niveau_natation} onChange={setF('niveau_natation')}>
-                  <option value="">—</option>
-                  <option>Non nageur</option>
-                  <option>Aisance Aquatique (Test OK)</option>
-                  <option>Nageur confirmé</option>
-                </select>
-              </div>
-            </div>
+            <div className="form-group"><label>Date de naissance *</label><input type="date" value={form.date_naissance} onChange={setF('date_naissance')}/></div>
             <div className="child-form__section">SANTÉ</div>
             <div className="form-group"><label>Infos médicales</label><textarea rows={2} value={form.infos_medicales} onChange={setF('infos_medicales')}/></div>
             <div className="form-group"><label>Allergie alimentaire</label><input value={form.allergie} onChange={setF('allergie')} placeholder="Aucune"/></div>

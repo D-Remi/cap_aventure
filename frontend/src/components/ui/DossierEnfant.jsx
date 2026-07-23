@@ -72,12 +72,6 @@ export default function DossierEnfant({ child, showPrivate=false }) {
           <strong>{child.medecin_nom||'—'}</strong>
           <span>{child.medecin_telephone||''}</span>
         </div>
-        {child.niveau_natation && (
-          <div className="dossier__contact">
-            <div className="dossier__contact-label">Niveau Natation :</div>
-            <span className="dossier__nage">{child.niveau_natation}</span>
-          </div>
-        )}
       </div>
       {showPrivate && child.notes_animateur && (
         <div className="dossier__private">
