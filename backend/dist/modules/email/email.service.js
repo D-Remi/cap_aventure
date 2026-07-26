@@ -64,11 +64,12 @@ let EmailService = EmailService_1 = class EmailService {
             });
         }
     }
-    async send(to, subject, html) {
+    async send(to, subject, html, replyTo) {
         try {
             await this.transporter.sendMail({
                 from: `"CapAventure" <${process.env.MAIL_FROM || process.env.MAIL_USER}>`,
                 to, subject, html,
+                ...(replyTo ? { replyTo } : {}),
             });
             this.logger.log(`Email → ${to} : ${subject}`);
         }
@@ -77,44 +78,46 @@ let EmailService = EmailService_1 = class EmailService {
         }
     }
     tpl(content) {
+        const site = process.env.FRONTEND_URL || 'https://capaventure33.fun';
         return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <style>
-body{margin:0;padding:0;background:#f0e6d8;font-family:'Segoe UI',Arial,sans-serif}
-.wrap{max-width:580px;margin:32px auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08)}
-.header{background:linear-gradient(135deg,#2d3a6b,#4a7a6d);padding:28px 40px;text-align:center}
-.header h1{margin:0;font-size:26px;color:#fff;font-weight:900}
-.header h1 span{color:#d4b99a}
-.header p{margin:6px 0 0;color:rgba(255,255,255,.7);font-size:13px}
+body{margin:0;padding:0;background:#f6f7f9;font-family:'Segoe UI',Arial,sans-serif}
+.wrap{max-width:580px;margin:32px auto;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 8px 32px rgba(15,17,21,.08)}
+.header{background:#0f1115;padding:28px 40px}
+.header h1{margin:0;font-size:24px;color:#fff;font-weight:800;letter-spacing:-.02em}
+.header h1 span{color:#1a8a72}
+.header p{margin:6px 0 0;color:rgba(255,255,255,.55);font-size:13px;font-weight:300}
 .body{padding:32px 40px}
-.body p{margin:0 0 16px;color:#374151;font-size:15px;line-height:1.7}
-.btn{display:inline-block;margin:8px 0 20px;background:#4a7a6d;color:#fff!important;font-weight:800;font-size:15px;padding:14px 32px;border-radius:50px;text-decoration:none}
-.box{background:#f0e6d8;border-left:4px solid #4a7a6d;border-radius:8px;padding:14px 18px;margin:16px 0}
-.box p{margin:0;font-size:14px;color:#374151}
-.footer{background:#faf8f4;padding:20px 40px;text-align:center;border-top:1px solid #e5e7eb}
-.footer p{margin:0;font-size:12px;color:#9ca3af}
-.footer a{color:#4a7a6d;text-decoration:none}
+.body p{margin:0 0 16px;color:#1a1d24;font-size:15px;line-height:1.7}
+.body strong{color:#0f1115}
+.btn{display:inline-block;margin:8px 0 20px;background:#136f5b;color:#fff!important;font-weight:600;font-size:15px;padding:14px 30px;border-radius:50px;text-decoration:none}
+.box{background:#f6f7f9;border-left:3px solid #136f5b;border-radius:8px;padding:16px 20px;margin:16px 0}
+.box p{margin:0;font-size:14px;color:#1a1d24;line-height:1.6}
+.footer{background:#f6f7f9;padding:22px 40px;text-align:center;border-top:1px solid #eaecef}
+.footer p{margin:0;font-size:12px;color:#9ba1ac;line-height:1.6}
+.footer a{color:#136f5b;text-decoration:none}
 </style></head><body><div class="wrap">
 <div class="header"><h1>Cap<span>Aventure</span></h1><p>Répit et accompagnement éducatif · Gironde (33)</p></div>
 <div class="body">${content}</div>
-<div class="footer"><p>CapAventure · Gironde (33)<br/>
-<a href="mailto:${process.env.MAIL_USER}">Nous contacter</a> · 
-<a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}">Visiter le site</a></p></div>
+<div class="footer"><p>CapAventure · Éducateur en lieu de vie · Gironde (33)<br/>
+<a href="${site}">capaventure33.fun</a></p></div>
 </div></body></html>`;
     }
     async sendWelcome(to, prenom) {
-        await this.send(to, 'Bienvenue sur CapAventure !', this.tpl(`
-      <p>Bonjour <strong>${prenom}</strong> </p>
-      <p>Votre compte <strong>CapAventure</strong> a bien été créé. Vous pouvez dès maintenant gérer vos enfants et réserver des créneaux.</p>
-      <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/dashboard" class="btn">Accéder à mon espace →</a>
+        await this.send(to, 'Bienvenue sur CapAventure', this.tpl(`
+      <p>Bonjour <strong>${prenom}</strong>,</p>
+      <p>Votre espace <strong>CapAventure</strong> a bien été créé. Vous pouvez dès maintenant y accéder pour suivre votre accompagnement.</p>
+      <a href="${process.env.FRONTEND_URL || 'https://capaventure33.fun'}/dashboard" class="btn">Accéder à mon espace →</a>
     `));
     }
     async sendResetPassword(to, prenom, token) {
-        const url = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password?token=${token}`;
+        const url = `${process.env.FRONTEND_URL || 'https://capaventure33.fun'}/reset-password?token=${token}`;
         await this.send(to, 'Réinitialisation de votre mot de passe', this.tpl(`
       <p>Bonjour <strong>${prenom}</strong>,</p>
       <p>Cliquez sur le bouton ci-dessous pour réinitialiser votre mot de passe :</p>
       <a href="${url}" class="btn">Réinitialiser mon mot de passe →</a>
-      <div class="box"><p>Ce lien est valable <strong>1 heure</strong> uniquement.</p></div>
+      <div class="box"><p>Ce lien est valable <strong>1 heure</strong> uniquement. Si vous n'êtes pas à l'origine de cette demande, ignorez cet email.</p></div>
     `));
     }
     async sendSeancePlanifiee(to, prenom, date, heure) {
@@ -140,18 +143,38 @@ body{margin:0;padding:0;background:#f0e6d8;font-family:'Segoe UI',Arial,sans-ser
     `));
     }
     async sendContactNotif(data) {
-        const admin = process.env.ADMIN_EMAIL;
+        const admin = process.env.ADMIN_EMAIL || process.env.MAIL_USER;
         if (!admin)
             return;
-        await this.send(admin, `Nouveau contact — ${data.prenom}`, this.tpl(`
-      <p>Nouvelle demande de contact reçue.</p>
+        const services = {
+            repit: 'Répit', accompagnement: 'Accompagnement éducatif', autre: 'Non précisé',
+        };
+        const urgences = {
+            info: 'Se renseigne', bientot: 'Dans les prochaines semaines', urgent: 'Situation urgente',
+        };
+        await this.send(admin, `Nouvelle demande — ${data.prenom}`, this.tpl(`
+      <p>Vous avez reçu une nouvelle demande de contact.</p>
       <div class="box">
-        <p><strong>${data.prenom}</strong> · ${data.email}<br/>
-        Service : ${data.service || '—'}<br/>
-        ${data.besoins_specifiques ? 'Besoins spécifiques signalés' : ''}</p>
+        <p>
+          <strong>${data.prenom}</strong><br/>
+          Email : ${data.email}<br/>
+          ${data.telephone ? `Téléphone : ${data.telephone}<br/>` : ''}
+          Service : ${services[data.service] || 'Non précisé'}<br/>
+          ${data.urgence ? `Échéance : ${urgences[data.urgence] || data.urgence}<br/>` : ''}
+        </p>
       </div>
-      <a href="mailto:${data.email}" class="btn">Répondre →</a>
-    `));
+      ${data.message ? `<p><strong>Message :</strong></p><div class="box"><p>${data.message.replace(/\n/g, '<br/>')}</p></div>` : ''}
+      <a href="mailto:${data.email}" class="btn">Répondre par email →</a>
+      <p style="font-size:13px;color:#6e7480">Ou retrouvez cette demande dans votre espace admin.</p>
+    `), data.email);
+    }
+    async sendReponseContact(to, prenom, message) {
+        await this.send(to, 'Réponse à votre demande — CapAventure', this.tpl(`
+      <p>Bonjour <strong>${prenom}</strong>,</p>
+      <div class="box"><p>${message.replace(/\n/g, '<br/>')}</p></div>
+      <p>Vous pouvez répondre directement à cet email pour continuer notre échange.</p>
+      <p style="font-size:14px;color:#6e7480">Rémi · Éducateur en lieu de vie</p>
+    `), process.env.MAIL_USER);
     }
 };
 exports.EmailService = EmailService;

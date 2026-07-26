@@ -20,6 +20,9 @@ export default function AdminContacts() {
   const [selected, setSelected] = useState(null)
   const [filter,   setFilter]   = useState('non_traites')
   const [loading,  setLoading]  = useState(true)
+  const [repondreA, setRepondreA] = useState(null)
+  const [reponse,   setReponse]   = useState('')
+  const [envoi,     setEnvoi]     = useState(false)
 
   useEffect(() => { load() }, [])
 
@@ -210,6 +213,9 @@ export default function AdminContacts() {
                         WhatsApp
                       </a>
                     )}
+                    <button className="btn-primary" onClick={() => { setRepondreA(selected); setReponse('') }} style={{ fontSize: '.9rem', padding: '.75rem 1.5rem' }}>
+                      Répondre depuis le site
+                    </button>
                     {!selected.traite && (
                       <button className="btn-secondary" onClick={() => marquerTraite(selected.id)} style={{ fontSize: '.9rem' }}>
                         Marquer traitée
@@ -230,6 +236,35 @@ export default function AdminContacts() {
           </div>
         )}
       </div>
+
+      {repondreA && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(15,17,21,.55)', zIndex: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }} onClick={() => setRepondreA(null)}>
+          <div style={{ background: '#fff', borderRadius: 18, width: '100%', maxWidth: 540, overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
+            <div style={{ background: 'var(--ink)', padding: '1.15rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', fontWeight: 600, margin: 0 }}>Répondre à {repondreA.prenom}</h3>
+              <button onClick={() => setRepondreA(null)} style={{ background: 'rgba(255,255,255,.15)', border: 'none', color: '#fff', width: 30, height: 30, borderRadius: '50%', cursor: 'pointer', fontFamily: 'inherit' }}>✕</button>
+            </div>
+            <div style={{ padding: '1.5rem' }}>
+              <p style={{ fontSize: '.88rem', color: 'var(--soft)', marginBottom: '1rem' }}>
+                Votre message sera envoyé à <strong>{repondreA.email}</strong>. Le parent pourra répondre directement à votre adresse.
+              </p>
+              <textarea
+                rows={7}
+                value={reponse}
+                onChange={e => setReponse(e.target.value)}
+                placeholder="Bonjour, merci pour votre message…"
+                style={{ width: '100%', padding: '.8rem 1rem', border: '1.5px solid var(--line)', borderRadius: 10, fontFamily: 'inherit', fontSize: '.92rem', outline: 'none', resize: 'vertical' }}
+              />
+              <div style={{ display: 'flex', gap: '.75rem', marginTop: '1rem' }}>
+                <button className="btn-secondary" style={{ flex: 1 }} onClick={() => setRepondreA(null)}>Annuler</button>
+                <button className="btn-primary" style={{ flex: 1 }} onClick={envoyerReponse} disabled={envoi || !reponse.trim()}>
+                  {envoi ? 'Envoi…' : 'Envoyer la réponse'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </AdminLayout>
   )
 }
