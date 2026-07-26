@@ -25,7 +25,7 @@ export default function HomePage() {
     const meta = document.querySelector('meta[name="description"]')
     if (meta) meta.setAttribute(
       'content',
-      "Éducateur en lieu de vie en Gironde. Répit pour parents d'enfants en situation de handicap et accompagnement éducatif pour les familles en difficulté. Premier échange gratuit."
+      "Éducateur en lieu de vie en Gironde. Répit pour les parents à bout de souffle et accompagnement éducatif pour les familles en difficulté. Premier échange gratuit."
     )
   }, [])
 

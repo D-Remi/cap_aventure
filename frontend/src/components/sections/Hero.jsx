@@ -19,8 +19,7 @@ export default function Hero({ onContact }) {
           <p className="hero__lead">
             Éducateur spécialisé, j'accompagne des enfants au quotidien en lieu de vie.
             Je propose deux services aux familles de Gironde : du répit pour les parents
-            d'enfants en situation de handicap, et un accompagnement éducatif pour celles
-            qui n'en peuvent plus.
+            à bout de souffle, et un accompagnement éducatif pour celles qui n'en peuvent plus.
           </p>
 
           <div className="hero__btns">

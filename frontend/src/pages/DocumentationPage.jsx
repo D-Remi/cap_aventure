@@ -5,12 +5,12 @@ import './DocumentationPage.css'
 
 const DOCS = [
   { cat:'Pour commencer', items:[
-    { title:"Que propose CapAventure ?", content:"Deux services distincts, assurés par un éducateur en lieu de vie :\n\n1. Du répit pour les parents d'enfants en situation de handicap — je prends le relais quelques heures.\n\n2. Un accompagnement éducatif pour les familles en difficulté — guidance parentale et travail avec l'enfant pour reposer un cadre." },
+    { title:"Que propose CapAventure ?", content:"Deux services distincts, assurés par un éducateur en lieu de vie :\n\n1. Du répit pour tous les parents à bout de souffle — familles nombreuses, parents isolés, ou enfants aux besoins spécifiques. Je prends le relais quelques heures.\n\n2. Un accompagnement éducatif pour les familles en difficulté — guidance parentale et travail avec l'enfant pour reposer un cadre." },
     { title:"Comment se passe le premier contact ?", content:"Vous remplissez le formulaire de contact ou vous m'écrivez sur WhatsApp. Je vous réponds sous 24h et nous convenons d'un premier échange téléphonique de 30 minutes, gratuit et sans engagement." },
-    { title:"Quels documents fournir ?", content:"Rien d'obligatoire au départ.\n\nPour le répit handicap, si vous les avez : notification MDPH, PAP ou PPS, ordonnances en cours, compte-rendu de suivi.\n\nTous les documents s'ajoutent depuis votre espace famille, onglet Documents." },
+    { title:"Quels documents fournir ?", content:"Rien d'obligatoire au départ.\n\nSi votre enfant a des besoins spécifiques et que vous les avez : notification MDPH, PAP ou PPS, ordonnances en cours. Rien d'obligatoire.\n\nTous les documents s'ajoutent depuis votre espace famille, onglet Documents." },
   ]},
-  { cat:'Le répit handicap', items:[
-    { title:"En quoi consiste le répit ?", content:"C'est un temps où je prends le relais auprès de votre enfant, pour que vous puissiez souffler, vous occuper de vos autres enfants, ou simplement vous reposer.\n\nCe n'est pas de la garde classique : c'est un accompagnement par un professionnel habitué aux besoins spécifiques." },
+  { cat:'Le répit', items:[
+    { title:"À qui s'adresse le répit ?", content:"À toutes les familles qui ont besoin de souffler. Que vous éleviez plusieurs enfants, que vous soyez seul(e) sans relais, ou que votre enfant ait des besoins particuliers.\n\nCe n'est pas de la garde classique : c'est un relais par un professionnel à l'aise aussi bien avec une fratrie nombreuse qu'avec des enfants aux besoins spécifiques." },
     { title:"Quels profils d'enfants ?", content:"Troubles du spectre de l'autisme (TSA)\nTDAH\nTroubles du comportement\nTroubles DYS\nAnxiété, phobie scolaire\nHandicap moteur léger\n\nUn échange préalable permet toujours d'évaluer si je suis la bonne personne pour votre enfant." },
     { title:"Comment se déroule la mise en place ?", content:"1. Un échange approfondi sur votre enfant : ses repères, ses déclencheurs, ce qui l'apaise.\n\n2. Une première rencontre en votre présence, pour que votre enfant m'identifie sans stress.\n\n3. Le répit commence, à un rythme défini ensemble." },
   ]},
@@ -21,7 +21,7 @@ const DOCS = [
   ]},
   { cat:'Tarifs et aides', items:[
     { title:"Quels sont les tarifs ?", content:"Les tarifs sont établis sur devis, selon le service, la fréquence et votre situation.\n\nLe premier échange est toujours gratuit et sans engagement." },
-    { title:"Quelles aides financières existent ?", content:"Selon votre situation :\n\nPCH (Prestation de Compensation du Handicap) via la MDPH\nAEEH et ses compléments\nFonds de répit départementaux\nCrédit d'impôt services à la personne\nAides de certaines mutuelles et caisses de retraite\n\nJe peux vous orienter dans les démarches." },
+    { title:"Quelles aides financières existent ?", content:"Le crédit d'impôt services à la personne peut s'appliquer quelle que soit votre situation.\n\nSi votre enfant est en situation de handicap, d'autres aides existent : PCH via la MDPH, AEEH et ses compléments, fonds de répit départementaux, aides de certaines mutuelles.\n\nJe peux vous orienter dans les démarches." },
     { title:"Le CESU est-il accepté ?", content:"Oui, les paiements en CESU et par virement bancaire sont acceptés." },
   ]},
   { cat:'Votre espace famille', items:[

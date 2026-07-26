@@ -1,10 +1,10 @@
 import './Services.css'
 
 const REPIT_POUR = [
-  "Votre enfant est porteur d'un handicap, d'un TSA, d'un TDAH ou de troubles du comportement",
-  "Vous n'avez jamais de temps pour vous, ni pour vos autres enfants",
-  "Vous ne trouvez personne de suffisamment formé pour le garder sereinement",
-  "Vous avez besoin de souffler sans culpabiliser",
+  "Vous élevez plusieurs enfants et vous n'avez jamais un moment à vous",
+  "Vous êtes seul(e) ou sans relais familial autour de vous",
+  "Votre enfant a des besoins spécifiques (handicap, TSA, TDAH, troubles du comportement)",
+  "Vous avez besoin de souffler quelques heures, sans culpabiliser",
 ]
 
 const ACC_POUR = [
@@ -39,11 +39,12 @@ export default function Services({ onContact }) {
           </div>
           <div className="svc__body">
             <span className="svc__tag">Service 01 · Répit</span>
-            <h3>Du répit pour les parents aidants</h3>
+            <h3>Du répit pour les parents à bout de souffle</h3>
             <p className="svc__desc">
-              Accompagner un enfant en situation de handicap au quotidien, c'est une charge
-              qui ne s'arrête jamais. Je prends le relais quelques heures, avec la compétence
-              d'un professionnel qui travaille tous les jours avec des enfants aux besoins spécifiques.
+              Élever plusieurs enfants, accompagner un enfant aux besoins particuliers,
+              tenir seul(e) sans relais autour de soi — dans tous les cas, vous avez le droit
+              de souffler. Je prends le relais quelques heures, avec la même exigence quel que
+              soit le profil de votre enfant, et une vraie aisance sur les situations complexes.
             </p>
             <div className="svc__for">
               <span className="svc__lbl">Ce service s'adresse à vous si</span>
