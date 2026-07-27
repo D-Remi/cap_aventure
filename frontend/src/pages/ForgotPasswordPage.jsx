@@ -24,7 +24,7 @@ export default function ForgotPasswordPage() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <Link to="/" className="auth-logo">Cap<span>Aventure</span></Link>
+        <Link to="/" className="auth-logo">Éduc<span> &amp; Vous</span></Link>
         <h1>Mot de passe oublié</h1>
         <p className="auth-sub">Entrez votre email pour recevoir un lien de réinitialisation</p>
 

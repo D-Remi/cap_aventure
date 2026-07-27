@@ -22,7 +22,7 @@ export default function AdminLayout({ children }) {
     <div className="admin-layout">
       <aside className="admin-sidebar">
         <div className="admin-sidebar__brand">
-          <Link to="/" className="admin-sidebar__logo">Cap<span>Aventure</span></Link>
+          <Link to="/" className="admin-sidebar__logo">Éduc<span> &amp; Vous</span></Link>
           <div className="admin-sidebar__role">Administration</div>
         </div>
         <nav className="admin-sidebar__nav">

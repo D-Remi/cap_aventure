@@ -10,7 +10,7 @@ const URGENCES = {
 }
 
 const SERVICES = {
-  repit:          { label: 'Répit handicap',        color: '#0e6b6b', bg: '#e6f2f2' },
+  repit:          { label: 'Relais à la journée',  color: '#0e6b6b', bg: '#e6f2f2' },
   accompagnement: { label: 'Accompagnement',        color: '#136f5b', bg: '#e7f2ee' },
   autre:          { label: 'Non précisé',           color: '#6e7480', bg: '#f6f7f9' },
 }

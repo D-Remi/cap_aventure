@@ -37,7 +37,7 @@ export default function RegisterPage() {
   return (
     <div className="auth-page">
       <div className="auth-card auth-card--wide">
-        <Link to="/" className="auth-logo">Cap<span>Aventure</span></Link>
+        <Link to="/" className="auth-logo">Éduc<span> &amp; Vous</span></Link>
         <h1>Créer un compte</h1>
         <p className="auth-sub">Créez votre espace pour suivre l'accompagnement</p>
 

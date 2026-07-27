@@ -92,7 +92,7 @@ export default function MessagingTab() {
         <div className="msg-header__avatar">CA</div>
         <div>
           <div className="msg-header__name">{adminName}</div>
-          <div className="msg-header__sub">Animateur CapAventure · Répond sous 24h</div>
+          <div className="msg-header__sub">Éducateur Éduc & Vous · Répond sous 24h</div>
         </div>
       </div>
 

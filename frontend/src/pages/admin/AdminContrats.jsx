@@ -156,7 +156,7 @@ export default function AdminContrats() {
     <AdminLayout>
       <div className="admin-page">
         <div className="admin-page__header">
-          <div><h1>Contrats Répit</h1>
+          <div><h1>Contrats Relais</h1>
             <p className="admin-page__subtitle">{contrats.filter(c=>c.statut==='actif').length} contrat{contrats.filter(c=>c.statut==='actif').length>1?'s':''} actif{contrats.filter(c=>c.statut==='actif').length>1?'s':''}</p>
           </div>
           <button className="btn-primary" onClick={()=>{setForm(EMPTY_CONTRAT);setModal('create')}}>+ Nouveau contrat</button>
@@ -384,7 +384,7 @@ export default function AdminContrats() {
       {(modal==='create'||modal==='edit') && (
         <div className="admin-modal-overlay" onClick={()=>!saving&&setModal(null)}>
           <div className="admin-modal" style={{maxWidth:640,maxHeight:'85vh',overflowY:'auto'}} onClick={e=>e.stopPropagation()}>
-            <h2>{modal==='create'?'Nouveau contrat répit':'Modifier le contrat'}</h2>
+            <h2>{modal==='create'?'Nouveau contrat relais':'Modifier le contrat'}</h2>
 
             {modal==='create' && (
               <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'.75rem',marginBottom:'.75rem'}}>

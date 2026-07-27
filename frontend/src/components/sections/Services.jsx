@@ -1,17 +1,17 @@
 import './Services.css'
 
-const REPIT_POUR = [
+const RELAIS_POUR = [
+  "Vous avez besoin d'une garde ponctuelle, à la journée ou pour quelques heures",
   "Vous élevez plusieurs enfants et vous n'avez jamais un moment à vous",
   "Vous êtes seul(e) ou sans relais familial autour de vous",
   "Votre enfant a des besoins spécifiques (handicap, TSA, TDAH, troubles du comportement)",
-  "Vous avez besoin de souffler quelques heures, sans culpabiliser",
 ]
 
 const ACC_POUR = [
-  "Vous avez le sentiment de ne plus vous faire respecter",
+  "La relation avec votre enfant s'est tendue et vous ne savez plus par où reprendre",
   "Chaque demande se transforme en conflit ou en négociation sans fin",
-  "Vous avez tout essayé : punitions, récompenses, discussions, cris",
-  "Vous êtes épuisé et vous culpabilisez de l'être",
+  "Vous cherchez quelqu'un pour vous épauler sur ce qui vous dépasse",
+  "Vous êtes épuisé et vous aimeriez retrouver des journées plus sereines",
 ]
 
 export default function Services({ onContact }) {
@@ -28,7 +28,7 @@ export default function Services({ onContact }) {
           </p>
         </div>
 
-        {/* SERVICE 1 — RÉPIT */}
+        {/* SERVICE 1 — RELAIS À LA JOURNÉE */}
         <article className="svc svc--repit" id="repit">
           <div className="svc__photo">
             <img
@@ -38,20 +38,21 @@ export default function Services({ onContact }) {
             />
           </div>
           <div className="svc__body">
-            <span className="svc__tag">Service 01 · Répit</span>
-            <h3>Du répit pour les parents à bout de souffle</h3>
+            <span className="svc__tag">Service 01 · Relais</span>
+            <h3>Le relais à la journée, quand vous en avez besoin</h3>
             <p className="svc__desc">
-              Élever plusieurs enfants, accompagner un enfant aux besoins particuliers,
-              tenir seul(e) sans relais autour de soi — dans tous les cas, vous avez le droit
-              de souffler. Je prends le relais quelques heures, avec la même exigence quel que
-              soit le profil de votre enfant, et une vraie aisance sur les situations complexes.
+              Un rendez-vous, un imprévu, une journée pour souffler, ou simplement besoin
+              d'un relais de confiance : je prends le relais auprès de votre enfant, à la
+              journée ou pour quelques heures. Une garde occasionnelle assurée par un
+              éducateur, à l'aise aussi bien avec une fratrie nombreuse qu'avec des enfants
+              aux besoins spécifiques.
             </p>
             <div className="svc__for">
               <span className="svc__lbl">Ce service s'adresse à vous si</span>
-              <ul>{REPIT_POUR.map(t => <li key={t}>{t}</li>)}</ul>
+              <ul>{RELAIS_POUR.map(t => <li key={t}>{t}</li>)}</ul>
             </div>
             <button className="svc__cta" onClick={() => onContact('repit')}>
-              Demander du répit →
+              Demander un relais →
             </button>
           </div>
         </article>

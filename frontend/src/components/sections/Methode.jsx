@@ -2,28 +2,28 @@ import './Methode.css'
 
 const PRINCIPES = [
   {
-    t: 'Un cadre clair, tenu jusqu\'au bout',
-    d: "Un enfant qui teste les limites cherche à savoir si elles existent vraiment. Les poser calmement et ne pas céder, c'est le rassurer, pas le brimer.",
+    t: "Tout part de la communication",
+    d: "Avant tout, je parle avec le jeune. Comprendre ce qu'il vit, mettre des mots sur ce qui coince : c'est là que tout commence, et c'est souvent ce qui débloque le reste.",
   },
   {
-    t: 'Réparer plutôt que punir',
-    d: "Une bêtise se répare. Cette logique apprend la responsabilité, là où la punition n'apprend que la peur ou la ruse.",
+    t: "Chaque action a une conséquence",
+    d: "J'aide l'enfant à comprendre que ce qu'il fait a un effet sur toute la famille. Pas pour le culpabiliser, mais pour qu'il saisisse le lien entre ses choix et ce qui se passe autour de lui.",
   },
   {
-    t: 'Le respect s\'apprend en étant respecté',
-    d: "On ne peut pas exiger d'un enfant une attitude qu'on ne lui montre pas soi-même. Ça commence toujours par l'adulte.",
+    t: "Montrer que bien vivre ensemble, c'est mieux",
+    d: "Quand tout se passe bien, la maison est plus légère pour tout le monde. Je fais découvrir au jeune que le calme et le respect lui rapportent, à lui le premier.",
   },
   {
-    t: 'Ni cri, ni humiliation. Jamais.',
-    d: "Élever la voix règle un problème pendant dix minutes et en crée un pour dix ans. La fermeté n'a rien à voir avec la brutalité.",
+    t: "Des hauts et des bas, c'est normal",
+    d: "Il y en a tous les jours, dans toutes les familles. Je ne cherche pas la perfection : j'aide chacun à traverser les moments difficiles sans que ça déborde sur tout le reste.",
   },
   {
-    t: 'La constance vaut mieux que la sévérité',
-    d: "Mieux vaut une règle simple appliquée tous les jours qu'une règle stricte appliquée une fois sur deux.",
+    t: "Des ateliers adaptés à chaque famille",
+    d: "Je ne plaque pas une recette. Selon ce que vit votre famille, je propose des temps concrets et des activités sur mesure pour avancer sur ce qui vous pèse.",
   },
   {
-    t: 'Le bien-être de l\'enfant comme boussole',
-    d: "Chaque décision éducative se juge à une chose : est-ce que ça aide cet enfant à grandir en confiance ?",
+    t: "Vous aider, pas vous juger",
+    d: "Je ne suis pas là pour changer votre façon d'élever vos enfants. Je suis là pour vous épauler sur ce qui vous dépasse, à votre rythme et dans le respect de vos choix.",
   },
 ]
 
@@ -34,10 +34,10 @@ export default function Methode() {
         <div className="methode__box">
           <div className="methode__head">
             <span className="methode__kicker">Ma méthode</span>
-            <h2>Des principes éducatifs <span>solides</span>, pas des recettes miracles</h2>
+            <h2>La <span>communication</span> avant tout</h2>
             <p>
-              Ce que j'applique avec les six enfants dont je m'occupe au quotidien.
-              Rien de révolutionnaire : de la constance, de la clarté, et beaucoup de respect.
+              Chaque famille est différente, donc j'adapte. Mais tout repose sur une même idée :
+              parler, faire comprendre, et avancer ensemble, sans jugement.
             </p>
           </div>
           <div className="methode__grid">

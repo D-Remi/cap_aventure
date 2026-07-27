@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 const TYPES = {
-  repit:          { label: 'Répit',           color: '#0e6b6b', bg: '#e6f2f2' },
+  repit:          { label: 'Relais',          color: '#0e6b6b', bg: '#e6f2f2' },
   accompagnement: { label: 'Accompagnement',  color: '#136f5b', bg: '#e7f2ee' },
   guidance:       { label: 'Guidance',        color: '#5b4b8a', bg: '#eeeaf5' },
 }

@@ -32,7 +32,7 @@ export default function ResetPasswordPage() {
   if (!token) return (
     <div className="auth-page">
       <div className="auth-card">
-        <Link to="/" className="auth-logo">Cap<span>Aventure</span></Link>
+        <Link to="/" className="auth-logo">Éduc<span> &amp; Vous</span></Link>
         <p className="auth-error" style={{ marginTop: '1rem' }}>Lien invalide. Faites une nouvelle demande.</p>
         <p className="auth-switch"><Link to="/forgot-password">Mot de passe oublié →</Link></p>
       </div>
@@ -42,7 +42,7 @@ export default function ResetPasswordPage() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <Link to="/" className="auth-logo">Cap<span>Aventure</span></Link>
+        <Link to="/" className="auth-logo">Éduc<span> &amp; Vous</span></Link>
         <h1>Nouveau mot de passe</h1>
         <p className="auth-sub">Choisissez un mot de passe sécurisé (8 caractères min.)</p>
 

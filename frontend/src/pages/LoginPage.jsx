@@ -29,7 +29,7 @@ export default function LoginPage() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <Link to="/" className="auth-logo">Cap<span>Aventure</span></Link>
+        <Link to="/" className="auth-logo">Éduc<span> &amp; Vous</span></Link>
         <h1>Connexion</h1>
         <p className="auth-sub">Accédez à votre espace famille</p>
 

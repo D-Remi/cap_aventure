@@ -55,8 +55,8 @@ export default function ContratTab() {
   if (contrats.length === 0) return (
     <div style={{textAlign:'center',padding:'3rem'}}>
       <div style={{fontSize:'2rem',marginBottom:'.75rem'}}></div>
-      <h3 style={{color:'var(--nuit)',marginBottom:'.5rem'}}>Aucun contrat répit</h3>
-      <p style={{color:'var(--text-muted)',fontSize:'.88rem'}}>Contactez l'animateur pour établir un contrat de répit personnalisé.</p>
+      <h3 style={{color:'var(--nuit)',marginBottom:'.5rem'}}>Aucun contrat relais</h3>
+      <p style={{color:'var(--text-muted)',fontSize:'.88rem'}}>Contactez l'animateur pour établir un contrat de relais personnalisé.</p>
     </div>
   )
 
@@ -102,7 +102,7 @@ export default function ContratTab() {
           <div style={{background:'white',borderRadius:'var(--radius-xl)',padding:'1.75rem',boxShadow:'var(--shadow-sm)',marginBottom:'1rem'}}>
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'1.25rem',flexWrap:'wrap',gap:'.5rem'}}>
               <h2 style={{color:'var(--nuit)',fontSize:'1.3rem',margin:0}}>
-                Contrat répit — {selected.child?.prenom} {selected.child?.nom}
+                Contrat relais — {selected.child?.prenom} {selected.child?.nom}
               </h2>
               {badge(selected.statut)}
             </div>

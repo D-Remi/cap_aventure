@@ -24,10 +24,10 @@ export default function Navbar({ onContact }) {
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-      <Link to="/" className="navbar__logo">Cap<span>Aventure</span></Link>
+      <Link to="/" className="navbar__logo">Éduc<span> &amp; Vous</span></Link>
 
       <div className={`navbar__links ${open ? 'open' : ''}`}>
-        <button onClick={() => go('repit')}>Répit handicap</button>
+        <button onClick={() => go('repit')}>Le relais</button>
         <button onClick={() => go('accompagnement')}>Accompagnement</button>
         <button onClick={() => go('methode')}>Ma méthode</button>
         <button onClick={() => go('qui')}>Qui je suis</button>

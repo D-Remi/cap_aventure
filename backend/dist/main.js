@@ -78,6 +78,6 @@ async function bootstrap() {
     app.useStaticAssets(uploadsRoot, { prefix: '/uploads' });
     const port = parseInt(process.env.PORT || '3001', 10);
     await app.listen(port, '0.0.0.0');
-    console.log(`CapAventure API démarrée sur le port ${port}`);
+    console.log(`Éduc & Vous API démarrée sur le port ${port}`);
 }
 bootstrap();

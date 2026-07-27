@@ -25,7 +25,7 @@ export class EmailService {
   private async send(to: string, subject: string, html: string, replyTo?: string) {
     try {
       await this.transporter.sendMail({
-        from: `"CapAventure" <${process.env.MAIL_FROM || process.env.MAIL_USER}>`,
+        from: `"Éduc & Vous" <${process.env.MAIL_FROM || process.env.MAIL_USER}>`,
         to, subject, html,
         ...(replyTo ? { replyTo } : {}),
       })
@@ -37,7 +37,7 @@ export class EmailService {
 
   // Template aux couleurs du site v50
   private tpl(content: string) {
-    const site = process.env.FRONTEND_URL || 'https://capaventure33.fun'
+    const site = process.env.FRONTEND_URL || 'https://educetvous33.fr'
     return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <style>
@@ -57,25 +57,25 @@ body{margin:0;padding:0;background:#f6f7f9;font-family:'Segoe UI',Arial,sans-ser
 .footer p{margin:0;font-size:12px;color:#9ba1ac;line-height:1.6}
 .footer a{color:#136f5b;text-decoration:none}
 </style></head><body><div class="wrap">
-<div class="header"><h1>Cap<span>Aventure</span></h1><p>Répit et accompagnement éducatif · Gironde (33)</p></div>
+<div class="header"><h1>Éduc<span> &amp; Vous</span></h1><p>Répit et accompagnement éducatif · Gironde (33)</p></div>
 <div class="body">${content}</div>
-<div class="footer"><p>CapAventure · Éducateur en lieu de vie · Gironde (33)<br/>
-<a href="${site}">capaventure33.fun</a></p></div>
+<div class="footer"><p>Éduc & Vous · Éducateur en lieu de vie · Gironde (33)<br/>
+<a href="${site}">educetvous33.fr</a></p></div>
 </div></body></html>`
   }
 
   // ── Bienvenue ──
   async sendWelcome(to: string, prenom: string) {
-    await this.send(to, 'Bienvenue sur CapAventure', this.tpl(`
+    await this.send(to, 'Bienvenue sur Éduc & Vous', this.tpl(`
       <p>Bonjour <strong>${prenom}</strong>,</p>
-      <p>Votre espace <strong>CapAventure</strong> a bien été créé. Vous pouvez dès maintenant y accéder pour suivre votre accompagnement.</p>
-      <a href="${process.env.FRONTEND_URL || 'https://capaventure33.fun'}/dashboard" class="btn">Accéder à mon espace →</a>
+      <p>Votre espace <strong>Éduc & Vous</strong> a bien été créé. Vous pouvez dès maintenant y accéder pour suivre votre accompagnement.</p>
+      <a href="${process.env.FRONTEND_URL || 'https://educetvous33.fr'}/dashboard" class="btn">Accéder à mon espace →</a>
     `))
   }
 
   // ── Réinitialisation mot de passe ──
   async sendResetPassword(to: string, prenom: string, token: string) {
-    const url = `${process.env.FRONTEND_URL || 'https://capaventure33.fun'}/reset-password?token=${token}`
+    const url = `${process.env.FRONTEND_URL || 'https://educetvous33.fr'}/reset-password?token=${token}`
     await this.send(to, 'Réinitialisation de votre mot de passe', this.tpl(`
       <p>Bonjour <strong>${prenom}</strong>,</p>
       <p>Cliquez sur le bouton ci-dessous pour réinitialiser votre mot de passe :</p>
@@ -146,7 +146,7 @@ body{margin:0;padding:0;background:#f6f7f9;font-family:'Segoe UI',Arial,sans-ser
 
   // ── Réponse au parent depuis l'admin ──
   async sendReponseContact(to: string, prenom: string, message: string) {
-    await this.send(to, 'Réponse à votre demande — CapAventure', this.tpl(`
+    await this.send(to, 'Réponse à votre demande — Éduc & Vous', this.tpl(`
       <p>Bonjour <strong>${prenom}</strong>,</p>
       <div class="box"><p>${message.replace(/\n/g, '<br/>')}</p></div>
       <p>Vous pouvez répondre directement à cet email pour continuer notre échange.</p>

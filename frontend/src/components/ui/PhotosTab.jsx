@@ -101,7 +101,7 @@ export default function PhotosTab() {
                 {viewing.date_seance && <div style={{color:'rgba(210,225,255,.65)',fontSize:'.78rem'}}>{fmtDate(viewing.date_seance)}</div>}
               </div>
               <div style={{display:'flex',gap:'.6rem',alignItems:'center'}}>
-                <a href={viewing.data} download={`CapAventure_${viewing.date_seance||'photo'}.jpg`}
+                <a href={viewing.data} download={`EducEtVous_${viewing.date_seance||'photo'}.jpg`}
                   style={{background:'rgba(255,255,255,.15)',color:'white',padding:'.3rem .85rem',borderRadius:8,fontSize:'.82rem',fontWeight:700,textDecoration:'none',display:'flex',alignItems:'center',gap:'.35rem'}}>
                   ⬇Télécharger
                 </a>

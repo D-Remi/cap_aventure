@@ -21,11 +21,11 @@ export default function HomePage() {
   }
 
   useEffect(() => {
-    document.title = "CapAventure — Répit handicap et accompagnement éducatif · Gironde"
+    document.title = "Éduc & Vous — Relais à la journée et accompagnement éducatif · Gironde"
     const meta = document.querySelector('meta[name="description"]')
     if (meta) meta.setAttribute(
       'content',
-      "Éducateur en lieu de vie en Gironde. Répit pour les parents à bout de souffle et accompagnement éducatif pour les familles en difficulté. Premier échange gratuit."
+      "Éducateur en lieu de vie en Gironde. Relais à la journée pour faire garder votre enfant et accompagnement éducatif des familles. Garde occasionnelle, y compris enfants aux besoins spécifiques. Premier échange gratuit."
     )
   }, [])
 

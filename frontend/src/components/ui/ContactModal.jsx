@@ -6,7 +6,7 @@ import './ContactModal.css'
 const WA_NUM = '33752096698'
 
 const SERVICES = [
-  { val: 'repit',          label: 'Répit — enfant en situation de handicap' },
+  { val: 'repit',          label: 'Relais à la journée / garde occasionnelle' },
   { val: 'accompagnement', label: 'Accompagnement éducatif familial' },
   { val: 'autre',          label: 'Je ne sais pas encore' },
 ]
@@ -14,7 +14,7 @@ const SERVICES = [
 const URGENCES = [
   { val: 'info',    label: 'Je me renseigne' },
   { val: 'bientot', label: 'Dans les prochaines semaines' },
-  { val: 'urgent',  label: "C'est urgent, je suis à bout" },
+  { val: 'urgent',  label: "C'est assez urgent" },
 ]
 
 export default function ContactModal({ open, onClose, serviceInitial = '' }) {

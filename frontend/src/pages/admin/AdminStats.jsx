@@ -4,7 +4,7 @@ import AdminLayout from '../../components/layout/AdminLayout'
 
 const MOIS = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc']
 const TYPES = {
-  repit:          { label: 'Répit',          color: '#0e6b6b' },
+  repit:          { label: 'Relais',          color: '#0e6b6b' },
   accompagnement: { label: 'Accompagnement', color: '#136f5b' },
   guidance:       { label: 'Guidance',       color: '#5b4b8a' },
 }

@@ -9,16 +9,16 @@ export default function Footer({ onContact }) {
       <div className="container">
         <div className="footer__grid">
           <div className="footer__brand">
-            <div className="footer__logo">Cap<span>Aventure</span></div>
+            <div className="footer__logo">Éduc<span> &amp; Vous</span></div>
             <p>
-              Répit pour parents aidants et accompagnement éducatif familial,
+              Relais à la journée et accompagnement éducatif familial,
               par un éducateur en lieu de vie. Gironde (33).
             </p>
           </div>
 
           <div className="footer__col">
             <h5>Les services</h5>
-            <button onClick={() => go('repit')}>Répit handicap</button>
+            <button onClick={() => go('repit')}>Le relais à la journée</button>
             <button onClick={() => go('accompagnement')}>Accompagnement éducatif</button>
             <button onClick={() => go('methode')}>Ma méthode</button>
           </div>
@@ -38,7 +38,7 @@ export default function Footer({ onContact }) {
         </div>
 
         <div className="footer__bottom">
-          <span>© {new Date().getFullYear()} CapAventure · Éducateur en lieu de vie</span>
+          <span>© {new Date().getFullYear()} Éduc &amp; Vous · Éducateur en lieu de vie</span>
           <span>Gironde (33)</span>
         </div>
       </div>

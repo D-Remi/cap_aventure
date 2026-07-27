@@ -41,7 +41,7 @@ export default function LaisserAvis({ prenom }) {
         </div>
       </div>
       <textarea value={contenu} onChange={e=>setContenu(e.target.value)} rows={4}
-        placeholder="Partagez votre expérience avec CapAventure…"
+        placeholder="Partagez votre expérience avec Éduc & Vous…"
         style={{width:'100%',padding:'.75rem',border:'1.5px solid var(--sable-dark)',borderRadius:10,fontFamily:'inherit',resize:'vertical',marginBottom:'1rem'}}/>
       <div style={{display:'flex',gap:'.75rem'}}>
         <button onClick={()=>setOpen(false)} className="btn-secondary" style={{flex:1}}>Annuler</button>

@@ -6,7 +6,7 @@ import AdminLayout from '../../components/layout/AdminLayout'
 const MOIS_LABELS = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc']
 const MOIS_FULL   = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre']
 const MODES = { cesu:'CESU', virement:'Virement', especes:'Espèces' }
-const CATS  = ['Garde','Répit','Animation','Kilométrage','Matériel','Formation','Autre']
+const CATS  = ['Garde','Relais','Accompagnement','Kilométrage','Matériel','Formation','Autre']
 
 const EMPTY = { date: new Date().toISOString().slice(0,10), montant:'', mode:'virement', reference:'', description:'', famille:'', type:'recette', categorie:'Garde' }
 
@@ -23,7 +23,7 @@ function exportCSV(entrees, mois, annee) {
   const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(';')).join('\n')
   const blob = new Blob(['\uFEFF'+csv], { type:'text/csv;charset=utf-8' })
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob)
-  a.download = `CapAventure_Compta_${label}.csv`; a.click()
+  a.download = `EducEtVous_Compta_${label}.csv`; a.click()
 }
 
 export default function AdminCompta() {
