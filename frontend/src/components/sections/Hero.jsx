@@ -30,11 +30,6 @@ export default function Hero({ onContact }) {
             </button>
           </div>
 
-          <div className="hero__stats">
-            <div className="hero__stat"><b>6</b><span>enfants suivis chaque jour</span></div>
-            <div className="hero__stat"><b>7j/7</b><span>en lieu de vie</span></div>
-            <div className="hero__stat"><b>0€</b><span>le premier échange</span></div>
-          </div>
         </div>
 
         <div className="hero__photos">

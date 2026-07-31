@@ -56,16 +56,6 @@
 }
 .hero__btns { display: flex; gap: .8rem; flex-wrap: wrap; margin-bottom: 2.4rem; }
 
-.hero__stats {
-  display: flex; gap: 2.2rem; flex-wrap: wrap;
-  padding-top: 1.8rem;
-  border-top: 1px solid var(--line);
-}
-.hero__stat b {
-  display: block; font-size: 1.6rem; font-weight: 700;
-  letter-spacing: -.03em; color: var(--s2); line-height: 1.1;
-}
-.hero__stat span { font-size: .82rem; color: var(--soft); font-weight: 300; }
 
 /* ── Composition photo ── */
 .hero__photos { position: relative; height: 520px; }
@@ -99,8 +89,7 @@
 @media (max-width: 960px) {
   .hero__grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .hero__photos { height: 340px; order: -1; }
-  .hero__stats { gap: 1.5rem; }
-}
+  }
 @media (max-width: 560px) {
   .hero__title { font-size: 2.2rem; }
   .hero__photos { height: 280px; }
