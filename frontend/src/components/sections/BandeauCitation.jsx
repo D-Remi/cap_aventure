@@ -12,7 +12,7 @@ export default function BandeauCitation() {
       <div className="bandeau__text">
         <div className="container">
           <p>« Vous n'êtes pas un mauvais parent. Vous êtes fatigué, et vous cherchez des réponses. »</p>
-          <cite>Rémi, éducateur en lieu de vie</cite>
+          <cite>Rémi, accompagnant éducatif</cite>
         </div>
       </div>
     </div>

@@ -25,7 +25,7 @@ export default function HomePage() {
     const meta = document.querySelector('meta[name="description"]')
     if (meta) meta.setAttribute(
       'content',
-      "Éducateur en lieu de vie en Gironde. Relais à la journée pour faire garder votre enfant et accompagnement éducatif des familles. Garde occasionnelle, y compris enfants aux besoins spécifiques. Premier échange gratuit."
+      "Accompagnant éducatif en Gironde. Relais à la journée pour faire garder votre enfant et accompagnement éducatif des familles. Garde occasionnelle, y compris enfants aux besoins spécifiques. Premier échange gratuit."
     )
   }, [])
 

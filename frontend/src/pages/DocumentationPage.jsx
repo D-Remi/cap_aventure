@@ -5,7 +5,7 @@ import './DocumentationPage.css'
 
 const DOCS = [
   { cat:'Pour commencer', items:[
-    { title:"Que propose Éduc & Vous ?", content:"Deux services distincts, assurés par un éducateur en lieu de vie :\n\n1. Un relais à la journée — une garde occasionnelle, à la journée ou pour quelques heures, assurée par un éducateur. Pour un imprévu, un rendez-vous, ou simplement souffler.\n\n2. Un accompagnement éducatif pour les familles en difficulté — guidance parentale et travail avec l'enfant pour reposer un cadre." },
+    { title:"Que propose Éduc & Vous ?", content:"Deux services distincts, assurés par un accompagnant éducatif :\n\n1. Un relais à la journée — une garde occasionnelle, à la journée ou pour quelques heures, assurée par un éducateur. Pour un imprévu, un rendez-vous, ou simplement souffler.\n\n2. Un accompagnement éducatif pour les familles en difficulté — guidance parentale et travail avec l'enfant pour reposer un cadre." },
     { title:"Comment se passe le premier contact ?", content:"Vous remplissez le formulaire de contact ou vous m'écrivez sur WhatsApp. Je vous réponds sous 24h et nous convenons d'un premier échange téléphonique de 30 minutes, gratuit et sans engagement." },
     { title:"Quels documents fournir ?", content:"Rien d'obligatoire au départ.\n\nSi votre enfant a des besoins spécifiques et que vous les avez : notification MDPH, PAP ou PPS, ordonnances en cours. Rien d'obligatoire.\n\nTous les documents s'ajoutent depuis votre espace famille, onglet Documents." },
   ]},

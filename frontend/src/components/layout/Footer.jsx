@@ -12,7 +12,7 @@ export default function Footer({ onContact }) {
             <div className="footer__logo">Éduc<span> &amp; Vous</span></div>
             <p>
               Relais à la journée et accompagnement éducatif familial,
-              par un éducateur en lieu de vie. Gironde (33).
+              par un accompagnant éducatif. Gironde (33).
             </p>
           </div>
 
@@ -38,7 +38,7 @@ export default function Footer({ onContact }) {
         </div>
 
         <div className="footer__bottom">
-          <span>© {new Date().getFullYear()} Éduc &amp; Vous · Éducateur en lieu de vie</span>
+          <span>© {new Date().getFullYear()} Éduc &amp; Vous · Accompagnant éducatif</span>
           <span>Gironde (33)</span>
         </div>
       </div>

@@ -17,7 +17,7 @@ function header(doc, sousTitre) {
   doc.setFontSize(9)
   doc.text('Relais à la journée et accompagnement éducatif • Gironde (33)', 14, 23)
   doc.setFontSize(8)
-  doc.text('Éducateur en lieu de vie', 14, 28)
+  doc.text('Accompagnant éducatif', 14, 28)
   if (sousTitre) {
     doc.setTextColor(...SAUGE)
     doc.setFont('helvetica', 'bold')

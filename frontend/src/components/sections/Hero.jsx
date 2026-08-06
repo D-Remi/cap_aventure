@@ -9,7 +9,7 @@ export default function Hero({ onContact }) {
         <div className="hero__text">
           <div className="hero__pill">
             <span className="hero__dot" />
-            Éducateur en lieu de vie · <b>6 enfants au quotidien</b>
+            Accompagnant éducatif · <b>Gironde (33)</b>
           </div>
 
           <h1 className="hero__title">
@@ -17,10 +17,10 @@ export default function Hero({ onContact }) {
           </h1>
 
           <p className="hero__lead">
-            Éducateur spécialisé, j'accompagne des enfants au quotidien en lieu de vie.
-            Je propose deux services aux familles de Gironde : un relais à la journée pour
-            faire garder votre enfant en confiance, et un accompagnement éducatif pour les
-            familles qui traversent une période difficile.
+            Accompagnant éducatif, j'épaule les enfants et les familles de Gironde.
+            Je propose deux services : un relais à la journée pour faire garder votre enfant
+            en confiance, et un accompagnement éducatif pour les familles qui traversent une
+            période difficile.
           </p>
 
           <div className="hero__btns">

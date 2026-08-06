@@ -1,7 +1,7 @@
 import './QuiJeSuis.css'
 
 const CREDS = [
-  { b: 'Éducateur', s: 'en lieu de vie' },
+  { b: 'Accompagnant', s: 'éducatif' },
   { b: 'Ex-AED',    s: "assistant d'éducation" },
   { b: 'BAFA',      s: "diplômé d'État" },
   { b: 'Gironde',   s: "secteur d'intervention" },
@@ -23,13 +23,13 @@ export default function QuiJeSuis() {
           <div className="qui__text">
             <h2>Je ne théorise pas. Je vis ces situations tous les jours.</h2>
             <p>
-              Je suis <strong>éducateur en lieu de vie</strong> en Gironde. Concrètement,
-              je vis et travaille dans une maison qui accueille <strong>six enfants</strong> aux
-              parcours souvent difficiles.
+              Je suis <strong>accompagnant éducatif</strong> en Gironde. J'accompagne au
+              quotidien des enfants aux parcours souvent difficiles, et j'épaule les familles
+              qui en ont besoin.
             </p>
             <p>
-              Les crises, les refus, les nuits compliquées, les progrès lents mais réels —
-              c'est mon quotidien. Cette expérience-là, aucun manuel ne la remplace.
+              Les crises, les refus, les progrès lents mais réels — c'est mon métier.
+              Cette expérience-là, aucun manuel ne la remplace.
             </p>
             <p>
               Avant ça, j'ai été <strong>assistant d'éducation</strong> en collège et j'ai passé
