@@ -31,6 +31,7 @@ export default function Navbar({ onContact }) {
         <button onClick={() => go('accompagnement')}>Accompagnement</button>
         <button onClick={() => go('methode')}>Ma méthode</button>
         <button onClick={() => go('qui')}>Qui je suis</button>
+        <Link to="/services" onClick={() => setOpen(false)}>Nos services</Link>
         {user && <Link to="/dashboard" onClick={() => setOpen(false)}>Mon espace</Link>}
         {user?.role === 'admin' && <Link to="/admin" onClick={() => setOpen(false)}>Admin</Link>}
       </div>

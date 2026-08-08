@@ -27,6 +27,7 @@ export default function Footer({ onContact }) {
             <h5>Me joindre</h5>
             <a href="https://wa.me/33752096698" target="_blank" rel="noopener noreferrer">WhatsApp</a>
             <button onClick={() => onContact ? onContact() : go('contact')}>Formulaire de contact</button>
+            <Link to="/services">Nos services</Link>
             <Link to="/documentation">Aide et questions</Link>
           </div>
 

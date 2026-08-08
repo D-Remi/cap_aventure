@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute       from './components/layout/ProtectedRoute'
+import ServicesPage        from './pages/ServicesPage'
 import ScrollToTop          from './components/layout/ScrollToTop'
 import HomePage             from './pages/HomePage'
 import LoginPage            from './pages/LoginPage'
@@ -48,6 +49,7 @@ export default function App() {
           {/* Public */}
           <Route path="/"                element={<HomePage />} />
           <Route path="/documentation"   element={<DocumentationPage />} />
+          <Route path="/services"        element={<ServicesPage />} />
           <Route path="/login"           element={<LoginPage />} />
           <Route path="/register"        element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
