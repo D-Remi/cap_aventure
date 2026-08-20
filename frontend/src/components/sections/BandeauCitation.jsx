@@ -5,7 +5,7 @@ export default function BandeauCitation() {
     <div className="bandeau">
       <img
         src="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=1600&q=80"
-        alt="Lumière du matin en extérieur"
+        alt="Lumière du matin — garde d'enfant en Haute-Savoie"
         loading="lazy"
       />
       <div className="bandeau__overlay" />

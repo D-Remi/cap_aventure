@@ -9,7 +9,7 @@ export default function Hero({ onContact }) {
         <div className="hero__text">
           <div className="hero__pill">
             <span className="hero__dot" />
-            Accompagnant éducatif · <b>Gironde (33)</b>
+            Accompagnant éducatif · <b>Haute-Savoie (74)</b>
           </div>
 
           <h1 className="hero__title">
@@ -17,10 +17,9 @@ export default function Hero({ onContact }) {
           </h1>
 
           <p className="hero__lead">
-            Accompagnant éducatif, j'épaule les enfants et les familles de Gironde.
-            Je propose deux services : un relais à la journée pour faire garder votre enfant
-            en confiance, et un accompagnement éducatif pour les familles qui traversent une
-            période difficile.
+            Accompagnant éducatif dans le Chablais, je propose un service de garde d'enfant
+            de confiance : une garde occasionnelle et fiable, à la journée ou à l'heure,
+            y compris pour les enfants aux besoins spécifiques.
           </p>
 
           <div className="hero__btns">
@@ -36,14 +35,14 @@ export default function Hero({ onContact }) {
           <div className="hero__photo hero__photo--main">
             <img
               src="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=900&q=80"
-              alt="Moment calme entre un adulte et un enfant"
+              alt="Accompagnant éducatif et enfant, moment calme — garde d'enfant en Haute-Savoie"
               loading="eager"
             />
           </div>
           <div className="hero__photo hero__photo--sub">
             <img
               src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=700&q=80"
-              alt="Enfant jouant en extérieur"
+              alt="Enfant jouant dehors — relais à la journée en Haute-Savoie"
               loading="lazy"
             />
           </div>

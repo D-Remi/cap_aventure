@@ -2,28 +2,28 @@ import './Methode.css'
 
 const PRINCIPES = [
   {
-    t: "Tout part de la communication",
-    d: "Avant tout, je parle avec le jeune. Comprendre ce qu'il vit, mettre des mots sur ce qui coince : c'est là que tout commence, et c'est souvent ce qui débloque le reste.",
+    t: "La sécurité avant tout",
+    d: "Votre enfant est sous ma responsabilité : je reste attentif, présent, et vigilant à chaque instant. Rien ne compte plus que son bien-être et sa sécurité.",
   },
   {
-    t: "Chaque action a une conséquence",
-    d: "J'aide l'enfant à comprendre que ce qu'il fait a un effet sur toute la famille. Pas pour le culpabiliser, mais pour qu'il saisisse le lien entre ses choix et ce qui se passe autour de lui.",
+    t: "Je respecte ses repères",
+    d: "Chaque enfant a ses habitudes, son rythme, ses petites manies rassurantes. Je les apprends avec vous en amont, et je les respecte pour qu'il se sente en confiance.",
   },
   {
-    t: "Montrer que bien vivre ensemble, c'est mieux",
-    d: "Quand tout se passe bien, la maison est plus légère pour tout le monde. Je fais découvrir au jeune que le calme et le respect lui rapportent, à lui le premier.",
+    t: "Une garde préparée avec vous",
+    d: "Avant la première garde, on échange : ce qui apaise votre enfant, ce qui le déclenche, ses besoins. Rien n'est improvisé, tout est anticipé ensemble.",
   },
   {
-    t: "Des hauts et des bas, c'est normal",
-    d: "Il y en a tous les jours, dans toutes les familles. Je ne cherche pas la perfection : j'aide chacun à traverser les moments difficiles sans que ça déborde sur tout le reste.",
+    t: "À l'aise avec tous les profils",
+    d: "Fratrie nombreuse, enfant en bas âge, ou besoins spécifiques (handicap, TSA, TDAH) : j'ai l'habitude, et j'adapte ma présence à chaque enfant.",
   },
   {
-    t: "Des ateliers adaptés à chaque famille",
-    d: "Je ne plaque pas une recette. Selon ce que vit votre famille, je propose des temps concrets et des activités sur mesure pour avancer sur ce qui vous pèse.",
+    t: "Des moments qui ont du sens",
+    d: "Je ne me contente pas de surveiller. Jeux, activités, sorties selon l'âge et l'envie : votre enfant passe un bon moment, pas juste un temps d'attente.",
   },
   {
-    t: "Vous aider, pas vous juger",
-    d: "Je ne suis pas là pour changer votre façon d'élever vos enfants. Je suis là pour vous épauler sur ce qui vous dépasse, à votre rythme et dans le respect de vos choix.",
+    t: "Vous êtes tenu au courant",
+    d: "À votre retour, je vous raconte comment ça s'est passé. Vous confiez votre enfant l'esprit tranquille, et vous savez exactement ce qui s'est vécu.",
   },
 ]
 
@@ -33,11 +33,11 @@ export default function Methode() {
       <div className="container">
         <div className="methode__box">
           <div className="methode__head">
-            <span className="methode__kicker">Ma méthode</span>
-            <h2>La <span>communication</span> avant tout</h2>
+            <span className="methode__kicker">Ma façon de faire</span>
+            <h2>La <span>confiance</span> avant tout</h2>
             <p>
-              Chaque famille est différente, donc j'adapte. Mais tout repose sur une même idée :
-              parler, faire comprendre, et avancer ensemble, sans jugement.
+              Confier son enfant, ce n'est jamais anodin. Voici ce sur quoi vous pouvez
+              compter quand vous me le confiez.
             </p>
           </div>
           <div className="methode__grid">

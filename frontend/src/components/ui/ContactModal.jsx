@@ -6,8 +6,7 @@ import './ContactModal.css'
 const WA_NUM = '33752096698'
 
 const SERVICES = [
-  { val: 'repit',          label: 'Relais à la journée / garde occasionnelle' },
-  { val: 'accompagnement', label: 'Accompagnement éducatif familial' },
+  { val: 'repit',          label: 'Garde d\'enfant / relais à la journée' },
   { val: 'autre',          label: 'Je ne sais pas encore' },
 ]
 

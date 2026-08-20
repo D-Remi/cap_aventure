@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute       from './components/layout/ProtectedRoute'
 import ServicesPage        from './pages/ServicesPage'
+import ConfidentialitePage from './pages/ConfidentialitePage'
 import ScrollToTop          from './components/layout/ScrollToTop'
 import HomePage             from './pages/HomePage'
 import LoginPage            from './pages/LoginPage'
@@ -50,6 +51,7 @@ export default function App() {
           <Route path="/"                element={<HomePage />} />
           <Route path="/documentation"   element={<DocumentationPage />} />
           <Route path="/services"        element={<ServicesPage />} />
+          <Route path="/confidentialite" element={<ConfidentialitePage />} />
           <Route path="/login"           element={<LoginPage />} />
           <Route path="/register"        element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />

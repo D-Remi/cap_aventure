@@ -10,6 +10,7 @@ import QuiJeSuis       from '../components/sections/QuiJeSuis'
 import Temoignages     from '../components/sections/Temoignages'
 import CtaFinal        from '../components/sections/CtaFinal'
 import ContactModal    from '../components/ui/ContactModal'
+import StickyContact   from '../components/ui/StickyContact'
 
 export default function HomePage() {
   const [modalOpen, setModalOpen] = useState(false)
@@ -21,11 +22,11 @@ export default function HomePage() {
   }
 
   useEffect(() => {
-    document.title = "Éduc & Vous — Relais à la journée et accompagnement éducatif · Gironde"
+    document.title = "Éduc & Vous — Relais à la journée et accompagnement éducatif · Haute-Savoie"
     const meta = document.querySelector('meta[name="description"]')
     if (meta) meta.setAttribute(
       'content',
-      "Accompagnant éducatif en Gironde. Relais à la journée pour faire garder votre enfant et accompagnement éducatif des familles. Garde occasionnelle, y compris enfants aux besoins spécifiques. Premier échange gratuit."
+      "Accompagnant éducatif en Haute-Savoie. Relais à la journée pour faire garder votre enfant et accompagnement éducatif des familles. Garde occasionnelle, y compris enfants aux besoins spécifiques. Premier échange gratuit."
     )
   }, [])
 
@@ -43,6 +44,8 @@ export default function HomePage() {
         <CtaFinal onContact={openContact} />
       </main>
       <Footer onContact={openContact} />
+
+      <StickyContact onContact={openContact} />
 
       <ContactModal
         open={modalOpen}

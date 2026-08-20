@@ -4,7 +4,7 @@ const WA_NUM = '33752096698'
 
 export default function CtaFinal({ onContact }) {
   const waLink = `https://wa.me/${WA_NUM}?text=${encodeURIComponent(
-    'Bonjour, je souhaite échanger avec vous au sujet de votre accompagnement.'
+    "Bonjour, je souhaite échanger avec vous au sujet d'une garde d'enfant."
   )}`
 
   return (

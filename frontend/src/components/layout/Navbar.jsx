@@ -27,9 +27,8 @@ export default function Navbar({ onContact }) {
       <Link to="/" className="navbar__logo">Éduc<span> &amp; Vous</span></Link>
 
       <div className={`navbar__links ${open ? 'open' : ''}`}>
-        <button onClick={() => go('repit')}>Le relais</button>
-        <button onClick={() => go('accompagnement')}>Accompagnement</button>
-        <button onClick={() => go('methode')}>Ma méthode</button>
+        <button onClick={() => go('repit')}>La garde</button>
+        <button onClick={() => go('methode')}>Ma façon de faire</button>
         <button onClick={() => go('qui')}>Qui je suis</button>
         <Link to="/services" onClick={() => setOpen(false)}>Nos services</Link>
         {user && <Link to="/dashboard" onClick={() => setOpen(false)}>Mon espace</Link>}

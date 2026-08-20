@@ -8,4 +8,4 @@ Disallow: /register
 Disallow: /reset-password
 Disallow: /forgot-password
 
-Sitemap: https://educetvous33.fr/sitemap.xml
+Sitemap: https://educetvous74.fr/sitemap.xml

@@ -37,7 +37,7 @@ export class EmailService {
 
   // Template aux couleurs du site v50
   private tpl(content: string) {
-    const site = process.env.FRONTEND_URL || 'https://educetvous33.fr'
+    const site = process.env.FRONTEND_URL || 'https://educetvous74.fr'
     return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <style>
@@ -60,7 +60,7 @@ body{margin:0;padding:0;background:#f6f7f9;font-family:'Segoe UI',Arial,sans-ser
 <div class="header"><h1>Éduc<span> &amp; Vous</span></h1><p>Répit et accompagnement éducatif · Gironde (33)</p></div>
 <div class="body">${content}</div>
 <div class="footer"><p>Éduc & Vous · Éducateur en lieu de vie · Gironde (33)<br/>
-<a href="${site}">educetvous33.fr</a></p></div>
+<a href="${site}">educetvous74.fr</a></p></div>
 </div></body></html>`
   }
 
@@ -69,13 +69,13 @@ body{margin:0;padding:0;background:#f6f7f9;font-family:'Segoe UI',Arial,sans-ser
     await this.send(to, 'Bienvenue sur Éduc & Vous', this.tpl(`
       <p>Bonjour <strong>${prenom}</strong>,</p>
       <p>Votre espace <strong>Éduc & Vous</strong> a bien été créé. Vous pouvez dès maintenant y accéder pour suivre votre accompagnement.</p>
-      <a href="${process.env.FRONTEND_URL || 'https://educetvous33.fr'}/dashboard" class="btn">Accéder à mon espace →</a>
+      <a href="${process.env.FRONTEND_URL || 'https://educetvous74.fr'}/dashboard" class="btn">Accéder à mon espace →</a>
     `))
   }
 
   // ── Réinitialisation mot de passe ──
   async sendResetPassword(to: string, prenom: string, token: string) {
-    const url = `${process.env.FRONTEND_URL || 'https://educetvous33.fr'}/reset-password?token=${token}`
+    const url = `${process.env.FRONTEND_URL || 'https://educetvous74.fr'}/reset-password?token=${token}`
     await this.send(to, 'Réinitialisation de votre mot de passe', this.tpl(`
       <p>Bonjour <strong>${prenom}</strong>,</p>
       <p>Cliquez sur le bouton ci-dessous pour réinitialiser votre mot de passe :</p>
