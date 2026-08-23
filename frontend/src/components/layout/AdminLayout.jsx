@@ -11,6 +11,7 @@ const NAV = [
   { path:'/admin/documents',    label:'Documents' },
   { path:'/admin/photos',       label:'Photos' },
   { path:'/admin/contrats',     label:'Contrats' },
+  { path:'/admin/gardes',       label:'Planning gardes' },
   { path:'/admin/compta',       label:'Comptabilité' },
   { path:'/admin/temoignages',  label:'Témoignages' },
   { path:'/admin/stats',        label:'Statistiques' },

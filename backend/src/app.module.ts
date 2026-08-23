@@ -12,6 +12,7 @@ import { MessagesModule }      from './modules/messages/messages.module'
 import { EmailModule }         from './modules/email/email.module'
 import { ContactModule }       from './modules/contact/contact.module'
 import { ComptaModule }        from './modules/compta/compta.module'
+import { GardesModule }        from './modules/gardes/gardes.module'
 import { PhotosModule }        from './modules/photos/photos.module'
 import { TemoignagesModule }   from './modules/temoignages/temoignages.module'
 import { ContratsModule }      from './modules/contrats/contrats.module'
@@ -38,6 +39,7 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
     TemoignagesModule,
     PhotosModule,
     ComptaModule,
+    GardesModule,
   ],
 })
 export class AppModule {}

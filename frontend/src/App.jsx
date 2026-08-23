@@ -22,6 +22,7 @@ import AdminMessages        from './pages/admin/AdminMessages'
 import AdminDocuments       from './pages/admin/AdminDocuments'
 import AdminPhotos          from './pages/admin/AdminPhotos'
 import AdminCompta          from './pages/admin/AdminCompta'
+import AdminGardes          from './pages/admin/AdminGardes'
 import AdminContrats        from './pages/admin/AdminContrats'
 import AdminTemoignages     from './pages/admin/AdminTemoignages'
 import AdminStats           from './pages/admin/AdminStats'
@@ -71,6 +72,7 @@ export default function App() {
           <Route path="/admin/documents"   element={<ProtectedRoute adminOnly><AdminDocuments /></ProtectedRoute>} />
           <Route path="/admin/photos"      element={<ProtectedRoute adminOnly><AdminPhotos /></ProtectedRoute>} />
           <Route path="/admin/compta"      element={<ProtectedRoute adminOnly><AdminCompta /></ProtectedRoute>} />
+          <Route path="/admin/gardes"      element={<ProtectedRoute adminOnly><AdminGardes /></ProtectedRoute>} />
           <Route path="/admin/contrats"    element={<ProtectedRoute adminOnly><AdminContrats /></ProtectedRoute>} />
           <Route path="/admin/temoignages" element={<ProtectedRoute adminOnly><AdminTemoignages /></ProtectedRoute>} />
           <Route path="/admin/stats"       element={<ProtectedRoute adminOnly><AdminStats /></ProtectedRoute>} />

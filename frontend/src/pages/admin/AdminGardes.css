@@ -1,0 +1,137 @@
+/* ══ Planning des gardes ══ */
+.ag { max-width: 1100px; }
+.ag-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.ag-head h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -.03em; color: var(--ink); margin-bottom: .3rem; }
+.ag-head p { color: var(--soft); font-size: .95rem; font-weight: 300; }
+.ag-add {
+  background: var(--s2); color: #fff; border: none; padding: .7rem 1.3rem;
+  border-radius: 100px; font-weight: 700; font-size: .9rem; cursor: pointer;
+  font-family: inherit; white-space: nowrap;
+}
+.ag-add:hover { background: var(--s2-bright); }
+
+/* Stats */
+.ag-stats {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: .8rem; margin-bottom: 1.8rem;
+}
+.ag-stat {
+  background: var(--gray); border-radius: 14px; padding: 1.1rem 1rem; text-align: center;
+}
+.ag-stat--money { background: var(--s2-light); }
+.ag-stat-v { display: block; font-size: 1.5rem; font-weight: 800; color: var(--ink); letter-spacing: -.03em; line-height: 1.1; }
+.ag-stat--money .ag-stat-v { color: var(--s2); }
+.ag-stat-l { font-size: .74rem; color: var(--soft); font-weight: 400; }
+
+/* Formulaire */
+.ag-form { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.8rem; }
+.ag-form h3 { font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: 1.1rem; }
+.ag-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
+.ag-form label { display: flex; flex-direction: column; gap: .35rem; font-size: .82rem; font-weight: 600; color: var(--ink); }
+.ag-form input, .ag-form select, .ag-form textarea {
+  padding: .6rem .8rem; border: 1px solid var(--line); border-radius: 9px;
+  font-family: inherit; font-size: .92rem; font-weight: 400; min-width: 0;
+}
+.ag-form input:focus, .ag-form select:focus, .ag-form textarea:focus { outline: none; border-color: var(--s2); }
+.ag-check { flex-direction: row !important; align-items: center; gap: .5rem !important; }
+.ag-check input { width: auto; }
+.ag-full { display: flex; flex-direction: column; gap: .35rem; font-size: .82rem; font-weight: 600; margin-top: .9rem; }
+.ag-form-actions { display: flex; gap: .7rem; margin-top: 1.2rem; }
+.ag-save { background: var(--s2); color: #fff; border: none; padding: .7rem 1.5rem; border-radius: 9px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.ag-cancel { background: var(--gray); color: var(--ink); border: none; padding: .7rem 1.5rem; border-radius: 9px; font-weight: 600; cursor: pointer; font-family: inherit; }
+
+/* Grille semaine */
+.ag-week { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; margin-bottom: 1rem; }
+.ag-week-head { display: grid; grid-template-columns: 48px repeat(7, 1fr); border-bottom: 1px solid var(--line); }
+.ag-corner { border-right: 1px solid var(--line); }
+.ag-day-head { text-align: center; padding: .7rem 0; font-weight: 700; font-size: .82rem; color: var(--ink); border-right: 1px solid var(--line); }
+.ag-day-head:last-child { border-right: none; }
+.ag-week-body { display: grid; grid-template-columns: 48px repeat(7, 1fr); position: relative; }
+.ag-hours { border-right: 1px solid var(--line); }
+.ag-hour { height: 46px; font-size: .68rem; color: var(--soft); text-align: right; padding-right: .4rem; padding-top: .1rem; }
+.ag-col { position: relative; border-right: 1px solid var(--line); }
+.ag-col:last-child { border-right: none; }
+.ag-slot { height: 46px; border-bottom: 1px solid #f2f3f5; }
+
+/* Bloc garde dans la grille */
+.ag-garde {
+  position: absolute; left: 2px; right: 2px;
+  border-radius: 7px; padding: .3rem .45rem; cursor: pointer;
+  overflow: hidden; font-size: .68rem; line-height: 1.25;
+  border-left: 3px solid;
+}
+.ag-garde b { display: block; font-size: .72rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ag-garde span { display: block; opacity: .85; }
+.ag-garde-lieu { font-style: italic; }
+.ag-garde-trajet { font-size: .64rem; }
+.ag-garde--cesu { background: var(--s2-light); border-color: var(--s2); color: var(--s2); }
+.ag-garde--agence { background: #eef2ff; border-color: #4f6bed; color: #3a4fc0; }
+.ag-garde--pressenti { opacity: .6; border-style: dashed; }
+
+/* Légende */
+.ag-legend { display: flex; gap: 1.3rem; flex-wrap: wrap; align-items: center; font-size: .82rem; color: var(--soft); margin-bottom: 2rem; }
+.ag-legend span { display: flex; align-items: center; gap: .4rem; }
+.ag-dot { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.ag-dot--cesu { background: var(--s2); }
+.ag-dot--agence { background: #4f6bed; }
+.ag-dot--pressenti { background: var(--soft); opacity: .5; }
+.ag-legend-tip { font-style: italic; }
+
+/* Liste */
+.ag-list { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1.3rem; overflow-x: auto; }
+.ag-list h3 { font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; }
+.ag-list table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.ag-list th { text-align: left; padding: .5rem .6rem; color: var(--soft); font-weight: 600; font-size: .76rem; text-transform: uppercase; letter-spacing: .04em; border-bottom: 1px solid var(--line); }
+.ag-list td { padding: .6rem; border-bottom: 1px solid #f2f3f5; color: var(--ink); }
+.ag-list td small { color: var(--soft); }
+.ag-row-done { opacity: .5; }
+.ag-actions { white-space: nowrap; }
+.ag-actions button { background: none; border: none; cursor: pointer; font-size: 1rem; padding: .2rem .35rem; opacity: .6; }
+.ag-actions button:hover { opacity: 1; }
+
+@media (max-width: 768px) {
+  .ag-stats { grid-template-columns: repeat(3, 1fr); }
+  .ag-grid2 { grid-template-columns: 1fr; }
+  .ag-week { overflow-x: auto; }
+  .ag-week-head, .ag-week-body { min-width: 640px; }
+}
+
+
+/* État vide */
+.ag-empty {
+  background: var(--gray); border: 2px dashed var(--line); border-radius: 18px;
+  padding: 3rem 2rem; text-align: center; margin-bottom: 1.5rem;
+}
+.ag-empty-ic { font-size: 2.5rem; margin-bottom: .8rem; }
+.ag-empty h3 { font-size: 1.15rem; font-weight: 700; color: var(--ink); margin-bottom: .5rem; }
+.ag-empty p { color: var(--soft); font-size: .95rem; font-weight: 300; max-width: 30rem; margin: 0 auto 1.4rem; line-height: 1.5; }
+.ag-empty-btn { background: var(--s2); color: #fff; border: none; padding: .8rem 1.6rem; border-radius: 100px; font-weight: 700; font-size: .92rem; cursor: pointer; font-family: inherit; }
+.ag-empty-btn:hover { background: var(--s2-bright); }
+
+/* Rendre la grille moins "vide" : fond subtil quand pas de garde */
+.ag-week { box-shadow: 0 2px 12px rgba(0,0,0,.04); }
+
+/* Switch semaine paire / impaire */
+.ag-switch { display: flex; align-items: center; gap: .9rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.ag-switch-lbl { font-size: .85rem; font-weight: 600; color: var(--soft); }
+.ag-switch-btns { display: inline-flex; background: var(--gray); border-radius: 100px; padding: .25rem; gap: .2rem; }
+.ag-switch-btns button {
+  border: none; background: transparent; padding: .5rem 1.1rem; border-radius: 100px;
+  font-family: inherit; font-size: .85rem; font-weight: 600; color: var(--soft); cursor: pointer;
+  transition: all .15s;
+}
+.ag-switch-btns button.on { background: var(--s2); color: #fff; }
+
+/* Badge P/I sur les gardes */
+.ag-wk { font-style: normal; font-weight: 800; opacity: .7; font-size: .62rem; }
+
+/* Alerte conflit */
+.ag-conflit-alert {
+  background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c;
+  padding: .9rem 1.2rem; border-radius: 12px; font-size: .9rem; font-weight: 500;
+  margin-bottom: 1.2rem; line-height: 1.5;
+}
+.ag-garde--conflit { box-shadow: 0 0 0 2px #ef4444 inset; }
+.ag-warn { color: #ef4444; font-weight: 800; margin-right: 2px; }
+
+/* Hint sous le switch */
+.ag-switch-hint { font-size: .82rem; color: var(--soft); font-style: italic; }
