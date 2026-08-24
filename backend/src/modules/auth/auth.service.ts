@@ -7,6 +7,7 @@ import * as bcrypt from 'bcrypt'
 import * as crypto from 'crypto'
 import { User } from '../users/user.entity'
 import { PasswordResetToken } from './password-reset.entity'
+import { RefreshToken } from './refresh-token.entity'
 import { EmailService } from '../email/email.service'
 
 @Injectable()
@@ -14,6 +15,7 @@ export class AuthService {
   constructor(
     @InjectRepository(User) private usersRepo: Repository<User>,
     @InjectRepository(PasswordResetToken) private resetRepo: Repository<PasswordResetToken>,
+    @InjectRepository(RefreshToken) private refreshRepo: Repository<RefreshToken>,
     private jwt: JwtService,
     private email: EmailService,
   ) {}
@@ -29,7 +31,7 @@ export class AuthService {
     // Email de bienvenue (non bloquant)
     this.email.sendWelcome(user.email, user.prenom)
 
-    return this.signToken(user)
+    return user  // le controller émet les tokens + cookies
   }
 
   async login(email: string, password: string) {
@@ -37,7 +39,7 @@ export class AuthService {
     if (!user || !(await bcrypt.compare(password, user.password))) {
       throw new UnauthorizedException('Email ou mot de passe incorrect.')
     }
-    return this.signToken(user)
+    return user  // le controller émet les tokens + cookies
   }
 
   // ── Forgot password ────────────────────────────────────────────
@@ -107,18 +109,70 @@ export class AuthService {
     return this.usersRepo.findOne({ where: { id: userId } })
   }
 
-  private signToken(user: User) {
+  // ── Génère access token (court) + refresh token (long, révocable) ──
+  private signAccessToken(user: User) {
     const payload = { sub: user.id, email: user.email, role: user.role }
+    // access token court : 15 minutes
+    return this.jwt.sign(payload, { expiresIn: '15m' })
+  }
+
+  private async createRefreshToken(user: User, userAgent?: string, ip?: string) {
+    // token aléatoire fort, envoyé au client ; on ne stocke que son hash
+    const raw = crypto.randomBytes(48).toString('hex')
+    const tokenHash = crypto.createHash('sha256').update(raw).digest('hex')
+    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 jours
+
+    await this.refreshRepo.save(this.refreshRepo.create({
+      userId: user.id, tokenHash, userAgent, ip, expiresAt, revoked: false,
+    }))
+    return raw
+  }
+
+  // Émet la paire de tokens (utilisé au login/register)
+  async issueTokens(user: User, userAgent?: string, ip?: string) {
+    const accessToken = this.signAccessToken(user)
+    const refreshToken = await this.createRefreshToken(user, userAgent, ip)
     return {
-      access_token: this.jwt.sign(payload),
+      accessToken,
+      refreshToken,
       user: {
-        id: user.id,
-        email: user.email,
-        prenom: user.prenom,
-        nom: user.nom,
-        role: user.role,
+        id: user.id, email: user.email,
+        prenom: user.prenom, nom: user.nom, role: user.role,
       },
     }
+  }
+
+  // Rafraîchit : vérifie le refresh token, le révoque, en émet un nouveau (rotation)
+  async refresh(rawToken: string, userAgent?: string, ip?: string) {
+    if (!rawToken) throw new UnauthorizedException('Session expirée.')
+    const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex')
+    const stored = await this.refreshRepo.findOne({ where: { tokenHash } })
+
+    if (!stored || stored.revoked || stored.expiresAt < new Date()) {
+      // token inconnu, révoqué ou expiré → refus
+      throw new UnauthorizedException('Session invalide.')
+    }
+
+    // rotation : on révoque l'ancien et on en émet un nouveau
+    stored.revoked = true
+    await this.refreshRepo.save(stored)
+
+    const user = await this.usersRepo.findOne({ where: { id: stored.userId } })
+    if (!user) throw new UnauthorizedException('Session invalide.')
+
+    return this.issueTokens(user, userAgent, ip)
+  }
+
+  // Déconnexion : révoque le refresh token courant
+  async logout(rawToken: string) {
+    if (!rawToken) return
+    const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex')
+    await this.refreshRepo.update({ tokenHash }, { revoked: true })
+  }
+
+  // Déconnexion de TOUS les appareils (révoque tous les refresh tokens de l'user)
+  async logoutAll(userId: number) {
+    await this.refreshRepo.update({ userId, revoked: false }, { revoked: true })
   }
 
   async validateById(id: number): Promise<User | null> {

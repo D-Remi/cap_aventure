@@ -7,11 +7,12 @@ import { AuthService } from './auth.service'
 import { JwtStrategy } from './jwt.strategy'
 import { User } from '../users/user.entity'
 import { PasswordResetToken } from './password-reset.entity'
+import { RefreshToken } from './refresh-token.entity'
 import { EmailModule } from '../email/email.module'
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, PasswordResetToken]),
+    TypeOrmModule.forFeature([User, PasswordResetToken, RefreshToken]),
     PassportModule,
     JwtModule.registerAsync({
       useFactory: () => ({

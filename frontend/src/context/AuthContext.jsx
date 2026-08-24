@@ -3,56 +3,50 @@ import axios from 'axios'
 
 const AuthContext = createContext(null)
 
-const TOKEN_KEY = 'cap_token'
-const USER_KEY  = 'cap_user'
-
 export function AuthProvider({ children }) {
   const [user, setUser]       = useState(null)
   const [loading, setLoading] = useState(true)
 
   // Restauration de session au chargement.
-  // Le token est injecté par l'intercepteur axios (services/api.js),
-  // il n'y a donc rien à poser manuellement ici.
+  // Plus de localStorage : l'authentification repose sur le cookie httpOnly
+  // (invisible au JS, donc protégé du vol XSS). On demande simplement au
+  // serveur qui on est ; si le cookie est valide, il renvoie l'utilisateur.
   useEffect(() => {
-    const token = localStorage.getItem(TOKEN_KEY)
-    const saved = localStorage.getItem(USER_KEY)
-    if (token && saved) {
-      try {
-        setUser(JSON.parse(saved))
-      } catch {
-        localStorage.removeItem(TOKEN_KEY)
-        localStorage.removeItem(USER_KEY)
-      }
-    }
-    setLoading(false)
+    axios.get('/api/auth/me')
+      .then(({ data }) => setUser(data.user))
+      .catch(() => setUser(null))     // pas de session valide
+      .finally(() => setLoading(false))
   }, [])
 
-  const persist = (data) => {
-    localStorage.setItem(TOKEN_KEY, data.access_token)
-    localStorage.setItem(USER_KEY, JSON.stringify(data.user))
+  const login = async (email, password) => {
+    // le serveur pose les cookies ; la réponse ne contient que l'utilisateur
+    const { data } = await axios.post('/api/auth/login', { email, password })
     setUser(data.user)
     return data.user
   }
 
-  const login = async (email, password) => {
-    const { data } = await axios.post('/api/auth/login', { email, password })
-    return persist(data)
-  }
-
   const register = async (payload) => {
     const { data } = await axios.post('/api/auth/register', payload)
-    return persist(data)
+    setUser(data.user)
+    return data.user
   }
 
-  const logout = () => {
-    localStorage.removeItem(TOKEN_KEY)
-    localStorage.removeItem(USER_KEY)
+  const logout = async () => {
+    // révoque le refresh token côté serveur et efface les cookies
+    try { await axios.post('/api/auth/logout') } catch { /* ignore */ }
+    setUser(null)
+    window.location.href = '/'
+  }
+
+  // Déconnexion de tous les appareils (révoque toutes les sessions)
+  const logoutAll = async () => {
+    try { await axios.post('/api/auth/logout-all') } catch { /* ignore */ }
     setUser(null)
     window.location.href = '/'
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, logoutAll }}>
       {children}
     </AuthContext.Provider>
   )
