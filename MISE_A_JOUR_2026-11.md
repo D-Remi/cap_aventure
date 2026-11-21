@@ -14,6 +14,16 @@
 - **Devis** : devis gratuit conforme en PDF.
 - **Factures** : numérotation continue `FAC-2027-0001`, toutes les mentions de l'article D7233-1 du Code du travail. « Marquer payée » demande le mode de règlement et inscrit la recette au livre des recettes.
 - **Familles** : adresse de facturation (obligatoire sur factures et attestations).
+- **Radar clients** :
+  - **Prescripteurs** : orthophonistes, psychologues, pédiatres, IME, SESSAD, crèches et associations du Chablais, tirés de l'annuaire officiel des entreprises (gratuit, sans compte).
+  - **Annonces de familles** : via l'API France Travail, plus des recherches rapides sur France Travail, Indeed, Leboncoin et Facebook.
+  - **Mon suivi** : statut de chaque contact, date de relance et notes.
+- **Réseaux sociaux** :
+  - visuels Instagram et Facebook aux couleurs du site (portrait, carré, story) ;
+  - légendes prêtes à publier avec les hashtags du Chablais ;
+  - planning des publications, avec un bouton qui propose 4 semaines d'idées.
+
+**Sécurité (correction)** : l'API renvoyait le mot de passe chiffré des comptes (`/api/users/me`, liste des familles). Corrigé dans `backend/src/main.ts`.
 
 ## Mettre à jour le VPS
 
@@ -54,9 +64,18 @@ Avec l'option B, le dépôt Git du serveur n'est plus à jour : la prochaine foi
 
 ```bash
 mysql -u UTILISATEUR -p NOM_DE_LA_BASE < database/migrate_legal_compta_2026.sql
+mysql -u UTILISATEUR -p NOM_DE_LA_BASE < database/migrate_marketing_2026.sql
 ```
 
-Le message `Migration légal + compta OK` doit s'afficher. En production, l'API ne crée pas les tables toute seule (`synchronize` est désactivé) : sans cette étape, les nouvelles pages du back-office affichent une erreur.
+Les messages `Migration légal + compta OK` puis `Migration réseaux sociaux + radar OK` doivent s'afficher (les deux scripts ont été testés sur une copie du schéma v50).
+
+**Optionnel, annonces France Travail dans le Radar** : crée un compte gratuit sur francetravail.io, déclare une application abonnée à l'API « Offres d'emploi », puis ajoute dans `backend/.env` du serveur :
+
+```bash
+FT_CLIENT_ID=ton_identifiant
+FT_CLIENT_SECRET=ton_secret
+# FT_SCOPE=api_offresdemploiv2 o2dsoffre   (à ajuster selon ce qu'affiche francetravail.io)
+``` En production, l'API ne crée pas les tables toute seule (`synchronize` est désactivé) : sans cette étape, les nouvelles pages du back-office affichent une erreur.
 
 ### 4. Construire et redémarrer
 

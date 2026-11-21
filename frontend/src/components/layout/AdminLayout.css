@@ -51,9 +51,11 @@
   gap: .15rem;
   padding: 0 .7rem;
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
 }
+.admin-sidebar__nav > * { flex-shrink: 0; }
 .admin-sidebar__nav::-webkit-scrollbar { width: 5px; }
 .admin-sidebar__nav::-webkit-scrollbar-track { background: transparent; }
 .admin-sidebar__nav::-webkit-scrollbar-thumb {

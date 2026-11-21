@@ -32,6 +32,8 @@ import CgvPage              from './pages/CgvPage'
 import AdminEntreprise      from './pages/admin/AdminEntreprise'
 import AdminDeclarations    from './pages/admin/AdminDeclarations'
 import AdminDevis           from './pages/admin/AdminDevis'
+import AdminReseaux         from './pages/admin/AdminReseaux'
+import AdminRadar           from './pages/admin/AdminRadar'
 import './styles/global.css'
 import './styles/site.css'
 
@@ -90,6 +92,8 @@ export default function App() {
           <Route path="/admin/declarations" element={<ProtectedRoute adminOnly><AdminDeclarations /></ProtectedRoute>} />
           <Route path="/admin/devis"       element={<ProtectedRoute adminOnly><AdminDevis /></ProtectedRoute>} />
           <Route path="/admin/entreprise"  element={<ProtectedRoute adminOnly><AdminEntreprise /></ProtectedRoute>} />
+          <Route path="/admin/reseaux"     element={<ProtectedRoute adminOnly><AdminReseaux /></ProtectedRoute>} />
+          <Route path="/admin/radar"       element={<ProtectedRoute adminOnly><AdminRadar /></ProtectedRoute>} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

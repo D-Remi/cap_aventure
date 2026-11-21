@@ -1,8 +1,8 @@
 import 'reflect-metadata'
 import * as dotenv from 'dotenv'
 dotenv.config()
-import { NestFactory } from '@nestjs/core'
-import { ValidationPipe } from '@nestjs/common'
+import { NestFactory, Reflector } from '@nestjs/core'
+import { ValidationPipe, ClassSerializerInterceptor } from '@nestjs/common'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import { join } from 'path'
 import { mkdirSync, existsSync } from 'fs'
@@ -26,6 +26,9 @@ async function bootstrap() {
     forbidNonWhitelisted: true,
     disableErrorMessages: false,
   }))
+
+  // Applique @Exclude() des entités : le mot de passe chiffré n'est jamais renvoyé au navigateur
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)))
 
   const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000')
     .split(',').map(s => s.trim())

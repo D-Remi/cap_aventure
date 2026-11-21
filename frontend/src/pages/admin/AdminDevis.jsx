@@ -13,7 +13,7 @@ const numero = () => {
 
 // Modèles repris de la grille tarifaire du site
 const MODELES = {
-  souffle: { description: 'Souffle : garde à domicile, créneau hebdomadaire (4 h par semaine)', heures: '17.3', prix: '40' },
+  souffle: { description: 'Souffle : garde à domicile, créneau hebdomadaire (4 h par semaine)', heures: '17.33', prix: '40' },
   relais: { description: 'Relais : garde ponctuelle à domicile', heures: '3', prix: '45' },
   journee: { description: 'Journée répit (8 h)', heures: '8', prix: '42.5' },
 }

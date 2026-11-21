@@ -18,6 +18,7 @@ import { TemoignagesModule }   from './modules/temoignages/temoignages.module'
 import { ContratsModule }      from './modules/contrats/contrats.module'
 import { NotificationsModule } from './modules/notifications/notifications.module'
 import { EntrepriseModule }    from './modules/entreprise/entreprise.module'
+import { MarketingModule }     from './modules/marketing/marketing.module'
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { EntrepriseModule }    from './modules/entreprise/entreprise.module'
     ComptaModule,
     GardesModule,
     EntrepriseModule,
+    MarketingModule,
   ],
 })
 export class AppModule {}
