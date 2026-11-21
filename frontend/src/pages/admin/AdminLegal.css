@@ -1,0 +1,73 @@
+/* Pages « Mon entreprise », « Déclarations » et « Devis » du back-office */
+.al { display: grid; gap: 1.4rem; font-family: 'Inter', 'Outfit', system-ui, sans-serif; }
+.al-card { background: #fff; border-radius: var(--radius-xl, 24px); padding: 1.5rem 1.6rem; box-shadow: var(--shadow-sm); display: grid; gap: 1rem; min-width: 0; }
+.al-card h2 { font-family: 'Outfit', sans-serif; font-size: 1.15rem; color: #0B2A22; margin: 0; }
+.al-card h3 { font-family: 'Outfit', sans-serif; font-size: 1rem; color: #0B2A22; margin: 0; }
+.al-sub { font-size: .86rem; color: #5B6B66; line-height: 1.55; margin: 0; }
+.al-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .85rem 1rem; }
+.al-field { display: grid; gap: .3rem; min-width: 0; }
+.al-field span { font-size: .72rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #5B6B66; }
+.al-field small { font-size: .74rem; color: #7A8A85; }
+.al-field input, .al-field select, .al-field textarea {
+  width: 100%; padding: .6rem .7rem; border: 1.5px solid #DFE7E3; border-radius: 10px;
+  font-family: inherit; font-size: .92rem; color: #0F1A17; background: #fff;
+}
+.al-field input:focus, .al-field select:focus, .al-field textarea:focus { outline: none; border-color: #136F5B; }
+.al-check { display: flex; gap: .55rem; align-items: center; font-size: .9rem; color: #0F1A17; }
+.al-actions { display: flex; gap: .7rem; flex-wrap: wrap; align-items: center; }
+
+/* Indicateurs */
+.al-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1rem; }
+.al-stat { background: #fff; border-radius: 18px; padding: 1.1rem 1.25rem; box-shadow: var(--shadow-sm); display: grid; gap: .25rem; }
+.al-stat span { font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #5B6B66; }
+.al-stat b { font-family: 'Outfit', sans-serif; font-size: 1.7rem; color: #0B2A22; font-variant-numeric: tabular-nums; }
+.al-stat small { font-size: .78rem; color: #7A8A85; }
+
+/* Jauges de seuils */
+.al-gauge { display: grid; gap: .35rem; }
+.al-gauge__top { display: flex; justify-content: space-between; gap: 1rem; font-size: .86rem; color: #0F1A17; }
+.al-gauge__top b { font-variant-numeric: tabular-nums; }
+.al-gauge__bar { height: 10px; border-radius: 99px; background: #EEF4F1; overflow: hidden; }
+.al-gauge__bar i { display: block; height: 100%; border-radius: 99px; background: #136F5B; transition: width .4s; }
+.al-gauge__bar i.warn { background: #D99A1E; }
+.al-gauge__bar i.danger { background: #B4432C; }
+
+/* Alertes */
+.al-alert { display: flex; gap: .7rem; align-items: flex-start; padding: .85rem 1rem; border-radius: 12px; font-size: .88rem; line-height: 1.5; }
+.al-alert--info { background: #EEF4F1; color: #0B2A22; }
+.al-alert--attention { background: #FFF6E0; color: #6B4A00; }
+.al-alert--urgent { background: #FDECE8; color: #7A2414; }
+.al-alert b { flex-shrink: 0; }
+
+/* Tableaux */
+.al-table-wrap { overflow-x: auto; border: 1px solid #DFE7E3; border-radius: 14px; }
+.al-table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: .86rem; font-variant-numeric: tabular-nums; }
+.al-table th, .al-table td { text-align: left; padding: .65rem .8rem; border-bottom: 1px solid #EEF2F0; }
+.al-table th { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: #5B6B66; background: #F6FAF8; }
+.al-table td.r, .al-table th.r { text-align: right; white-space: nowrap; }
+.al-table tr.is-next td { background: #F2FADF; }
+.al-table tr.is-past td { color: #7A8A85; }
+.al-table tfoot td { font-weight: 700; background: #F6FAF8; }
+.al-pill { display: inline-block; font-size: .72rem; font-weight: 700; padding: .15rem .55rem; border-radius: 99px; }
+.al-pill--ok { background: #E8F5E9; color: #2E7D32; }
+.al-pill--wait { background: #FFF8E1; color: #A15C00; }
+.al-pill--todo { background: #F1F3F2; color: #5B6B66; }
+
+/* Check-list des obligations */
+.al-progress { height: 12px; border-radius: 99px; background: #EEF4F1; overflow: hidden; }
+.al-progress i { display: block; height: 100%; background: linear-gradient(90deg, #136F5B, #C8F169); }
+.al-steps { display: grid; gap: .55rem; }
+.al-step { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: .8rem; padding: .85rem 1rem; border-radius: 14px; border: 1px solid #E6EDEA; align-items: start; }
+.al-step.is-done { background: #F4FAF6; border-color: #CFE3D8; }
+.al-step input { width: 20px; height: 20px; margin-top: .15rem; accent-color: #136F5B; cursor: pointer; }
+.al-step b { display: block; font-size: .93rem; color: #0F1A17; }
+.al-step.is-done b { text-decoration: line-through; color: #5B6B66; }
+.al-step p { margin: .25rem 0 0; font-size: .83rem; color: #5B6B66; line-height: 1.5; }
+.al-step a { font-size: .82rem; color: #136F5B; font-weight: 600; }
+.al-tag { display: inline-block; margin-left: .4rem; font-size: .68rem; font-weight: 700; padding: .1rem .45rem; border-radius: 99px; vertical-align: middle; }
+.al-tag--oblig { background: #FDECE8; color: #9A3412; }
+.al-tag--conseil { background: #EEF4F1; color: #136F5B; }
+
+.al-lines { display: grid; gap: .6rem; }
+.al-line { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 1fr) minmax(0, 1fr) auto; gap: .6rem; align-items: end; }
+@media (max-width: 700px) { .al-line { grid-template-columns: 1fr 1fr; } }

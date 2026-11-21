@@ -1,0 +1,26 @@
+/* Pages Mentions légales, CGV, Confidentialité (site public) */
+.ev-legal { max-width: 860px; margin: 0 auto; padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.1rem, 4vw, 2.5rem) 5rem; }
+.ev-legal__head { display: grid; gap: .8rem; margin-bottom: 2.5rem; }
+.ev-legal__head h1 { font-size: clamp(2rem, 4.4vw, 3rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.05; color: var(--ev-forest); }
+.ev-legal__head p { color: var(--ev-soft); line-height: 1.6; }
+.ev-legal__toc { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: 2.5rem; }
+.ev-legal__toc a { font-size: .84rem; padding: .38rem .8rem; border-radius: 999px; background: var(--ev-mist); color: var(--ev-forest); text-decoration: none; }
+.ev-legal__toc a:hover { background: var(--ev-mist-2); }
+.ev-legal section { display: grid; gap: .8rem; padding: 1.6rem 0; border-top: 1px solid var(--ev-line); scroll-margin-top: 90px; }
+.ev-legal h2 { font-size: 1.35rem; font-weight: 700; letter-spacing: -.02em; color: var(--ev-forest); }
+.ev-legal h3 { font-size: 1.05rem; font-weight: 600; color: var(--ev-ink); margin-top: .4rem; }
+.ev-legal p, .ev-legal li { color: #34423D; line-height: 1.75; font-size: 1rem; }
+.ev-legal ul { margin: 0; padding-left: 1.2rem; display: grid; gap: .35rem; }
+.ev-legal a { color: var(--ev-green); font-weight: 500; }
+.ev-legal dl { display: grid; grid-template-columns: minmax(150px, 220px) minmax(0, 1fr); gap: .5rem 1.2rem; margin: 0; }
+.ev-legal dt { font-weight: 600; color: var(--ev-ink); }
+.ev-legal dd { margin: 0; color: #34423D; overflow-wrap: anywhere; }
+@media (max-width: 600px) { .ev-legal dl { grid-template-columns: 1fr; } .ev-legal dd { margin-bottom: .6rem; } }
+.ev-legal__box { background: var(--ev-mist); border-radius: 18px; padding: 1.3rem 1.5rem; display: grid; gap: .6rem; }
+.ev-legal__form { border: 1.5px dashed #A9C1B7; border-radius: 18px; padding: 1.4rem 1.5rem; display: grid; gap: .6rem; background: #fff; }
+.ev-legal__maj { font-size: .88rem; color: var(--ev-soft); }
+
+/* Mentions sous les grilles de prix */
+.ev-mentions-prix { display: grid; gap: .45rem; margin-top: 1.2rem; font-size: .86rem; color: var(--ev-soft); line-height: 1.6; }
+.ev-mentions-prix a { color: var(--ev-green); font-weight: 600; }
+.ev-mentions-prix__fiscal { font-size: .78rem; font-style: italic; }

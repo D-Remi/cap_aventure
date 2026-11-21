@@ -1,55 +1,78 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import './Navbar.css'
 
-export default function Navbar({ onContact }) {
+// overHero : la barre est transparente au-dessus d'un en-tête sombre, puis devient blanche au défilement.
+export default function Navbar({ onContact, overHero = false }) {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const { pathname } = useLocation()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', fn)
+    const fn = () => setScrolled(window.scrollY > 30)
+    fn()
+    window.addEventListener('scroll', fn, { passive: true })
     return () => window.removeEventListener('scroll', fn)
   }, [])
 
+  useEffect(() => { setOpen(false) }, [pathname])
+
   const go = (id) => {
     setOpen(false)
-    const el = document.getElementById(id)
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
+    if (pathname === '/') document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
     else navigate('/#' + id)
   }
 
+  const contact = () => {
+    setOpen(false)
+    if (onContact) onContact()
+    else navigate('/#contact')
+  }
+
+  const light = overHero && !scrolled && !open
+
   return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-      <Link to="/" className="navbar__logo">Éduc<span> &amp; Vous</span></Link>
+    <nav className={`ev-nav ${overHero ? 'ev-nav--over' : ''} ${light ? 'is-light' : 'is-solid'} ${open ? 'is-open' : ''}`}>
+      <div className="ev-nav__inner">
+        <Link to="/" className="ev-nav__logo">Éduc<span> &amp; Vous</span></Link>
 
-      <div className={`navbar__links ${open ? 'open' : ''}`}>
-        <button onClick={() => go('repit')}>La garde</button>
-        <button onClick={() => go('methode')}>Ma façon de faire</button>
-        <button onClick={() => go('qui')}>Qui je suis</button>
-        <Link to="/services" onClick={() => setOpen(false)}>Nos services</Link>
-        {user && <Link to="/dashboard" onClick={() => setOpen(false)}>Mon espace</Link>}
-        {user?.role === 'admin' && <Link to="/admin" onClick={() => setOpen(false)}>Admin</Link>}
-      </div>
+        <div className="ev-nav__links" id="ev-menu">
+          <button onClick={() => go('formules')}>La garde</button>
+          <NavLink to="/tarifs">Tarifs</NavLink>
+          <NavLink to="/frontaliers-suisse">Frontaliers &amp; Suisse</NavLink>
+          <button onClick={() => go('qui')}>Qui je suis</button>
+          <NavLink to="/documentation">Aide</NavLink>
+          {user && <NavLink to="/dashboard" className="ev-nav__m">Mon espace</NavLink>}
+          {user?.role === 'admin' && <NavLink to="/admin" className="ev-nav__m">Admin</NavLink>}
+          {user
+            ? <button className="ev-nav__m" onClick={logout}>Déconnexion</button>
+            : <NavLink to="/login" className="ev-nav__m">Connexion espace famille</NavLink>}
+        </div>
 
-      <div className="navbar__actions">
-        {user ? (
-          <>
-            <Link to="/dashboard" className="navbar__btn">Mon espace</Link>
-            <button className="navbar__out" onClick={logout}>Déconnexion</button>
-          </>
-        ) : (
-          <>
-            <Link to="/login" className="navbar__login">Connexion</Link>
-            <button className="navbar__btn" onClick={() => onContact ? onContact() : go('contact')}>Prendre contact</button>
-          </>
-        )}
-        <button className="navbar__burger" onClick={() => setOpen(!open)} aria-label="Menu">
-          <span /><span /><span />
-        </button>
+        <div className="ev-nav__actions">
+          {user ? (
+            <>
+              <Link to="/dashboard" className="ev-nav__login">Mon espace</Link>
+              {user.role === 'admin' && <Link to="/admin" className="ev-nav__login">Admin</Link>}
+              <button className="ev-nav__login" onClick={logout}>Déconnexion</button>
+            </>
+          ) : (
+            <Link to="/login" className="ev-nav__login">Connexion</Link>
+          )}
+          <button className="ev-nav__cta" onClick={contact}>Prendre contact</button>
+          <button
+            className="ev-nav__burger"
+            aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+            aria-expanded={open}
+            aria-controls="ev-menu"
+            onClick={() => setOpen(o => !o)}
+          >
+            <span /><span /><span />
+          </button>
+        </div>
       </div>
     </nav>
   )

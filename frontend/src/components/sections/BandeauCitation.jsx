@@ -1,20 +1,16 @@
+import { img, P } from '../../data/photos'
 import './BandeauCitation.css'
 
 export default function BandeauCitation() {
   return (
-    <div className="bandeau">
-      <img
-        src="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=1600&q=80"
-        alt="Lumière du matin — garde d'enfant en Haute-Savoie"
-        loading="lazy"
-      />
-      <div className="bandeau__overlay" />
-      <div className="bandeau__text">
-        <div className="container">
-          <p>« Vous n'êtes pas un mauvais parent. Vous êtes fatigué, et vous cherchez des réponses. »</p>
-          <cite>Rémi, accompagnant éducatif</cite>
-        </div>
+    <section className="ev-quote" aria-label="Citation">
+      <img src={img(P.banc, 2000)} alt="Un banc face au lac, au calme" loading="lazy" />
+      <div className="ev-quote__veil" />
+      <div className="ev-container ev-quote__inner ev-reveal">
+        <span className="ev-quote__mark" aria-hidden="true">“</span>
+        <p>Vous n'êtes pas un mauvais parent. Vous êtes fatigué, et vous cherchez des réponses.</p>
+        <cite>Rémi, accompagnant éducatif</cite>
       </div>
-    </div>
+    </section>
   )
 }

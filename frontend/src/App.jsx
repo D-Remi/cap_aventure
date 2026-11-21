@@ -26,7 +26,14 @@ import AdminGardes          from './pages/admin/AdminGardes'
 import AdminContrats        from './pages/admin/AdminContrats'
 import AdminTemoignages     from './pages/admin/AdminTemoignages'
 import AdminStats           from './pages/admin/AdminStats'
+import FrontaliersPage      from './pages/FrontaliersPage'
+import MentionsLegalesPage  from './pages/MentionsLegalesPage'
+import CgvPage              from './pages/CgvPage'
+import AdminEntreprise      from './pages/admin/AdminEntreprise'
+import AdminDeclarations    from './pages/admin/AdminDeclarations'
+import AdminDevis           from './pages/admin/AdminDevis'
 import './styles/global.css'
+import './styles/site.css'
 
 function NotFound() {
   return (
@@ -52,6 +59,10 @@ export default function App() {
           <Route path="/"                element={<HomePage />} />
           <Route path="/documentation"   element={<DocumentationPage />} />
           <Route path="/services"        element={<ServicesPage />} />
+          <Route path="/tarifs"          element={<ServicesPage />} />
+          <Route path="/frontaliers-suisse" element={<FrontaliersPage />} />
+          <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
+          <Route path="/cgv"             element={<CgvPage />} />
           <Route path="/confidentialite" element={<ConfidentialitePage />} />
           <Route path="/login"           element={<LoginPage />} />
           <Route path="/register"        element={<RegisterPage />} />
@@ -76,6 +87,9 @@ export default function App() {
           <Route path="/admin/contrats"    element={<ProtectedRoute adminOnly><AdminContrats /></ProtectedRoute>} />
           <Route path="/admin/temoignages" element={<ProtectedRoute adminOnly><AdminTemoignages /></ProtectedRoute>} />
           <Route path="/admin/stats"       element={<ProtectedRoute adminOnly><AdminStats /></ProtectedRoute>} />
+          <Route path="/admin/declarations" element={<ProtectedRoute adminOnly><AdminDeclarations /></ProtectedRoute>} />
+          <Route path="/admin/devis"       element={<ProtectedRoute adminOnly><AdminDevis /></ProtectedRoute>} />
+          <Route path="/admin/entreprise"  element={<ProtectedRoute adminOnly><AdminEntreprise /></ProtectedRoute>} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

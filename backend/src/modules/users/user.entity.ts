@@ -34,6 +34,16 @@ export class User {
   @OneToMany(() => Child, (child) => child.user, { cascade: true })
   children: Child[]
 
+  // Adresse : obligatoire sur les factures et attestations fiscales (Code du travail D7233-1 et D7233-4)
+  @Column({ nullable: true })
+  adresse: string
+
+  @Column({ nullable: true })
+  code_postal: string
+
+  @Column({ nullable: true })
+  ville: string
+
   @CreateDateColumn()
   created_at: Date
 

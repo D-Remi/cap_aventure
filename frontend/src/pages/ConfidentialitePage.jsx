@@ -1,81 +1,117 @@
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import Navbar from '../components/layout/Navbar'
 import Footer from '../components/layout/Footer'
-import './LegalPage.css'
+import useEntreprise, { v, nomEI } from '../hooks/useEntreprise'
+import { setMeta } from '../utils/seo'
+import './LegalPages.css'
 
 export default function ConfidentialitePage() {
+  const e = useEntreprise()
   useEffect(() => {
-    document.title = "Politique de confidentialité — Éduc & Vous"
+    setMeta('Politique de confidentialité · Éduc & Vous', "Comment Éduc & Vous protège les données des familles et des enfants : finalités, durées de conservation, droits RGPD.")
   }, [])
+  const contact = v(e.email || 'delfosseremi33@gmail.com')
 
   return (
-    <>
+    <div className="ev">
       <Navbar />
-      <main className="legal">
-        <div className="container">
+      <main className="ev-legal">
+        <div className="ev-legal__head">
+          <span className="ev-kicker">RGPD</span>
           <h1>Politique de confidentialité</h1>
-          <p className="legal-date">Dernière mise à jour : {new Date().getFullYear()}</p>
+          <p>Confier son enfant, c'est aussi confier des informations personnelles, parfois médicales. Voici exactement ce qui est collecté, pourquoi, et combien de temps.</p>
+        </div>
 
-          <h2>1. Qui traite vos données</h2>
-          <p>
-            Le site educetvous74.fr est édité par Rémi Delfosse, accompagnant éducatif
-            exerçant en Haute-Savoie (74). Pour toute question relative à vos données personnelles,
-            vous pouvez écrire à : delfosseremi33@gmail.com.
-          </p>
+        <section>
+          <h2>1. Responsable du traitement</h2>
+          <p>{nomEI(e)}{e.nom_commercial ? ` (« ${e.nom_commercial} »)` : ''}, accompagnant éducatif, Haute-Savoie. Contact pour toute question sur vos données : <b>{contact}</b>.</p>
+        </section>
 
-          <h2>2. Quelles données sont collectées</h2>
-          <p>
-            Lorsque vous utilisez le formulaire de contact, les informations suivantes sont
-            recueillies : prénom, adresse email, numéro de téléphone (facultatif), et le contenu
-            de votre message. Ces données sont fournies volontairement par vous.
-          </p>
-          <p>
-            Si vous créez un espace famille, votre nom, prénom, email et les informations liées
-            à l'accompagnement sont également enregistrés.
-          </p>
+        <section>
+          <h2>2. Données collectées</h2>
+          <h3>Formulaire de contact</h3>
+          <p>Prénom, e-mail, téléphone (facultatif), lieu de résidence (France ou Suisse) et votre message.</p>
+          <h3>Espace famille et suivi des gardes</h3>
+          <ul>
+            <li>Identité et coordonnées des parents, adresse de facturation.</li>
+            <li>Enfants : prénom, nom, date de naissance, habitudes, besoins, et le cas échéant des <b>données de santé</b> (handicap, traitements, allergies, protocole d'urgence).</li>
+            <li>Documents que vous déposez, photos (uniquement avec votre autorisation), messages, contrats signés, comptes-rendus.</li>
+          </ul>
+          <h3>Gestion et comptabilité</h3>
+          <p>Devis, factures, paiements, attestations fiscales.</p>
+        </section>
 
-          <h2>3. Pourquoi ces données sont collectées</h2>
-          <p>
-            Vos données servent uniquement à répondre à votre demande, à assurer le suivi de
-            l'accompagnement, et à vous recontacter. Elles ne sont jamais vendues, louées, ni
-            transmises à des tiers à des fins commerciales.
-          </p>
+        <section>
+          <h2>3. Finalités et bases légales</h2>
+          <ul>
+            <li>Répondre à vos demandes et préparer un devis : mesures précontractuelles prises à votre demande (RGPD, art. 6.1.b).</li>
+            <li>Réaliser les gardes, assurer la sécurité de l'enfant, tenir l'espace famille : exécution du contrat (art. 6.1.b).</li>
+            <li>Données de santé de l'enfant : votre consentement explicite, que vous pouvez retirer à tout moment (art. 9.2.a), et la sauvegarde des intérêts vitaux de l'enfant en cas d'urgence (art. 9.2.c).</li>
+            <li>Factures, comptabilité, attestations fiscales, avance immédiate du crédit d'impôt : obligations légales (art. 6.1.c).</li>
+          </ul>
+          <p>Aucune donnée n'est vendue, louée ni utilisée à des fins publicitaires. Aucun profilage n'est réalisé.</p>
+        </section>
 
-          <h2>4. Combien de temps sont-elles conservées</h2>
-          <p>
-            Les demandes de contact sont conservées le temps nécessaire au traitement de votre
-            demande, puis archivées ou supprimées. Les données liées à un accompagnement en cours
-            sont conservées pendant la durée de la relation, puis supprimées sur demande.
-          </p>
+        <section>
+          <h2>4. Durées de conservation</h2>
+          <ul>
+            <li>Demande de contact sans suite : 3 ans après le dernier échange.</li>
+            <li>Espace famille et données de l'enfant : pendant la durée de l'accompagnement, puis supprimées au plus tard 1 an après la dernière garde (ou plus tôt à votre demande).</li>
+            <li>Factures et pièces comptables : 10 ans (obligation légale).</li>
+            <li>Devis : au moins 1 an.</li>
+          </ul>
+        </section>
 
-          <h2>5. Vos droits</h2>
+        <section>
+          <h2>5. Qui a accès à vos données</h2>
+          <ul>
+            <li>Rémi uniquement. Les informations sur votre enfant ne sont jamais transmises à un tiers sans votre accord, sauf aux secours en cas d'urgence.</li>
+            <li>Sous-traitants techniques : l'hébergeur du site ({v(e.hebergeur, 'hébergeur')}) et le service d'envoi des e-mails du site.</li>
+            <li>Administrations, dans le cadre légal : URSSAF (avance immédiate du crédit d'impôt) et administration fiscale.</li>
+          </ul>
           <p>
-            Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez
-            d'un droit d'accès, de rectification, de suppression et d'opposition sur vos données.
-            Pour exercer ces droits, écrivez à delfosseremi33@gmail.com. Une réponse vous sera
-            apportée dans les meilleurs délais.
+            Les photos d'illustration du site sont chargées depuis Unsplash (États-Unis), qui reçoit à cette occasion votre adresse IP ; ce transfert est encadré
+            par le cadre de protection des données UE / États-Unis. Les polices de caractères sont hébergées sur le site lui-même.
           </p>
+        </section>
 
+        <section>
           <h2>6. Cookies</h2>
           <p>
-            Ce site utilise le strict nécessaire à son fonctionnement. Si des outils de mesure
-            d'audience (comme Google Analytics) sont activés, ils servent uniquement à comprendre
-            la fréquentation du site de façon anonyme, et jamais à vous identifier personnellement.
+            Le site n'utilise aucun cookie publicitaire ni de mesure d'audience. Seuls des cookies strictement nécessaires sont déposés quand vous vous connectez
+            à l'espace famille (maintien de la connexion sécurisée). Ils ne demandent pas de consentement.
           </p>
+        </section>
 
+        <section>
           <h2>7. Sécurité</h2>
-          <p>
-            Vos données sont stockées de façon sécurisée. Les échanges avec le site sont chiffrés
-            (HTTPS). Toutes les précautions raisonnables sont prises pour protéger vos informations.
-          </p>
+          <p>Connexion chiffrée (HTTPS), mots de passe chiffrés, accès à l'espace famille protégé, accès administrateur réservé à Rémi, sauvegardes régulières.</p>
+        </section>
 
-          <p className="legal-note">
-            Cette politique peut être mise à jour. La date en haut de page indique la dernière
-            version en vigueur.
+        <section>
+          <h2>8. Vos droits</h2>
+          <p>
+            Vous pouvez accéder à vos données, les rectifier, les effacer, en limiter l'utilisation, vous y opposer, les récupérer (portabilité), retirer votre
+            consentement et définir des directives sur leur sort après votre décès. Écrivez à <b>{contact}</b> : réponse sous un mois.
           </p>
-        </div>
+          <p>
+            Si vous estimez que vos droits ne sont pas respectés, vous pouvez saisir la CNIL :{' '}
+            <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener noreferrer">cnil.fr/fr/plaintes</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2>Voir aussi</h2>
+          <ul>
+            <li><Link to="/mentions-legales">Mentions légales</Link></li>
+            <li><Link to="/cgv">Conditions générales de prestation</Link></li>
+          </ul>
+        </section>
+
+        <p className="ev-legal__maj">Dernière mise à jour : novembre 2026.</p>
       </main>
       <Footer />
-    </>
+    </div>
   )
 }

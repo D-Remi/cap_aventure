@@ -19,6 +19,11 @@ export class ContratsController {
     return this.svc.findActifsBetween(from, to)
   }
 
+  // Toutes les factures (suivi de la facturation dans le back-office)
+  @Get('factures/toutes')
+  @UseGuards(RolesGuard) @Roles('admin')
+  toutesFactures() { return this.svc.findAllFactures() }
+
   @Get(':id')
   findOne(@Param('id') id: string) { return this.svc.findOne(+id) }
 
@@ -71,5 +76,5 @@ export class ContratsController {
 
   @Patch('factures/:fid/payee')
   @UseGuards(RolesGuard) @Roles('admin')
-  marquerPayee(@Param('fid') fid: string) { return this.svc.marquerPayee(+fid) }
+  marquerPayee(@Param('fid') fid: string, @Body() dto: any) { return this.svc.marquerPayee(+fid, dto || {}) }
 }

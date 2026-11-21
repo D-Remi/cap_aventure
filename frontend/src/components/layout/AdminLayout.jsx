@@ -13,6 +13,9 @@ const NAV = [
   { path:'/admin/contrats',     label:'Contrats' },
   { path:'/admin/gardes',       label:'Planning gardes' },
   { path:'/admin/compta',       label:'Comptabilité' },
+  { path:'/admin/declarations', label:'Déclarations & URSSAF' },
+  { path:'/admin/devis',        label:'Devis' },
+  { path:'/admin/entreprise',   label:'Mon entreprise & obligations' },
   { path:'/admin/temoignages',  label:'Témoignages' },
   { path:'/admin/stats',        label:'Statistiques' },
 ]

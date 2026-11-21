@@ -1,0 +1,31 @@
+.ev-phero {
+  position: relative; overflow: hidden; color: #fff;
+  background:
+    radial-gradient(60% 70% at 0% 0%, rgba(26, 138, 114, .4) 0%, transparent 60%),
+    linear-gradient(160deg, #0F3A2F 0%, #0B2A22 60%, #071D17 100%);
+  padding: calc(76px + clamp(2.5rem, 5vw, 4rem)) 0 clamp(3.5rem, 7vw, 5.5rem);
+}
+.ev-phero__grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+.ev-phero .ev-kicker { color: var(--ev-lime); }
+.ev-phero h1 { margin: 1.2rem 0 1.2rem; font-size: clamp(2.3rem, 5vw, 3.9rem); font-weight: 700; line-height: 1.03; letter-spacing: -.04em; color: #fff; }
+.ev-phero h1 em { font-style: normal; color: var(--ev-lime); }
+.ev-phero__text p { font-size: 1.14rem; line-height: 1.7; color: var(--ev-on-dark); max-width: 36rem; }
+.ev-phero__visual { position: relative; }
+.ev-phero__photo { margin: 0; aspect-ratio: 5 / 4; border-radius: 30px; overflow: hidden; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .6); }
+.ev-phero__photo img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Carte de prix posée sur la photo */
+.ev-phero__ticket {
+  position: absolute; left: -22px; bottom: -22px; background: #fff; color: var(--ev-forest);
+  border-radius: 22px; padding: 1.1rem 1.3rem; display: grid; gap: .25rem; max-width: 260px;
+  box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .55);
+}
+.ev-phero__ticket span { font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ev-soft); }
+.ev-phero__ticket b { font-family: var(--ev-display); font-size: 2.3rem; line-height: 1; letter-spacing: -.03em; color: var(--ev-green); font-variant-numeric: tabular-nums; }
+.ev-phero__ticket b small { font-family: var(--ev-text); font-size: .9rem; font-weight: 500; color: var(--ev-soft); letter-spacing: 0; }
+.ev-phero__ticket em { font-style: normal; font-size: .82rem; line-height: 1.45; color: var(--ev-soft); }
+
+@media (max-width: 900px) {
+  .ev-phero__grid { grid-template-columns: 1fr; }
+  .ev-phero__ticket { left: 12px; bottom: -18px; }
+}

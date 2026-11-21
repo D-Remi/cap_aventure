@@ -17,6 +17,7 @@ import { PhotosModule }        from './modules/photos/photos.module'
 import { TemoignagesModule }   from './modules/temoignages/temoignages.module'
 import { ContratsModule }      from './modules/contrats/contrats.module'
 import { NotificationsModule } from './modules/notifications/notifications.module'
+import { EntrepriseModule }    from './modules/entreprise/entreprise.module'
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
     PhotosModule,
     ComptaModule,
     GardesModule,
+    EntrepriseModule,
   ],
 })
 export class AppModule {}

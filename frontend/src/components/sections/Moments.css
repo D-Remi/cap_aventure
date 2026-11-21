@@ -1,41 +1,21 @@
-.moments { background: var(--gray); padding: 4.5rem 0; }
+.ev-moments {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: clamp(170px, 19vw, 250px); gap: 1rem;
+}
+.ev-moment { position: relative; margin: 0; border-radius: 22px; overflow: hidden; background: var(--ev-mist-2); }
+.ev-moment--big { grid-column: span 2; grid-row: span 2; }
+.ev-moment img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.ev-moment:hover img { transform: scale(1.06); }
+.ev-moment::after { content: ""; position: absolute; inset: 45% 0 0; background: linear-gradient(transparent, rgba(7, 29, 23, .75)); pointer-events: none; }
+.ev-moment figcaption {
+  position: absolute; left: 1.1rem; bottom: 1rem; z-index: 1; color: #fff;
+  font-family: var(--ev-display); font-weight: 600; font-size: 1.05rem; letter-spacing: -.01em;
+}
+.ev-moment--big figcaption { font-size: 1.5rem; left: 1.5rem; bottom: 1.3rem; }
 
-.moments__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 200px 200px;
-  gap: 1rem;
+@media (max-width: 860px) {
+  .ev-moments { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 190px; }
 }
-.moment {
-  border-radius: 16px;
-  overflow: hidden;
-  position: relative;
-  margin: 0;
-}
-.moment img {
-  width: 100%; height: 100%;
-  object-fit: cover; display: block;
-  transition: transform .6s ease;
-}
-.moment:hover img { transform: scale(1.06); }
-.moment--big { grid-column: span 2; grid-row: span 2; }
-
-.moment figcaption {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  padding: 1.1rem;
-  background: linear-gradient(to top, rgba(15,17,21,.85), transparent);
-  color: #fff;
-  font-size: .86rem;
-  font-weight: 400;
-}
-
-@media (max-width: 960px) {
-  .moments__grid { grid-template-columns: 1fr 1fr; }
-  .moment--big { grid-column: span 2; }
-}
-@media (max-width: 560px) {
-  .moments__grid { grid-template-columns: 1fr; grid-template-rows: none; }
-  .moment { height: 200px; }
-  .moment--big { grid-column: span 1; height: 260px; }
+@media (max-width: 480px) {
+  .ev-moments { grid-auto-rows: 150px; gap: .7rem; }
+  .ev-moment--big figcaption { font-size: 1.2rem; }
 }

@@ -1,0 +1,6 @@
+.ev-zone__grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.ev-zone__chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+.ev-zone__chips span { font-size: .9rem; padding: .45rem .9rem; border-radius: 999px; background: #fff; border: 1px solid var(--ev-line); color: var(--ev-ink); }
+.ev-zone__chips span.is-station { background: transparent; border-style: dashed; border-color: #A9C1B7; color: var(--ev-soft); }
+.ev-zone__photo { aspect-ratio: 4 / 4.6; margin: 0; box-shadow: var(--ev-shadow); }
+@media (max-width: 900px) { .ev-zone__grid { grid-template-columns: 1fr; } .ev-zone__photo { aspect-ratio: 16 / 10; } }

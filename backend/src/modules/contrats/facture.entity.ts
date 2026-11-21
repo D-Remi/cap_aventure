@@ -10,6 +10,7 @@ export class Facture {
   @ManyToOne(() => Contrat, { onDelete:'CASCADE' }) @JoinColumn({name:'contrat_id'}) contrat: Contrat
   @ManyToOne(() => User,    { onDelete:'CASCADE' }) @JoinColumn({name:'user_id'})    user:    User
 
+  // Numérotation chronologique et continue, par année : FAC-2027-0001, FAC-2027-0002…
   @Column() numero: string
   @Column({ type:'date' }) periode_debut: string
   @Column({ type:'date' }) periode_fin:   string
@@ -21,5 +22,10 @@ export class Facture {
   @Column({ type:'enum', enum:['brouillon','envoyee','payee'], default:'brouillon' }) statut: string
   @Column({ type:'text', nullable:true }) notes: string
   @Column({ nullable:true }) pdf_url: string
+
+  // Règlement : sert au livre des recettes et à l'attestation fiscale (montant effectivement acquitté)
+  @Column({ type:'date', nullable:true }) date_paiement: string
+  @Column({ nullable:true }) mode_paiement: string
+
   @CreateDateColumn() created_at: Date
 }

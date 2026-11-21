@@ -318,14 +318,34 @@ export default function AdminContrats() {
                           </div>
                           <div style={{display:'flex',alignItems:'center',gap:'.75rem'}}>
                             <span style={{fontSize:'1.3rem',fontWeight:800,color:'var(--sauge)'}}>{parseFloat(f.montant_total).toFixed(2)} €
-                      <button onClick={(e)=>{e.stopPropagation();genererFacturePDF(f, selected, selected.user, [])}}
+                      <button onClick={(e)=>{e.stopPropagation();genererFacturePDF(f, selected, selected.user, seances.filter(s=>s.facture_id===f.id))}}
                         style={{marginLeft:'.5rem',background:'#e0f2fe',color:'#0369a1',border:'none',borderRadius:6,padding:'2px 8px',cursor:'pointer',fontSize:'.72rem',fontWeight:700,fontFamily:'inherit'}}>
                         ⬇PDF
                       </button></span>
                             <span style={{background:f.statut==='payee'?'#e8f5e9':f.statut==='envoyee'?'#fff8e1':'#f3f4f6',color:f.statut==='payee'?'#2e7d32':f.statut==='envoyee'?'#f57f17':'#6b7280',fontSize:'.72rem',fontWeight:700,padding:'2px 8px',borderRadius:50}}>
                               {f.statut==='payee'?'Payée':f.statut==='envoyee'?'Envoyée':'Brouillon'}
                             </span>
-                            {f.statut!=='payee' && <button onClick={()=>axios.patch(`/api/contrats/factures/${f.id}/payee`).then(()=>{setFactures(fa=>fa.map(x=>x.id===f.id?{...x,statut:'payee'}:x));toast.success('Facture marquée payée')})} style={{background:'#e8f5e9',color:'#2e7d32',border:'none',borderRadius:8,padding:'.35rem .75rem',cursor:'pointer',fontFamily:'inherit',fontWeight:700,fontSize:'.78rem'}}>Marquer payée</button>}
+                            {f.statut!=='payee' && (
+                              <span style={{display:'inline-flex',gap:'.35rem',alignItems:'center'}}>
+                                <select id={`mode-${f.id}`} defaultValue="avance_immediate" aria-label="Mode de règlement"
+                                  style={{border:'1px solid var(--line)',borderRadius:8,padding:'.3rem .4rem',fontFamily:'inherit',fontSize:'.78rem'}}>
+                                  <option value="avance_immediate">Avance immédiate</option>
+                                  <option value="virement">Virement</option>
+                                  <option value="cesu">CESU préfinancé</option>
+                                  <option value="cheque">Chèque</option>
+                                  <option value="cb">Carte bancaire</option>
+                                  <option value="especes">Espèces</option>
+                                </select>
+                                <button onClick={()=>{
+                                  const mode = document.getElementById(`mode-${f.id}`)?.value || 'virement'
+                                  const date = new Date().toISOString().slice(0,10)
+                                  axios.patch(`/api/contrats/factures/${f.id}/payee`, { mode, date }).then(()=>{
+                                    setFactures(fa=>fa.map(x=>x.id===f.id?{...x,statut:'payee',mode_paiement:mode,date_paiement:date}:x))
+                                    toast.success('Facture payée et inscrite au livre des recettes')
+                                  })
+                                }} style={{background:'#e8f5e9',color:'#2e7d32',border:'none',borderRadius:8,padding:'.35rem .75rem',cursor:'pointer',fontFamily:'inherit',fontWeight:700,fontSize:'.78rem'}}>Marquer payée</button>
+                              </span>
+                            )}
                           </div>
                         </div>
                       ))}

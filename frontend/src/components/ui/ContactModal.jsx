@@ -6,8 +6,13 @@ import './ContactModal.css'
 const WA_NUM = '33752096698'
 
 const SERVICES = [
-  { val: 'repit',          label: 'Garde d\'enfant / relais à la journée' },
+  { val: 'repit',          label: 'Garde ou répit pour mon enfant' },
   { val: 'autre',          label: 'Je ne sais pas encore' },
+]
+
+const RESIDENCES = [
+  { val: 'france', label: 'En France' },
+  { val: 'suisse', label: 'En Suisse' },
 ]
 
 const URGENCES = [
@@ -16,9 +21,10 @@ const URGENCES = [
   { val: 'urgent',  label: "C'est assez urgent" },
 ]
 
-export default function ContactModal({ open, onClose, serviceInitial = '' }) {
+export default function ContactModal({ open, onClose, serviceInitial = '', residenceInitiale = '' }) {
   const [service, setService] = useState(serviceInitial)
   const [urgence, setUrgence] = useState('')
+  const [residence, setResidence] = useState(residenceInitiale)
   const [prenom,  setPrenom]  = useState('')
   const [email,   setEmail]   = useState('')
   const [tel,     setTel]     = useState('')
@@ -29,7 +35,8 @@ export default function ContactModal({ open, onClose, serviceInitial = '' }) {
   // Pré-sélection du service quand la modale s'ouvre depuis un bloc précis
   useEffect(() => {
     if (open && serviceInitial) setService(serviceInitial)
-  }, [open, serviceInitial])
+    if (open && residenceInitiale) setResidence(residenceInitiale)
+  }, [open, serviceInitial, residenceInitiale])
 
   // Fermeture avec Échap + blocage du défilement de la page
   useEffect(() => {
@@ -60,7 +67,11 @@ export default function ContactModal({ open, onClose, serviceInitial = '' }) {
         telephone: tel || undefined,
         service: service || 'autre',
         urgence: urgence || undefined,
-        message: message || undefined,
+        // Le lieu de résidence (France / Suisse) est ajouté en tête du message
+        message: [
+          residence ? `Habite : ${RESIDENCES.find(r => r.val === residence)?.label}` : '',
+          message,
+        ].filter(Boolean).join('\n\n') || undefined,
       })
       setDone(true)
     } catch (err) {
@@ -73,7 +84,7 @@ export default function ContactModal({ open, onClose, serviceInitial = '' }) {
   }
 
   const reset = () => {
-    setDone(false); setService(''); setUrgence('')
+    setDone(false); setService(''); setUrgence(''); setResidence('')
     setPrenom(''); setEmail(''); setTel(''); setMessage('')
   }
 
@@ -120,6 +131,22 @@ export default function ContactModal({ open, onClose, serviceInitial = '' }) {
                       onClick={() => setService(s.val)}
                     >
                       {s.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="cmodal__field">
+                <label>Vous habitez</label>
+                <div className="cmodal__chips">
+                  {RESIDENCES.map(r => (
+                    <button
+                      key={r.val}
+                      type="button"
+                      className={`cmodal__chip ${residence === r.val ? 'is-on' : ''}`}
+                      onClick={() => setResidence(r.val)}
+                    >
+                      {r.label}
                     </button>
                   ))}
                 </div>
@@ -181,7 +208,9 @@ export default function ContactModal({ open, onClose, serviceInitial = '' }) {
                 Écrire sur WhatsApp
               </a>
               <p className="cmodal__legal">
-                Vos informations restent strictement confidentielles
+                Vos informations servent uniquement à vous répondre et sont conservées 3 ans au plus sans suite.
+                Évitez d'indiquer ici des détails médicaux : on en parlera de vive voix.
+                Vous pouvez y accéder ou les faire supprimer à tout moment. <a href="/confidentialite" target="_blank" rel="noopener noreferrer">Confidentialité</a>
               </p>
             </div>
           </>

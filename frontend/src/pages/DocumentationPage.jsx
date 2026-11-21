@@ -15,7 +15,7 @@ const DOCS = [
     { title:"Comment se déroule la mise en place ?", content:"1. Un échange sur votre enfant : ses repères, ses habitudes, ce qui l'apaise.\n\n2. Une première rencontre en votre présence, pour que votre enfant m'identifie sans stress.\n\n3. Le relais commence, à un rythme défini ensemble." },
   ]},
   { cat:'Tarifs et aides', items:[
-    { title:"Quels sont les tarifs ?", content:"Les tarifs sont établis sur devis, selon le service, la fréquence et votre situation.\n\nLe premier échange est toujours gratuit et sans engagement." },
+    { title:"Quels sont les tarifs ?", content:"40 € de l'heure en abonnement hebdomadaire, 45 € de l'heure en ponctuel, 340 € la journée répit et 790 € le week-end.\n\nAvec le crédit d'impôt de 50 % déduit tout de suite (avance immédiate URSSAF), vous payez réellement 20 € et 22,50 € de l'heure.\n\nLa grille complète est sur la page Tarifs. Le premier échange est toujours gratuit et sans engagement." },
     { title:"Quelles aides financières existent ?", content:"Le crédit d'impôt services à la personne peut s'appliquer quelle que soit votre situation.\n\nSi votre enfant est en situation de handicap, d'autres aides existent : PCH via la MDPH, AEEH et ses compléments, fonds de répit départementaux (si handicap), aides de certaines mutuelles.\n\nJe peux vous orienter dans les démarches." },
     { title:"Le CESU est-il accepté ?", content:"Oui, les paiements en CESU et par virement bancaire sont acceptés." },
   ]},
@@ -35,8 +35,8 @@ export default function DocumentationPage() {
         <div className="container">
           <div className="doc-page__header">
             <span className="section-tag">Centre d'aide</span>
-            <h1>Espace Documentation</h1>
-            <p>Tout ce que vous devez savoir sur les deux services, les aides financières et votre espace famille.</p>
+            <h1>Aide et questions</h1>
+            <p>Tout ce que vous devez savoir sur la garde, les tarifs, les aides financières et votre espace famille.</p>
           </div>
           <div className="doc-quick">
             {DOCS.map(c => (

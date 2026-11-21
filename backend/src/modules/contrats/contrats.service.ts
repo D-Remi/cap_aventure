@@ -5,6 +5,7 @@ import { Contrat } from './contrat.entity'
 import { ContratSeance } from './contrat-seance.entity'
 import { Facture } from './facture.entity'
 import { User } from '../users/user.entity'
+import { ComptaEntree } from '../compta/compta.entity'
 
 @Injectable()
 export class ContratsService {
@@ -12,7 +13,25 @@ export class ContratsService {
     @InjectRepository(Contrat)       private cRepo: Repository<Contrat>,
     @InjectRepository(ContratSeance) private sRepo: Repository<ContratSeance>,
     @InjectRepository(Facture)       private fRepo: Repository<Facture>,
+    @InjectRepository(ComptaEntree)  private comptaRepo: Repository<ComptaEntree>,
   ) {}
+
+  // Toutes les factures (back-office : suivi de la facturation)
+  findAllFactures() {
+    return this.fRepo.find({ relations: ['user', 'contrat'], order: { created_at: 'DESC' } })
+  }
+
+  // Numéro suivant, chronologique et sans trou dans l'année : FAC-2027-0001
+  private async prochainNumero() {
+    const annee = new Date().getFullYear()
+    const prefixe = `FAC-${annee}-`
+    const existantes = await this.fRepo.createQueryBuilder('f')
+      .select('f.numero', 'numero')
+      .where('f.numero LIKE :p', { p: `${prefixe}%` })
+      .getRawMany()
+    const max = existantes.reduce((m, r) => Math.max(m, parseInt(String(r.numero).slice(prefixe.length), 10) || 0), 0)
+    return `${prefixe}${String(max + 1).padStart(4, '0')}`
+  }
 
   findAll()                       { return this.cRepo.find({ order:{ created_at:'DESC' } }) }
   findByUser(uid: number)         { return this.cRepo.find({ where:{ user_id:uid }, order:{ created_at:'DESC' } }) }
@@ -118,8 +137,7 @@ export class ContratsService {
     const mKm   = seances.reduce((s,x) => s + Number(x.montant_km||0),    0)
     const total = Math.round((mH+mKm)*100)/100
 
-    const count  = await this.fRepo.count()
-    const numero = `FAC-${new Date().getFullYear()}-${String(count+1).padStart(3,'0')}`
+    const numero = await this.prochainNumero()
 
     const facture = await this.fRepo.save(this.fRepo.create({
       contrat_id:    contratId,
@@ -141,8 +159,21 @@ export class ContratsService {
     return { facture, seances }
   }
 
-  async marquerPayee(factureId: number) {
-    await this.fRepo.update(factureId, { statut:'payee' })
+  // Facture réglée : on note le règlement et on l'inscrit automatiquement au livre des recettes
+  async marquerPayee(factureId: number, dto: { date?: string; mode?: string } = {}) {
+    const f = await this.fRepo.findOne({ where:{ id:factureId } })
+    if (!f) throw new NotFoundException('Facture introuvable')
+    const date = dto.date || new Date().toISOString().slice(0, 10)
+    const mode = dto.mode || 'virement'
+    await this.fRepo.update(factureId, { statut:'payee', date_paiement: date, mode_paiement: mode })
+    const deja = await this.comptaRepo.findOne({ where: { facture_id: factureId } })
+    if (!deja) {
+      await this.comptaRepo.save(this.comptaRepo.create({
+        date, montant: f.montant_total, mode, type: 'recette', categorie: 'Garde',
+        reference: f.numero, user_id: f.user_id, facture_id: f.id,
+        description: `Garde d'enfants à domicile, facture ${f.numero}`,
+      }))
+    }
     return this.fRepo.findOne({ where:{ id:factureId } })
   }
 

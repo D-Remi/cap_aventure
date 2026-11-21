@@ -1,46 +1,53 @@
 import { Link } from 'react-router-dom'
+import { waLink, TEL_AFFICHE, TEL_LIEN, EMAIL } from '../../data/contact'
 import './Footer.css'
 
 export default function Footer({ onContact }) {
-  const go = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-
   return (
-    <footer className="footer">
-      <div className="container">
-        <div className="footer__grid">
-          <div className="footer__brand">
-            <div className="footer__logo">Éduc<span> &amp; Vous</span></div>
-            <p>
-              Service de garde d'enfant de confiance,
-              par un accompagnant éducatif. Haute-Savoie (74).
-            </p>
+    <footer className="ev-foot">
+      <div className="ev-foot__inner">
+        <div className="ev-foot__grid">
+          <div className="ev-foot__brand">
+            <Link to="/" className="ev-foot__logo">Éduc<span> &amp; Vous</span></Link>
+            <p>Garde et répit à domicile pour les familles d'enfants à besoins spécifiques, par un accompagnant éducatif. Thonon, Évian et le Chablais.</p>
+            <a className="ev-foot__wa" href={waLink()} target="_blank" rel="noopener noreferrer">Écrire sur WhatsApp</a>
           </div>
 
-          <div className="footer__col">
-            <h5>Les services</h5>
-            <button onClick={() => go('repit')}>La garde d'enfant</button>
-            <button onClick={() => go('methode')}>Ma méthode</button>
+          <div className="ev-foot__col">
+            <h5>La garde</h5>
+            <Link to="/#formules">Les formules</Link>
+            <Link to="/tarifs">Tarifs et aides</Link>
+            <Link to="/frontaliers-suisse">Frontaliers et Suisse</Link>
+            <Link to="/#qui">Qui je suis</Link>
           </div>
 
-          <div className="footer__col">
+          <div className="ev-foot__col">
             <h5>Me joindre</h5>
-            <a href="https://wa.me/33752096698" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-            <button onClick={() => onContact ? onContact() : go('contact')}>Formulaire de contact</button>
-            <Link to="/services">Nos services</Link>
+            <a href={TEL_LIEN}>{TEL_AFFICHE}</a>
+            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+            {onContact
+              ? <button onClick={() => onContact()}>Formulaire de contact</button>
+              : <Link to="/#contact">Formulaire de contact</Link>}
             <Link to="/documentation">Aide et questions</Link>
-            <Link to="/confidentialite">Confidentialité</Link>
           </div>
 
-          <div className="footer__col">
+          <div className="ev-foot__col">
             <h5>Espace famille</h5>
             <Link to="/login">Connexion</Link>
             <Link to="/register">Créer un compte</Link>
           </div>
+
+          <div className="ev-foot__col">
+            <h5>Informations légales</h5>
+            <Link to="/mentions-legales">Mentions légales</Link>
+            <Link to="/cgv">Conditions générales</Link>
+            <Link to="/confidentialite">Confidentialité</Link>
+          </div>
         </div>
 
-        <div className="footer__bottom">
-          <span>© {new Date().getFullYear()} Éduc &amp; Vous · Accompagnant éducatif</span>
-          <span>Haute-Savoie (74)</span>
+        <div className="ev-foot__bottom">
+          <span>© {new Date().getFullYear()} Éduc &amp; Vous · Rémi Delfosse, accompagnant éducatif</span>
+          <span>Chablais · Haute-Savoie (74)</span>
         </div>
       </div>
     </footer>

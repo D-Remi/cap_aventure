@@ -1,15 +1,16 @@
+import { waLink, IconeWhatsApp } from '../../data/contact'
 import './StickyContact.css'
 
-// Bouton de contact fixe, visible uniquement sur mobile.
-// Reste en bas de l'écran quand on fait défiler la page.
-export default function StickyContact({ onContact }) {
+// Barre de contact fixe, visible uniquement sur mobile.
+export default function StickyContact({ onContact, waTexte }) {
   return (
-    <button
-      className="sticky-contact"
-      onClick={() => onContact && onContact()}
-      aria-label="Prendre contact"
-    >
-      Prendre contact — échange gratuit
-    </button>
+    <div className="ev-sticky">
+      <button className="ev-sticky__main" onClick={() => onContact && onContact()}>
+        Premier échange gratuit
+      </button>
+      <a className="ev-sticky__wa" href={waLink(waTexte)} target="_blank" rel="noopener noreferrer" aria-label="Écrire sur WhatsApp">
+        <IconeWhatsApp />
+      </a>
+    </div>
   )
 }

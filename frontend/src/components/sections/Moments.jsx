@@ -1,27 +1,28 @@
+import { img, P } from '../../data/photos'
 import './Moments.css'
 
 const PHOTOS = [
-  { src: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=900&q=80', cap: 'Sorties nature, à leur rythme', big: true,  alt: 'Sortie en nature' },
-  { src: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80', cap: 'Jeux libres',                            alt: 'Enfant jouant au sol' },
-  { src: 'https://images.unsplash.com/photo-1607453998774-d533f65dac99?w=600&q=80', cap: 'Lecture',                                alt: 'Moment de lecture' },
-  { src: 'https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?w=600&q=80', cap: 'Temps calmes',                           alt: 'Temps calme en extérieur' },
-  { src: 'https://images.unsplash.com/photo-1753164726456-487d6c6d1f9d?q=80&w=1331&auto=format&fit=crop', cap: 'Activités manuelles', alt: 'Activité manuelle' },
+  { id: P.saut,      cap: 'Sorties nature, à son rythme', alt: 'Des enfants sautent de joie dans une forêt', big: true },
+  { id: P.lecture,   cap: 'Lecture',                      alt: 'Un adulte et un enfant lisent un livre sur le canapé' },
+  { id: P.coloriage, cap: 'Activités manuelles',          alt: 'Un enfant colorie un papillon' },
+  { id: P.automne,   cap: 'Balades',                      alt: 'Un adulte et un enfant marchent dans une forêt en automne' },
+  { id: P.cubes,     cap: 'Jeux libres',                  alt: 'Un enfant empile des cubes colorés' },
 ]
 
 export default function Moments() {
   return (
-    <section className="moments">
-      <div className="container">
-        <div className="section-head">
-          <span className="section-head__kicker">Le quotidien</span>
-          <h2>Des temps calmes, pas des animations</h2>
-          <p>Pas de programme chargé. Des moments simples, adaptés au rythme de chaque enfant.</p>
+    <section className="ev-section ev-section--mist">
+      <div className="ev-container">
+        <div className="ev-head ev-moments__head ev-reveal">
+          <span className="ev-kicker">Le quotidien</span>
+          <h2>Des temps calmes, <em>pas des animations.</em></h2>
+          <p>Pas de programme chargé. Des moments simples, adaptés au rythme et à la sensibilité de chaque enfant.</p>
         </div>
 
-        <div className="moments__grid">
-          {PHOTOS.map(({ src, cap, big, alt }) => (
-            <figure key={cap} className={`moment ${big ? 'moment--big' : ''}`}>
-              <img src={src} alt={alt} loading="lazy" />
+        <div className="ev-moments">
+          {PHOTOS.map(({ id, cap, alt, big }, i) => (
+            <figure key={cap} className={`ev-moment ${big ? 'ev-moment--big' : ''} ev-reveal`} style={{ transitionDelay: `${i * 70}ms` }}>
+              <img src={img(id, big ? 1200 : 700)} alt={alt} loading="lazy" />
               <figcaption>{cap}</figcaption>
             </figure>
           ))}

@@ -1,6 +1,44 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import toast from 'react-hot-toast'
 import AdminLayout from '../../components/layout/AdminLayout'
+
+// Adresse du client : obligatoire sur les factures et les attestations fiscales
+function AdresseFamille({ user, onSaved }) {
+  const [f, setF] = useState({ adresse: user.adresse || '', code_postal: user.code_postal || '', ville: user.ville || '' })
+  const [saving, setSaving] = useState(false)
+  const champ = (k, label, w) => (
+    <label style={{display:'grid',gap:3,flex:w,minWidth:0}}>
+      <span style={{fontSize:'.72rem',fontWeight:700,color:'var(--text-muted)',textTransform:'uppercase'}}>{label}</span>
+      <input value={f[k]} onChange={e=>setF(s=>({...s,[k]:e.target.value}))}
+        style={{padding:'.5rem .6rem',border:'1.5px solid var(--sable-dark)',borderRadius:8,fontFamily:'inherit',fontSize:'.88rem'}} />
+    </label>
+  )
+  const save = async () => {
+    setSaving(true)
+    try {
+      const { data } = await axios.patch(`/api/users/${user.id}`, f)
+      toast.success('Adresse enregistrée')
+      onSaved({ ...user, ...f, ...(data || {}) })
+    } catch { toast.error("Impossible d'enregistrer l'adresse") }
+    finally { setSaving(false) }
+  }
+  return (
+    <div style={{marginTop:'1.1rem',paddingTop:'1rem',borderTop:'1px solid #eef2ee'}}>
+      <div style={{fontSize:'.8rem',fontWeight:700,color:'var(--nuit)',marginBottom:'.5rem'}}>
+        Adresse de facturation {(!user.adresse || !user.ville) && <span style={{color:'#b45309',fontWeight:600}}>· à compléter (factures et attestations fiscales)</span>}
+      </div>
+      <div style={{display:'flex',gap:'.6rem',flexWrap:'wrap',alignItems:'flex-end'}}>
+        {champ('adresse', 'Adresse', 3)}
+        {champ('code_postal', 'Code postal', 1)}
+        {champ('ville', 'Ville', 2)}
+        <button onClick={save} disabled={saving} className="btn-primary" style={{padding:'.55rem 1rem',fontSize:'.85rem'}}>
+          {saving ? '…' : 'Enregistrer'}
+        </button>
+      </div>
+    </div>
+  )
+}
 
 export default function AdminUsers() {
   const [users,    setUsers]    = useState([])
@@ -61,6 +99,7 @@ export default function AdminUsers() {
                   {selected.telephone && <span style={{fontSize:'.85rem',color:'var(--text-muted)'}}>{selected.telephone}</span>}
                   <span style={{fontSize:'.85rem',color:'var(--text-muted)'}}>Inscrit le {new Date(selected.created_at).toLocaleDateString('fr-FR')}</span>
                 </div>
+                <AdresseFamille key={selected.id} user={selected} onSaved={(u)=>{ setSelected(u); setUsers(us=>us.map(x=>x.id===u.id?{...x,...u}:x)) }} />
               </div>
 
               {/* Enfants */}

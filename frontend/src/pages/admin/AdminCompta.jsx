@@ -5,7 +5,7 @@ import AdminLayout from '../../components/layout/AdminLayout'
 
 const MOIS_LABELS = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc']
 const MOIS_FULL   = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre']
-const MODES = { cesu:'CESU', virement:'Virement', especes:'Espèces' }
+const MODES = { avance_immediate:'Avance immédiate', virement:'Virement', cesu:'CESU préfinancé', cheque:'Chèque', cb:'Carte bancaire', especes:'Espèces' }
 const CATS  = ['Garde','Relais','Accompagnement','Kilométrage','Matériel','Formation','Autre']
 
 const EMPTY = { date: new Date().toISOString().slice(0,10), montant:'', mode:'virement', reference:'', description:'', famille:'', type:'recette', categorie:'Garde' }
@@ -286,7 +286,7 @@ export default function AdminCompta() {
                 </div>
                 <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
                   {fs('Type', 'type', [['recette','↑ Recette'],['depense','↓ Dépense']])}
-                  {fs('Mode de paiement', 'mode', [['virement','Virement'],['cesu','CESU'],['especes','Espèces']])}
+                  {fs('Mode de paiement', 'mode', Object.entries(MODES))}
                 </div>
                 <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
                   {fs('Catégorie', 'categorie', CATS.map(c => [c,c]))}

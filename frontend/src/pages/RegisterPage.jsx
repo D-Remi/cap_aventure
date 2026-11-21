@@ -76,6 +76,12 @@ export default function RegisterPage() {
 
           {error && <p className="auth-error">{error}</p>}
 
+          <p style={{ fontSize: '.8rem', color: 'var(--soft)', lineHeight: 1.5, margin: '.25rem 0 .5rem' }}>
+            En créant votre compte, vous acceptez les <a href="/cgv" target="_blank" rel="noopener noreferrer">conditions générales</a> et
+            la <a href="/confidentialite" target="_blank" rel="noopener noreferrer">politique de confidentialité</a>. Les informations de santé de votre enfant
+            ne sont enregistrées qu'avec votre accord, pour la sécurité des gardes.
+          </p>
+
           <button type="submit" className="btn-primary auth-submit" disabled={loading}>
             {loading ? 'Création...' : 'Créer mon compte'}
           </button>

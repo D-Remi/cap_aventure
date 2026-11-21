@@ -1,47 +1,56 @@
+import { REMI } from '../../data/photos'
 import './QuiJeSuis.css'
 
-const CREDS = [
-  { b: 'Accompagnant', s: 'éducatif' },
-  { b: 'Ex-AED',    s: "assistant d'éducation" },
-  { b: 'BAFA',      s: "diplômé d'État" },
-  { b: 'Haute-Savoie',   s: "secteur d'intervention" },
+const PARCOURS = [
+  { quand: "2024 → aujourd'hui", quoi: "Assistant d'éducation en collège, à Annecy, Évian puis Douvaine" },
+  { quand: '2026', quoi: 'Accompagnant éducatif en lieu de vie, auprès de jeunes accueillis en internat' },
+  { quand: '2025', quoi: 'Animateur de séjours adaptés APAJH, avec des enfants autistes et des enfants avec troubles du comportement' },
+  { quand: '2025', quoi: "Référent d'un enfant en situation de handicap en colonie de ski" },
+  { quand: '2023 → 2024', quoi: "Aide médico-psychologique auprès d'enfants atteints de paralysie cérébrale, en centre d'éducation motrice" },
+  { quand: '2022 → 2023', quoi: "Garde d'enfants, dont en situation de handicap, et soutien éducatif en foyer" },
 ]
+
+const BADGES = ['BAFA', 'Séjours adaptés TSA', 'Polyhandicap', "Attestation d'honorabilité", 'Permis B']
 
 export default function QuiJeSuis() {
   return (
-    <section className="qui" id="qui">
-      <div className="container">
-        <div className="qui__box">
-          <div className="qui__photo">
-            <img
-              src="https://images.unsplash.com/photo-1654613698275-b0930ef9570f?q=80&w=1170&auto=format&fit=crop"
-              alt="Rémi, accompagnant éducatif en Haute-Savoie au quotidien"
-              loading="lazy"
-            />
+    <section className="ev-section ev-qui" id="qui">
+      <div className="ev-container ev-qui__grid">
+        <div className="ev-qui__photo ev-reveal">
+          <div className="ev-qui__frame">
+            <img src={REMI} alt="Rémi, accompagnant éducatif dans le Chablais" loading="lazy" />
+          </div>
+          <div className="ev-qui__name">
+            <b>Rémi</b>
+            <span>Accompagnant éducatif · Thonon-les-Bains</span>
+          </div>
+        </div>
+
+        <div className="ev-qui__text">
+          <div className="ev-head ev-reveal">
+            <span className="ev-kicker">Qui je suis</span>
+            <h2>Un éducateur pour garder votre enfant, <em>pas juste un baby-sitter.</em></h2>
+          </div>
+          <div className="ev-qui__lead ev-reveal">
+            <p>
+              J'ai quitté l'informatique en 2022 parce que ce qui compte pour moi, c'est l'humain.
+              Depuis, je travaille chaque jour avec des enfants et des adolescents, dont beaucoup
+              ont des besoins particuliers.
+            </p>
+            <p>
+              Gérer une crise, rassurer un enfant qui ne parle pas, garder son calme quand tout déborde :
+              c'est mon quotidien de professionnel. Cette expérience-là, aucun baby-sitter occasionnel ne l'a.
+            </p>
           </div>
 
-          <div className="qui__text">
-            <h2>Un éducateur pour garder votre enfant, pas juste un baby-sitter.</h2>
-            <p>
-              Je suis <strong>accompagnant éducatif</strong> en Haute-Savoie, et je propose
-              un service de garde d'enfant de confiance. J'ai l'habitude d'accompagner des
-              enfants de tous profils, y compris aux besoins spécifiques.
-            </p>
-            <p>
-              Gérer un groupe d'enfants, s'adapter à chaque caractère, garder son calme en
-              toute situation — c'est mon quotidien de professionnel. Cette expérience-là,
-              aucun baby-sitter occasionnel ne l'a.
-            </p>
-            <p>
-              Avant ça, j'ai été <strong>assistant d'éducation</strong> en collège et j'ai passé
-              mon <strong>BAFA</strong>. J'ai quitté un métier dans l'informatique en 2022 parce
-              que ce qui compte pour moi, c'est l'humain.
-            </p>
-            <div className="qui__creds">
-              {CREDS.map(({ b, s }) => (
-                <div className="qui__cred" key={b}><b>{b}</b><span>{s}</span></div>
-              ))}
-            </div>
+          <ol className="ev-qui__parcours ev-reveal">
+            {PARCOURS.map(({ quand, quoi }) => (
+              <li key={quoi}><span>{quand}</span><p>{quoi}</p></li>
+            ))}
+          </ol>
+
+          <div className="ev-qui__badges ev-reveal">
+            {BADGES.map(b => <span key={b}>{b}</span>)}
           </div>
         </div>
       </div>
