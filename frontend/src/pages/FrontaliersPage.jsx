@@ -22,6 +22,7 @@ const TARIFS = [
   { p: 'Soirée + nuit', d: '18 h → 9 h', eur: '260 €', chf: '239 CHF', fr: '130 €', ch: '260 €' },
   { p: 'Week-end répit', d: 'samedi 9 h → dimanche 18 h', eur: '790 €', chf: '727 CHF', fr: '395 €', ch: '790 €' },
   { p: 'Forfait stations', d: 'par venue, minimum 4 h de garde', eur: '30 €', chf: '28 CHF', fr: '15 €', ch: '30 €' },
+  { p: 'Forfait Genève ou Vaud', d: 'garde à votre domicile en Suisse, par venue, minimum 4 h', eur: '40 €', chf: '37 CHF', fr: '-', ch: '40 €' },
 ]
 
 const FAQ = [
@@ -39,7 +40,11 @@ const FAQ = [
   },
   {
     q: 'Pouvez-vous venir à Genève ou à Lausanne ?',
-    r: "Pas pour l'instant. Les gardes ont lieu côté français uniquement : chez vous si vous êtes frontalier, ou dans votre résidence du Chablais.",
+    r: "Oui, pour des gardes ponctuelles (soirées, week-ends, vacances), réservées au moins 8 jours à l'avance : chaque intervention est déclarée aux autorités suisses, dans la limite de 90 jours par an. Un forfait de déplacement s'ajoute.",
+  },
+  {
+    q: 'Et pour un créneau chaque semaine chez nous, en Suisse ?',
+    r: "Dans ce cas, vous m'employez directement, comme pour une garde d'enfants à domicile. Chèque service (Genève) ou Chèques-emploi (Vaud) s'occupent des déclarations et des assurances sociales à votre place, et le permis frontalier est demandé à votre nom. On regarde ensemble si c'est la bonne formule.",
   },
   {
     q: "Je n'ai pas de compte en euros. Comment je paie ?",
@@ -59,7 +64,7 @@ export default function FrontaliersPage() {
   useEffect(() => {
     setMeta(
       "Garde et relève pour frontaliers et familles suisses · Thonon, Évian, Chablais · Éduc & Vous",
-      "Vous travaillez à Genève, Lausanne ou en Valais, ou vous avez un chalet dans le Chablais ? Garde et répit à domicile pour enfants autistes, TDAH ou en situation de handicap. Crédit d'impôt de 50 % pour les frontaliers résidant en France."
+      "Vous travaillez à Genève, Lausanne ou en Valais, vous habitez en Suisse ou vous avez un chalet dans le Chablais ? Garde et répit à domicile pour enfants autistes, TDAH ou en situation de handicap, dans le Chablais et ponctuellement à Genève et Vaud. Crédit d'impôt de 50 % pour les frontaliers résidant en France."
     )
   }, [])
 
@@ -70,7 +75,7 @@ export default function FrontaliersPage() {
         <PageHero
           kicker="Frontaliers · familles suisses · Chablais"
           title={<>Vous travaillez en Suisse. <em>Votre enfant a besoin de quelqu'un ici.</em></>}
-          lead="Genève, Lausanne, le Valais : vos journées commencent tôt et finissent tard. Je garde votre enfant chez vous, côté français du Léman, et je reste jusqu'à votre retour, même quand la douane ou le bateau vous retardent."
+          lead="Genève, Lausanne, le Valais : vos journées commencent tôt et finissent tard. Je garde votre enfant chez vous dans le Chablais, et je viens aussi à Genève et dans le canton de Vaud pour des gardes ponctuelles. Je reste jusqu'à votre retour, même quand la douane ou le bateau vous retardent."
           photo={P.vapeur}
           alt="Un bateau à vapeur sur le Léman devant le jet d'eau de Genève"
         >
@@ -85,12 +90,12 @@ export default function FrontaliersPage() {
           <div className="ev-container">
             <div className="ev-head ev-reveal">
               <span className="ev-kicker">Votre situation</span>
-              <h2>Deux cas, <em>deux façons de travailler ensemble</em></h2>
+              <h2>Trois situations, <em>une solution pour chacune</em></h2>
               <p>En Suisse, on parle de service de relève. En France, de répit. C'est la même idée : quelqu'un de formé prend le relais auprès de votre enfant, pour que vous puissiez souffler.</p>
             </div>
             <div className="ev-ch__cases">
               <article className="ev-ch__case ev-reveal">
-                <div className="ev-ch__photo"><img src={img(P.geneve, 900)} alt="Genève et le Léman vus du ciel" loading="lazy" /><span>Frontaliers</span></div>
+                <div className="ev-ch__photo"><img src={img(P.lavaux, 900)} alt="Le Léman et les montagnes du Chablais" loading="lazy" /><span>Frontaliers</span></div>
                 <div className="ev-ch__body">
                   <h3>Vous habitez dans le Chablais et travaillez en Suisse</h3>
                   <ul>
@@ -110,6 +115,18 @@ export default function FrontaliersPage() {
                     <li>Châtel, Abondance, Bernex, Thollon-les-Mémises, Morzine, Les Gets, Évian, Thonon</li>
                     <li>Vos relâches tombent souvent pendant les semaines scolaires françaises : c'est là que j'ai le plus de place en journée</li>
                     <li>Tarif plein : le crédit d'impôt français concerne seulement les résidents fiscaux en France</li>
+                  </ul>
+                </div>
+              </article>
+              <article className="ev-ch__case ev-reveal" style={{ transitionDelay: '180ms' }}>
+                <div className="ev-ch__photo"><img src={img(P.geneve, 900)} alt="Genève et le Léman vus du ciel" loading="lazy" /><span>Genève · Vaud</span></div>
+                <div className="ev-ch__body">
+                  <h3>Vous habitez à Genève ou dans le canton de Vaud</h3>
+                  <ul>
+                    <li>Gardes ponctuelles à votre domicile : soirées, week-ends, relâches, vacances</li>
+                    <li>À réserver au moins 8 jours avant : chaque intervention est déclarée aux autorités suisses</li>
+                    <li>Pour un créneau chaque semaine, vous pouvez m'employer directement, déclaré simplement par Chèque service (Genève) ou Chèques-emploi (Vaud). On en parle au premier échange</li>
+                    <li>Tarif en francs, sans crédit d'impôt français, plus un forfait de déplacement</li>
                   </ul>
                 </div>
               </article>
@@ -150,12 +167,17 @@ export default function FrontaliersPage() {
         <section className="ev-section">
           <div className="ev-container ev-ch__notes">
             <div className="ev-ch__note ev-reveal">
-              <h3>Ce que je ne fais pas pour l'instant</h3>
-              <p>Je n'interviens pas au domicile de familles qui habitent en Suisse. La garde a lieu côté français : chez vous si vous êtes frontalier, ou dans votre résidence du Chablais si vous habitez en Suisse.</p>
+              <h3>Garde chez vous, en Suisse : comment ça marche</h3>
+              <p>
+                Je viens à Genève et dans le canton de Vaud pour des gardes ponctuelles. Chaque intervention est déclarée en ligne aux autorités suisses
+                au moins 8 jours avant, et ne peut pas dépasser 90 jours par an au total : réservez tôt. Pour une urgence à moins de 8 jours, je peux garder
+                votre enfant côté français. Pour un créneau chaque semaine chez vous, la solution simple est de m'employer, déclaré par Chèque service (Genève)
+                ou Chèques-emploi (Vaud), qui s'occupent des assurances sociales.
+              </p>
             </div>
             <div className="ev-ch__note ev-ch__note--en ev-reveal" lang="en">
               <h3>In English</h3>
-              <p>I look after children with special needs (autism, ADHD, disabilities, behavioural difficulties) at your home or holiday chalet in the French Chablais, between Geneva and Lausanne. I speak English at an intermediate level.</p>
+              <p>I look after children with special needs (autism, ADHD, disabilities, behavioural difficulties) at your home or holiday chalet in the French Chablais, and occasionally at your home in Geneva or Vaud (please book at least 8 days ahead). I speak English at an intermediate level.</p>
               <a href={waLink('Hello Rémi, I would like to talk about care for my child.')} target="_blank" rel="noopener noreferrer" className="ev-arrow">WhatsApp · {TEL_AFFICHE}</a>
             </div>
           </div>

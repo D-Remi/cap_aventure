@@ -19,6 +19,12 @@ export const DEMARCHES = [
     { k: 'honorabilite', t: 'Garder l\'attestation d\'honorabilité à jour', d: 'À présenter aux familles et à renouveler selon sa durée de validité.', o: false },
     { k: 'psc1', t: 'Se former aux premiers secours (PSC1)', d: 'Fortement recommandé pour garder seul des enfants, et rassurant pour les familles.', o: false },
   ]},
+  { groupe: 'Interventions chez des familles qui habitent en Suisse', items: [
+    { k: 'annonce_ch', t: 'Déclarer chaque intervention en Suisse au moins 8 jours avant', d: 'Procédure d\'annonce en ligne, gratuite, pour les indépendants de l\'UE. Maximum 90 jours de travail par année civile (une journée compte dès qu\'il y a une intervention). Garde les confirmations.', lien: 'https://www.easygov.swiss', o: true },
+    { k: 'preuve_independant', t: 'Avoir sur soi la preuve du statut d\'indépendant', d: 'Avis de situation SIRENE et attestation d\'immatriculation : la Suisse peut contrôler les « faux indépendants ». Réserve la Suisse aux gardes ponctuelles.', o: true },
+    { k: 'rc_suisse', t: 'Vérifier que l\'assurance RC pro couvre les interventions en Suisse', d: 'À demander par écrit à ton assureur avant la première garde à Genève ou dans le canton de Vaud.', o: true },
+    { k: 'cleiss', t: 'Avant tout emploi salarié en Suisse (Chèque service, Chèques-emploi) : faire valider ta situation sociale', d: 'Salarié en Suisse et micro-entrepreneur en France : la règle européenne peut te rattacher à la sécurité sociale suisse pour toutes tes activités. Le CLEISS répond gratuitement.', lien: 'https://www.cleiss.fr', o: false },
+  ]},
   { groupe: 'À chaque nouvelle famille', items: [
     { k: 'devis', t: 'Remettre un devis gratuit', d: 'Obligatoire dès 100 € TTC de prestations par mois, ou si la famille le demande (arrêté du 17 mars 2015). Conserver une copie au moins un an. Menu « Devis ».', o: true },
     { k: 'contrat', t: 'Faire signer le contrat et les conditions générales', d: 'Signé au domicile de la famille : droit de rétractation de 14 jours. Une garde pendant ce délai seulement si la famille le demande par écrit.', o: true },

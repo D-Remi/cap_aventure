@@ -5,7 +5,7 @@ import PageHero from '../components/sections/PageHero'
 import BandeauSuisse from '../components/sections/BandeauSuisse'
 import CtaFinal from '../components/sections/CtaFinal'
 import MentionsPrix from '../components/sections/MentionsPrix'
-import { COMMUNES, STATIONS } from '../components/sections/Zone'
+import { COMMUNES, STATIONS, SUISSE } from '../components/sections/Zone'
 import ContactModal from '../components/ui/ContactModal'
 import StickyContact from '../components/ui/StickyContact'
 import useReveal from '../hooks/useReveal'
@@ -29,6 +29,7 @@ const GRILLE = [
   { p: 'Enfant en plus', d: 'fratrie, par enfant et par heure', prix: '+ 8,00 €', reel: '+ 4,00 €' },
   { p: 'Déplacement', d: 'inclus jusqu\'à 20 km autour de Thonon ; au-delà, par km', prix: '0,60 €', reel: '0,30 €' },
   { p: 'Forfait stations', d: 'Châtel, Abondance, Morzine, Les Gets…, par venue', prix: '30 €', reel: '15 €' },
+  { p: 'Forfait Genève ou Vaud', d: 'garde à domicile en Suisse, par venue, minimum 4 h, réservée 8 jours avant', prix: '40 €', reel: 'pas de crédit d\'impôt' },
   { p: 'Rencontre de préparation', d: '1 h 30 chez vous, fiche de votre enfant', prix: 'offerte', reel: '—' },
 ]
 
@@ -137,13 +138,14 @@ export default function ServicesPage() {
               <h2>Garde d'enfant à domicile dans le Chablais</h2>
               <p>
                 J'interviens chez vous à Thonon-les-Bains, Évian-les-Bains et dans les communes du Léman.
-                Le déplacement est inclus jusqu'à 20 km autour de Thonon. Votre commune n'apparaît pas ?
-                Écrivez-moi, j'étudie chaque demande.
+                Le déplacement est inclus jusqu'à 20 km autour de Thonon. En Suisse (Genève, Vaud), je viens pour des gardes
+                ponctuelles réservées au moins 8 jours avant. Votre commune n'apparaît pas ? Écrivez-moi, j'étudie chaque demande.
               </p>
             </div>
             <div className="ev-zone__chips ev-reveal">
               {COMMUNES.map(c => <span key={c}>{c}</span>)}
               {STATIONS.map(c => <span key={c} className="is-station">{c}</span>)}
+              {SUISSE.map(c => <span key={c} className="is-station">{c} (CH)</span>)}
             </div>
           </div>
         </section>

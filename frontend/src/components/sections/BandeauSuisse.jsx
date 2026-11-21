@@ -11,14 +11,16 @@ export default function BandeauSuisse() {
           <div className="ev-ch-band__veil" />
           <div className="ev-ch-band__content">
             <span className="ev-kicker">Frontaliers et familles suisses</span>
-            <h2>Vous travaillez en Suisse, ou vous avez un chalet dans le Chablais ?</h2>
+            <h2>Vous travaillez ou habitez en Suisse ?</h2>
             <p>
               Horaires de frontalier, bateau CGN en retard, relâches genevoises et vaudoises :
-              je m'adapte. Et si vous habitez en France, le crédit d'impôt de 50 % s'applique,
+              je m'adapte. Je viens aussi chez vous à Genève et dans le canton de Vaud pour des
+              gardes ponctuelles. Et si vous habitez en France, le crédit d'impôt de 50 % s'applique,
               même avec un salaire suisse.
             </p>
             <ul>
               <li>De 6 h 30 à 20 h 30</li>
+              <li>Gardes à Genève et Vaud</li>
               <li>Tarifs en francs suisses</li>
               <li>Gardes au chalet</li>
             </ul>

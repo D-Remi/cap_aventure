@@ -23,7 +23,7 @@ const FAQ = [
   },
   {
     q: 'Je travaille en Suisse. C\'est pareil pour moi ?',
-    r: <>Si vous habitez en France, oui, crédit d'impôt compris. Si vous habitez en Suisse et avez une résidence dans le Chablais, je viens aussi, au tarif plein. Tout est expliqué sur la page <Link to="/frontaliers-suisse">frontaliers et familles suisses</Link>.</>,
+    r: <>Si vous habitez en France, oui, crédit d'impôt compris. Si vous habitez en Suisse, je garde votre enfant dans votre résidence du Chablais, ou chez vous à Genève et dans le canton de Vaud pour des gardes ponctuelles réservées 8 jours avant, au tarif plein. Tout est expliqué sur la page <Link to="/frontaliers-suisse">frontaliers et familles suisses</Link>.</>,
   },
 ]
 

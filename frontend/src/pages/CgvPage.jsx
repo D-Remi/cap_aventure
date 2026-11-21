@@ -48,6 +48,13 @@ export default function CgvPage() {
             présentant des besoins spécifiques, et sur leur accompagnement lors de sorties. Mode d'intervention : <b>prestataire</b>.
             Le prestataire intervient lui-même ; la famille n'est pas employeur.
           </p>
+          <p>
+            Pour les familles qui habitent en Suisse (cantons de Genève et de Vaud), les gardes à domicile sont ponctuelles. Chaque intervention est
+            déclarée au préalable aux autorités suisses (procédure d'annonce des prestataires de services), ce qui impose une réservation au moins
+            8 jours à l'avance et une limite de 90 jours d'intervention par année civile. Le crédit d'impôt français ne s'applique pas aux familles
+            qui ne sont pas résidentes fiscales en France. Une garde régulière au domicile d'une famille en Suisse relève d'un contrat de travail
+            conclu directement avec la famille, hors des présentes conditions.
+          </p>
           <p>La garde d'enfants en situation de handicap de moins de 18 ans et d'enfants de moins de 3 ans n'est réalisée qu'une fois l'agrément obtenu.</p>
         </section>
 
