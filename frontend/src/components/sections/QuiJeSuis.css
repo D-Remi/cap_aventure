@@ -29,6 +29,8 @@
 .ev-qui__parcours span { font-size: .88rem; font-weight: 600; color: var(--ev-green); font-variant-numeric: tabular-nums; padding-top: .1rem; }
 .ev-qui__parcours p { font-size: .98rem; line-height: 1.55; color: var(--ev-ink); }
 .ev-qui__badges { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 2rem; }
+.ev-qui__pro { margin-top: 1.6rem; padding: 1rem 1.2rem; border-radius: 16px; background: var(--ev-forest); color: var(--ev-on-dark); line-height: 1.6; }
+.ev-qui__pro .ev-arrow { color: var(--ev-lime); }
 .ev-qui__badges span { font-size: .85rem; font-weight: 600; padding: .5rem .95rem; border-radius: 999px; background: var(--ev-mist); color: var(--ev-forest); }
 
 @media (max-width: 900px) {

@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom'
 import { REMI } from '../../data/photos'
 import './QuiJeSuis.css'
 
-const PARCOURS = [
+export const PARCOURS = [
   { quand: "2024 → aujourd'hui", quoi: "Assistant d'éducation en collège, à Annecy, Évian puis Douvaine" },
   { quand: '2026', quoi: 'Accompagnant éducatif en lieu de vie, auprès de jeunes accueillis en internat' },
   { quand: '2025', quoi: 'Animateur de séjours adaptés APAJH, avec des enfants autistes et des enfants avec troubles du comportement' },
@@ -10,7 +11,7 @@ const PARCOURS = [
   { quand: '2022 → 2023', quoi: "Garde d'enfants, dont en situation de handicap, et soutien éducatif en foyer" },
 ]
 
-const BADGES = ['BAFA', 'Séjours adaptés TSA', 'Polyhandicap', "Attestation d'honorabilité", 'Permis B']
+export const BADGES = ['BAFA', 'Séjours adaptés TSA', 'Polyhandicap', "Attestation d'honorabilité", 'Permis B']
 
 export default function QuiJeSuis() {
   return (
@@ -52,6 +53,11 @@ export default function QuiJeSuis() {
           <div className="ev-qui__badges ev-reveal">
             {BADGES.map(b => <span key={b}>{b}</span>)}
           </div>
+
+          <p className="ev-qui__pro ev-reveal">
+            Vous êtes une institution, une association ou un service de relève en Suisse ?{' '}
+            <Link to="/structures" className="ev-arrow">Mon profil pour les structures</Link>
+          </p>
         </div>
       </div>
     </section>

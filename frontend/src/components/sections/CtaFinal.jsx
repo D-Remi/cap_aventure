@@ -22,7 +22,7 @@ export default function CtaFinal({ onContact, photo = P.lavaux, titre, texte, wa
         <div className="ev-cta__card ev-reveal">
           <div><span>Téléphone et WhatsApp</span><a href={TEL_LIEN}>{TEL_AFFICHE}</a><small>Même numéro depuis la Suisse</small></div>
           <div><span>E-mail</span><a href={`mailto:${EMAIL}`}>{EMAIL}</a></div>
-          <div><span>Secteur</span><b>Thonon, Évian, Chablais · Haute-Savoie</b></div>
+          <div><span>Secteur</span><b>Chablais (74) · Genève · Vaud</b></div>
         </div>
       </div>
     </section>

@@ -33,8 +33,8 @@ export default function HomePage() {
 
   useEffect(() => {
     setMeta(
-      "Éduc & Vous · Répit et garde d'enfants à besoins spécifiques · Thonon, Évian, Chablais",
-      "Garde et répit à domicile pour les familles d'enfants autistes (TSA), TDAH, en situation de handicap ou avec troubles du comportement. Thonon, Évian, Chablais. 20 €/h après crédit d'impôt. Frontaliers bienvenus."
+      "Éduc & Vous · Répit et garde d'enfants à besoins spécifiques · Chablais, Genève, Vaud",
+      "Garde et répit à domicile pour les familles d'enfants autistes (TSA), TDAH, en situation de handicap ou avec troubles du comportement, des deux côtés du Léman : Thonon, Évian, Chablais, Genève, Lausanne et canton de Vaud. Frontaliers bienvenus."
     )
   }, [])
 

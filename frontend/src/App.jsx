@@ -29,6 +29,7 @@ import AdminStats           from './pages/admin/AdminStats'
 import FrontaliersPage      from './pages/FrontaliersPage'
 import MentionsLegalesPage  from './pages/MentionsLegalesPage'
 import CgvPage              from './pages/CgvPage'
+import StructuresPage       from './pages/StructuresPage'
 import AdminEntreprise      from './pages/admin/AdminEntreprise'
 import AdminDeclarations    from './pages/admin/AdminDeclarations'
 import AdminDevis           from './pages/admin/AdminDevis'
@@ -65,6 +66,7 @@ export default function App() {
           <Route path="/frontaliers-suisse" element={<FrontaliersPage />} />
           <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
           <Route path="/cgv"             element={<CgvPage />} />
+          <Route path="/structures"      element={<StructuresPage />} />
           <Route path="/confidentialite" element={<ConfidentialitePage />} />
           <Route path="/login"           element={<LoginPage />} />
           <Route path="/register"        element={<RegisterPage />} />

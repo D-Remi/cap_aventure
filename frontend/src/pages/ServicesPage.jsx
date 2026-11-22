@@ -59,7 +59,7 @@ export default function ServicesPage() {
 
   useEffect(() => {
     setMeta(
-      "Tarifs · Garde et répit d'enfants à besoins spécifiques · Thonon, Évian · Éduc & Vous",
+      "Tarifs · Garde et répit d'enfants à besoins spécifiques · Chablais, Genève, Vaud · Éduc & Vous",
       "Tarifs Éduc & Vous : 40 €/h en abonnement (20 €/h après crédit d'impôt), 45 €/h en ponctuel, journée répit 340 €, week-end 790 €. Avance immédiate URSSAF : vous ne payez que 50 %."
     )
   }, [])
@@ -69,7 +69,7 @@ export default function ServicesPage() {
       <Navbar onContact={openContact} overHero />
       <main>
         <PageHero
-          kicker="Tarifs · aides · Haute-Savoie"
+          kicker="Tarifs · Chablais · Genève · Vaud"
           title={<>Des prix clairs, <em>et l'État en paie la moitié.</em></>}
           lead="Chaque garde ouvre droit au crédit d'impôt des services à la personne : 50 % de la facture. Avec l'avance immédiate de l'URSSAF, cette moitié est déduite tout de suite. Vous ne payez que l'autre."
           photo={P.dessin}
@@ -135,7 +135,7 @@ export default function ServicesPage() {
           <div className="ev-container ev-tarifs__zone">
             <div className="ev-reveal">
               <span className="ev-kicker">Zone d'intervention</span>
-              <h2>Garde d'enfant à domicile dans le Chablais</h2>
+              <h2>Garde d'enfant à domicile, des deux côtés du Léman</h2>
               <p>
                 J'interviens chez vous à Thonon-les-Bains, Évian-les-Bains et dans les communes du Léman.
                 Le déplacement est inclus jusqu'à 20 km autour de Thonon. En Suisse (Genève, Vaud), je viens pour des gardes

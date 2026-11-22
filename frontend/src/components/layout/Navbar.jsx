@@ -43,6 +43,7 @@ export default function Navbar({ onContact, overHero = false }) {
           <button onClick={() => go('formules')}>La garde</button>
           <NavLink to="/tarifs">Tarifs</NavLink>
           <NavLink to="/frontaliers-suisse">Frontaliers &amp; Suisse</NavLink>
+          <NavLink to="/structures">Structures</NavLink>
           <button onClick={() => go('qui')}>Qui je suis</button>
           <NavLink to="/documentation">Aide</NavLink>
           {user && <NavLink to="/dashboard" className="ev-nav__m">Mon espace</NavLink>}

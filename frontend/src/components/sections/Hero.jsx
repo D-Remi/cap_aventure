@@ -7,7 +7,7 @@ export default function Hero({ onContact }) {
       <div className="ev-hero__glow" aria-hidden="true" />
       <div className="ev-container ev-hero__grid">
         <div className="ev-hero__text">
-          <span className="ev-hero__pill"><i aria-hidden="true" />Accompagnant éducatif · Chablais · Haute-Savoie</span>
+          <span className="ev-hero__pill"><i aria-hidden="true" />Accompagnant éducatif · Chablais · Genève · Vaud</span>
 
           <h1 className="ev-hero__title">
             Votre enfant a des besoins particuliers.
@@ -17,7 +17,7 @@ export default function Hero({ onContact }) {
           <p className="ev-hero__lead">
             Autisme, TDAH, handicap, troubles du comportement ou fratrie nombreuse :
             je garde votre enfant chez vous, quelques heures, une journée ou chaque semaine.
-            Thonon, Évian et tout le Chablais.
+            Des deux côtés du Léman : Thonon, Évian, le Chablais, Genève et le canton de Vaud.
           </p>
 
           <div className="ev-btns">
@@ -45,7 +45,7 @@ export default function Hero({ onContact }) {
           </figure>
           <figure className="ev-hero__lake">
             <img src={img(P.lavaux, 700)} alt="Le Léman et les montagnes du Chablais" loading="eager" />
-            <figcaption>Thonon · Évian · Chablais</figcaption>
+            <figcaption>Des deux côtés du Léman</figcaption>
           </figure>
           <div className="ev-hero__ticket">
             <span>Ce que vous payez vraiment</span>

@@ -9,7 +9,7 @@ export default function Footer({ onContact }) {
         <div className="ev-foot__grid">
           <div className="ev-foot__brand">
             <Link to="/" className="ev-foot__logo">Éduc<span> &amp; Vous</span></Link>
-            <p>Garde et répit à domicile pour les familles d'enfants à besoins spécifiques, par un accompagnant éducatif. Thonon, Évian et le Chablais.</p>
+            <p>Garde et répit à domicile pour les familles d'enfants à besoins spécifiques, par un accompagnant éducatif. Des deux côtés du Léman : Chablais, Genève et canton de Vaud.</p>
             <a className="ev-foot__wa" href={waLink()} target="_blank" rel="noopener noreferrer">Écrire sur WhatsApp</a>
           </div>
 
@@ -18,6 +18,7 @@ export default function Footer({ onContact }) {
             <Link to="/#formules">Les formules</Link>
             <Link to="/tarifs">Tarifs et aides</Link>
             <Link to="/frontaliers-suisse">Frontaliers et Suisse</Link>
+            <Link to="/structures">Structures et recruteurs en Suisse</Link>
             <Link to="/#qui">Qui je suis</Link>
           </div>
 
@@ -47,7 +48,7 @@ export default function Footer({ onContact }) {
 
         <div className="ev-foot__bottom">
           <span>© {new Date().getFullYear()} Éduc &amp; Vous · Rémi Delfosse, accompagnant éducatif</span>
-          <span>Chablais · Haute-Savoie (74)</span>
+          <span>Chablais (74) · Genève · Vaud</span>
         </div>
       </div>
     </footer>

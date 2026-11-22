@@ -63,7 +63,7 @@ export default function FrontaliersPage() {
 
   useEffect(() => {
     setMeta(
-      "Garde et relève pour frontaliers et familles suisses · Thonon, Évian, Chablais · Éduc & Vous",
+      "Garde et relève d'enfants à Genève, dans le canton de Vaud et le Chablais · Frontaliers et familles suisses · Éduc & Vous",
       "Vous travaillez à Genève, Lausanne ou en Valais, vous habitez en Suisse ou vous avez un chalet dans le Chablais ? Garde et répit à domicile pour enfants autistes, TDAH ou en situation de handicap, dans le Chablais et ponctuellement à Genève et Vaud. Crédit d'impôt de 50 % pour les frontaliers résidant en France."
     )
   }, [])

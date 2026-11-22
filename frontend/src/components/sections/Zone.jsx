@@ -7,7 +7,7 @@ export const COMMUNES = [
   'Perrignier', 'Bons-en-Chablais', 'Douvaine',
 ]
 export const STATIONS = ['Châtel', 'Abondance', 'Bernex', 'Thollon-les-Mémises', 'Morzine', 'Les Gets']
-export const SUISSE = ['Genève', 'Nyon', 'Lausanne', 'Riviera vaudoise']
+export const SUISSE = ['Genève', 'Nyon', 'Lausanne', 'Vevey', 'Montreux', 'Monthey']
 
 export default function Zone() {
   return (
@@ -16,8 +16,8 @@ export default function Zone() {
         <div>
           <div className="ev-head ev-reveal">
             <span className="ev-kicker">Où j'interviens</span>
-            <h2>Thonon, Évian et <em>tout le Chablais.</em></h2>
-            <p>Déplacement inclus jusqu'à 20 km autour de Thonon. Les stations et la Suisse sont possibles avec un forfait.</p>
+            <h2>Des deux côtés <em>du Léman.</em></h2>
+            <p>Basé à Thonon-les-Bains : tout le Chablais français, les stations, et en Suisse Genève, La Côte, Lausanne, la Riviera et le Chablais valaisan. Déplacement inclus jusqu'à 20 km autour de Thonon, forfait au-delà.</p>
           </div>
           <div className="ev-zone__chips ev-reveal">
             {COMMUNES.map(c => <span key={c}>{c}</span>)}
