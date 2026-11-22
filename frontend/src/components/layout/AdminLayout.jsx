@@ -7,6 +7,7 @@ const NAV = [
   { path:'/admin/children',     label:'Dossiers enfants' },
   { path:'/admin/users',        label:'Familles' },
   { path:'/admin/contacts',     label:'Demandes' },
+  { path:'/admin/rendez-vous',  label:'Rendez-vous' },
   { path:'/admin/radar',        label:'Radar clients' },
   { path:'/admin/reseaux',      label:'Réseaux sociaux' },
   { path:'/admin/messages',     label:'Messages' },

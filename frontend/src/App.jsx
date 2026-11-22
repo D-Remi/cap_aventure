@@ -35,6 +35,12 @@ import AdminDeclarations    from './pages/admin/AdminDeclarations'
 import AdminDevis           from './pages/admin/AdminDevis'
 import AdminReseaux         from './pages/admin/AdminReseaux'
 import AdminRadar           from './pages/admin/AdminRadar'
+import AdminRendezVous      from './pages/admin/AdminRendezVous'
+import RendezVousPage       from './pages/RendezVousPage'
+import ConseilsPage         from './pages/ConseilsPage'
+import ArticlePage          from './pages/ArticlePage'
+import RendezVousModal      from './components/ui/RendezVousModal'
+import AssistantWidget      from './components/ui/AssistantWidget'
 import './styles/global.css'
 import './styles/site.css'
 
@@ -68,6 +74,9 @@ export default function App() {
           <Route path="/cgv"             element={<CgvPage />} />
           <Route path="/structures"      element={<StructuresPage />} />
           <Route path="/confidentialite" element={<ConfidentialitePage />} />
+          <Route path="/rendez-vous"     element={<RendezVousPage />} />
+          <Route path="/conseils"        element={<ConseilsPage />} />
+          <Route path="/conseils/:slug"  element={<ArticlePage />} />
           <Route path="/login"           element={<LoginPage />} />
           <Route path="/register"        element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -96,9 +105,12 @@ export default function App() {
           <Route path="/admin/entreprise"  element={<ProtectedRoute adminOnly><AdminEntreprise /></ProtectedRoute>} />
           <Route path="/admin/reseaux"     element={<ProtectedRoute adminOnly><AdminReseaux /></ProtectedRoute>} />
           <Route path="/admin/radar"       element={<ProtectedRoute adminOnly><AdminRadar /></ProtectedRoute>} />
+          <Route path="/admin/rendez-vous" element={<ProtectedRoute adminOnly><AdminRendezVous /></ProtectedRoute>} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <RendezVousModal />
+        <AssistantWidget />
       </BrowserRouter>
     </AuthProvider>
   )

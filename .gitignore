@@ -32,3 +32,7 @@ Thumbs.db
 *.js.map
 *.tsbuildinfo
 backend/.env.production
+
+# Copies de fichiers de configuration (contiennent des mots de passe)
+*.env.save
+.env.*.save

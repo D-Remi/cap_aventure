@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import ChampPiege from './ChampPiege'
+import { ouvrirRendezVous } from '../../utils/rendezVous'
 import './ContactModal.css'
 
 const WA_NUM = '33752096698'
@@ -123,6 +124,9 @@ export default function ContactModal({ open, onClose, serviceInitial = '', resid
                 Le premier échange est gratuit et sans engagement.
                 Je réponds sous 24 heures.
               </p>
+              <button type="button" className="cmodal__appel" onClick={() => { close(); setTimeout(ouvrirRendezVous, 150) }}>
+                Vous préférez qu'on s'appelle ? <b>Choisir un créneau</b>
+              </button>
             </div>
 
             <div className="cmodal__body">

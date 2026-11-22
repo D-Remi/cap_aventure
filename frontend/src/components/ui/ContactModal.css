@@ -204,3 +204,12 @@
   .cmodal__row { grid-template-columns: 1fr; }
   .cmodal__head h2 { font-size: 1.35rem; }
 }
+
+/* Lien vers la réservation d'un appel */
+.cmodal__appel {
+  margin-top: .8rem; display: inline-flex; flex-wrap: wrap; gap: .35rem; align-items: center;
+  border: 1.5px solid #DFE7E3; background: #EEF4F1; border-radius: 999px; padding: .5rem .95rem;
+  font-family: inherit; font-size: .86rem; color: #34423D; cursor: pointer;
+}
+.cmodal__appel b { color: #136F5B; }
+.cmodal__appel:hover { border-color: #136F5B; }

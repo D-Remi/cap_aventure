@@ -32,6 +32,14 @@ export default function ConfidentialitePage() {
           <h2>2. Données collectées</h2>
           <h3>Formulaire de contact</h3>
           <p>Prénom, e-mail, téléphone (facultatif), lieu de résidence (France ou Suisse) et votre message.</p>
+          <h3>Réservation d'un appel</h3>
+          <p>Prénom, téléphone, e-mail, lieu de résidence et commune (facultatifs), votre message éventuel, et le créneau choisi.</p>
+          <h3>Assistant du site</h3>
+          <p>
+            Les questions que vous tapez dans l'assistant sont transmises au service d'intelligence artificielle d'Anthropic pour générer la réponse.
+            Éduc & Vous ne les enregistre pas : la conversation reste seulement dans l'onglet de votre navigateur et s'efface à sa fermeture.
+            N'y indiquez pas d'informations médicales ni de données sur votre enfant.
+          </p>
           <h3>Espace famille et suivi des gardes</h3>
           <ul>
             <li>Identité et coordonnées des parents, adresse de facturation.</li>
@@ -45,7 +53,8 @@ export default function ConfidentialitePage() {
         <section>
           <h2>3. Finalités et bases légales</h2>
           <ul>
-            <li>Répondre à vos demandes et préparer un devis : mesures précontractuelles prises à votre demande (RGPD, art. 6.1.b).</li>
+            <li>Répondre à vos demandes, organiser l'appel que vous réservez et préparer un devis : mesures précontractuelles prises à votre demande (RGPD, art. 6.1.b).</li>
+            <li>Répondre à vos questions avec l'assistant du site : intérêt légitime à informer les visiteurs (art. 6.1.f). Vous pouvez toujours écrire ou appeler directement.</li>
             <li>Réaliser les gardes, assurer la sécurité de l'enfant, tenir l'espace famille : exécution du contrat (art. 6.1.b).</li>
             <li>Données de santé de l'enfant : votre consentement explicite, que vous pouvez retirer à tout moment (art. 9.2.a), et la sauvegarde des intérêts vitaux de l'enfant en cas d'urgence (art. 9.2.c).</li>
             <li>Factures, comptabilité, attestations fiscales, avance immédiate du crédit d'impôt : obligations légales (art. 6.1.c).</li>
@@ -56,7 +65,8 @@ export default function ConfidentialitePage() {
         <section>
           <h2>4. Durées de conservation</h2>
           <ul>
-            <li>Demande de contact sans suite : 3 ans après le dernier échange.</li>
+            <li>Demande de contact ou appel réservé sans suite : 3 ans après le dernier échange.</li>
+            <li>Questions posées à l'assistant : non conservées par Éduc & Vous ; Anthropic les conserve pour une durée limitée selon ses conditions et ne les utilise pas pour entraîner ses modèles.</li>
             <li>Espace famille et données de l'enfant : pendant la durée de l'accompagnement, puis supprimées au plus tard 1 an après la dernière garde (ou plus tôt à votre demande).</li>
             <li>Factures et pièces comptables : 10 ans (obligation légale).</li>
             <li>Devis : au moins 1 an.</li>
@@ -67,7 +77,7 @@ export default function ConfidentialitePage() {
           <h2>5. Qui a accès à vos données</h2>
           <ul>
             <li>Rémi uniquement. Les informations sur votre enfant ne sont jamais transmises à un tiers sans votre accord, sauf aux secours en cas d'urgence.</li>
-            <li>Sous-traitants techniques : l'hébergeur du site ({v(e.hebergeur, 'hébergeur')}) et le service d'envoi des e-mails du site.</li>
+            <li>Sous-traitants techniques : l'hébergeur du site ({v(e.hebergeur, 'hébergeur')}), le service d'envoi des e-mails du site, et Anthropic PBC (États-Unis) pour l'assistant du site uniquement. Ce transfert hors de l'Union européenne est encadré par les clauses contractuelles types de la Commission européenne.</li>
             <li>Administrations, dans le cadre légal : URSSAF (avance immédiate du crédit d'impôt) et administration fiscale.</li>
           </ul>
           <p>

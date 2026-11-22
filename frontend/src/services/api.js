@@ -12,10 +12,11 @@ axios.defaults.withCredentials = true
 
 // Pages publiques : un 401 n'y provoque JAMAIS de redirection.
 // (le site vitrine doit rester accessible sans être connecté)
-const PAGES_PUBLIQUES = ['/', '/services', '/tarifs', '/frontaliers-suisse', '/structures', '/mentions-legales', '/cgv', '/documentation', '/confidentialite', '/login', '/register', '/forgot-password', '/mot-de-passe-oublie', '/reset-password']
+const PAGES_PUBLIQUES = ['/', '/services', '/tarifs', '/frontaliers-suisse', '/structures', '/mentions-legales', '/cgv', '/documentation', '/confidentialite', '/rendez-vous', '/conseils', '/login', '/register', '/forgot-password', '/mot-de-passe-oublie', '/reset-password']
 
 function surPagePublique() {
-  return PAGES_PUBLIQUES.includes(window.location.pathname)
+  const p = window.location.pathname
+  return PAGES_PUBLIQUES.includes(p) || p.startsWith('/conseils/')
 }
 
 // ── Refresh automatique du token ──────────────────────────────────

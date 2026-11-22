@@ -5,6 +5,7 @@ import PageHero from '../components/sections/PageHero'
 import BandeauSuisse from '../components/sections/BandeauSuisse'
 import CtaFinal from '../components/sections/CtaFinal'
 import MentionsPrix from '../components/sections/MentionsPrix'
+import Simulateur from '../components/sections/Simulateur'
 import { COMMUNES, STATIONS, SUISSE } from '../components/sections/Zone'
 import ContactModal from '../components/ui/ContactModal'
 import StickyContact from '../components/ui/StickyContact'
@@ -57,6 +58,13 @@ export default function ServicesPage() {
   const openContact = () => setModalOpen(true)
   useReveal()
 
+  // Arrivée avec une ancre (ex. /tarifs#simulateur depuis un article)
+  useEffect(() => {
+    if (!window.location.hash) return
+    const t = setTimeout(() => document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ behavior: 'smooth' }), 150)
+    return () => clearTimeout(t)
+  }, [])
+
   useEffect(() => {
     setMeta(
       "Tarifs · Garde et répit d'enfants à besoins spécifiques · Chablais, Genève, Vaud · Éduc & Vous",
@@ -104,6 +112,17 @@ export default function ServicesPage() {
               « Ce que vous payez » : montant après le crédit d'impôt de 50 %, pour un foyer résident fiscal en France, dans la limite du plafond annuel.
             </p>
             <MentionsPrix />
+          </div>
+        </section>
+
+        <section className="ev-section ev-section--mist" id="simulateur">
+          <div className="ev-container">
+            <div className="ev-head ev-reveal">
+              <span className="ev-kicker">Simulateur</span>
+              <h2>Combien ça vous coûterait <em>vraiment ?</em></h2>
+              <p>Choisissez une formule : le calcul tient compte du crédit d'impôt, de son plafond, de la fratrie et du forfait Suisse.</p>
+            </div>
+            <Simulateur onContact={openContact} />
           </div>
         </section>
 

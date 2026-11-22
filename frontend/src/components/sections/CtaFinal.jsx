@@ -1,5 +1,6 @@
 import { img, P } from '../../data/photos'
 import { waLink, TEL_AFFICHE, TEL_LIEN, EMAIL, IconeWhatsApp } from '../../data/contact'
+import { ouvrirRendezVous } from '../../utils/rendezVous'
 import './CtaFinal.css'
 
 export default function CtaFinal({ onContact, photo = P.lavaux, titre, texte, waTexte }) {
@@ -13,7 +14,8 @@ export default function CtaFinal({ onContact, photo = P.lavaux, titre, texte, wa
           <h2>{titre || 'Trente minutes pour me raconter votre situation'}</h2>
           <p>{texte || "Sans jugement, sans engagement. Et si je ne suis pas la bonne personne, je vous le dirai franchement."}</p>
           <div className="ev-btns">
-            <button className="ev-btn ev-btn--lime" onClick={() => onContact('repit')}>Prendre contact</button>
+            <button className="ev-btn ev-btn--lime" onClick={ouvrirRendezVous}>Réserver un appel</button>
+            <button className="ev-btn ev-btn--ghost-light" onClick={() => onContact('repit')}>Écrire un message</button>
             <a className="ev-btn ev-btn--ghost-light" href={waLink(waTexte)} target="_blank" rel="noopener noreferrer">
               <IconeWhatsApp /> WhatsApp
             </a>

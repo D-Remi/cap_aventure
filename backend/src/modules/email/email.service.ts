@@ -35,6 +35,54 @@ export class EmailService {
     }
   }
 
+  // Échappe le texte saisi par un visiteur avant de l'insérer dans un email HTML
+  private esc(v: unknown) {
+    return String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
+  }
+
+  // ── Appel découverte réservé en ligne ──
+  async sendRdvAdmin(r: { prenom: string; email: string; telephone: string; quand: string; residence?: string; commune?: string; message?: string }) {
+    const admin = process.env.ADMIN_EMAIL || process.env.MAIL_USER
+    if (!admin) return
+    const e = (v: unknown) => this.esc(v)
+    await this.send(admin, `Appel réservé : ${r.prenom}, ${r.quand}`, this.tpl(`
+      <p>Une famille a réservé un appel découverte.</p>
+      <div class="box"><p>
+        <strong>${e(r.quand)}</strong><br/>
+        ${e(r.prenom)} · <a href="tel:${e(r.telephone.replace(/[^+\d]/g, ''))}">${e(r.telephone)}</a><br/>
+        ${e(r.email)}<br/>
+        ${r.residence ? `Habite : ${r.residence === 'suisse' ? 'en Suisse' : 'en France'}${r.commune ? ` (${e(r.commune)})` : ''}<br/>` : ''}
+      </p></div>
+      ${r.message ? `<p><strong>Son message :</strong></p><div class="box"><p>${e(r.message).replace(/\n/g, '<br/>')}</p></div>` : ''}
+      <p style="font-size:13px;color:#6e7480">C'est toi qui appelles, à l'heure prévue. Retrouve le rendez-vous dans le back-office, rubrique Rendez-vous.</p>
+    `), r.email)
+  }
+
+  async sendRdvConfirmation(to: string, prenom: string, quand: string, telephone: string, lienAgenda: string) {
+    const e = (v: unknown) => this.esc(v)
+    await this.send(to, `Notre appel est confirmé : ${quand}`, this.tpl(`
+      <p>Bonjour <strong>${e(prenom)}</strong>,</p>
+      <p>Merci pour votre confiance. Notre appel est bien réservé :</p>
+      <div class="box"><p><strong>${e(quand)}</strong><br/>Je vous appelle au ${e(telephone)}.</p></div>
+      <a href="${e(lienAgenda)}" class="btn">Ajouter à mon agenda</a>
+      <p>Pendant ces 30 minutes, vous me racontez votre situation et ce dont vous auriez besoin. C'est gratuit et sans engagement.</p>
+      <p>Un empêchement ? Répondez simplement à cet email, on trouvera un autre moment.</p>
+      <p style="font-size:14px;color:#6e7480">Rémi · Éduc & Vous</p>
+    `), process.env.ADMIN_EMAIL || process.env.MAIL_USER)
+  }
+
+  async sendRdvAnnulation(to: string, prenom: string, quand: string) {
+    const site = process.env.FRONTEND_URL || 'https://educetvous74.fr'
+    await this.send(to, 'Notre appel est annulé', this.tpl(`
+      <p>Bonjour <strong>${this.esc(prenom)}</strong>,</p>
+      <p>Je suis désolé, je ne pourrai pas vous appeler le <strong>${this.esc(quand)}</strong>.</p>
+      <p>Vous pouvez choisir un autre moment ici :</p>
+      <a href="${site}/rendez-vous" class="btn">Choisir un autre créneau</a>
+      <p>Ou répondez à cet email, je vous recontacte.</p>
+      <p style="font-size:14px;color:#6e7480">Rémi · Éduc & Vous</p>
+    `), process.env.ADMIN_EMAIL || process.env.MAIL_USER)
+  }
+
   // Template aux couleurs du site v50
   private tpl(content: string) {
     const site = process.env.FRONTEND_URL || 'https://educetvous74.fr'
@@ -57,9 +105,9 @@ body{margin:0;padding:0;background:#f6f7f9;font-family:'Segoe UI',Arial,sans-ser
 .footer p{margin:0;font-size:12px;color:#9ba1ac;line-height:1.6}
 .footer a{color:#136f5b;text-decoration:none}
 </style></head><body><div class="wrap">
-<div class="header"><h1>Éduc<span> &amp; Vous</span></h1><p>Répit et accompagnement éducatif · Gironde (33)</p></div>
+<div class="header"><h1>Éduc<span> &amp; Vous</span></h1><p>Garde et répit d'enfants à besoins particuliers · Chablais, Genève, Vaud</p></div>
 <div class="body">${content}</div>
-<div class="footer"><p>Éduc & Vous · Éducateur en lieu de vie · Gironde (33)<br/>
+<div class="footer"><p>Éduc & Vous · Accompagnant éducatif · Chablais (74), Genève, Vaud<br/>
 <a href="${site}">educetvous74.fr</a></p></div>
 </div></body></html>`
   }
@@ -127,19 +175,20 @@ body{margin:0;padding:0;background:#f6f7f9;font-family:'Segoe UI',Arial,sans-ser
       info: 'Se renseigne', bientot: 'Dans les prochaines semaines', urgent: 'Situation urgente',
     }
 
+    const e = (v: unknown) => this.esc(v)
     await this.send(admin, `Nouvelle demande — ${data.prenom}`, this.tpl(`
       <p>Vous avez reçu une nouvelle demande de contact.</p>
       <div class="box">
         <p>
-          <strong>${data.prenom}</strong><br/>
-          Email : ${data.email}<br/>
-          ${data.telephone ? `Téléphone : ${data.telephone}<br/>` : ''}
+          <strong>${e(data.prenom)}</strong><br/>
+          Email : ${e(data.email)}<br/>
+          ${data.telephone ? `Téléphone : ${e(data.telephone)}<br/>` : ''}
           Service : ${services[data.service] || 'Non précisé'}<br/>
-          ${data.urgence ? `Échéance : ${urgences[data.urgence] || data.urgence}<br/>` : ''}
+          ${data.urgence ? `Échéance : ${urgences[data.urgence] || e(data.urgence)}<br/>` : ''}
         </p>
       </div>
-      ${data.message ? `<p><strong>Message :</strong></p><div class="box"><p>${data.message.replace(/\n/g, '<br/>')}</p></div>` : ''}
-      <a href="mailto:${data.email}" class="btn">Répondre par email →</a>
+      ${data.message ? `<p><strong>Message :</strong></p><div class="box"><p>${e(data.message).replace(/\n/g, '<br/>')}</p></div>` : ''}
+      <a href="mailto:${e(data.email)}" class="btn">Répondre par email →</a>
       <p style="font-size:13px;color:#6e7480">Ou retrouvez cette demande dans votre espace admin.</p>
     `), data.email)
   }
@@ -147,10 +196,10 @@ body{margin:0;padding:0;background:#f6f7f9;font-family:'Segoe UI',Arial,sans-ser
   // ── Réponse au parent depuis l'admin ──
   async sendReponseContact(to: string, prenom: string, message: string) {
     await this.send(to, 'Réponse à votre demande — Éduc & Vous', this.tpl(`
-      <p>Bonjour <strong>${prenom}</strong>,</p>
-      <div class="box"><p>${message.replace(/\n/g, '<br/>')}</p></div>
+      <p>Bonjour <strong>${this.esc(prenom)}</strong>,</p>
+      <div class="box"><p>${this.esc(message).replace(/\n/g, '<br/>')}</p></div>
       <p>Vous pouvez répondre directement à cet email pour continuer notre échange.</p>
-      <p style="font-size:14px;color:#6e7480">Rémi · Éducateur en lieu de vie</p>
+      <p style="font-size:14px;color:#6e7480">Rémi · Éduc & Vous</p>
     `), process.env.MAIL_USER)
   }
 }

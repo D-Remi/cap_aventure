@@ -18,6 +18,8 @@ export default function Footer({ onContact }) {
             <Link to="/#formules">Les formules</Link>
             <Link to="/tarifs">Tarifs et aides</Link>
             <Link to="/frontaliers-suisse">Frontaliers et Suisse</Link>
+            <Link to="/conseils">Conseils aux parents</Link>
+            <Link to="/rendez-vous">Réserver un appel</Link>
             <Link to="/structures">Structures et recruteurs en Suisse</Link>
             <Link to="/#qui">Qui je suis</Link>
           </div>

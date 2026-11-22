@@ -4,6 +4,7 @@ import Footer from '../components/layout/Footer'
 import PageHero from '../components/sections/PageHero'
 import CtaFinal from '../components/sections/CtaFinal'
 import MentionsPrix from '../components/sections/MentionsPrix'
+import Simulateur from '../components/sections/Simulateur'
 import ContactModal from '../components/ui/ContactModal'
 import StickyContact from '../components/ui/StickyContact'
 import useReveal from '../hooks/useReveal'
@@ -164,7 +165,18 @@ export default function FrontaliersPage() {
           </div>
         </section>
 
-        <section className="ev-section">
+        <section className="ev-section" id="simulateur">
+          <div className="ev-container">
+            <div className="ev-head ev-reveal">
+              <span className="ev-kicker">Simulateur</span>
+              <h2>Votre prix, <em>côté France ou côté Suisse</em></h2>
+              <p>Frontalier qui habite en France ou famille qui habite en Suisse : choisissez votre situation et la formule.</p>
+            </div>
+            <Simulateur onContact={openContact} />
+          </div>
+        </section>
+
+        <section className="ev-section ev-section--mist">
           <div className="ev-container ev-ch__notes">
             <div className="ev-ch__note ev-reveal">
               <h3>Garde chez vous, en Suisse : comment ça marche</h3>
@@ -183,7 +195,7 @@ export default function FrontaliersPage() {
           </div>
         </section>
 
-        <section className="ev-section ev-section--mist">
+        <section className="ev-section">
           <div className="ev-container">
             <div className="ev-head ev-reveal">
               <span className="ev-kicker">Vos questions</span>

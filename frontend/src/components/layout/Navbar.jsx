@@ -44,6 +44,7 @@ export default function Navbar({ onContact, overHero = false }) {
           <NavLink to="/tarifs">Tarifs</NavLink>
           <NavLink to="/frontaliers-suisse">Frontaliers &amp; Suisse</NavLink>
           <NavLink to="/structures">Structures</NavLink>
+          <NavLink to="/conseils">Conseils</NavLink>
           <button onClick={() => go('qui')}>Qui je suis</button>
           <NavLink to="/documentation">Aide</NavLink>
           {user && <NavLink to="/dashboard" className="ev-nav__m">Mon espace</NavLink>}
@@ -56,8 +57,9 @@ export default function Navbar({ onContact, overHero = false }) {
         <div className="ev-nav__actions">
           {user ? (
             <>
-              <Link to="/dashboard" className="ev-nav__login">Mon espace</Link>
-              {user.role === 'admin' && <Link to="/admin" className="ev-nav__login">Admin</Link>}
+              {user.role === 'admin'
+                ? <Link to="/admin" className="ev-nav__login">Admin</Link>
+                : <Link to="/dashboard" className="ev-nav__login">Mon espace</Link>}
               <button className="ev-nav__login" onClick={logout}>Déconnexion</button>
             </>
           ) : (

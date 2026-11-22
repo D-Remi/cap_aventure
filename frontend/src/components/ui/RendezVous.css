@@ -1,0 +1,86 @@
+/* Réservation d'un appel découverte */
+.ev-rdv { display: grid; gap: 1rem; font-family: var(--ev-text); color: var(--ev-ink); }
+.ev-rdv__intro, .ev-rdv__vide { margin: 0; color: var(--ev-soft); line-height: 1.6; font-size: .95rem; }
+.ev-rdv__etapes { list-style: none; display: flex; gap: .5rem; margin: 0; padding: 0; font-size: .8rem; font-weight: 600; color: var(--ev-soft); }
+.ev-rdv__etapes li { padding: .3rem .7rem; border-radius: 99px; background: var(--ev-mist); }
+.ev-rdv__etapes li.is-on { background: var(--ev-forest); color: #fff; }
+.ev-rdv__etapes li.is-ok { background: var(--ev-mist-2); color: var(--ev-green); }
+
+.ev-rdv__jours { display: flex; gap: .5rem; overflow-x: auto; padding-bottom: .4rem; scroll-snap-type: x proximity; }
+.ev-rdv__jours button {
+  flex: 0 0 auto; scroll-snap-align: start; display: grid; gap: .15rem; text-align: left; cursor: pointer;
+  padding: .6rem .85rem; border-radius: 14px; border: 1.5px solid var(--ev-line); background: #fff;
+  font-family: inherit; font-weight: 600; font-size: .9rem; color: var(--ev-ink);
+}
+.ev-rdv__jours button small { font-weight: 400; font-size: .74rem; color: var(--ev-soft); }
+.ev-rdv__jours button.is-on { border-color: var(--ev-green); background: var(--ev-mist); box-shadow: inset 0 0 0 1px var(--ev-green); }
+
+.ev-rdv__heures { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: .5rem; }
+.ev-rdv__heures button {
+  padding: .65rem .5rem; border-radius: 12px; border: 1.5px solid var(--ev-line); background: #fff; cursor: pointer;
+  font-family: inherit; font-weight: 600; font-size: .95rem; color: var(--ev-forest);
+}
+.ev-rdv__heures button:hover, .ev-rdv__jours button:hover { border-color: var(--ev-green-2); }
+.ev-rdv__heures button.is-on { background: var(--ev-green); border-color: var(--ev-green); color: #fff; }
+
+.ev-rdv__actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+.ev-rdv__actions .ev-btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+.ev-rdv__form { display: grid; gap: .8rem; }
+.ev-rdv__form label { display: grid; gap: .3rem; font-size: .82rem; font-weight: 600; color: var(--ev-soft); }
+.ev-rdv__form input, .ev-rdv__form textarea {
+  font-family: inherit; font-size: 1rem; color: var(--ev-ink); padding: .7rem .85rem;
+  border: 1.5px solid var(--ev-line); border-radius: 12px; background: #fff; outline: none; width: 100%; box-sizing: border-box;
+}
+.ev-rdv__form input:focus, .ev-rdv__form textarea:focus { border-color: var(--ev-green); }
+.ev-rdv__ligne { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; align-items: end; }
+.ev-rdv__puces { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+.ev-rdv__puces span { width: 100%; font-size: .82rem; font-weight: 600; color: var(--ev-soft); }
+.ev-rdv__puces button {
+  padding: .55rem .9rem; border-radius: 99px; border: 1.5px solid var(--ev-line); background: #fff; cursor: pointer;
+  font-family: inherit; font-weight: 600; font-size: .88rem; color: var(--ev-ink);
+}
+.ev-rdv__puces button.is-on { border-color: var(--ev-green); background: var(--ev-mist); color: var(--ev-green); }
+.ev-rdv__choix {
+  margin: 0; display: flex; justify-content: space-between; align-items: center; gap: .6rem;
+  background: var(--ev-mist); border-radius: 12px; padding: .7rem .9rem; font-weight: 600;
+}
+.ev-rdv__choix button { border: none; background: none; color: var(--ev-green); font-family: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; }
+.ev-rdv__rgpd { margin: 0; font-size: .78rem; color: var(--ev-soft); }
+.ev-rdv__rgpd a { color: var(--ev-green); }
+
+.ev-rdv--fait { text-align: center; justify-items: center; padding: .5rem 0; }
+.ev-rdv--fait h3 { margin: 0; font-family: var(--ev-display); font-size: 1.5rem; }
+.ev-rdv--fait p { margin: 0; line-height: 1.6; color: var(--ev-soft); max-width: 30rem; }
+.ev-rdv--fait p b { color: var(--ev-ink); }
+.ev-rdv__ok { width: 56px; height: 56px; border-radius: 50%; background: var(--ev-lime); color: var(--ev-forest); display: grid; place-items: center; font-size: 1.6rem; font-weight: 700; }
+
+.ev-rdv__secours { display: flex; flex-wrap: wrap; gap: .6rem; }
+.ev-rdv__secours a {
+  display: inline-flex; align-items: center; gap: .45rem; padding: .65rem 1rem; border-radius: 99px;
+  font-weight: 600; text-decoration: none; font-size: .92rem;
+}
+.ev-rdv__wa { background: #25D366; color: #fff; }
+.ev-rdv__wa svg { width: 18px; height: 18px; }
+.ev-rdv__tel { border: 1.5px solid var(--ev-line); color: var(--ev-forest); }
+
+/* Fenêtre */
+.ev-rdvm__overlay {
+  position: fixed; inset: 0; z-index: 820; background: rgba(11, 42, 34, .55); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center; padding: 1rem;
+}
+.ev-rdvm {
+  position: relative; width: 100%; max-width: 600px; max-height: 92vh; overflow-y: auto;
+  background: #fff; border-radius: 22px; padding: clamp(1.3rem, 3vw, 2rem); box-shadow: 0 24px 70px rgba(11, 42, 34, .3);
+}
+.ev-rdvm h2 { margin: 0 2.5rem .9rem 0; font-family: var(--ev-display); font-size: clamp(1.4rem, 3vw, 1.75rem); letter-spacing: -.02em; color: var(--ev-ink); }
+.ev-rdvm__fermer {
+  position: absolute; top: 1rem; right: 1rem; width: 34px; height: 34px; border-radius: 50%; border: none; cursor: pointer;
+  background: var(--ev-mist); color: var(--ev-forest); font-size: 1rem;
+}
+
+@media (max-width: 560px) {
+  .ev-rdv__ligne { grid-template-columns: 1fr; }
+  .ev-rdvm__overlay { align-items: flex-end; padding: 0; }
+  .ev-rdvm { border-radius: 22px 22px 0 0; max-height: 94vh; }
+}

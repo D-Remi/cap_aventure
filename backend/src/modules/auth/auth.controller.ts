@@ -5,6 +5,7 @@ import { AuthService } from './auth.service'
 import { IsEmail, IsString, MinLength, IsOptional } from 'class-validator'
 import { JwtAuthGuard, CurrentUser } from '../../common/guards/auth.guard'
 import { User } from '../users/user.entity'
+import { CustomThrottlerGuard } from '../../common/guards/custom-throttler.guard'
 
 
 // Options des cookies httpOnly — invisibles au JavaScript (protection XSS)
@@ -62,7 +63,7 @@ export class AuthController {
 
   // 5 tentatives / minute pour register
   @Post('register')
-  @Throttle({ auth: { limit: 5, ttl: 60000 } })
+  @Throttle({ auth: { limit: 5, ttl: 60000 } }) @UseGuards(CustomThrottlerGuard)
   async register(@Body() dto: RegisterDto, @Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const user = await this.authService.register(dto)
     const tokens = await this.authService.issueTokens(user, req.headers['user-agent'], req.ip)
@@ -73,7 +74,7 @@ export class AuthController {
   // 10 tentatives / minute pour login
   @Post('login')
   @HttpCode(200)
-  @Throttle({ auth: { limit: 10, ttl: 60000 } })
+  @Throttle({ auth: { limit: 10, ttl: 60000 } }) @UseGuards(CustomThrottlerGuard)
   async login(@Body() dto: LoginDto, @Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const user = await this.authService.login(dto.email, dto.password)
     const tokens = await this.authService.issueTokens(user, req.headers['user-agent'], req.ip)
@@ -120,14 +121,14 @@ export class AuthController {
   // 3 demandes / minute pour mot de passe oublié
   @Post('forgot-password')
   @HttpCode(200)
-  @Throttle({ auth: { limit: 3, ttl: 60000 } })
+  @Throttle({ auth: { limit: 3, ttl: 60000 } }) @UseGuards(CustomThrottlerGuard)
   forgotPassword(@Body() dto: ForgotPasswordDto) {
     return this.authService.forgotPassword(dto.email)
   }
 
   @Post('reset-password')
   @HttpCode(200)
-  @Throttle({ auth: { limit: 5, ttl: 60000 } })
+  @Throttle({ auth: { limit: 5, ttl: 60000 } }) @UseGuards(CustomThrottlerGuard)
   resetPassword(@Body() dto: ResetPasswordDto) {
     return this.authService.resetPassword(dto.token, dto.password)
   }

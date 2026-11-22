@@ -4,13 +4,14 @@ import { ContactService } from './contact.service'
 import { CreateContactDto } from './create-contact.dto'
 import { JwtAuthGuard, RolesGuard, Roles } from '../../common/guards/auth.guard'
 import { UseGuards } from '@nestjs/common'
+import { CustomThrottlerGuard } from '../../common/guards/custom-throttler.guard'
 
 @Controller('contact')
 export class ContactController {
   constructor(private svc: ContactService) {}
 
   @Post()
-  @Throttle({ global:{ limit:5, ttl:600000 } })
+  @Throttle({ global:{ limit:5, ttl:600000 } }) @UseGuards(CustomThrottlerGuard)
   create(@Body() dto: CreateContactDto) { return this.svc.create(dto) }
 
   @Get()

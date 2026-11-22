@@ -18,3 +18,7 @@
   }
   .ev-sticky__wa svg { width: 22px; height: 22px; }
 }
+@media (max-width: 768px) {
+  .ev-sticky__ecrire { border: 0; cursor: pointer; padding: 0; }
+  .ev-sticky__main { font-size: .92rem; padding: .9rem .8rem; }
+}

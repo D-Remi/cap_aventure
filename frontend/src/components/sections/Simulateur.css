@@ -1,0 +1,48 @@
+.ev-simu {
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(1.2rem, 3vw, 2rem);
+  align-items: start;
+}
+.ev-simu__form { display: grid; gap: 1.1rem; }
+.ev-simu__bloc {
+  background: #fff; border: 1px solid var(--ev-line); border-radius: 20px; padding: 1.25rem 1.3rem;
+  display: grid; gap: .85rem;
+}
+.ev-simu__bloc h3 { font-size: 1.02rem; font-weight: 700; letter-spacing: -.01em; margin: 0; }
+.ev-simu__puces { display: flex; flex-wrap: wrap; gap: .5rem; }
+.ev-simu__puces button {
+  display: grid; gap: .1rem; text-align: left; cursor: pointer; font-family: var(--ev-text);
+  padding: .6rem .95rem; border-radius: 14px; border: 1.5px solid var(--ev-line); background: #fff;
+  color: var(--ev-ink); font-weight: 600; font-size: .92rem; transition: border-color .15s, background .15s;
+}
+.ev-simu__puces button small { font-weight: 400; font-size: .76rem; color: var(--ev-soft); }
+.ev-simu__puces button:hover { border-color: var(--ev-green-2); }
+.ev-simu__puces button.is-on { border-color: var(--ev-green); background: var(--ev-mist); box-shadow: inset 0 0 0 1px var(--ev-green); }
+.ev-simu__curseur { display: grid; gap: .4rem; font-size: .92rem; color: var(--ev-soft); }
+.ev-simu__curseur b { color: var(--ev-ink); font-weight: 700; }
+.ev-simu__curseur input[type=range] { width: 100%; accent-color: var(--ev-green); height: 28px; }
+.ev-simu__case { display: flex; gap: .6rem; align-items: flex-start; font-size: .9rem; color: var(--ev-ink); cursor: pointer; }
+.ev-simu__case input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--ev-green); flex-shrink: 0; }
+.ev-simu__aide { font-size: .85rem; line-height: 1.55; color: var(--ev-soft); margin: 0; }
+
+.ev-simu__resultat {
+  position: sticky; top: 96px;
+  background: var(--ev-forest); color: #fff; border-radius: var(--ev-radius); padding: clamp(1.4rem, 3vw, 2rem);
+  display: grid; gap: .7rem; box-shadow: var(--ev-shadow);
+}
+.ev-simu__sur { font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ev-lime); }
+.ev-simu__lab { margin: .4rem 0 0; color: var(--ev-on-dark); font-size: .95rem; }
+.ev-simu__gros { margin: 0; font-family: var(--ev-display); font-weight: 700; font-size: clamp(2.6rem, 6vw, 3.6rem); letter-spacing: -.04em; line-height: 1; color: var(--ev-lime); }
+.ev-simu__gros small { font-size: 1rem; font-weight: 500; color: var(--ev-on-dark); letter-spacing: 0; }
+.ev-simu__lignes { list-style: none; margin: .4rem 0 0; padding: 0; display: grid; gap: .45rem; }
+.ev-simu__lignes li { display: flex; justify-content: space-between; gap: 1rem; font-size: .95rem; color: var(--ev-on-dark); border-top: 1px solid rgba(255,255,255,.12); padding-top: .45rem; }
+.ev-simu__lignes b { color: #fff; white-space: nowrap; }
+.ev-simu__lignes b.moins { color: var(--ev-lime); }
+.ev-simu__alerte { margin: 0; font-size: .85rem; line-height: 1.5; background: rgba(200,241,105,.12); border-radius: 12px; padding: .7rem .85rem; color: #fff; }
+.ev-simu__note { margin: 0; font-size: .78rem; line-height: 1.55; color: var(--ev-on-dark); }
+.ev-simu__btns { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .4rem; }
+.ev-simu__btns .ev-btn { flex: 1 1 auto; }
+
+@media (max-width: 860px) {
+  .ev-simu { grid-template-columns: 1fr; }
+  .ev-simu__resultat { position: static; }
+}

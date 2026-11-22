@@ -13,6 +13,10 @@ import { AppModule } from './app.module'
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
 
+  // Derrière nginx : l'adresse IP du visiteur vient de X-Forwarded-For, accepté seulement depuis le proxy local.
+  // Sans ça, toutes les requêtes ont l'IP 127.0.0.1 et la limite d'envois s'appliquerait à tout le monde à la fois.
+  app.set('trust proxy', 'loopback')
+
   app.setGlobalPrefix('api')
   app.use(cookieParser.default())
 
