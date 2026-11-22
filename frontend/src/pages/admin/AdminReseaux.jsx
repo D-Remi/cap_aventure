@@ -5,18 +5,25 @@ import AdminLayout from '../../components/layout/AdminLayout'
 import { img, P } from '../../data/photos'
 import { TEL_AFFICHE } from '../../data/contact'
 import { THEMES, HASHTAGS, COULEURS as C, FORMATS, MODELES } from './reseauxModeles'
+import { PACK } from './postsTroisMois'
 import './AdminLegal.css'
 
 const SITE = 'educetvous74.fr'
 const PHOTOS = [
-  ['foret', 'Adulte et enfant en forêt'], ['balade', 'Balade main dans la main'], ['blocs', 'Jeu de construction'],
+  ['foret', 'Adulte et enfant en forêt'], ['foret2', 'Homme et garçon en forêt'], ['balade', 'Balade main dans la main'], ['blocs', 'Jeu de construction'],
   ['lecture', 'Lecture sur le canapé'], ['dessin', 'Dessin à table'], ['saut', 'Enfants qui sautent'],
   ['coloriage', 'Coloriage'], ['cubes', 'Cubes'], ['automne', 'Forêt en automne'], ['mains', 'Main d\'enfant'],
-  ['lavaux', 'Léman et montagnes'], ['banc', 'Banc face au lac'], ['coucher', 'Coucher de soleil'],
-  ['vapeur', 'Bateau CGN et jet d\'eau'], ['chillon', 'Léman fleuri'], ['chalet', 'Chalet sous la neige'],
+  ['lavaux', 'Léman et montagnes'], ['lavaux2', 'Ferme au bord du Léman'], ['banc', 'Banc face au lac'], ['coucher', 'Coucher de soleil'],
+  ['vapeur', 'Bateau CGN et jet d\'eau'], ['geneve', 'Genève vue du ciel'], ['chillon', 'Léman fleuri'], ['chalet', 'Chalet sous la neige'],
 ]
 const STATUTS = { idee: 'Idée', prete: 'Prête', programmee: 'Programmée', publiee: 'Publiée' }
 const AUJ = new Date().toISOString().slice(0, 10)
+
+// Légende finale d'une publication du pack : coordonnées + hashtags
+const legendePack = (p) =>
+  `${p.legende.replaceAll('{tel}', TEL_AFFICHE).replaceAll('{site}', SITE)}\n\n${p.tags.map(k => HASHTAGS[k]).filter(Boolean).join(' ')}`
+const dansLePack = (pub) => PACK.find(p => p.date === pub.date && p.titre === pub.titre)
+const FIN_PACK = PACK[PACK.length - 1].date
 
 // ── Dessin ─────────────────────────────────────────────────────────────
 function lignes(ctx, texte, largeur) {
@@ -186,20 +193,20 @@ export default function AdminReseaux() {
   }, [v, image])
   useEffect(() => { redessiner() }, [redessiner])
 
-  // Légende
-  const genererLegende = useCallback((t = theme, n = version) => {
+  // Légende : générée seulement à la demande, pour ne pas écraser une légende reprise du planning
+  const genererLegende = (t, n) => {
     const th = THEMES[t]
     const base = th.versions[n % th.versions.length]
     const tags = th.hashtags.map(k => HASHTAGS[k]).join(' ')
     setLegende(`${base.replaceAll('{tel}', TEL_AFFICHE).replaceAll('{site}', SITE)}\n\n${tags}`)
-  }, [theme, version])
-  useEffect(() => { genererLegende() }, [genererLegende])
+  }
+  useEffect(() => { genererLegende('presentation', 0) }, [])
 
   const charger = () => axios.get('/api/marketing/publications').then(r => setPubs(r.data || [])).catch(() => {})
   useEffect(() => { charger() }, [])
 
   const choisirTheme = (t) => {
-    setTheme(t); setVersion(0)
+    setTheme(t); setVersion(0); genererLegende(t, 0)
     set('titre', THEMES[t].titre)
     if (t === 'prix') set('modele', 'prix')
     if (t === 'disponibilites') set('modele', 'dispo')
@@ -260,14 +267,38 @@ export default function AdminReseaux() {
     toast.success('12 idées ajoutées sur 4 semaines'); charger()
   }
 
+  // Charge les publications entièrement rédigées (visuel + légende), sans doublon
+  const [chargement, setChargement] = useState(false)
+  const restantes = PACK.filter(p => p.date >= AUJ && !pubs.some(x => x.date === p.date && x.titre === p.titre))
+  const chargerPack = async () => {
+    if (!restantes.length) { toast('Toutes les publications prêtes sont déjà dans ton planning'); return }
+    setChargement(true)
+    let ok = 0
+    for (const p of restantes) {
+      try {
+        await axios.post('/api/marketing/publications', { date: p.date, heure: p.heure, theme: p.theme, titre: p.titre, legende: legendePack(p), statut: 'prete', format: 'post' })
+        ok++
+      } catch { /* on passe à la suivante */ }
+    }
+    setChargement(false)
+    if (ok) toast.success(`${ok} publications prêtes ajoutées, jusqu'au ${new Date(FIN_PACK + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}`)
+    else toast.error("Impossible d'ajouter (migration de la base faite ?)")
+    charger()
+  }
+
   const majPub = async (p, statut) => { await axios.put(`/api/marketing/publications/${p.id}`, { statut }); charger() }
   const supPub = async (p) => { await axios.delete(`/api/marketing/publications/${p.id}`); charger() }
   const reprendre = (p) => {
     const cle = Object.keys(THEMES).find(k => THEMES[k].label === p.theme)
     if (cle) setTheme(cle)
-    if (p.titre) set('titre', p.titre)
+    const pack = dansLePack(p)
+    if (pack) setV(s => ({ ...s, modele: pack.modele, texte: pack.texte || '', photo: pack.photo || s.photo, titre: pack.titre }))
+    else if (p.titre) set('titre', p.titre)
     if (p.legende) setLegende(p.legende)
+    else if (pack) setLegende(legendePack(pack))
+    setDatePub(p.date)
     window.scrollTo({ top: 0, behavior: 'smooth' })
+    toast.success('Visuel et légende prêts : télécharge l\'image, copie la légende')
   }
 
   const aVenir = pubs.filter(p => p.date >= AUJ && p.statut !== 'publiee')
@@ -354,9 +385,20 @@ export default function AdminReseaux() {
           <section className="al-card">
             <div className="al-actions" style={{ justifyContent: 'space-between' }}>
               <h2>Planning des publications</h2>
-              <button className="btn-secondary" onClick={genererMois}>Proposer 4 semaines d'idées</button>
+              <div className="al-actions">
+                {restantes.length > 0 && (
+                  <button className="btn-primary" onClick={chargerPack} disabled={chargement}>
+                    {chargement ? 'Ajout en cours…' : `Charger ${restantes.length} publications prêtes (3 mois)`}
+                  </button>
+                )}
+                <button className="btn-secondary" onClick={genererMois}>Proposer 4 semaines d'idées</button>
+              </div>
             </div>
             <p className="al-sub">Le rythme qui fonctionne : 2 à 3 publications par semaine, en soirée ou le dimanche matin, quand les parents ont un moment. Varie les sujets : conseils, coulisses, disponibilités, frontaliers.</p>
+            <div className="al-alert al-alert--info">
+              <b>3 mois sans y penser</b>
+              <span>Les {PACK.length} publications prêtes vont du {new Date(PACK[0].date + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })} au {new Date(FIN_PACK + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}, mardi et jeudi à 19 h 30, dimanche à 10 h. Une fois par semaine : clique sur « Préparer », télécharge l'image, copie la légende et programme-les dans Meta Business Suite, puis passe-les en « Programmée ».</span>
+            </div>
             <div className="al-table-wrap">
               <table className="al-table">
                 <thead><tr><th>Date</th><th>Sujet</th><th>Titre</th><th>Statut</th><th /></tr></thead>

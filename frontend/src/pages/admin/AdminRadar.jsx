@@ -2,7 +2,10 @@ import { useEffect, useState, useCallback } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/layout/AdminLayout'
+import { CANTONS, METIERS, SITES_EMPLOI, STRUCTURES, lienOffres, RECHERCHES_FAMILLES_CH } from './radarSuisse'
 import './AdminLegal.css'
+
+const CANDIDATURE = 'Candidature Suisse'
 
 const AUJ = new Date().toISOString().slice(0, 10)
 const STATUTS = {
@@ -37,6 +40,9 @@ export default function AdminRadar() {
   const [filtre, setFiltre] = useState('actifs')
   const [ouvert, setOuvert] = useState(null)
   const [nouveau, setNouveau] = useState({ nom: '', type: 'famille', telephone: '', ville: '', source: 'Bouche-à-oreille' })
+  const [canton, setCanton] = useState('GE')
+  const [metier, setMetier] = useState(METIERS[0])
+  const [cantonStructures, setCantonStructures] = useState('tous')
 
   const chargerProspects = () => axios.get('/api/marketing/prospects').then(r => setProspects(r.data || [])).catch(() => {})
   useEffect(() => {
@@ -61,6 +67,7 @@ export default function AdminRadar() {
   useEffect(() => { if (onglet === 'annonces' && !offres) chercherOffres() }, [onglet]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const dejaSuivi = (siret) => siret && prospects.some(p => p.siret === siret)
+  const dejaCandidat = (nom) => prospects.some(p => p.categorie === CANDIDATURE && p.nom === nom)
 
   const ajouter = async (data) => {
     try {
@@ -79,6 +86,7 @@ export default function AdminRadar() {
   const visibles = prospects.filter(p =>
     filtre === 'tous' ? true :
     filtre === 'relances' ? relancesDues.includes(p) :
+    filtre === 'candidatures' ? p.categorie === CANDIDATURE :
     filtre === 'actifs' ? p.statut !== 'sans_suite' : p.statut === filtre)
   const compte = (s) => prospects.filter(p => p.statut === s).length
 
@@ -96,7 +104,7 @@ export default function AdminRadar() {
 
         <div className="al">
           <div className="al-actions">
-            {[['prescripteurs', 'Prescripteurs'], ['annonces', 'Annonces de familles'], ['suivi', `Mon suivi (${prospects.length})`]].map(([k, l]) => (
+            {[['prescripteurs', 'Prescripteurs'], ['annonces', 'Annonces de familles'], ['emplois', 'Emplois en Suisse'], ['suivi', `Mon suivi (${prospects.length})`]].map(([k, l]) => (
               <button key={k} className={onglet === k ? 'btn-primary' : 'btn-secondary'} onClick={() => setOnglet(k)}>{l}</button>
             ))}
             {relancesDues.length > 0 && <span className="al-pill al-pill--wait">{relancesDues.length} relance{relancesDues.length > 1 ? 's' : ''} à faire</span>}
@@ -193,7 +201,7 @@ export default function AdminRadar() {
                   </div>
                 </>
               )}
-              <h3>Recherches rapides</h3>
+              <h3>Recherches rapides côté français</h3>
               <p className="al-sub">Ces sites n'ont pas d'accès automatique autorisé : le radar ouvre directement la bonne recherche. Réponds aux annonces par les moyens qu'elles indiquent.</p>
               <div className="al-steps">
                 {RECHERCHES.map(([site, t, url]) => (
@@ -202,6 +210,77 @@ export default function AdminRadar() {
                   </a>
                 ))}
               </div>
+              <h3>Familles qui habitent en Suisse</h3>
+              <p className="al-sub">Gardes ponctuelles uniquement, déclarées sur easygov.swiss au moins 8 jours avant (90 jours par an au maximum). Pour une garde régulière, la famille t'emploie via Chèque service (Genève) ou Chèques-emploi (Vaud).</p>
+              <div className="al-steps">
+                {RECHERCHES_FAMILLES_CH.map(([site, t, url]) => (
+                  <a key={url} href={url} target="_blank" rel="noopener noreferrer" className="al-step" style={{ gridTemplateColumns: '1fr', textDecoration: 'none' }}>
+                    <div><b>{site}</b><p>{t}</p></div>
+                  </a>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {onglet === 'emplois' && (
+            <section className="al-card">
+              <h2>Postuler en Suisse</h2>
+              <p className="al-sub">
+                Joins à chaque candidature le lien de ta page <a href="/structures" target="_blank" rel="noopener noreferrer">educetvous74.fr/structures</a> :
+                elle présente ton profil aux employeurs suisses. Pour une veille automatique des offres, utilise aussi ton JobRadar Suisse.
+              </p>
+
+              <h3>1. Les offres d'emploi, recherches prêtes</h3>
+              <div className="al-grid">
+                <label className="al-field"><span>Métier</span>
+                  <select value={metier} onChange={e => setMetier(e.target.value)}>
+                    {METIERS.map(m => <option key={m} value={m}>{m}</option>)}
+                  </select>
+                </label>
+                <label className="al-field"><span>Où</span>
+                  <select value={canton} onChange={e => setCanton(e.target.value)}>
+                    {Object.entries(CANTONS).map(([k, c]) => <option key={k} value={k}>{c.label}</option>)}
+                  </select>
+                </label>
+              </div>
+              <div className="al-steps">
+                {SITES_EMPLOI.map(s => (
+                  <a key={s.nom} href={s.url(metier, CANTONS[canton].lieu)} target="_blank" rel="noopener noreferrer" className="al-step" style={{ gridTemplateColumns: '1fr', textDecoration: 'none' }}>
+                    <div><b>{s.url.length ? `${s.nom} · « ${metier} » · ${CANTONS[canton].label}` : `${s.nom} · tape « ${metier} » sur le site`}</b><p>{s.aide}</p></div>
+                  </a>
+                ))}
+              </div>
+
+              <h3>2. Les structures à qui écrire</h3>
+              <p className="al-sub">Ajoute-les à tes candidatures, puis passe-les en « Contacté » quand tu as envoyé ton CV, en « Rendez-vous » pour un entretien.</p>
+              <div className="al-actions">
+                {[['tous', 'Toutes'], ['GE', 'Genève'], ['VD', 'Vaud'], ['VS', 'Valais'], ['CH', 'Toute la Suisse']].map(([k, l]) => (
+                  <button key={k} className={cantonStructures === k ? 'btn-primary' : 'btn-secondary'} style={{ padding: '.35rem .8rem', fontSize: '.82rem' }} onClick={() => setCantonStructures(k)}>{l}</button>
+                ))}
+              </div>
+              <div className="al-table-wrap">
+                <table className="al-table">
+                  <thead><tr><th>Structure</th><th>Type</th><th>Pourquoi toi</th><th /></tr></thead>
+                  <tbody>
+                    {STRUCTURES.filter(s => cantonStructures === 'tous' || s.canton === cantonStructures).map(s => (
+                      <tr key={s.nom}>
+                        <td><b>{s.nom}</b><br /><small className="al-sub">{s.canton === 'CH' ? 'Toute la Suisse' : CANTONS[s.canton]?.label}</small></td>
+                        <td>{s.type}</td>
+                        <td>{s.pourquoi}</td>
+                        <td className="r" style={{ whiteSpace: 'nowrap' }}>
+                          <a href={lienOffres(s)} target="_blank" rel="noopener noreferrer" style={{ color: '#136F5B', fontWeight: 600, fontSize: '.8rem', marginRight: 10 }}>Voir leurs offres</a>
+                          {dejaCandidat(s.nom)
+                            ? <span className="al-pill al-pill--ok">Dans mes candidatures</span>
+                            : <button className="btn-secondary" style={{ padding: '.3rem .7rem', fontSize: '.78rem' }}
+                                onClick={() => ajouter({ type: 'etablissement', nom: s.nom, organisme: s.type, categorie: CANDIDATURE, ville: s.canton === 'CH' ? 'Suisse' : CANTONS[s.canton]?.label, source: 'Radar emplois Suisse', notes: s.pourquoi })}>
+                                Ajouter à mes candidatures</button>}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="al-sub">Avant de signer un contrat en Suisse alors que tu as ta micro-entreprise en France : vérifie ta situation sociale auprès du CLEISS (voir « Mon entreprise & obligations »).</p>
             </section>
           )}
 
@@ -218,6 +297,7 @@ export default function AdminRadar() {
                 <select value={filtre} onChange={e => setFiltre(e.target.value)} style={{ padding: '.45rem', borderRadius: 10, border: '1.5px solid #DFE7E3', fontFamily: 'inherit' }}>
                   <option value="actifs">En cours (hors sans suite)</option>
                   <option value="relances">Relances à faire</option>
+                  <option value="candidatures">Mes candidatures en Suisse</option>
                   <option value="tous">Tous</option>
                   {Object.entries(STATUTS).map(([k, l]) => <option key={k} value={k}>{l}</option>)}
                 </select>

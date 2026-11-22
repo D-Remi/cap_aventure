@@ -6,6 +6,7 @@ export const HASHTAGS = {
   repit: '#repit #aidantfamilial #parentsepuises #handicap #autisme #TSA #TDAH #parentalite',
   garde: '#gardedenfants #babysitting #educateur #relaisparental',
   frontalier: '#frontalier #frontaliers #Geneve #Lausanne #Valais #travailleurfrontalier',
+  suisse: '#Geneve #Lausanne #Nyon #Vevey #Montreux #Monthey #SuisseRomande #VaudGeneve',
 }
 
 export const THEMES = {
