@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import ChampPiege from '../ui/ChampPiege'
 import './Contact.css'
 
 const WA_NUM = '33752096698'
@@ -26,6 +27,8 @@ export default function Contact() {
   const [message, setMessage] = useState('')
   const [sending, setSending] = useState(false)
   const [done,    setDone]    = useState(false)
+  const [piege,   setPiege]   = useState('')
+  const affichage = useRef(Date.now())
 
   const waLink = () => {
     const svc = SERVICES.find(s => s.val === service)?.label || 'vos services'
@@ -44,6 +47,8 @@ export default function Contact() {
         service: service || 'autre',
         urgence: urgence || undefined,
         message: message || undefined,
+        site_web: piege || undefined,
+        duree: Date.now() - affichage.current,
       })
       setDone(true)
     } catch (err) {
@@ -136,6 +141,8 @@ export default function Contact() {
               <label>Téléphone</label>
               <input value={tel} onChange={e => setTel(e.target.value)} placeholder="06…" />
             </div>
+
+            <ChampPiege value={piege} onChange={setPiege} />
 
             <div className="contact__field">
               <label>Décrivez votre situation en quelques mots</label>

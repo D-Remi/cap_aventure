@@ -32,11 +32,25 @@ export default function AdminContacts() {
       .catch(() => {})
       .finally(() => setLoading(false))
 
+  const maj = (id, champs) => {
+    setContacts(c => c.map(x => x.id === id ? { ...x, ...champs } : x))
+    if (selected?.id === id) setSelected(s => ({ ...s, ...champs }))
+  }
+
   const marquerTraite = async (id) => {
-    await axios.patch(`/api/contact/${id}`, { traite: true })
-    setContacts(c => c.map(x => x.id === id ? { ...x, traite: true } : x))
-    if (selected?.id === id) setSelected(s => ({ ...s, traite: true }))
-    toast.success('Demande marquée comme traitée')
+    try {
+      await axios.patch(`/api/contact/${id}/traite`)
+      maj(id, { traite: true })
+      toast.success('Demande marquée comme traitée')
+    } catch { toast.error('Impossible de marquer la demande') }
+  }
+
+  const marquerSpam = async (id, spam) => {
+    try {
+      const { data } = await axios.patch(`/api/contact/${id}/spam`, { spam })
+      maj(id, { spam: data.spam, spam_raison: data.spam_raison })
+      toast.success(spam ? 'Rangée dans les indésirables' : 'Remise dans les demandes')
+    } catch { toast.error('Impossible de déplacer la demande') }
   }
 
   const supprimer = async (id) => {
@@ -49,21 +63,26 @@ export default function AdminContacts() {
 
   const isUrgent = (c) => c.urgence === 'urgent'
 
-  const filtered = contacts.filter(c => {
+  // Les indésirables (robots, liens douteux) restent à part, hors des compteurs
+  const vraies = contacts.filter(c => !c.spam)
+  const spams  = contacts.filter(c => c.spam)
+
+  const filtered = filter === 'spam' ? spams : vraies.filter(c => {
     if (filter === 'non_traites') return !c.traite
     if (filter === 'traites')     return c.traite
     if (filter === 'urgent')      return isUrgent(c) && !c.traite
     return true
   })
 
-  const nonTraites = contacts.filter(c => !c.traite).length
-  const urgents    = contacts.filter(c => isUrgent(c) && !c.traite).length
+  const nonTraites = vraies.filter(c => !c.traite).length
+  const urgents    = vraies.filter(c => isUrgent(c) && !c.traite).length
 
   const FILTERS = [
     { v: 'non_traites', l: 'À traiter',   n: nonTraites },
     { v: 'urgent',      l: 'Urgentes',    n: urgents },
-    { v: 'traites',     l: 'Traitées',    n: contacts.length - nonTraites },
-    { v: 'tous',        l: 'Toutes',      n: contacts.length },
+    { v: 'traites',     l: 'Traitées',    n: vraies.length - nonTraites },
+    { v: 'tous',        l: 'Toutes',      n: vraies.length },
+    { v: 'spam',        l: 'Indésirables', n: spams.length },
   ]
 
   return (
@@ -81,7 +100,7 @@ export default function AdminContacts() {
 
         <div style={{ display: 'flex', gap: '.5rem', marginBottom: '1.4rem', flexWrap: 'wrap' }}>
           {FILTERS.map(({ v, l, n }) => (
-            <button key={v} onClick={() => setFilter(v)} style={{
+            <button key={v} onClick={() => { setFilter(v); setSelected(null) }} style={{
               padding: '.45rem 1.05rem', borderRadius: 100,
               border: `1.5px solid ${filter === v ? 'var(--s2)' : 'var(--line)'}`,
               background: filter === v ? 'var(--s2)' : '#fff',
@@ -136,6 +155,11 @@ export default function AdminContacts() {
                           Traitée
                         </span>
                       )}
+                      {c.spam && (
+                        <span style={{ background: '#fee2e2', color: '#991b1b', fontSize: '.72rem', fontWeight: 700, padding: '2px 8px', borderRadius: 50 }}>
+                          Indésirable
+                        </span>
+                      )}
                     </div>
                   </button>
                 )
@@ -166,6 +190,12 @@ export default function AdminContacts() {
                 </div>
 
                 <div style={{ padding: '1.6rem', display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+                  {selected.spam && (
+                    <div style={{ background: '#fee2e2', color: '#7f1d1d', borderRadius: 10, padding: '.9rem 1.1rem', fontSize: '.88rem', lineHeight: 1.5 }}>
+                      <strong>Demande indésirable</strong>{selected.spam_raison ? ` : ${selected.spam_raison.charAt(0).toLowerCase()}${selected.spam_raison.slice(1)}` : ''}.
+                      {' '}Ne clique sur aucun lien et ne réponds pas. Si c'est en réalité une vraie famille, clique sur « Ce n'est pas un spam ».
+                    </div>
+                  )}
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                     <div>
                       <div style={lbl}>Contact</div>
@@ -201,6 +231,11 @@ export default function AdminContacts() {
                   )}
 
                   <div style={{ display: 'flex', gap: '.7rem', paddingTop: '.5rem', borderTop: '1px solid var(--line)', flexWrap: 'wrap' }}>
+                    {selected.spam ? (
+                      <button className="btn-secondary" onClick={() => marquerSpam(selected.id, false)} style={{ fontSize: '.9rem' }}>
+                        Ce n'est pas un spam
+                      </button>
+                    ) : (<>
                     <a href={`mailto:${selected.email}`} className="btn-primary" style={{ fontSize: '.9rem', padding: '.75rem 1.5rem' }}>
                       Répondre par email
                     </a>
@@ -221,6 +256,10 @@ export default function AdminContacts() {
                         Marquer traitée
                       </button>
                     )}
+                    <button className="btn-secondary" onClick={() => marquerSpam(selected.id, true)} style={{ fontSize: '.9rem' }}>
+                      C'est un spam
+                    </button>
+                    </>)}
                     <button onClick={() => supprimer(selected.id)} style={{
                       background: '#fee2e2', color: '#991b1b', border: 'none',
                       borderRadius: 100, padding: '.75rem 1.3rem',

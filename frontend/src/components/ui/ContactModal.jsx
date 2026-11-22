@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import ChampPiege from './ChampPiege'
 import './ContactModal.css'
 
 const WA_NUM = '33752096698'
@@ -31,9 +32,12 @@ export default function ContactModal({ open, onClose, serviceInitial = '', resid
   const [message, setMessage] = useState('')
   const [sending, setSending] = useState(false)
   const [done,    setDone]    = useState(false)
+  const [piege,   setPiege]   = useState('')
+  const ouverture = useRef(Date.now())
 
   // Pré-sélection du service quand la modale s'ouvre depuis un bloc précis
   useEffect(() => {
+    if (open) ouverture.current = Date.now()
     if (open && serviceInitial) setService(serviceInitial)
     if (open && residenceInitiale) setResidence(residenceInitiale)
   }, [open, serviceInitial, residenceInitiale])
@@ -72,6 +76,8 @@ export default function ContactModal({ open, onClose, serviceInitial = '', resid
           residence ? `Habite : ${RESIDENCES.find(r => r.val === residence)?.label}` : '',
           message,
         ].filter(Boolean).join('\n\n') || undefined,
+        site_web: piege || undefined,
+        duree: Date.now() - ouverture.current,
       })
       setDone(true)
     } catch (err) {
@@ -85,7 +91,7 @@ export default function ContactModal({ open, onClose, serviceInitial = '', resid
 
   const reset = () => {
     setDone(false); setService(''); setUrgence(''); setResidence('')
-    setPrenom(''); setEmail(''); setTel(''); setMessage('')
+    setPrenom(''); setEmail(''); setTel(''); setMessage(''); setPiege('')
   }
 
   const close = () => { onClose(); setTimeout(reset, 300) }
@@ -183,6 +189,8 @@ export default function ContactModal({ open, onClose, serviceInitial = '', resid
                 <label>Téléphone</label>
                 <input value={tel} onChange={e => setTel(e.target.value)} placeholder="06…" />
               </div>
+
+              <ChampPiege value={piege} onChange={setPiege} />
 
               <div className="cmodal__field">
                 <label>Décrivez votre situation en quelques mots</label>

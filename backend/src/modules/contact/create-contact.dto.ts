@@ -1,4 +1,4 @@
-import { IsEmail, IsIn, IsOptional, IsString, MaxLength, MinLength } from 'class-validator'
+import { IsEmail, IsIn, IsInt, IsOptional, IsString, Max, MaxLength, Min, MinLength } from 'class-validator'
 
 export class CreateContactDto {
   @IsString() @MinLength(2) @MaxLength(100)
@@ -24,4 +24,12 @@ export class CreateContactDto {
 
   @IsOptional() @IsString() @MaxLength(5000)
   message?: string
+
+  // Anti-robots : champ invisible qui doit rester vide
+  @IsOptional() @IsString() @MaxLength(500)
+  site_web?: string
+
+  // Anti-robots : temps passé sur le formulaire, en millisecondes
+  @IsOptional() @IsInt() @Min(0) @Max(86400000)
+  duree?: number
 }

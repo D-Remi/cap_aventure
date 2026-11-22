@@ -21,6 +21,10 @@ export class ContactController {
   @UseGuards(JwtAuthGuard, RolesGuard) @Roles('admin')
   markTraite(@Param('id') id: string) { return this.svc.markTraite(+id) }
 
+  @Patch(':id/spam')
+  @UseGuards(JwtAuthGuard, RolesGuard) @Roles('admin')
+  marquerSpam(@Param('id') id: string, @Body('spam') spam: boolean) { return this.svc.marquerSpam(+id, spam !== false) }
+
   @Post(':id/repondre')
   @UseGuards(JwtAuthGuard, RolesGuard) @Roles('admin')
   repondre(@Param('id') id: string, @Body('message') message: string) {

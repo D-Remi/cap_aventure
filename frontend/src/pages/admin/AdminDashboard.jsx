@@ -28,7 +28,7 @@ export default function AdminDashboard() {
         enfants:  c.data.length,
         seances:  realisees.length,
         heures:   +heures.toFixed(1),
-        demandes: ct.data.filter(x => !x.traite).length,
+        demandes: ct.data.filter(x => !x.traite && !x.spam).length,
         prochaines: seances
           .filter(x => x.statut === 'planifiee' && x.date >= today)
           .sort((a, b) => a.date.localeCompare(b.date))

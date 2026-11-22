@@ -13,5 +13,7 @@ export class ContactRequest {
   @Column({ default:false }) besoins_specifiques: boolean
   @Column({ type:'text', nullable:true }) message: string
   @Column({ default:false }) traite: boolean
+  @Column({ default:false }) spam: boolean
+  @Column({ nullable:true }) spam_raison: string
   @CreateDateColumn() created_at: Date
 }
