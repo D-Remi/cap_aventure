@@ -28,7 +28,7 @@
 
 .ev-rdv__form { display: grid; gap: .8rem; }
 .ev-rdv__form label { display: grid; gap: .3rem; font-size: .82rem; font-weight: 600; color: var(--ev-soft); }
-.ev-rdv__form input, .ev-rdv__form textarea {
+.ev-rdv__form input, .ev-rdv__form textarea, .ev-rdv__form select {
   font-family: inherit; font-size: 1rem; color: var(--ev-ink); padding: .7rem .85rem;
   border: 1.5px solid var(--ev-line); border-radius: 12px; background: #fff; outline: none; width: 100%; box-sizing: border-box;
 }

@@ -13,6 +13,7 @@ export class RendezVous {
   @Column({ length: 20, nullable: true }) residence: string   // france | suisse
   @Column({ length: 100, nullable: true }) commune: string
   @Column({ type: 'text', nullable: true }) message: string
+  @Column({ length: 30, nullable: true }) source: string        // comment la famille a connu Éduc & Vous
   @Column({ type: 'enum', enum: ['confirme', 'fait', 'annule'], default: 'confirme' }) statut: string
   @CreateDateColumn() created_at: Date
 }

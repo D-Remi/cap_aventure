@@ -3,6 +3,8 @@ import axios from 'axios'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/layout/AdminLayout'
 import { CANTONS, METIERS, SITES_EMPLOI, STRUCTURES, lienOffres, RECHERCHES_FAMILLES_CH } from './radarSuisse'
+import RadarAujourdhui from './RadarAujourdhui'
+import PanneauContact from './PanneauContact'
 import './AdminLegal.css'
 
 const CANDIDATURE = 'Candidature Suisse'
@@ -28,7 +30,8 @@ const lien = (q) => `https://www.google.com/search?q=${encodeURIComponent(q)}`
 const carte = (q) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`
 
 export default function AdminRadar() {
-  const [onglet, setOnglet] = useState('prescripteurs')
+  const [onglet, setOnglet] = useState('aujourdhui')
+  const [aContacter, setAContacter] = useState(null)
   const [config, setConfig] = useState(null)
   const [cat, setCat] = useState('reeducation')
   const [page, setPage] = useState(1)
@@ -104,11 +107,13 @@ export default function AdminRadar() {
 
         <div className="al">
           <div className="al-actions">
-            {[['prescripteurs', 'Prescripteurs'], ['annonces', 'Annonces de familles'], ['emplois', 'Emplois en Suisse'], ['suivi', `Mon suivi (${prospects.length})`]].map(([k, l]) => (
+            {[['aujourdhui', "Aujourd'hui"], ['prescripteurs', 'Prescripteurs'], ['annonces', 'Annonces de familles'], ['emplois', 'Emplois en Suisse'], ['suivi', `Mon suivi (${prospects.length})`]].map(([k, l]) => (
               <button key={k} className={onglet === k ? 'btn-primary' : 'btn-secondary'} onClick={() => setOnglet(k)}>{l}</button>
             ))}
             {relancesDues.length > 0 && <span className="al-pill al-pill--wait">{relancesDues.length} relance{relancesDues.length > 1 ? 's' : ''} à faire</span>}
           </div>
+
+          {onglet === 'aujourdhui' && <RadarAujourdhui prospects={prospects} onContacter={setAContacter} onOnglet={setOnglet} />}
 
           {onglet === 'prescripteurs' && (
             <section className="al-card">
@@ -153,6 +158,15 @@ export default function AdminRadar() {
                     </table>
                   </div>
                   <div className="al-actions">
+                    {res.resultats.some(r => !dejaSuivi(r.siret)) && (
+                      <button className="btn-primary" onClick={async () => {
+                        const nouveaux = res.resultats.filter(r => !dejaSuivi(r.siret))
+                        for (const r of nouveaux) {
+                          await axios.post('/api/marketing/prospects', { type: TYPE_PAR_CATEGORIE[cat] || 'prescripteur', nom: r.nom, organisme: r.raison_sociale, categorie: catInfo?.label, siret: r.siret, adresse: r.adresse, code_postal: r.code_postal, ville: r.ville, source: 'Annuaire des entreprises' }).catch(() => {})
+                        }
+                        toast.success(`${nouveaux.length} contacts ajoutés : retrouve-les dans « Aujourd'hui »`); chargerProspects()
+                      }}>Tout ajouter au suivi</button>
+                    )}
                     <button className="btn-secondary" disabled={page <= 1} onClick={() => setPage(p => p - 1)}>Page précédente</button>
                     <button className="btn-secondary" disabled={page >= res.pages} onClick={() => setPage(p => p + 1)}>Page suivante</button>
                   </div>
@@ -321,6 +335,7 @@ export default function AdminRadar() {
                             <input type="date" value={p.relance || ''} onChange={e => maj(p, { relance: e.target.value })} style={{ padding: '.3rem', borderRadius: 8, border: '1px solid #DFE7E3', fontFamily: 'inherit' }} />
                           </label>
                           {p.relance && p.relance <= AUJ && !['client', 'partenaire', 'sans_suite'].includes(p.statut) && <span className="al-pill al-pill--wait">À relancer</span>}
+                          <button className="btn-primary" style={{ padding: '.3rem .7rem', fontSize: '.78rem' }} onClick={() => setAContacter(p)}>Contacter</button>
                           <button className="btn-secondary" style={{ padding: '.3rem .7rem', fontSize: '.78rem' }} onClick={() => setOuvert(ouvert === p.id ? null : p.id)}>{ouvert === p.id ? 'Fermer' : 'Détails'}</button>
                         </div>
                       </div>
@@ -369,6 +384,7 @@ export default function AdminRadar() {
           )}
         </div>
       </div>
+      {aContacter && <PanneauContact prospect={aContacter} onFermer={() => setAContacter(null)} onFait={(champs) => maj(aContacter, champs)} />}
     </AdminLayout>
   )
 }

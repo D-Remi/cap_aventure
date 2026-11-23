@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import ChampPiege from '../ui/ChampPiege'
+import { SOURCES } from '../../data/sources'
 import './Contact.css'
 
 const WA_NUM = '33752096698'
@@ -24,6 +25,7 @@ export default function Contact() {
   const [prenom,  setPrenom]  = useState('')
   const [email,   setEmail]   = useState('')
   const [tel,     setTel]     = useState('')
+  const [source,  setSource]  = useState('')
   const [message, setMessage] = useState('')
   const [sending, setSending] = useState(false)
   const [done,    setDone]    = useState(false)
@@ -44,6 +46,7 @@ export default function Contact() {
         prenom,
         email,
         telephone: tel || undefined,
+        source: source || undefined,
         service: service || 'autre',
         urgence: urgence || undefined,
         message: message || undefined,
@@ -140,6 +143,14 @@ export default function Contact() {
             <div className="contact__field">
               <label>Téléphone</label>
               <input value={tel} onChange={e => setTel(e.target.value)} placeholder="06…" />
+            </div>
+
+            <div className="contact__field">
+              <label>Comment m'avez-vous connu ?</label>
+              <select value={source} onChange={e => setSource(e.target.value)}>
+                <option value="">Choisir (facultatif)</option>
+                {Object.entries(SOURCES).map(([k, l]) => <option key={k} value={k}>{l}</option>)}
+              </select>
             </div>
 
             <ChampPiege value={piege} onChange={setPiege} />

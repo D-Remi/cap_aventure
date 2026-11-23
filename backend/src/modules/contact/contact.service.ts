@@ -4,6 +4,7 @@ import { Repository } from 'typeorm'
 import { ContactRequest } from './contact.entity'
 import { EmailService } from '../email/email.service'
 import { analyserContact } from './anti-spam'
+import { ajouterColonnes } from '../../common/colonnes'
 
 @Injectable()
 export class ContactService implements OnModuleInit {
@@ -17,23 +18,11 @@ export class ContactService implements OnModuleInit {
   // Ajoute les colonnes anti-spam si la migration n'a pas encore été passée,
   // pour que le formulaire de contact ne tombe jamais en panne après un déploiement.
   async onModuleInit() {
-    try {
-      const cols: { c: string }[] = await this.repo.query(
-        "SELECT COLUMN_NAME AS c FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'contact_requests'",
-      )
-      if (!cols.length) return
-      const noms = cols.map(x => x.c)
-      if (!noms.includes('spam')) {
-        await this.repo.query('ALTER TABLE `contact_requests` ADD COLUMN `spam` TINYINT(1) NOT NULL DEFAULT 0')
-        this.logger.log('Colonne contact_requests.spam ajoutée')
-      }
-      if (!noms.includes('spam_raison')) {
-        await this.repo.query('ALTER TABLE `contact_requests` ADD COLUMN `spam_raison` VARCHAR(255) NULL')
-        this.logger.log('Colonne contact_requests.spam_raison ajoutée')
-      }
-    } catch (e) {
-      this.logger.error(`Colonnes anti-spam non ajoutées : passe database/migrate_contact_spam_2026.sql (${e?.message})`)
-    }
+    await ajouterColonnes(this.repo, 'contact_requests', {
+      spam: 'TINYINT(1) NOT NULL DEFAULT 0',
+      spam_raison: 'VARCHAR(255) NULL',
+      source: 'VARCHAR(30) NULL',
+    }, this.logger)
   }
 
   async create(dto: Partial<ContactRequest> & { site_web?: string; duree?: number }) {

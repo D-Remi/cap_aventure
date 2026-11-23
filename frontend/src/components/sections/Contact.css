@@ -80,3 +80,9 @@
   .contact__box { grid-template-columns: 1fr; gap: 2.2rem; padding: 2.3rem 1.6rem; }
   .contact__row { grid-template-columns: 1fr; }
 }
+
+.contact__field select {
+  border: 1.5px solid var(--line); border-radius: 10px; padding: .8rem 1rem; font-family: inherit; font-size: .95rem;
+  color: var(--ink); background: #fff; outline: none;
+}
+.contact__field select:focus { border-color: var(--s2); }

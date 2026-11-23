@@ -1,12 +1,26 @@
 // Textes prêts à publier sur Instagram et Facebook.
 // {tel} et {site} sont remplacés automatiquement.
 
+// Classés du plus utile au moins utile : on en prend 5 au total par publication (Instagram recommande 3 à 5 hashtags précis)
 export const HASHTAGS = {
-  local: '#Thonon #Evian #Chablais #HauteSavoie #Leman #Publier #Sciez #Douvaine',
-  repit: '#repit #aidantfamilial #parentsepuises #handicap #autisme #TSA #TDAH #parentalite',
-  garde: '#gardedenfants #babysitting #educateur #relaisparental',
-  frontalier: '#frontalier #frontaliers #Geneve #Lausanne #Valais #travailleurfrontalier',
-  suisse: '#Geneve #Lausanne #Nyon #Vevey #Montreux #Monthey #SuisseRomande #VaudGeneve',
+  local: '#Thonon #Chablais #Evian #HauteSavoie #Leman #Publier #Sciez #Douvaine',
+  repit: '#repit #autisme #TDAH #handicap #aidantfamilial #parentsepuises #TSA #parentalite',
+  garde: '#gardedenfants #educateur #babysitting #relaisparental',
+  frontalier: '#frontalier #Geneve #Lausanne #frontaliers #Valais #travailleurfrontalier',
+  suisse: '#Geneve #Lausanne #Nyon #SuisseRomande #Vevey #Montreux #Monthey #VaudGeneve',
+}
+
+// Choisit au plus `max` hashtags en piochant à tour de rôle dans chaque liste (sans doublon)
+export function choisirHashtags(cles, max = 5) {
+  const listes = cles.map(k => (HASHTAGS[k] || '').split(' ').filter(Boolean))
+  const vus = new Set(), choisis = []
+  for (let i = 0; choisis.length < max && listes.some(l => i < l.length); i++) {
+    for (const l of listes) {
+      const t = l[i]
+      if (t && !vus.has(t.toLowerCase()) && choisis.length < max) { vus.add(t.toLowerCase()); choisis.push(t) }
+    }
+  }
+  return choisis.join(' ')
 }
 
 export const THEMES = {

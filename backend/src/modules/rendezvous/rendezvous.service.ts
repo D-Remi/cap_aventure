@@ -8,6 +8,7 @@ import { Garde } from '../gardes/garde.entity'
 import { Seance } from '../seances/seance.entity'
 import { EmailService } from '../email/email.service'
 import { analyserContact } from '../contact/anti-spam'
+import { ajouterColonnes } from '../../common/colonnes'
 
 const HEURE = /^([01]\d|2[0-3]):[0-5]\d$/
 
@@ -37,6 +38,7 @@ export class RendezVousService implements OnModuleInit {
         \`residence\` varchar(20) NULL,
         \`commune\` varchar(100) NULL,
         \`message\` text NULL,
+        \`source\` varchar(30) NULL,
         \`statut\` enum('confirme','fait','annule') NOT NULL DEFAULT 'confirme',
         \`created_at\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
         PRIMARY KEY (\`id\`), KEY \`idx_rdv_date\` (\`date\`)
@@ -53,6 +55,7 @@ export class RendezVousService implements OnModuleInit {
     } catch (e) {
       this.logger.error(`Tables des rendez-vous non créées : passe database/migrate_rendez_vous_2026.sql (${e?.message})`)
     }
+    await ajouterColonnes(this.repo, 'rendez_vous', { source: 'VARCHAR(30) NULL' }, this.logger)
   }
 
   async reglages(): Promise<ReglagesRdv> {

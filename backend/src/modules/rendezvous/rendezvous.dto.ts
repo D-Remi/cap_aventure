@@ -1,4 +1,5 @@
 import { IsEmail, IsIn, IsInt, IsOptional, IsString, Matches, Max, MaxLength, Min, MinLength } from 'class-validator'
+import { SOURCES_CONTACT } from '../../common/colonnes'
 
 export class ReserverRdvDto {
   @Matches(/^\d{4}-\d{2}-\d{2}$/, { message: 'Date invalide' })
@@ -24,6 +25,9 @@ export class ReserverRdvDto {
 
   @IsOptional() @IsString() @MaxLength(2000)
   message?: string
+
+  @IsOptional() @IsIn(SOURCES_CONTACT)
+  source?: string
 
   // Anti-robots : champ invisible qui doit rester vide, et temps passé sur le formulaire (ms)
   @IsOptional() @IsString() @MaxLength(500)

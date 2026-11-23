@@ -12,6 +12,10 @@ export class Publication {
   @Column({ nullable: true }) titre: string
   @Column({ type: 'text', nullable: true }) legende: string
   @Column({ type: 'enum', enum: ['idee', 'prete', 'programmee', 'publiee'], default: 'idee' }) statut: string
+  // Bilan saisi après publication
+  @Column({ type: 'int', nullable: true }) vues: number
+  @Column({ type: 'int', nullable: true }) interactions: number   // j'aime + commentaires + partages + enregistrements
+  @Column({ type: 'int', nullable: true }) contacts: number       // messages ou demandes reçus grâce au post
   @CreateDateColumn() created_at: Date
   @UpdateDateColumn() updated_at: Date
 }
@@ -34,6 +38,7 @@ export class Prospect {
   @Column({ nullable: true }) source: string
   @Column({ type: 'enum', enum: ['a_contacter', 'contacte', 'rdv', 'partenaire', 'client', 'sans_suite'], default: 'a_contacter' }) statut: string
   @Column({ type: 'date', nullable: true }) relance: string
+  @Column({ type: 'date', nullable: true }) dernier_contact: string
   @Column({ type: 'text', nullable: true }) notes: string
   @CreateDateColumn() created_at: Date
   @UpdateDateColumn() updated_at: Date

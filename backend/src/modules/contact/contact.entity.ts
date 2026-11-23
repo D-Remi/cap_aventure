@@ -15,5 +15,6 @@ export class ContactRequest {
   @Column({ default:false }) traite: boolean
   @Column({ default:false }) spam: boolean
   @Column({ nullable:true }) spam_raison: string
+  @Column({ length:30, nullable:true }) source: string   // comment la famille a connu Éduc & Vous
   @CreateDateColumn() created_at: Date
 }

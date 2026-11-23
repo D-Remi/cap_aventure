@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/layout/AdminLayout'
+import { SOURCES } from '../../data/sources'
 
 const URGENCES = {
   info:    'Se renseigne',
@@ -202,6 +203,9 @@ export default function AdminContacts() {
                       <a href={`mailto:${selected.email}`} style={{ color: 'var(--s2)', fontWeight: 500, fontSize: '.92rem' }}>{selected.email}</a>
                       {selected.telephone && (
                         <div style={{ fontSize: '.88rem', color: 'var(--soft)', marginTop: 2 }}>{selected.telephone}</div>
+                      )}
+                      {selected.source && (
+                        <div style={{ fontSize: '.85rem', color: 'var(--soft)', marginTop: 4 }}>M'a connu par : <b>{SOURCES[selected.source] || selected.source}</b></div>
                       )}
                     </div>
                     <div>

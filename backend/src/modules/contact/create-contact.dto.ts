@@ -1,4 +1,5 @@
 import { IsEmail, IsIn, IsInt, IsOptional, IsString, Max, MaxLength, Min, MinLength } from 'class-validator'
+import { SOURCES_CONTACT } from '../../common/colonnes'
 
 export class CreateContactDto {
   @IsString() @MinLength(2) @MaxLength(100)
@@ -24,6 +25,9 @@ export class CreateContactDto {
 
   @IsOptional() @IsString() @MaxLength(5000)
   message?: string
+
+  @IsOptional() @IsIn(SOURCES_CONTACT)
+  source?: string
 
   // Anti-robots : champ invisible qui doit rester vide
   @IsOptional() @IsString() @MaxLength(500)

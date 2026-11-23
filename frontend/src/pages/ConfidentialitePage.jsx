@@ -31,9 +31,9 @@ export default function ConfidentialitePage() {
         <section>
           <h2>2. Données collectées</h2>
           <h3>Formulaire de contact</h3>
-          <p>Prénom, e-mail, téléphone (facultatif), lieu de résidence (France ou Suisse) et votre message.</p>
+          <p>Prénom, e-mail, téléphone (facultatif), lieu de résidence (France ou Suisse), la façon dont vous avez connu Éduc & Vous (facultatif) et votre message.</p>
           <h3>Réservation d'un appel</h3>
-          <p>Prénom, téléphone, e-mail, lieu de résidence et commune (facultatifs), votre message éventuel, et le créneau choisi.</p>
+          <p>Prénom, téléphone, e-mail, lieu de résidence, commune et façon dont vous avez connu Éduc & Vous (facultatifs), votre message éventuel, et le créneau choisi.</p>
           <h3>Assistant du site</h3>
           <p>
             Les questions que vous tapez dans l'assistant sont transmises au service d'intelligence artificielle d'Anthropic pour générer la réponse.

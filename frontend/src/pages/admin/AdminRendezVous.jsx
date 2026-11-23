@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/layout/AdminLayout'
+import { SOURCES } from '../../data/sources'
 import './AdminLegal.css'
 
 const JOURS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
@@ -86,7 +87,7 @@ export default function AdminRendezVous() {
                       <div>
                         <b>{quand(r)}</b>
                         <p>{r.prenom} · <a href={`tel:${telBrut(r.telephone)}`}>{r.telephone}</a> · {r.email}
-                          {r.residence ? ` · habite en ${r.residence === 'suisse' ? 'Suisse' : 'France'}` : ''}{r.commune ? ` (${r.commune})` : ''}</p>
+                          {r.residence ? ` · habite en ${r.residence === 'suisse' ? 'Suisse' : 'France'}` : ''}{r.commune ? ` (${r.commune})` : ''}{r.source ? ` · m'a connu par : ${SOURCES[r.source] || r.source}` : ''}</p>
                       </div>
                       <div className="al-actions">
                         <a className="btn-secondary" style={{ padding: '.3rem .7rem', fontSize: '.78rem' }} href={`https://wa.me/${waNum(r.telephone)}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>

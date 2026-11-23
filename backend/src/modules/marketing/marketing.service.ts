@@ -1,15 +1,16 @@
-import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common'
+import { Injectable, BadRequestException, NotFoundException, Logger, OnModuleInit } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Publication, Prospect } from './marketing.entities'
 import { CATEGORIES_RADAR, CODES_POSTAUX_CHABLAIS } from './radar.config'
+import { ajouterColonnes } from '../../common/colonnes'
 
 const API_ENTREPRISES = 'https://recherche-entreprises.api.gouv.fr/search'
 const FT_TOKEN_URL = 'https://entreprise.francetravail.fr/connexion/oauth2/access_token?realm=%2Fpartenaire'
 const FT_SEARCH_URL = 'https://api.francetravail.io/partenaire/offresdemploi/v2/offres/search'
 
-const CHAMPS_PUBLICATION = ['date', 'heure', 'reseaux', 'format', 'theme', 'titre', 'legende', 'statut']
-const CHAMPS_PROSPECT = ['type', 'nom', 'organisme', 'categorie', 'siret', 'adresse', 'code_postal', 'ville', 'telephone', 'email', 'site', 'source', 'statut', 'relance', 'notes']
+const CHAMPS_PUBLICATION = ['date', 'heure', 'reseaux', 'format', 'theme', 'titre', 'legende', 'statut', 'vues', 'interactions', 'contacts']
+const CHAMPS_PROSPECT = ['type', 'nom', 'organisme', 'categorie', 'siret', 'adresse', 'code_postal', 'ville', 'telephone', 'email', 'site', 'source', 'statut', 'relance', 'dernier_contact', 'notes']
 
 function garder(dto: Record<string, any>, champs: string[]) {
   const out: Record<string, any> = {}
@@ -18,11 +19,18 @@ function garder(dto: Record<string, any>, champs: string[]) {
 }
 
 @Injectable()
-export class MarketingService {
+export class MarketingService implements OnModuleInit {
+  private readonly logger = new Logger(MarketingService.name)
+
   constructor(
     @InjectRepository(Publication) private pubRepo: Repository<Publication>,
     @InjectRepository(Prospect)    private proRepo: Repository<Prospect>,
   ) {}
+
+  async onModuleInit() {
+    await ajouterColonnes(this.pubRepo, 'publications', { vues: 'INT NULL', interactions: 'INT NULL', contacts: 'INT NULL' }, this.logger)
+    await ajouterColonnes(this.proRepo, 'prospects', { dernier_contact: 'DATE NULL' }, this.logger)
+  }
 
   // ── Publications ───────────────────────────────────────────────
   listePublications() { return this.pubRepo.find({ order: { date: 'ASC', heure: 'ASC' } }) }

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import ChampPiege from './ChampPiege'
+import { SOURCES } from '../../data/sources'
 import { waLink, TEL_AFFICHE, TEL_LIEN, IconeWhatsApp } from '../../data/contact'
 import './RendezVous.css'
 
@@ -18,7 +19,7 @@ export default function RendezVous({ onFermer }) {
   const [jour, setJour] = useState('')
   const [heure, setHeure] = useState('')
   const [etape, setEtape] = useState(1)
-  const [f, setF] = useState({ prenom: '', telephone: '', email: '', residence: '', commune: '', message: '' })
+  const [f, setF] = useState({ prenom: '', telephone: '', email: '', residence: '', commune: '', message: '', source: '' })
   const [piege, setPiege] = useState('')
   const [envoi, setEnvoi] = useState(false)
   const [fait, setFait] = useState(null)
@@ -46,7 +47,7 @@ export default function RendezVous({ onFermer }) {
       const { data } = await axios.post('/api/rendez-vous', {
         date: jour, heure,
         prenom: f.prenom.trim(), telephone: f.telephone.trim(), email: f.email.trim(),
-        residence: f.residence || undefined, commune: f.commune.trim() || undefined, message: f.message.trim() || undefined,
+        residence: f.residence || undefined, commune: f.commune.trim() || undefined, message: f.message.trim() || undefined, source: f.source || undefined,
         site_web: piege || undefined, temps_formulaire: Date.now() - debut.current,
       })
       setFait(data)
@@ -145,6 +146,12 @@ export default function RendezVous({ onFermer }) {
             <label>Commune<input value={f.commune} onChange={e => set('commune', e.target.value)} autoComplete="address-level2" placeholder="Thonon, Évian, Genève…" /></label>
           </div>
           <label>En deux mots (facultatif)<textarea rows={3} value={f.message} onChange={e => set('message', e.target.value)} placeholder="L'âge de votre enfant, ce que vous cherchez… Inutile de donner des détails médicaux ici." /></label>
+          <label>Comment m'avez-vous connu ?
+            <select value={f.source} onChange={e => set('source', e.target.value)}>
+              <option value="">Choisir (facultatif)</option>
+              {Object.entries(SOURCES).map(([k, l]) => <option key={k} value={k}>{l}</option>)}
+            </select>
+          </label>
           <ChampPiege value={piege} onChange={setPiege} />
           <p className="ev-rdv__rgpd">Vos coordonnées servent uniquement à organiser cet appel. <Link to="/confidentialite">Confidentialité</Link></p>
           <div className="ev-rdv__actions">

@@ -213,3 +213,9 @@
 }
 .cmodal__appel b { color: #136F5B; }
 .cmodal__appel:hover { border-color: #136F5B; }
+
+.cmodal__field select {
+  width: 100%; min-width: 0; border: 1.5px solid var(--line); border-radius: 10px; padding: .78rem 1rem;
+  font-family: inherit; font-size: .95rem; color: var(--ink); background: #fff; outline: none;
+}
+.cmodal__field select:focus { border-color: var(--s2); }

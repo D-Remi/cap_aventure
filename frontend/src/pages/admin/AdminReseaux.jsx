@@ -4,8 +4,10 @@ import toast from 'react-hot-toast'
 import AdminLayout from '../../components/layout/AdminLayout'
 import { img, P } from '../../data/photos'
 import { TEL_AFFICHE } from '../../data/contact'
-import { THEMES, HASHTAGS, COULEURS as C, FORMATS, MODELES } from './reseauxModeles'
+import { THEMES, choisirHashtags, COULEURS as C, FORMATS, MODELES } from './reseauxModeles'
 import { PACK } from './postsTroisMois'
+import { CiblePost, NotePost, BilanPublications } from './ReseauxOutils'
+import ReseauxVisibilite from './ReseauxVisibilite'
 import './AdminLegal.css'
 
 const SITE = 'educetvous74.fr'
@@ -21,7 +23,7 @@ const AUJ = new Date().toISOString().slice(0, 10)
 
 // Légende finale d'une publication du pack : coordonnées + hashtags
 const legendePack = (p) =>
-  `${p.legende.replaceAll('{tel}', TEL_AFFICHE).replaceAll('{site}', SITE)}\n\n${p.tags.map(k => HASHTAGS[k]).filter(Boolean).join(' ')}`
+  `${p.legende.replaceAll('{tel}', TEL_AFFICHE).replaceAll('{site}', SITE)}\n\n${choisirHashtags(p.tags)}`
 const dansLePack = (pub) => PACK.find(p => p.date === pub.date && p.titre === pub.titre)
 const FIN_PACK = PACK[PACK.length - 1].date
 
@@ -197,7 +199,7 @@ export default function AdminReseaux() {
   const genererLegende = (t, n) => {
     const th = THEMES[t]
     const base = th.versions[n % th.versions.length]
-    const tags = th.hashtags.map(k => HASHTAGS[k]).join(' ')
+    const tags = choisirHashtags(th.hashtags)
     setLegende(`${base.replaceAll('{tel}', TEL_AFFICHE).replaceAll('{site}', SITE)}\n\n${tags}`)
   }
   useEffect(() => { genererLegende('presentation', 0) }, [])
@@ -287,6 +289,10 @@ export default function AdminReseaux() {
   }
 
   const majPub = async (p, statut) => { await axios.put(`/api/marketing/publications/${p.id}`, { statut }); charger() }
+  const majBilan = async (p, champs) => {
+    setPubs(ps => ps.map(x => x.id === p.id ? { ...x, ...champs } : x))
+    try { await axios.put(`/api/marketing/publications/${p.id}`, champs) } catch { toast.error('Bilan non enregistré') }
+  }
   const supPub = async (p) => { await axios.delete(`/api/marketing/publications/${p.id}`); charger() }
   const reprendre = (p) => {
     const cle = Object.keys(THEMES).find(k => THEMES[k].label === p.theme)
@@ -364,11 +370,13 @@ export default function AdminReseaux() {
                   <button key={k} onClick={() => choisirTheme(k)} className={theme === k ? 'btn-primary' : 'btn-secondary'} style={{ padding: '.4rem .8rem', fontSize: '.82rem' }}>{t.label}</button>
                 ))}
               </div>
+              <CiblePost legende={legende} setLegende={setLegende} />
               <label className="al-field"><span>Texte (modifiable)</span><textarea rows={14} value={legende} onChange={e => setLegende(e.target.value)} /></label>
               <div className="al-actions">
                 <button className="btn-secondary" onClick={() => { const n = version + 1; setVersion(n); genererLegende(theme, n) }}>Autre version</button>
                 <button className="btn-primary" onClick={copier}>Copier la légende</button>
               </div>
+              <NotePost legende={legende} />
               <p className="al-sub">Pour publier sur Instagram et Facebook en même temps, et programmer à l'avance, utilise Meta Business Suite (gratuit) : colle la légende, ajoute l'image, choisis la date.</p>
               <div className="al-actions">
                 <a className="btn-secondary" href="https://business.facebook.com/latest/composer" target="_blank" rel="noopener noreferrer">Ouvrir Meta Business Suite</a>
@@ -424,6 +432,9 @@ export default function AdminReseaux() {
               </table>
             </div>
           </section>
+
+          <BilanPublications pubs={pubs} onMaj={majBilan} />
+          <ReseauxVisibilite />
         </div>
       </div>
     </AdminLayout>
