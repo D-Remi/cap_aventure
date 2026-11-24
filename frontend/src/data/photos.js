@@ -1,11 +1,18 @@
-// Photos du site public.
-// Banque Unsplash (licence gratuite, usage commercial autorisé) + portrait de Rémi dans /public/images.
-// Pour changer une photo : remplacer l'identifiant (la partie après "photo-" dans l'URL Unsplash).
+// Photos du site public, hébergées sur le site lui-même (public/images/photos) :
+// elles s'affichent aussi sur les réseaux qui bloquent les banques d'images (écoles, entreprises),
+// et aucun service extérieur ne reçoit l'adresse IP des visiteurs.
+// Origine : Unsplash (licence gratuite, usage commercial autorisé). Portrait de Rémi : /public/images/remi.jpg.
+//
+// Chaque photo existe en deux tailles WebP : « nom-moyen.webp » (900 px max) et « nom-grand.webp » (1600 × 1100 px max).
+// Ajouter une photo : télécharger les deux tailles, par exemple
+//   https://images.unsplash.com/photo-ID?fit=max&w=900&h=900&q=64&fm=webp    → nom-moyen.webp
+//   https://images.unsplash.com/photo-ID?fit=max&w=1600&h=1100&q=60&fm=webp  → nom-grand.webp
+// puis ajouter « nom: 'ID' » dans UNSPLASH ci-dessous.
 
-export const img = (id, w = 1200) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=75`
+export const img = (cle, w = 1200) => `/images/photos/${cle}-${w <= 1000 ? 'moyen' : 'grand'}.webp`
 
-export const P = {
+// Identifiants Unsplash d'origine (pour retrouver ou retélécharger une photo)
+export const UNSPLASH = {
   // Éducateur et enfant
   foret:      '1768509197111-1deec3dd559a', // adulte et enfant explorant la mousse en forêt
   foret2:     '1768509197138-c09f59db7448', // homme et garçon en forêt
@@ -29,5 +36,8 @@ export const P = {
   chillon:    '1765496888350-2a41bb618049', // tulipes et Léman
   chalet:     '1610803523148-a0052fa341bb', // chalet sous la neige
 }
+
+// Clés utilisées par les pages : img(P.foret, 1200) → /images/photos/foret-grand.webp
+export const P = Object.fromEntries(Object.keys(UNSPLASH).map(k => [k, k]))
 
 export const REMI = '/images/remi.jpg'

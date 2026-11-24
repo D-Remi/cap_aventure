@@ -28,7 +28,7 @@ export default function ArticlePage() {
 
   useEffect(() => {
     if (!a) { setMeta('Article introuvable · Éduc & Vous', 'Cet article n\'existe pas ou a été déplacé.'); setJsonLd(null); return }
-    const image = img(P[a.photo], 1200)
+    const image = SITE + img(P[a.photo], 1200)
     setMeta(`${a.titre} · Éduc & Vous`, a.description, { image })
     setJsonLd({
       '@context': 'https://schema.org',

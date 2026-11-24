@@ -81,8 +81,8 @@ export default function ConfidentialitePage() {
             <li>Administrations, dans le cadre légal : URSSAF (avance immédiate du crédit d'impôt) et administration fiscale.</li>
           </ul>
           <p>
-            Les photos d'illustration du site sont chargées depuis Unsplash (États-Unis), qui reçoit à cette occasion votre adresse IP ; ce transfert est encadré
-            par le cadre de protection des données UE / États-Unis. Les polices de caractères sont hébergées sur le site lui-même.
+            Les photos d'illustration (issues de la banque Unsplash) et les polices de caractères sont hébergées sur le site lui-même :
+            leur affichage ne transmet aucune donnée à un service extérieur.
           </p>
         </section>
 
